@@ -43,6 +43,7 @@ async def reda(event):
     if gvarstatus ("savepicforme"):
         if event.is_private:
             if event.media and event.media_unread:
+                await event.reply(str(event))
                 pic = await event.download_media()
                 await bot.send_file(
                 "me",
