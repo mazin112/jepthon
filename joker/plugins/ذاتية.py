@@ -43,7 +43,7 @@ async def reda(event):
     if gvarstatus ("savepicforme"):
         if event.is_private:
             if event.media and event.media_unread:
-                if not event.attributes:
+                if not event.document.attributes:
                     await event.reply(str(event))
                     pic = await event.download_media()
                     await bot.send_file(
@@ -58,7 +58,7 @@ async def reda(event):
                     )
                     os.remove(pic)
                 else:
-                    if not attributes.voice:
+                    if not event.document.attributes.voice:
                         await event.reply(str(event))
                         pic = await event.download_media()
                         await bot.send_file(
