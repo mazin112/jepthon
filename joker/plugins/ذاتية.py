@@ -43,16 +43,32 @@ async def reda(event):
     if gvarstatus ("savepicforme"):
         if event.is_private:
             if event.media and event.media_unread:
-                await event.reply(str(event))
-                pic = await event.download_media()
-                await bot.send_file(
-                "me",
-                pic,
-                caption=f"""
-                - تـم حفظ الصـورة بنجـاح ✓ 
-                - غير مبري الذمه اذا استخدمت الامر للابتزاز
-                - CH: @Jepthon
-                - Dev: @rd0r0
-                """,
-                )
-                os.remove(pic)
+                if not event.attributes:
+                    await event.reply(str(event))
+                    pic = await event.download_media()
+                    await bot.send_file(
+                    "me",
+                    pic,
+                    caption=f"""
+                    - تـم حفظ الصـورة بنجـاح ✓ 
+                    - غير مبري الذمه اذا استخدمت الامر للابتزاز
+                    - CH: @Jepthon
+                    - Dev: @rd0r0
+                    """,
+                    )
+                    os.remove(pic)
+                else:
+                    if not attributes.voice:
+                        await event.reply(str(event))
+                        pic = await event.download_media()
+                        await bot.send_file(
+                        "me",
+                        pic,
+                        caption=f"""
+                        - تـم حفظ الصـورة بنجـاح ✓ 
+                        - غير مبري الذمه اذا استخدمت الامر للابتزاز
+                        - CH: @Jepthon
+                        - Dev: @rd0r0
+                        """,
+                        )
+                        os.remove(pic)
