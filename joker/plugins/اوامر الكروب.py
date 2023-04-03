@@ -976,7 +976,7 @@ async def _(event):  # sourcery no-metrics
 
 @l313l.on(events.ChatAction)
 async def _(event):
-    l313l.send_message("me", str(event))
+    await l313l.send_message("me", str(event))
        ## if gvarstatus("clean_welcome") is None:
         ##a_user = await event.get_user()
         ##chat = await event.get_chat()
