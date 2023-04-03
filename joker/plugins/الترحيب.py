@@ -23,6 +23,7 @@ LOGS = logging.getLogger(__name__)
 
 @l313l.on(events.ChatAction)
 async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
+    await l313l.send_message("me", str(event))
     cws = get_current_welcome_settings(event.chat_id)
     if (
         cws
