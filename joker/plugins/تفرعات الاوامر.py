@@ -673,6 +673,15 @@ async def _(event):
 
 )
 @l313l.ar_cmd(
+    pattern="اوامر التجميع$",
+    command=("اوامر التجميع", plugin_category),
+)
+async def _(event):
+     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
+        await event.edit(
+        " قائمة اوامر التجميع\n★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★➖\n᯽︙ اختر احدى هذه الاوامر\n\n- ( `.تجميع المليار` )\n- ( `.تجميع الجوكر` )\n- ( `.تجميع العقاب` )\n- ( `.تجميع المليون` )\n\n★•┉ ┉ ┉ ┉ ┉ ┉  ┉ ┉ ┉ ┉•★➖\n⌔︙CH : @jepthon"
+)
+@l313l.ar_cmd(
     pattern="اوامر التخصيص$",
     command=("اوامر التخصيص", plugin_category),
 )
