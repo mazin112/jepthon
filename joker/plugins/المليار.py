@@ -8,7 +8,7 @@ import requests
 import asyncio
 from telethon import events
 c = requests.session()
-bot_username = '@Ss0bOt'
+bot_username = '@KBKBOT'
 bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
@@ -20,12 +20,12 @@ async def _(event):
     if joker[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username)
-        await l313l.send_message('@Ss0bOt', '/start')
+        await l313l.send_message('@KBKBOT', '/start')
         await asyncio.sleep(1)
-        msg0 = await l313l.get_messages('@Ss0bOt', limit=1)
+        msg0 = await l313l.get_messages('@KBKBOT', limit=1)
         await msg0[0].click(2)
         await asyncio.sleep(1)
-        msg1 = await l313l.get_messages('@Ss0bOt', limit=1)
+        msg1 = await l313l.get_messages('@KBKBOT', limit=1)
         await msg1[0].click(0)
 
         chs = 1
@@ -47,7 +47,7 @@ async def _(event):
                 except:
                     bott = url.split('/')[-1]
                     await l313l(ImportChatInviteRequest(bott))
-                msg2 = await l313l.get_messages('@Ss0bOt', limit=1)
+                msg2 = await l313l.get_messages('@KBKBOT', limit=1)
                 await msg2[0].click(text='تحقق')
                 chs += 1
                 await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
