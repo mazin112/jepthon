@@ -74,7 +74,7 @@ async def reda(event):
 async def reda(event):
     if gvarstatus("transnow"):
         if event.media or isinstance(event.media, types.MessageMediaDocument) or isinstance(event.media, types.MessageMediaInvoice):
-            ##Reda
+            print ("Joker")
         else:
             original_message = event.message.message
             translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
