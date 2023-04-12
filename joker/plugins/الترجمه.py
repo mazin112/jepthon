@@ -64,5 +64,5 @@ async def _(event):
 async def reda(event):
     original_message = event.message.message
     translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
-    await l313l.send_message(event.message.peer_id, translated_message)
-    await event.message.delete()
+    ##await l313l.send_message(event.message.peer_id, translated_message)
+    await event.message.edit(translated_message)
