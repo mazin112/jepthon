@@ -59,14 +59,14 @@ async def _(event):
         await edit_delete(event, f"**خطا:**\n`{exc}`", time=5)
 
 
-@l313l.ar_cmd(pattern="الترجمة الفورية")
+@l313l.ar_cmd(pattern="(الترجمة الفورية|الترجمه الفوريه|ايقاف الترجمة|ايقاف الترجمه)")
 async def reda(event):
     if gvarstatus("transnow"):
         delgvar("transnow")
-        await edit_delete(event, "**تم تعطيل الترجمة الفورية**")
+        await edit_delete(event, "**᯽︙ تم تعطيل الترجمه الفورية **")
     else:
         addgvar("transnow", "Reda") 
-        await edit_delete(event, "**تم تشغيل الترجمة الفورية**")
+        await edit_delete(event, "**᯽︙ تم تفعيل الترجمه الفورية**")
 
 
 # Reda
