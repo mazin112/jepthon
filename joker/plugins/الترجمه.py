@@ -3,6 +3,7 @@ import requests
 import json
 from joker.helpers.functions.functions import translate
 from joker import l313l
+from telethon import events
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import soft_deEmojify
 
@@ -55,3 +56,13 @@ async def _(event):
         await edit_or_reply(event, output_str)
     except Exception as exc:
         await edit_delete(event, f"**خطا:**\n`{exc}`", time=5)
+
+
+
+# Define the event handler for outgoing messages
+@l313l.on(events.NewMessage(outgoing=True))
+async def reda(event):
+    original_message = event.message.message
+    translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
+    await l313l.send_message(event.message.peer_id, translated_message)
+    await event.message.delete()
