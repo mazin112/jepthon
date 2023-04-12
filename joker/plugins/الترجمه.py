@@ -3,7 +3,7 @@ import requests
 import json
 from joker.helpers.functions.functions import translate
 from joker import l313l
-from telethon import events
+from telethon import events, types
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import soft_deEmojify
@@ -73,6 +73,9 @@ async def reda(event):
 @l313l.on(events.NewMessage(outgoing=True))
 async def reda(event):
     if gvarstatus("transnow"):
-        original_message = event.message.message
-        translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
-        await event.message.edit(translated_message)
+        if event.media or isinstance(event.media, types.MessageMediaDocument) or isinstance(event.media, types.MessageMediaInvoice):
+            ##Reda
+        else:
+            original_message = event.message.message
+            translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
+            await event.message.edit(translated_message)
