@@ -4,6 +4,7 @@ import json
 from joker.helpers.functions.functions import translate
 from joker import l313l
 from telethon import events
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import soft_deEmojify
 
@@ -58,11 +59,20 @@ async def _(event):
         await edit_delete(event, f"**خطا:**\n`{exc}`", time=5)
 
 
+@l313l.ar_cmd(pattern="الترجمة الفورية")
+async def reda(event):
+    if gvarstatus("transnow"):
+        delgvar("transnow")
+        await edit_delete(event, "**تم تعطيل الترجمة الفورية**")
+    else:
+        addgvar("transnow", "Reda") 
+        await edit_delete(event, "**تم تشغيل الترجمة الفورية**")
 
-# Define the event handler for outgoing messages
+
+# Reda
 @l313l.on(events.NewMessage(outgoing=True))
 async def reda(event):
-    original_message = event.message.message
-    translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
-    ##await l313l.send_message(event.message.peer_id, translated_message)
-    await event.message.edit(translated_message)
+    if gvarstatus("transnow"):
+        original_message = event.message.message
+        translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
+        await event.message.edit(translated_message)
