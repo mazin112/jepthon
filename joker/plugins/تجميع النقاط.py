@@ -64,10 +64,10 @@ async def _(event):
         await event.edit("**᯽︙سيتم تجميع النقاط من بوت الجوكر , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
         channel_entity = await l313l.get_entity(bot_username2)
         await l313l.send_message('@A_MAN9300BOT', '/start')
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         msg0 = await l313l.get_messages('@A_MAN9300BOT', limit=1)
         await msg0[0].click(2)
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         msg1 = await l313l.get_messages('@A_MAN9300BOT', limit=1)
         await msg1[0].click(0)
 
