@@ -26,7 +26,10 @@ async def rfilm(event):
         movief = movies[0] 
         moviep = movief.get('full-size cover url')
         if moviep is not None:
-            moviep = upload_image(str(moviep)) 
+            try:
+                moviep = upload_image(str(moviep)) 
+            except BaseException:
+                moveip = None
         if moviep is None:
             moviep = f"https://telegra.ph/file/15480332b663adae49205.jpg"
         moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}"
