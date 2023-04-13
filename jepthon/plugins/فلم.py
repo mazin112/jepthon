@@ -25,11 +25,14 @@ async def rfilm(event):
             return await edit_delete(event, "**حدث خطأ حاول مجدداً **")
         movief = movies[0] 
         moviep = movief.get('full-size cover url')
+        movied = movief.get('plot')
+        if movied is None:
+            movied = "-"
         if moviep is not None:
             moviep = upload_image(str(moviep)) 
         if moviep is None:
             moviep = f"https://telegra.ph/file/15480332b663adae49205.jpg"
-        moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}"
+        moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}\nالقصة: {movied}"
         await event.delete()
         await jepiq.send_file(
                 event.chat_id,
