@@ -6,7 +6,7 @@ from pathlib import Path
 
 from ShazamAPI import Shazam
 from telethon import types
-from telethon.errors.rpcerrorlist import YouBlockedUserError, CHAT_SEND_MEDIA_FORBIDDEN
+from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
@@ -107,7 +107,7 @@ async def _(event):
         for files in (catthumb, song_file):
             if files and os.path.exists(files):
                 os.remove(files)
-    except BaseException as err:
+    except ChatSendMediaForbiddenError as err:
         await catevent.edit("لا يمكن ارسال المقطع الصوتي هنا")
         LOGS.error(str(err))
 
