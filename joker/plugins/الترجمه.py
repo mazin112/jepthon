@@ -34,6 +34,7 @@ langs = {
     'سويدي': 'sv',
     'تركي': 'tr',
     'هندي': 'ur',
+    'كردي': 'ku',
 }
 
 async def gtrans(text, lan):
