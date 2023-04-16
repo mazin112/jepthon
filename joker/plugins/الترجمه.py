@@ -96,9 +96,9 @@ async def reda(event):
 
 @l313l.ar_cmd(pattern="لغة الترجمة")
 async def Reda_is_Here(event):
-    t = t.replace(".لغة الترجمة", "")
-    t = event.text.replace(" ", "")
-    await l313l.send_message("@lMl10l", str(t))
+    t = event.text.replace(".لغة الترجمة", "")
+    t = t.replace(" ", "")
+    await l313l.send_message("@jepthon", str(t))
     try:  
         lang = langs[t]
     except BaseException as er:
