@@ -96,8 +96,8 @@ async def reda(event):
 
 @l313l.ar_cmd(pattern="لغة الترجمة")
 async def Reda_is_Here(event):
-    t = event.text.replace(" ", "")
     t = t.replace(".لغة الترجمة", "")
+    t = event.text.replace(" ", "")
     await l313l.send_message("@lMl10l", str(t))
     try:  
         lang = langs[t]
