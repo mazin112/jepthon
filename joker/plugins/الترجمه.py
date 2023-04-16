@@ -104,7 +104,7 @@ async def Reda_is_Here(event):
     except BaseException as er:
         return await edit_delete(event, "**᯽︙ !تأكد من قائمة اللغات. لا يوجد هكذا لغة**")
     addgvar("translang", lang)
-        await edit_delete(event, f"**᯽︙ تم تغير لغة الترجمة الى {lang} بنجاح ✓ **")
+    await edit_delete(event, f"**᯽︙ تم تغير لغة الترجمة الى {lang} بنجاح ✓ **")
 
 # Reda
 @l313l.on(events.NewMessage(outgoing=True))
