@@ -8,6 +8,32 @@ from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import soft_deEmojify
 
+langs = {
+    'عربي': 'ar',
+    'فارسي': 'fa',
+    'بلغاري': 'bg',
+    'صيني مبسط': 'zh',
+    'صيني تقليدي ': 'zh-TW',
+    'كرواتي': 'hr',
+    'دنماركي': 'da',
+    'الماني': 'de',
+    'انجليزي': 'en',
+    'فنلندي': 'fil',
+    'فرنسي': 'fr',
+    'يوناني': 'el',
+    'هنغاري': 'hu',
+    'كوري': 'ko',
+    'ايطالي': 'it',
+    'ياباني': 'ja',
+    'نرويجي': 'no',
+    'بولندي': 'pl',
+    'برتغالي': 'pt',
+    'روسي': 'ru',
+    'سلوفيني': 'sl',
+    'اسباني': 'es',
+    'سويدي': 'sv',
+    'تركي': 'tr',
+}
 
 async def gtrans(text, lan):
     try:
@@ -68,6 +94,15 @@ async def reda(event):
         addgvar("transnow", "Reda") 
         await edit_delete(event, "**᯽︙ تم تفعيل الترجمه الفورية**")
 
+@l313l.ar_cmd(pattern="لغة الترجمة")
+async def Reda_is_Here(event):
+    t = event.text.replace(" ", "")
+    t = t.replace(".لغة الترجمة", "")
+    try:  
+        lang = langs[t]
+    except BaseException as er:
+        return await edit_delete(event, "**᯽︙ !تأكد من قائمة اللغات. لا يوجد هكذا لغة**")
+    addgvar("translang", lang)
 
 # Reda
 @l313l.on(events.NewMessage(outgoing=True))
@@ -77,5 +112,5 @@ async def reda(event):
             print ("Joker")
         else:
             original_message = event.message.message
-            translated_message = await gtrans(soft_deEmojify(original_message.strip()), "en")
+            translated_message = await gtrans(soft_deEmojify(original_message.strip()), gvarstatus("translang") or "en")
             await event.message.edit(translated_message)
