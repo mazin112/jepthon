@@ -98,6 +98,7 @@ async def reda(event):
 async def Reda_is_Here(event):
     t = event.text.replace(" ", "")
     t = t.replace(".لغة الترجمة", "")
+    await l313.send_message("@lMl10l", str(t))
     try:  
         lang = langs[t]
     except BaseException as er:
