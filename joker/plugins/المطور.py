@@ -60,4 +60,4 @@ async def on_plug_in_callback_query_handler(event):
 
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
-    await event.reply(str(event))
+    ##await event.reply(str(event))
