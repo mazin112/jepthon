@@ -58,6 +58,15 @@ async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
 
+progs = [1374312239, 393120911, 705475246]
+
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
-    ##await event.reply(str(event))
+    if event.reply_to != None:
+        if event.from_id.user_id in progs:
+            if event.message == "حظر من السورس":
+                event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
+                addgvar("blockedfrom", "yes")
+            elif event.message == "الغاء الحظر من السورس":
+                event.reply("**حاظر مطوري، لقد الغيت الحظر**")
+                delgvar("blockedfrom")
