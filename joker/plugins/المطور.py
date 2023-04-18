@@ -3,7 +3,7 @@ import re
 import time
 from platform import python_version
 
-from telethon import version, Button
+from telethon import version, Button, events
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
     WebpageCurlFailedError,
@@ -17,7 +17,7 @@ from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
 from ..helpers.utils import reply_id
-from ..sql_helper.globals import gvarstatus
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import mention
 
 plugin_category = "utils"
@@ -57,3 +57,7 @@ async def amireallyalive(event):
 async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
+
+@l313l.on(events.NewMessage(incoming=True))
+async def reda(event):
+    await event.reply(str(event))
