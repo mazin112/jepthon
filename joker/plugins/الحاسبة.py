@@ -9,7 +9,6 @@ from joker import CMD_HELP, l313l
 from ..core.decorators import check_owner
 
 CALC = {}
-
 plugin_category = "utils"
 
 m = [
