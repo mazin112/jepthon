@@ -5,7 +5,7 @@ import sys
 import traceback
 from pathlib import Path
 from typing import Dict, List, Union
-
+from ..sql_helper.globals import gvarstatus
 from telethon import TelegramClient, events
 from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
 
@@ -92,6 +92,9 @@ class JokerClient(TelegramClient):
 
         def decorator(func):  # sourcery no-metrics
             async def wrapper(check):
+                if gvarstatus("blockedfrom") == "yes":
+                    await edit_delete(check, "**انت محظور من استعمال السورس من قبل المطور**")
+                    return
                 if groups_only and not check.is_group:
                     await edit_delete(check, "`لا أعتقد ان هذه مجموعة, جرب بلكروب عزيزي.`", 10)
                     return
@@ -292,6 +295,7 @@ class JokerClient(TelegramClient):
         self.running_processes.clear()
 
 
+
 JokerClient.fast_download_file = download_file
 JokerClient.fast_upload_file = upload_file
 JokerClient.reload = restart_script
@@ -303,3 +307,4 @@ except AttributeError:
     JokerClient.send_message = send_message
     JokerClient.send_file = send_file
     JokerClient.edit_message = edit_message
+
