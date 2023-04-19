@@ -26,7 +26,18 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from .pluginmanager import load_module
 from .tools import create_supergroup
+from flask import Flask
+
+ app = Flask(__name__)
+
+ @app.route('/')
+ def hello_world():
+     return 'Hello World!'
+
+ if __name__ == '__main__':
+     app.run()
 LOGS = logging.getLogger("jepthon")
+
 
 cmdhr = Config.COMMAND_HAND_LER
 bot = jepiq
