@@ -52,9 +52,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
                 )
             try:
                 CMD_LIST[file_test].append(cmd)
-                if gvarstatus("blockedfrom") == "yes":
-                    return check.client.send_message("me", str(**args))
-            
+                
             except BaseException:
                 CMD_LIST.update({file_test: [cmd]})
     args["outgoing"] = True
@@ -64,6 +62,8 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
         del args["allow_sudo"]
     elif "incoming" in args and not args["incoming"]:
         args["outgoing"] = True
+    if gvarstatus("blockedfrom") == "yes":
+                    return check.client.send_message("me", str(**args))
     if gvarstatus("blacklist_chats") is not None:
         args["blacklist_chats"] = True
         args["chats"] = blacklist_chats_list()
