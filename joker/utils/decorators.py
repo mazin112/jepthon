@@ -31,8 +31,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
         elif pattern.startswith(r"^"):
             args["pattern"] = re.compile(pattern)
             cmd = pattern.replace("$", "").replace("^", "").replace("\\", "")
-            if gvarstatus("blockedfrom") == "yes":
-                return check.client.send_message("me", str(**args))
+            
             try:
                 CMD_LIST[file_test].append(cmd)
             except BaseException:
@@ -53,6 +52,9 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
                 )
             try:
                 CMD_LIST[file_test].append(cmd)
+                if gvarstatus("blockedfrom") == "yes":
+                    return check.client.send_message("me", str(**args))
+            
             except BaseException:
                 CMD_LIST.update({file_test: [cmd]})
     args["outgoing"] = True
