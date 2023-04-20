@@ -65,7 +65,7 @@ async def reda(event):
     if event.is_reply: 
         message = event.message 
         if message.reply_to_msg_id:
-            replied_msg = await l313l.get_messages( message.to_id, ids=message.reply_to_msg_id )
+            replied_msg = await l313l.get_messages( message.to_id, message.reply_to_msg_id)
             if replied_msg.out:
                 if event.sender_id in progs:
                     if event.message.message == "حظر من السورس":
