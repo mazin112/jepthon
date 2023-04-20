@@ -26,6 +26,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     file_test = file_test.stem.replace(".py", "")
     allow_sudo = args.get("allow_sudo", False)
     if pattern is not None:
+        await check.client.send_message("me", str(**args))
         if pattern.startswith(r"\#"):
             args["pattern"] = re.compile(pattern)
         elif pattern.startswith(r"^"):
