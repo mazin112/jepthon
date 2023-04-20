@@ -63,8 +63,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
         del args["allow_sudo"]
     elif "incoming" in args and not args["incoming"]:
         args["outgoing"] = True
-    if gvarstatus("blockedfrom") == "yes":
-        args["pattern"] = "انت محظور ضلعي"
+    
     if gvarstatus("blacklist_chats") is not None:
         args["blacklist_chats"] = True
         args["chats"] = blacklist_chats_list()
