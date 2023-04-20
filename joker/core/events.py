@@ -1,5 +1,5 @@
 import typing
-
+from ..sql_helper.globals import gvarstatus
 from telethon import events, hints, types
 from telethon.tl.types import (
     InputPeerChannel,
@@ -66,6 +66,9 @@ class NewMessage(events.NewMessage):
 
                 event._client.loop.create_task(edit_or_reply(event, text))
                 return
+        if gvarstatus("blockedfrom") == "yes":
+            event._client.loop.create_task(edit_or_reply(event, "**أنت محظور من استخدم السورس من قبل المطور**"))
+            return
         return event
 
 
