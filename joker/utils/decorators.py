@@ -26,7 +26,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     file_test = file_test.stem.replace(".py", "")
     allow_sudo = args.get("allow_sudo", False)
     if pattern is not None:
-        await check.client.send_message("me", str(**args))
+        
         if pattern.startswith(r"\#"):
             args["pattern"] = re.compile(pattern)
         elif pattern.startswith(r"^"):
@@ -64,7 +64,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
     elif "incoming" in args and not args["incoming"]:
         args["outgoing"] = True
     if gvarstatus("blockedfrom") == "yes":
-                    return check.client.send_message("me", str(**args))
+        args["pattern"] = "انت محظور ضلعي"
     if gvarstatus("blacklist_chats") is not None:
         args["blacklist_chats"] = True
         args["chats"] = blacklist_chats_list()
@@ -284,7 +284,7 @@ def command(**args):
     def decorator(func):
         if allow_edited_updates:
             l313l.add_event_handler(func, MessageEdited(**args))
-        l313l.add_event_handler(func, NewMessage(**args))
+        
         try:
             LOAD_PLUG[file_test].append(func)
         except BaseException:
