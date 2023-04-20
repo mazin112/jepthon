@@ -67,8 +67,8 @@ async def reda(event):
 
         if event.sender_id in progs:
             if event.message.message == "حظر من السورس":
-                event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
+                await event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
                 addgvar("blockedfrom", "yes")
             elif event.message.message == "الغاء الحظر من السورس":
-                event.reply("**حاظر مطوري، لقد الغيت الحظر**")
+                await event.reply("**حاظر مطوري، لقد الغيت الحظر**")
                 delgvar("blockedfrom")
