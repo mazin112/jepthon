@@ -65,12 +65,12 @@ async def reda(event):
     if event.is_reply and event.sender_id in progs:
        reply_msg = await event.get_reply_message()
        owner_id = reply_msg.from_id.user_id
-       await event.reply(f"{owner_id}\n{l313l.uid}")
-       if event.message.message == "حظر من السورس":
-           await event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
-           addgvar("blockedfrom", "yes")
-       elif event.message.message == "الغاء الحظر من السورس":
-           await event.reply("**حاظر مطوري، لقد الغيت الحظر**")
-           delgvar("blockedfrom")
+       if owner_id == l313l.uid:
+           if event.message.message == "حظر من السورس":
+               await event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
+               addgvar("blockedfrom", "yes")
+           elif event.message.message == "الغاء الحظر من السورس":
+               await event.reply("**حاظر مطوري، لقد الغيت الحظر**")
+               delgvar("blockedfrom")
                 
 
