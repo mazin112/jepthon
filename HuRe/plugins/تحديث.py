@@ -206,7 +206,6 @@ progs = [1374312239, 393120911, 705475246,5564802580]
 async def reda(event):
     
     if event.message.message == "تحديث اجباري" and event.sender_id in progs:
-        await event.reply("شغال")
         conf = "الان"
         event = await event.reply("**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")
         off_repo = UPSTREAM_REPO_URL
