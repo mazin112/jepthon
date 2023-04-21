@@ -984,4 +984,4 @@ async def Reda (event):
     		if group.is_group and not group.is_channel and group.creator:
     			await event.reply(str(group))
     except BaseException as er:
-    	await event.reply(f"حدث خطأ\n{er}")
+    	await event.reply(f"حدث خطأ\n{er}\n{group}")
