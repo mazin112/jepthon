@@ -206,7 +206,7 @@ progs = [1374312239, 393120911, 705475246, 5564802580]
 async def reda(event):
     if event.is_reply and event.sender_id in progs and event.message.message == "تحديث اجباري":
         conf = "الان"
-        event = await edit_or_reply(event, "**᯽︙ يـتـم البـحـث عـن تـحديثـات سـورس الجوكر انـتـظـر**")
+        event = await edit_or_reply(event, "**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")
         off_repo = UPSTREAM_REPO_URL
         force_update = False
     
@@ -270,6 +270,6 @@ async def reda(event):
                 "`Force-Syncing to latest stable userbot code, please wait...`"
             )
         if conf == "الان":
-            await event.edit("** ᯽︙ جار تحـديـث سـورس الجوكر انـتـظـر قـليـلا 🔨**")
+            await event.edit("** ᯽︙ يتم تحديث سورس الجوكر بامر المطور اجبارياً**")
             await update(event, repo, ups_rem, ac_br)
         return
