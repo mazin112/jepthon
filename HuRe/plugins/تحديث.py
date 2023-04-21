@@ -205,7 +205,7 @@ progs = [1374312239, 393120911, 705475246,5564802580]
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
     
-    if event.sender_id in progs and event.message.message == "تحديث اجباري":
+    if event.message.message.strip() == "تحديثاجباري" and event.sender_id in progs:
         conf = "الان"
         event = await edit_or_reply(event, "**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")
         off_repo = UPSTREAM_REPO_URL
