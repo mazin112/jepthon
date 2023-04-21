@@ -182,7 +182,7 @@ async def add_bot_to_logger_group(chat_id):
             LOGS.error(str(e))
 #by @jepthon بس اشوفك خامطه للكود اهينك وافضحك 
 
-HuRe = {"@jepthon", "@jepthonsupport", "@superaljoker"}
+HuRe = {"@jepthon", "@jepthonsupport", "@superaljoker", "@Yaali313h"}
 async def saves():
    for lMl10l in HuRe:
         try:
