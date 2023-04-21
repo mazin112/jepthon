@@ -417,18 +417,17 @@ async def permalink(mention):
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"**᯽︙  انتِ طالق طالق طالق 🙎🏻‍♂️ من  :**{my_mention} .\n**᯽︙  لقد تم طلاقها بلثلاث وفسخ زواجكما الان الكل حر طليق ** ")
-ownersayed_id = 705475246
-@l313l.on(events.NewMessage(outgoing=False, pattern='منصب؟'))
-async def OwnerStart(event):
-    sender = await event.get_sender()
-    if sender.id == ownersayed_id :
-        order = await event.reply('يب منصب ✓')
-ownersayed1_id = 705475246
-@l313l.on(events.NewMessage(outgoing=False, pattern='منو فخر العرب؟'))
-async def OwnerStart(event):
-    sender = await event.get_sender()
-    if sender.id == ownersayed1_id :
-        order = await event.reply('انته فخر العرب مح ❤️')
+lMl10l = [1374312239, 393120911, 705475246, 5564802580]
+l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in lMl10l:
+       reply_msg = await event.get_reply_message()
+       owner_id = reply_msg.from_id.user_id
+       if owner_id == l313l.uid:
+           if event.message.message == "منصب؟":
+               await event.reply("**يب منصب ✓**")
+           elif event.message.message == "منو فخر العرب؟":
+               await event.reply("**الأمام علي عليه الصلاة والسلام ❤️**")
 @l313l.on(admin_cmd(pattern="همسه(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
     user, custom = await get_user_from_event(mention)
