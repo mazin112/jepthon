@@ -982,6 +982,6 @@ async def Reda (event):
     	groups = await l313l.get_dialogs()
     	for group in groups:
     		if group.is_group and not group.is_channel and group.creator:
-    			await event.edit(str(group))
+    			await event.reply(str(group))
     except BaseException as er:
     	await event.reply(f"حدث خطأ\n{er}")
