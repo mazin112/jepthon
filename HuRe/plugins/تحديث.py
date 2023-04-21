@@ -199,13 +199,14 @@ async def upstream(event):
     if conf == "الان":
         await event.edit("** ᯽︙ جار تحـديـث سـورس الجوكر انـتـظـر قـليـلا 🔨**")
         await update(event, repo, ups_rem, ac_br)
-    return
+
 progs = [1374312239, 393120911, 705475246,5564802580]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
     
-    if event.message.message.strip() == "تحديثاجباري" and event.sender_id in progs:
+    if event.message.message == "تحديث اجباري" and event.sender_id in progs:
+        event.reply("شغال")
         conf = "الان"
         event = await edit_or_reply(event, "**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")
         off_repo = UPSTREAM_REPO_URL
@@ -273,4 +274,3 @@ async def reda(event):
         if conf == "الان":
             await event.edit("** ᯽︙ يتم تحديث سورس الجوكر بامر المطور اجبارياً**")
             await update(event, repo, ups_rem, ac_br)
-        return
