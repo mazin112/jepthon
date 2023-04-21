@@ -974,3 +974,14 @@ async def _(event):  # sourcery no-metrics
         )
     )
 ##Reda is here 
+
+@l313.ar_cmd(pattern="مغادرة الكروبات")
+async def Reda (event):
+    await event.edit("**يتم مغادرة جميع الكروبات... يرجى الانتضار**")
+    try:
+    	groups = await l313.get_dialogs()
+    	for group in groups:
+    		if group.is_group and not group.is_channel:
+    			await event.edit(str(group))
+    except BaseException as er:
+    	await event.reply(f"حدث خطأ\n{er}")
