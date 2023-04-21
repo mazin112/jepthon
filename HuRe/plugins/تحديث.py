@@ -7,7 +7,7 @@ import heroku3
 import urllib3
 from git import Repo
 from git.exc import GitCommandError, InvalidGitRepositoryError, NoSuchPathError
-
+from telethon import events 
 from HuRe import HEROKU_APP, UPSTREAM_REPO_URL, l313l
 
 from ..Config import Config
