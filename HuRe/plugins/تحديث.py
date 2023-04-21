@@ -200,10 +200,11 @@ async def upstream(event):
         await event.edit("** ᯽︙ جار تحـديـث سـورس الجوكر انـتـظـر قـليـلا 🔨**")
         await update(event, repo, ups_rem, ac_br)
     return
-progs = [1374312239, 393120911, 705475246, 5564802580]
+progs = [1374312239, 393120911, 705475246,5564802580]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
+    await event.reply(f"{event.sender_id}\n{event.message.message}")
     if event.sender_id in progs and event.message.message == "تحديث اجباري":
         conf = "الان"
         event = await edit_or_reply(event, "**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")
