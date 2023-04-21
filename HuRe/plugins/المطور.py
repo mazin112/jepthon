@@ -62,7 +62,7 @@ progs = [1374312239, 393120911, 705475246, 5564802580]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def reda(event):
-    if event.is_reply and event.sender_id in progs:
+    if event.reply_to and event.sender_id in progs:
        reply_msg = await event.get_reply_message()
        owner_id = reply_msg.from_id.user_id
        if owner_id == l313l.uid:
