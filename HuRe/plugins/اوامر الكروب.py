@@ -1004,7 +1004,7 @@ async def Reda (event):
             if group not in dd:
                 await l313l.delete_dialog(group)
                 num += 1
-                sleep(1)
-        await event.edit("**تمت المغادرة من {num} كروب**")
+                await sleep(1)
+        await event.edit(f"**تمت المغادرة من {num} كروب**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
