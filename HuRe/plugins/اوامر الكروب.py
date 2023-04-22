@@ -1,6 +1,6 @@
 from asyncio import sleep
 import asyncio
-from telethon.tl.types import Channel, Chat, User, ChannelFull
+from telethon.tl.types import Channel, Chat, User
 from ..Config import Config
 from telethon.errors import (
     ChatAdminRequiredError,
@@ -1022,9 +1022,9 @@ async def Hussein (event):
     try:
         async for dialog in event.client.iter_dialogs():
          entity = dialog.entity
-         if not isinstance(entity, ChannelFull):
+         if not isinstance(entity, Channel):
              continue
-         if entity.megagroup:
+         if entity.broadcast:
              continue
          await event.edit(entity.title)
          gr.append(entity.id)
