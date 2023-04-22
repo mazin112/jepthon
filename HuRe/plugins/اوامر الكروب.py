@@ -995,12 +995,14 @@ async def Reda (event):
             and not isinstance(entity, User)
             and isinstance(entity, Chat)
             ):
-                 gr.append(entity.id)
+                 gr.append([enity.id, str(isinstance(entity, Chat)))
                  if entity.creator or entity.admin_rights:
                   dd.append(entity.id)
+        await event.reply(str(gr))
         for group in gr:
-            await l313l.delete_dialog(group)
-            num += 1
+            if group not in dd:
+                await l313l.delete_dialog(group)
+                num += 1
         await event.edit("**تمت المغادرة من {num} كروب**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
