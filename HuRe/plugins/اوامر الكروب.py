@@ -997,7 +997,8 @@ async def Reda (event):
             and isinstance(entity, Chat)
             and entity.creator 
             or entity.admin_rights):
-                 dd.append(entity.id)
+                 if not isinstance(entity, User):
+                dd.append(entity.id)
         await event.reply(str(dd))
     except BaseException as er:
     	await event.reply(f"حدث خطأ\n{er}\n{entity}")
