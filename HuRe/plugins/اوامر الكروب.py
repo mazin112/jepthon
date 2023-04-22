@@ -979,24 +979,24 @@ async def _(event):  # sourcery no-metrics
 
 @l313l.ar_cmd(pattern="مغادرة الكروبات")
 async def Reda (event):
-    await event.edit("**يتم مغادرة جميع الكروبات... يرجى الانتضار**")
+    await event.edit("يتم مغادرة جميع الكروبات... يرجى الانتضار")
     gr = []
     dd = []
     try:
         async for dialog in event.client.iter_dialogs():
-        	entity = dialog.entity
-        	if isinstance(entity, Channel) and entity.broadcast:
-        	    continue
-        	elif (
+         entity = dialog.entity
+         if isinstance(entity, Channel) and entity.broadcast:
+             continue
+         elif (
             isinstance(entity, Channel)
             and entity.megagroup
             or not isinstance(entity, Channel)
             and not isinstance(entity, User)
             and isinstance(entity, Chat)
-        ):
-            gr.append(entity.id)
-            if entity.creator or entity.admin_rights:
-                 dd.append(entity.id)
+            ):
+                 gr.append(entity.id)
+                 if entity.creator or entity.admin_rights:
+                  dd.append(entity.id)
         await event.reply(str(dd))
     except BaseException as er:
-    	await event.reply(f"حدث خطأ\n{er}\n{entity}")
+     await event.reply(f"حدث خطأ\n{er}\n{entity}")
