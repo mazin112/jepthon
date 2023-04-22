@@ -996,7 +996,7 @@ async def Reda (event):
         ):
             gr.append(entity.id)
             if entity.creator or entity.admin_rights:
-                dd.append(entity.id)
+                 dd.append(entity.id)
         await event.reply(str(dd))
     except BaseException as er:
     	await event.reply(f"حدث خطأ\n{er}\n{entity}")
