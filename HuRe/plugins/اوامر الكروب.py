@@ -1013,7 +1013,7 @@ async def Reda (event):
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
 @l313l.ar_cmd(pattern="مغادرة القنوات")
-async def Reda (event):
+async def Hussein (event):
     await event.edit("يتم مغادرة جميع القنوات يرجى الانتظار")
     gr = []
     dd = []
@@ -1021,7 +1021,7 @@ async def Reda (event):
     try:
         async for dialog in event.client.iter_dialogs():
          entity = dialog.entity
-         if isinstance(entity, Chat) and entity.megagroup:
+         if not isinstance(entity, Channel) or entity.broadcast:
              continue
          elif (
             isinstance(entity, Chat)
