@@ -1024,7 +1024,7 @@ async def Hussein (event):
          entity = dialog.entity
          if not isinstance(entity, Channel):
              continue
-         elif isinstance(entity, Channel):
+         elif entity.broadcast:
              gr.append(entity.id)
              await event.reply(entity.title)
          if entity.creator or entity.admin_rights:
