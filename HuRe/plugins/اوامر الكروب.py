@@ -986,7 +986,7 @@ async def Reda (event):
     try:
         async for dialog in event.client.iter_dialogs():
          entity = dialog.entity
-         if isinstance(entity, Channel) and (entity.megagroup or not entity.creator):
+         if isinstance(entity, Channel) and not entity.megagroup:
              continue
          elif (
             isinstance(entity, Channel)
