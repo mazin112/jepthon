@@ -985,20 +985,18 @@ async def Reda (event):
     try:
         async for dialog in event.client.iter_dialogs():
         	entity = dialog.entity
-        	if isinstance(entity, Chat):
-        	       if entity.group:
-        	           	gr.append(entity.id)
+        	if isinstance(entity, Channel) and entity.broadcast:
         	       continue
         	elif (
             isinstance(entity, Channel)
             and entity.megagroup
             or not isinstance(entity, Channel)
             and not isinstance(entity, User)
-            and entity.is_group
-            and entity.creator 
-            or entity.admin_rights):
-                 if not isinstance(entity, User):
-                     dd.append(entity.id)
+            and isinstance(entity, Chat)
+        ):
+            gr.append([entity.title, entity.id])
+            if entity.creator or entity.admin_rights:
+                dd.append(entity.id)
         await event.reply(str(dd))
     except BaseException as er:
     	await event.reply(f"حدث خطأ\n{er}\n{entity}")
