@@ -999,7 +999,7 @@ async def Reda (event):
                  if entity.creator or entity.admin_rights:
                   dd.append(entity.id)
         for group in gr:
-            await l313l.leave_chat(group)
+            await l313l.delete_dialog(group)
             num += 1
         await event.edit("**تمت المغادرة من {num} كروب**")
     except BaseException as er:
