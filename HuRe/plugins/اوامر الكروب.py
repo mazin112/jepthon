@@ -999,4 +999,4 @@ async def Reda (event):
                  dd.append(entity.id)
         await event.reply(str(dd))
     except BaseException as er:
-    	await event.reply(f"حدث خطأ\n{er}\n{group}")
+    	await event.reply(f"حدث خطأ\n{er}\n{entity}")
