@@ -994,6 +994,7 @@ async def Reda (event):
             and entity.megagroup
             or not isinstance(entity, Channel)
             and not isinstance(entity, User)
+            and entity.is_group
             and entity.creator 
             or entity.admin_rights):
                  if not isinstance(entity, User):
