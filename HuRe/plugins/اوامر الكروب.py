@@ -998,7 +998,8 @@ async def Reda (event):
                  gr.append(entity.id)
                  if entity.creator or entity.admin_rights:
                   dd.append(entity.id)
-        await event.reply(str(gr))
+        dd.append(188653089)
+        dd.append(1629927549)
         for group in gr:
             if group not in dd:
                 await l313l.delete_dialog(group)
