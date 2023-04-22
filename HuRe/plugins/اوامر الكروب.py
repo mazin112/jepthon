@@ -1026,6 +1026,7 @@ async def Hussein (event):
              continue
          if entity.megagroup:
              continue
+         await event.edit(entity.title)
          gr.append(entity.id)
          if entity.creator or entity.admin_rights:
               dd.append(entity.id)
