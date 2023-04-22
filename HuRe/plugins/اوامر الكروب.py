@@ -1026,6 +1026,7 @@ async def Hussein (event):
              continue
          elif isinstance(entity, Channel):
              gr.append(entity.id)
+             await event.reply(entity.title)
          if entity.creator or entity.admin_rights:
               dd.append(entity.id)
          dd.append(1527835100)
