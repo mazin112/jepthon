@@ -1003,7 +1003,6 @@ async def Reda (event):
         for group in gr:
             if group not in dd:
                 await l313l.delete_dialog(group)
-                await event.reply(str(entity))
                 num += 1
                 await sleep(1)
         if num >=1:
