@@ -982,6 +982,7 @@ async def Reda (event):
     await event.edit("يتم مغادرة جميع الكروبات... يرجى الانتضار")
     gr = []
     dd = []
+    num = 0
     try:
         async for dialog in event.client.iter_dialogs():
          entity = dialog.entity
@@ -997,6 +998,9 @@ async def Reda (event):
                  gr.append(entity.id)
                  if entity.creator or entity.admin_rights:
                   dd.append(entity.id)
-        await event.reply(str(dd))
+        for group in gr:
+            await l313l.leave_chat(group)
+            num += 1
+        await event.edit("**تمت المغادرة من {num} كروب**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
