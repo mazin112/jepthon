@@ -995,7 +995,7 @@ async def Reda (event):
             and not isinstance(entity, User)
             and isinstance(entity, Chat)
             ):
-                 gr.append([enity.id, str(isinstance(entity, Chat)))
+                 gr.append([enity.id, str(isinstance(entity, Chat))])
                  if entity.creator or entity.admin_rights:
                   dd.append(entity.id)
         await event.reply(str(gr))
