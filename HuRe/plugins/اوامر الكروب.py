@@ -985,9 +985,9 @@ async def Reda (event):
     try:
         async for dialog in event.client.iter_dialogs():
         	entity = dialog.entity
-        	if isinstance(entity, Channel) and entity.broadcast:
+        	if isinstance(entity, Chat):
         	       if entity.group:
-        	       	gr.append(entity.id)
+        	           	gr.append(entity.id)
         	       continue
         	elif (
             isinstance(entity, Channel)
