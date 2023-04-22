@@ -1,5 +1,6 @@
 from asyncio import sleep
 import asyncio
+from telethon.tl.types import Channel, Chat, User
 from ..Config import Config
 from telethon.errors import (
     ChatAdminRequiredError,
