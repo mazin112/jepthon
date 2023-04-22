@@ -1011,3 +1011,37 @@ async def Reda (event):
             await event.edit("**ليس لديك كروبات منضم لها لمغادرتها**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
+
+@l313l.ar_cmd(pattern="مغادرة القنوات")
+async def Reda (event):
+    await event.edit("يتم مغادرة جميع القنوات يرجى الانتظار")
+    gr = []
+    dd = []
+    num = 0
+    try:
+        async for dialog in event.client.iter_dialogs():
+         entity = dialog.entity
+         if isinstance(entity, Chat) and entity.megagroup:
+             continue
+         elif (
+            isinstance(entity, Chat)
+            and not entity.megagroup
+            or not isinstance(entity, Chat)
+            and not isinstance(entity, User)
+            and isinstance(entity, Channel)
+            ):
+                 gr.append(entity.id)
+                 if entity.creator or entity.admin_rights:
+                  dd.append(entity.id)
+        dd.append(1527835100)
+        for group in gr:
+            if group not in dd:
+                await l313l.delete_dialog(group)
+                num += 1
+                await sleep(1)
+        if num >=1:
+            await event.edit(f"**تمت المغادرة من {num} قناة")
+        else:
+            await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
+    except BaseException as er:
+     await event.reply(f"حدث خطأ\n{er}\n{entity}")
