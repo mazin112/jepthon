@@ -1036,9 +1036,9 @@ async def Hussein (event):
                    	await l313l.delete_dialog(group)
                    	num += 1
                    	await sleep(1)
-         if num >=1:
-             await event.edit(f"**تمت المغادرة من {num} قناة")
-         else:
-            await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
+              if num >=1:
+                  await event.edit(f"**تمت المغادرة من {num} قناة")
+              else:
+                  await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
