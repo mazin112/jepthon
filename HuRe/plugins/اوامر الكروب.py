@@ -975,13 +975,28 @@ async def _(event):  # sourcery no-metrics
     )
 ##Reda is here 
 
+
 @l313l.ar_cmd(pattern="مغادرة الكروبات")
 async def Reda (event):
     await event.edit("**يتم مغادرة جميع الكروبات... يرجى الانتضار**")
+    gr = []
+    dd = []
     try:
-    	groups = await l313l.get_dialogs()
-    	for group in groups:
-    		if group.is_group and not group.is_channel and group.entity.creator:
-    			await event.reply(str(group))
+        async for dialog in event.client.iter_dialogs():
+        	entity = dialog.entity
+        	if isinstance(entity, Channel) and entity.broadcast:
+        	       if entity.group:
+        	       	gr.append(entity.id)
+        	       continue
+        	elif (
+            isinstance(entity, Channel)
+            and entity.megagroup
+            or not isinstance(entity, Channel)
+            and not isinstance(entity, User)
+            and isinstance(entity, Chat)
+            and entity.creator 
+            or entity.admin_rights):
+                 dd.append(entity.id)
+        await event.reply(str(dd))
     except BaseException as er:
     	await event.reply(f"حدث خطأ\n{er}\n{group}")
