@@ -1026,15 +1026,15 @@ async def Hussein (event):
              gr.append(entity.id)
              if entity.creator or entity.admin_rights:
                  dd.append(entity.id)
-         dd.append(1527835100)
-         for group in gr:
-             if group not in dd:
-                 await l313l.delete_dialog(group)
-                 num += 1
-                 await sleep(1)
-         if num >=1:
-             await event.edit(f"**تمت المغادرة من {num} قناة")
-         else:
-                  await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
+        dd.append(1527835100)
+        for group in gr:
+            if group not in dd:
+                await l313l.delete_dialog(group)
+                num += 1
+                await sleep(1)
+        if num >=1:
+            await event.edit(f"**تمت المغادرة من {num} قناة")
+        else:
+            await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
