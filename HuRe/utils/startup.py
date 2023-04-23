@@ -3,6 +3,7 @@ import asyncio
 import glob
 import os
 import sys
+from telethon.errors.rpcerrorlist import ChannelPrivateError
 import urllib.request
 from datetime import timedelta
 from pathlib import Path
@@ -189,6 +190,8 @@ async def saves():
              await l313l(JoinChannelRequest(channel=lMl10l))
         except OverflowError:
             LOGS.error("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
+            continue
+        except ChannelPrivateError:
             continue
 
 async def load_plugins(folder, extfolder=None):
