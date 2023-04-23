@@ -1033,7 +1033,7 @@ async def Hussein (event):
                 num += 1
                 await sleep(1)
         if num >=1:
-            await event.edit(f"**تمت المغادرة من {num} قناة")
+            await event.edit(f"**تمت المغادرة من {num} قناة**")
         else:
             await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
     except BaseException as er:
