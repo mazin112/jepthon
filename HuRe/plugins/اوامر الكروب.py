@@ -1022,9 +1022,7 @@ async def Hussein (event):
     try:
         async for dialog in event.client.iter_dialogs():
          entity = dialog.entity
-         if entity.deleted:
-             continue
-         elif isinstance(entity, Channel) and entity.broadcast:
+         if isinstance(entity, Channel) and entity.broadcast:
              gr.append(entity.id)
              if entity.creator or entity.admin_rights:
                  dd.append(entity.id)
