@@ -979,7 +979,7 @@ async def _(event):  # sourcery no-metrics
 
 @l313l.ar_cmd(pattern="مغادرة الكروبات")
 async def Reda (event):
-    await event.edit("يتم مغادرة جميع الكروبات... يرجى الانتضار")
+    await event.edit("**᯽︙ جارِ مغادرة جميع الكروبات الموجوده في حسابك ...**")
     gr = []
     dd = []
     num = 0
@@ -1006,16 +1006,16 @@ async def Reda (event):
                 num += 1
                 await sleep(1)
         if num >=1:
-            await event.edit(f"**تمت المغادرة من {num} كروب**")
+            await event.edit(f"**᯽︙ تم المغادرة من {num} كروب بنجاح ✓**")
         else:
-            await event.edit("**ليس لديك كروبات منضم لها لمغادرتها**")
+            await event.edit("**᯽︙ ليس لديك كروبات في حسابك لمغادرتها !**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
 
 @l313l.ar_cmd(pattern="مغادرة القنوات")
 async def Hussein (event):
-    await event.edit("يتم مغادرة جميع القنوات يرجى الانتظار")
+    await event.edit("**᯽︙ جارِ مغادرة جميع القنوات الموجوده في حسابك ...**")
     gr = []
     dd = []
     num = 0
@@ -1033,8 +1033,8 @@ async def Hussein (event):
                 num += 1
                 await sleep(1)
         if num >=1:
-            await event.edit(f"**تمت المغادرة من {num} قناة**")
+            await event.edit(f"**᯽︙ تم المغادرة من {num} قناة بنجاح ✓**")
         else:
-            await event.edit("**ليس لديك قنوات مشترك بها لمغادرتها**")
+            await event.edit("**᯽︙ ليس لديك قنوات في حسابك لمغادرتها !**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
