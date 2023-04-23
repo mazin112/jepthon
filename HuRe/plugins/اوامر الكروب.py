@@ -1022,13 +1022,12 @@ async def Hussein (event):
     try:
         async for dialog in event.client.iter_dialogs():
          entity = dialog.entity
-         #if not isinstance(entity, Channel):
-            # continue
-         if isinstance (entity, Channel) and not entity.broadcast and not entity.megagroup:
+         if entity.deleted:
+             continue
+         elif isinstance(entity, Channel) and entity.broadcast:
              gr.append(entity.id)
-             await event.reply(entity.title)
-         if entity.creator or entity.admin_rights:
-              dd.append(entity.id)
+             if entity.creator or entity.admin_rights:
+                 dd.append(entity.id)
          dd.append(1527835100)
          for group in gr:
              if group not in dd:
