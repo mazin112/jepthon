@@ -4,6 +4,7 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
 )
 from telethon.tl.functions.messages import ExportChatInviteRequest
+from telethon.tl.types import PeerUser
 
 
 async def create_supergroup(group_name, client, botusername, descript, photo):
@@ -18,7 +19,7 @@ async def create_supergroup(group_name, client, botusername, descript, photo):
         created_chat_id = result.chats[0].id
         result = await client(
             ExportChatInviteRequest(
-                peer=created_chat_id,
+                created_chat_id
             )
         )
         await client(
