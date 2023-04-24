@@ -40,36 +40,23 @@ except Exception as jep:
     sys.exit()    
 
 
-class CatCheck:
-    def __init__(self):
-        self.sucess = True
-
-
-Catcheck = CatCheck()
-
 
 async def startup_process():
-    check = await ipchange()
-    if check is not None:
-        Catcheck.sucess = False
-        return
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
-    print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
-    print("᯽︙بـوت الجوكر يعـمل بـنجاح ")
+    print("============================================================")
+    print("᯽︙بـوت الجوكر يعـمل بـنجاح")
     print(
         f"تم تشغيل الانلاين تلقائياً ارسل {cmdhr}الاوامر لـرؤيـة اوامر السورس\
-        \nللمسـاعدة تواصـل  https://t.me/jepthonSupport"
+        \nللمسـاعدة تواصـل  https://t.me/JepthonSupport"
     )
-    print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
+    print("============================================================")
     await verifyLoggerGroup()
-    await saves()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
     await startupmessage()
-    Catcheck.sucess = True
     return
 
 async def externalrepo():
