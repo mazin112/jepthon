@@ -47,3 +47,4 @@ def delgvar(variable):
         .delete(synchronize_session="fetch")
     ):
         SESSION.commit()
+        SESSION.commit()
