@@ -31,10 +31,10 @@ if Config.PRIVATE_GROUP_BOT_API_ID == 0:
         Config.BOTLOG = False
         Config.BOTLOG_CHATID = "me"
     else:
-        LOGS.error(str(gvarstatus ("PRIVATE_GROUP_BOT_API_ID")))
-        Config.BOTLOG_CHATID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
-        Config.PRIVATE_GROUP_BOT_API_ID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
-        Config.BOTLOG = True
+        return LOGS.error(str(gvarstatus ("PRIVATE_GROUP_BOT_API_ID")))
+       ## Config.BOTLOG_CHATID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
+        ##Config.PRIVATE_GROUP_BOT_API_ID = int(gvarstatus("PRIVATE_GROUP_BOT_API_ID"))
+        ##Config.BOTLOG = True
 else:
     if str(Config.PRIVATE_GROUP_BOT_API_ID)[0] != "-":
         Config.BOTLOG_CHATID = int("-" + str(Config.PRIVATE_GROUP_BOT_API_ID))
