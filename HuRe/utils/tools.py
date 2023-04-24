@@ -4,11 +4,7 @@ from telethon.tl.functions.channels import (
     InviteToChannelRequest,
 )
 from telethon.tl.functions.messages import ExportChatInviteRequest
-from telethon.tl.types import PeerChannel
 
-from ..core.logger import logging
-
-LOGS = logging.getLogger("super_group")
 
 async def create_supergroup(group_name, client, botusername, descript, photo):
     try:
@@ -19,13 +15,10 @@ async def create_supergroup(group_name, client, botusername, descript, photo):
                 megagroup=True,
             )
         )
-        created_chat_idd = result.chats[0].id
-        created_idd = result.chats[0]
-        LOGS.error(str(created_idd)) 
-        created_chat_id = await client.get_entity(PeerChannel(created_chat_idd))
+        created_chat_id = result.chats[0].id
         result = await client(
             ExportChatInviteRequest(
-                created_chat_id
+                peer=created_chat_id,
             )
         )
         await client(
@@ -43,5 +36,6 @@ async def create_supergroup(group_name, client, botusername, descript, photo):
             )
     except Exception as e:
         return "error", str(e)
-    
+    if not str(created_chat_id).startswith("-100"):
+        created_chat_id = int("-100" + str(created_chat_id))
     return result, created_chat_id
