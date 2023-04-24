@@ -1,5 +1,3 @@
-import signal
-import sys
 import time
 
 import heroku3
@@ -7,9 +5,6 @@ import heroku3
 from .Config import Config
 from .core.logger import logging
 from .core.session import l313l, tgbot
-from .helpers.functions.converter import Convert
-from .helpers.functions.musictool import *
-from .helpers.utils.utils import runasync
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
 __version__ = "1.0.0"
@@ -24,15 +19,6 @@ tbot = tgbot
 
 StartTime = time.time()
 JEPVERSION = "3.1.3"
-
-
-def close_connection(*_):
-    print("تم اغلاق الاتصال بالسورس")
-    runasync(l313l.disconnect())
-    sys.exit(143)
-
-
-signal.signal(signal.SIGTERM, close_connection)
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 
