@@ -278,7 +278,7 @@ async def add_bot_to_logger_group(chat_id):
 
 async def verifyLoggerGroup():
     """
-    التاكد من كروب التخزين
+    Will verify the both loggers group
     """
     flag = False
     if BOTLOG:
@@ -287,51 +287,60 @@ async def verifyLoggerGroup():
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.info(
-                        "لا توجد صلاحيات كافية لارسال الرسائل في كروب الحفظ او التخزين"
+                        "᯽︙الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.info(
-                        "لا توجد صلاحيات كافية لاضافة الاعضاء في كروب الحفظ او التخزين"
+                        "᯽︙الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
                     )
         except ValueError:
-            LOGS.error("لم يتم التعرف على فار كروب الحفظ")
+            LOGS.error("᯽︙تـأكد من فـار المجـموعة  PRIVATE_GROUP_BOT_API_ID.")
         except TypeError:
-            LOGS.error("يبدو انك وضعت فار كروب الحفظ بشكل غير صحيح")
+            LOGS.error(
+                "᯽︙لا يمكـن العثور على فار المجموعه PRIVATE_GROUP_BOT_API_ID. تأكد من صحتها."
+            )
         except Exception as e:
-            LOGS.error("هنالك خطا ما للتعرف على فار كروب الحفظ\n" + str(e))
+            LOGS.error(
+                "᯽︙حدث استثناء عند محاولة التحقق من PRIVATE_GROUP_BOT_API_ID.\n"
+                + str(e)
+            )
     else:
-        descript = " هذه هي مجموعه الحفظ الخاصه بك لا تحذفها ابدا "
+        descript = "- عزيزي المستخدم هذه هي مجموعه الاشعارات يرجى عدم حذفها  - @Jepthon"
         photobt = await l313l.upload_file(file="l313l/razan/resources/start/Jepthon.JPEG")
         _, groupid = await create_supergroup(
-            "مجموعة أشعارات الجوكر", l313l, Config.TG_BOT_USERNAME, descript, photobt
+            "مجموعة أشعارات الجوكر ", l313l, Config.TG_BOT_USERNAME, descript, photobt
         )
         addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        print("تم انشاء كروب الحفظ بنجاح")
+        print("᯽︙تم إنشاء مجموعة المسـاعدة بنجاح وإضافتها إلى المتغيرات.")
         flag = True
     if PM_LOGGER_GROUP_ID != -100:
         try:
             entity = await l313l.get_entity(PM_LOGGER_GROUP_ID)
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
-                    LOGS.info("لا توجد صلاحيات كافية لارسال الرسائل في كروب التخزين")
+                    LOGS.info(
+                        "᯽︙الأذونات مفقودة لإرسال رسائل لـ PM_LOGGER_GROUP_ID المحدد."
+                    )
                 if entity.default_banned_rights.invite_users:
-                    LOGS.info("لا توجد صلاحيات كافية لاضافة الاعضاء في كروب التخزين")
+                    LOGS.info(
+                        "᯽︙الأذونات مفقودة للمستخدمين الإضافيين لـ PM_LOGGER_GROUP_ID المحدد."
+                    )
         except ValueError:
-            LOGS.error(
-                "لم يتم العثور على ايدي كروب التخزين تاكد من انه مكتوب بشكل صحيح "
-            )
+            LOGS.error("᯽︙لا يمكن العثور على فار  PM_LOGGER_GROUP_ID. تأكد من صحتها.")
         except TypeError:
-            LOGS.error("صيغه ايدي كروب التخزين غير صالحة.تاكد من انه مكتوب بشكل صحيح ")
+            LOGS.error("᯽︙PM_LOGGER_GROUP_ID غير مدعوم. تأكد من صحتها.")
         except Exception as e:
-            LOGS.error("حدث خطأ اثناء التعرف على كروب التخزين\n" + str(e))
+            LOGS.error(
+                "⌯︙حدث استثناء عند محاولة التحقق من PM_LOGGER_GROUP_ID.\n" + str(e)
+            )
     else:
-        descript = "لا تحذف او تغادر المجموعه وظيفتها حفظ رسائل التي تأتي على الخاص"
+        descript = "᯽︙ وظيفه الكروب يحفظ رسائل الخاص اذا ما تريد الامر احذف الكروب نهائي \n  - @Jepthon"
         photobt = await l313l.upload_file(file="l313l/razan/resources/start/Jepthon2.JPEG")
         _, groupid = await create_supergroup(
             "مجموعة التخزين", l313l, Config.TG_BOT_USERNAME, descript, photobt
         )
         addgvar("PM_LOGGER_GROUP_ID", groupid)
-        print("تم عمل الكروب التخزين بنجاح واضافة الفارات اليه.")
+        print("تـم عمـل الكروب التخزين بنـجاح واضافة الـفارات الـيه.")
         flag = True
     if flag:
         executable = sys.executable.replace(" ", "\\ ")
