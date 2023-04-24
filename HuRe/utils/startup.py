@@ -301,7 +301,7 @@ async def verifyLoggerGroup():
             LOGS.error("هنالك خطا ما للتعرف على فار كروب الحفظ\n" + str(e))
     else:
         descript = " هذه هي مجموعه الحفظ الخاصه بك لا تحذفها ابدا "
-        photobt = await l313l.upload_file(file="l313l/razan/resources/start/Jepthon.JEPG")
+        photobt = await l313l.upload_file(file="l313l/razan/resources/start/Jepthon.JPEG")
         _, groupid = await create_supergroup(
             "مجموعة أشعارات الجوكر", l313l, Config.TG_BOT_USERNAME, descript, photobt
         )
@@ -326,7 +326,7 @@ async def verifyLoggerGroup():
             LOGS.error("حدث خطأ اثناء التعرف على كروب التخزين\n" + str(e))
     else:
         descript = "لا تحذف او تغادر المجموعه وظيفتها حفظ رسائل التي تأتي على الخاص"
-        photobt = await l313l.upload_file(file="l313l/razan/resources/start/Jepthon2.JEPG")
+        photobt = await l313l.upload_file(file="l313l/razan/resources/start/Jepthon2.JPEG")
         _, groupid = await create_supergroup(
             "مجموعة التخزين", l313l, Config.TG_BOT_USERNAME, descript, photobt
         )
