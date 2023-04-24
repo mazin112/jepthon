@@ -15,8 +15,7 @@ from .sql_helper.globals import addgvar, delgvar, gvarstatus
 __version__ = "1.0.0"
 __license__ = "GNU Affero General Public License v3.0"
 __author__ = "سورس الجوكر <https://github.com/jepthoniq/jepthon>"
-__copyright__ = f" حقوق سورس الجوكر (C) 2021 - 2023  {__author__}"
-
+__copyright__ = " حقوق سورس الجوكر (C) 2021 - 2023  " +__author__ 
 l313l.version = __version__
 l313l.tgbot.version = __version__
 LOGS = logging.getLogger("سورس الجوكر")
