@@ -3,7 +3,7 @@ from datetime import datetime
 
 from telethon.errors import BadRequestError, FloodWaitError, ForbiddenError
 
-from HuRe import HuRe as l313l
+from HuRe import l313l
 
 from ..Config import Config
 from ..core.logger import logging
