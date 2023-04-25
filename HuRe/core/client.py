@@ -96,7 +96,7 @@ class HuReClient(TelegramClient):
                     await edit_delete(check, "**انت محظور من استعمال السورس من قبل المطور**")
                     return
                 chat = check.chat
-                if aljoker(chat, "title"):
+                if hasattr(chat, "title"):
                     if( "ALjoker" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
                     ):
                         await edit_delete(check, "** ᯽︙ لا يمكنك استخدام اوامر السورس هنا في مجموعة المساعدة ❤ **")
