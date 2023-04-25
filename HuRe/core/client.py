@@ -10,7 +10,6 @@ from telethon import TelegramClient, events
 from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
 from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
 from ..helpers.utils.utils import runcmd
@@ -21,7 +20,7 @@ from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
 from .events import *
 from .fasttelethon import download_file, upload_file
 from .logger import logging
-from .managers import edit_delete
+from .managers import edit_delete, edit_or_reply
 from .pluginManager import get_message_link, restart_script
 
 LOGS = logging.getLogger(__name__)
