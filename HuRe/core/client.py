@@ -10,6 +10,7 @@ from telethon import TelegramClient, events
 from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
 
 from ..Config import Config
+from ..core.managers import edit_or_reply
 from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
 from ..helpers.utils.utils import runcmd
@@ -99,7 +100,7 @@ class HuReClient(TelegramClient):
                 if hasattr(chat, "title"):
                     if( "ALjoker" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
                     ):
-                        await edit_delete(check, "** ᯽︙ لا يمكنك استخدام اوامر السورس هنا في مجموعة المساعدة ❤ **")
+                        await edit_or_reply(check, "** ᯽︙ لا يمكنك استخدام اوامر السورس هنا في مجموعة المساعدة ❤ **")
                         return
                 if groups_only and not check.is_group:
                     await edit_delete(check, "`لا أعتقد ان هذه مجموعة, جرب بلكروب عزيزي.`", 10)
