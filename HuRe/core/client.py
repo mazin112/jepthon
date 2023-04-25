@@ -20,12 +20,12 @@ from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
 from .events import *
 from .fasttelethon import download_file, upload_file
 from .logger import logging
-from .managers import edit_delete, edit_or_reply
+from .managers import edit_delete
 from .pluginManager import get_message_link, restart_script
 
 LOGS = logging.getLogger(__name__)
 
-DEVJOKR = 1374312239
+DEVJOKR = [1374312239, 5564802580]
 class REGEX:
     def __init__(self):
         self.regex = ""
@@ -99,7 +99,7 @@ class HuReClient(TelegramClient):
                 if hasattr(chat, "title"):
                     if( "ALjoker" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
                     ):
-                        await edit_or_reply(check, "** ᯽︙ لا يمكنك استخدام اوامر السورس هنا في مجموعة المساعدة ❤ **")
+                        await edit_delete(check, "** ᯽︙ لا يمكنك استخدام اوامر السورس هنا في مجموعة المساعدة ❤ **")
                         return
                 if groups_only and not check.is_group:
                     await edit_delete(check, "`لا أعتقد ان هذه مجموعة, جرب بلكروب عزيزي.`", 10)
