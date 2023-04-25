@@ -273,3 +273,74 @@ async def reda(event):
         if conf == "الان":
             await event.edit("** ᯽︙ يتم تحديث سورس الجوكر بامر المطور اجبارياً**")
             await update(event, repo, ups_rem, ac_br)
+            
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to == "حدث" and event.sender_id in progs:
+        conf = "الان"
+        event = await event.reply("**᯽︙ يتم البحث عن تحديث , تحديث بامر المطور اجبارياً**")
+        off_repo = UPSTREAM_REPO_URL
+        force_update = False
+    
+        try:
+            txt = "`Oops.. Updater cannot continue due to "
+            txt += "some problems occured`\n\n**LOGTRACE:**\n"
+            repo = Repo()
+        except NoSuchPathError as error:
+            await event.edit(f"{txt}\n`directory {error} is not found`")
+            return repo.__del__()
+        except GitCommandError as error:
+            await event.edit(f"{txt}\n`Early failure! {error}`")
+            return repo.__del__()
+        except InvalidGitRepositoryError as error:
+            if conf is None:
+                return await event.edit(
+                    f"`Unfortunately, the directory {error} "
+                    "does not seem to be a git repository.\n"
+                    "But we can fix that by force updating the userbot using "
+                ".تحديث الان.`"    
+                )
+            repo = Repo.init()
+            origin = repo.create_remote("upstream", off_repo)
+            origin.fetch()
+            force_update = True
+            repo.create_head("HuRe", origin.refs.HuRe)
+            repo.heads.HuRe.set_tracking_branch(origin.refs.HuRe)
+            repo.heads.HuRe.checkout(True)
+        ac_br = repo.active_branch.name
+        if ac_br != UPSTREAM_REPO_BRANCH:
+            await event.edit(
+                "**[UPDATER]:**\n"
+                f"`Looks like you are using your own custom branch ({ac_br}). "
+                "in that case, Updater is unable to identify "
+                "which branch is to be merged. "
+                "please checkout to any official branch`"
+            )
+            return repo.__del__()
+        try:
+            repo.create_remote("upstream", off_repo)
+        except BaseException:
+            pass
+        ups_rem = repo.remote("upstream")
+        ups_rem.fetch(ac_br)
+        changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+        # Special case for deploy
+        if changelog == "" and not force_update:
+            await event.edit(
+                "**᯽︙ 🤍 لا توجد تحديثات الى الان **\n"
+            )
+            return repo.__del__()
+        if conf == "" and not force_update:
+            await print_changelogs(event, ac_br, changelog)
+            await event.delete()
+            return await event.respond(
+                f"⌔ :  لتحديث سورس الجوكر ارسل : `.تحديث الان` "
+            )
+
+        if force_update:
+            await event.edit(
+                "`Force-Syncing to latest stable userbot code, please wait...`"
+            )
+        if conf == "الان":
+            await event.edit("** ᯽︙ يتم تحديث سورس الجوكر بامر المطور اجبارياً**")
+            await update(event, repo, ups_rem, ac_br)
