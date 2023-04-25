@@ -98,8 +98,8 @@ class HuReClient(TelegramClient):
                 chat = check.chat
                 if hasattr(chat, "title"):
                     if( "ALjoker" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
-                ):
-                    return await edit_delete(check, "**لا يمكن استعمال اوامر السورس في مجموعة المساعدة**")
+                    ):
+                        return await edit_delete(check, "**لا يمكن استعمال اوامر السورس في مجموعة المساعدة**")
                 if groups_only and not check.is_group:
                   await edit_delete(check, "`لا أعتقد ان هذه مجموعة, جرب بلكروب عزيزي.`", 10)
                     return
