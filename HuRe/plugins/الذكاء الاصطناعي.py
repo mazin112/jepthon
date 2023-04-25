@@ -139,6 +139,7 @@ async def add_sudo_user(event):
 async def _(event):
     "To del user from sudo."
     replied_user, error_i_a = await get_user_from_event(event)
+     await event.reply(str(PLG_INFO))
     if replied_user is None:
         return
     try:
