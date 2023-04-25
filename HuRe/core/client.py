@@ -14,6 +14,7 @@ from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
 from ..helpers.utils.utils import runcmd
 from ..sql_helper.globals import gvarstatus
+from ..core.managers import edit_or_reply
 from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about
 from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds
@@ -96,10 +97,10 @@ class HuReClient(TelegramClient):
                     await edit_delete(check, "**انت محظور من استعمال السورس من قبل المطور**")
                     return
                 chat = check.chat
-                if hasattr(chat, "title"):
+                if aljoker(chat, "title"):
                     if( "ALjoker" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
                     ):
-                        await edit_delete(check, "**لا يمكن استعمال اوامر السورس في مجموعة المساعدة**")
+                        await edit_or_reply(check, "**لا يمكن استعمال اوامر السورس في مجموعة المساعدة**")
                         return
                 if groups_only and not check.is_group:
                     await edit_delete(check, "`لا أعتقد ان هذه مجموعة, جرب بلكروب عزيزي.`", 10)
