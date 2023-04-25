@@ -25,7 +25,7 @@ from .pluginManager import get_message_link, restart_script
 
 LOGS = logging.getLogger(__name__)
 
-DEVJOKR = [1374312239, ]
+DEVJOKR = [1374312239]
 class REGEX:
     def __init__(self):
         self.regex = ""
