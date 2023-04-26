@@ -229,14 +229,14 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         totalcmds = CMD_INFO.keys()
         flagcmds = (
             PLG_INFO["botcontrols"]
-            + PLG_INFO["autoprofile"]
+            + PLG_INFO["الوقتي"]
             + PLG_INFO["evaluators"]
             + PLG_INFO["execmod"]
             + PLG_INFO["profile"]
             + PLG_INFO["pmpermit"]
             + PLG_INFO["custom"]
             + PLG_INFO["blacklistchats"]
-            + PLG_INFO["corecmds"]
+            + PLG_INFO["الاوامر"]
             + PLG_INFO["groupactions"]
             + PLG_INFO["sudo"]
             + PLG_INFO["transfer_channel"]
@@ -330,14 +330,14 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         )
         flagcmds = (
             PLG_INFO["botcontrols"]
-            + PLG_INFO["autoprofile"]
+            + PLG_INFO["الوقتي"]
             + PLG_INFO["evaluators"]
             + PLG_INFO["execmod"]
             + PLG_INFO["profile"]
             + PLG_INFO["pmpermit"]
             + PLG_INFO["custom"]
             + PLG_INFO["blacklistchats"]
-            + PLG_INFO["corecmds"]
+            + PLG_INFO["الاوامر"]
             + PLG_INFO["groupactions"]
             + PLG_INFO["sudo"]
             + PLG_INFO["transfer_channel"]
