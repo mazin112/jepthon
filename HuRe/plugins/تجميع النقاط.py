@@ -8,7 +8,7 @@ import requests
 import asyncio
 from telethon import events
 c = requests.session()
-bot_username = '@KBKBOT'
+bot_username = '@zmmbot'
 bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
