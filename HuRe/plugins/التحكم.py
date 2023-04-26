@@ -19,6 +19,7 @@ plugin_category = "tools"
 
 LOGS = logging.getLogger(__name__)
 ENV = bool(os.environ.get("ENV", False))
+JOKDEV = gvarstatus("sudoenable") or "true"
 
 
 async def _init() -> None:
