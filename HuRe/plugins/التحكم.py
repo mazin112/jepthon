@@ -228,7 +228,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         catevent = await edit_or_reply(event, "__Enabling all safe cmds for sudo....__")
         totalcmds = CMD_INFO.keys()
         flagcmds = (
-            PLG_INFO["botcontrols"]
+            PLG_INFO["اوامر الكروب"]
             + PLG_INFO["الوقتي"]
             + PLG_INFO["evaluators"]
             + PLG_INFO["execmod"]
@@ -237,7 +237,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             + PLG_INFO["custom"]
             + PLG_INFO["blacklistchats"]
             + PLG_INFO["الاوامر"]
-            + PLG_INFO["groupactions"]
+            + PLG_INFO["botcontrols"]
             + PLG_INFO["التحكم"]
             + PLG_INFO["transfer_channel"]
             + ["gauth"]
@@ -328,7 +328,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             event, "__Disabling all flagged cmds for sudo.....__"
         )
         flagcmds = (
-            PLG_INFO["botcontrols"]
+            PLG_INFO["اوامر الكروب"]
             + PLG_INFO["الوقتي"]
             + PLG_INFO["evaluators"]
             + PLG_INFO["execmod"]
@@ -337,7 +337,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             + PLG_INFO["custom"]
             + PLG_INFO["blacklistchats"]
             + PLG_INFO["الاوامر"]
-            + PLG_INFO["groupactions"]
+            + PLG_INFO["botcontrols"]
             + PLG_INFO["التحكم"]
             + PLG_INFO["transfer_channel"]
             + ["gauth"]
