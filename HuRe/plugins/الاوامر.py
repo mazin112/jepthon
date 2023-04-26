@@ -48,7 +48,7 @@ async def _(event):
 )
 
 @l313l.ar_cmd(
-    pattern="م1$",
+    pattern="^\م1$",
     command=("م1", plugin_category),
 )
 async def _(event):
