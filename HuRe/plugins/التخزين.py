@@ -46,8 +46,8 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                                     " **📮┊رسـاله جـديده**", f"{LOG_CHATS_.COUNT} **رسـائل**"
                                 )
                             )
-                        except BaseException:
-                            print("لا تخاف نقذتك من خطأ ههههههه")
+                        except BaseException as er:
+                            print(f"صار خطأ\n{er}")
                     else:
                         await LOG_CHATS_.NEWPM.edit(
                             LOG_CHATS_.NEWPM.text.replace(
