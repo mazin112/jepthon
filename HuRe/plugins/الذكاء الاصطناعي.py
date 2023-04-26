@@ -138,8 +138,11 @@ async def add_sudo_user(event):
 )
 async def _(event):
     "To del user from sudo."
+    message_chunks = textwrap.wrap(str(PLG_INFO), width=4000)
+    for chunk in message_chunks:
+        await event.reply(chunk)
     replied_user, error_i_a = await get_user_from_event(event)
-    await event.reply(str(PLG_INFO))
+    
     if replied_user is None:
         return
     try:
