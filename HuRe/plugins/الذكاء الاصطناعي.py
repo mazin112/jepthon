@@ -238,12 +238,11 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             + PLG_INFO["blacklistchats"]
             + PLG_INFO["الاوامر"]
             + PLG_INFO["groupactions"]
-            + PLG_INFO["sudo"]
+            + PLG_INFO["التحكم"]
             + PLG_INFO["transfer_channel"]
             + ["gauth"]
             + ["greset"]
         )
-        flagcmds = flagcmds + PLG_INFO["heroku"] if ENV else flagcmds + PLG_INFO["vps"]
         loadcmds = list(set(totalcmds) - set(flagcmds))
         if len(sudocmds) > 0:
             sqllist.del_keyword_list("sudo_enabled_cmds")
@@ -339,12 +338,11 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             + PLG_INFO["blacklistchats"]
             + PLG_INFO["الاوامر"]
             + PLG_INFO["groupactions"]
-            + PLG_INFO["sudo"]
+            + PLG_INFO["التحكم"]
             + PLG_INFO["transfer_channel"]
             + ["gauth"]
             + ["greset"]
         )
-        flagcmds = flagcmds + PLG_INFO["heroku"] if ENV else flagcmds + PLG_INFO["vps"]
     elif input_str[0] == "-p":
         catevent = event
         input_str.remove("-p")
