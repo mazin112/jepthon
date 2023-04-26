@@ -32,7 +32,7 @@ async def _(event):
         for i in range(100):
             if HuRe[0] == 'no':
                 break
-            await asyncio.sleep(3)
+            await asyncio.sleep(1)
 
             list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1,
                                                    offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
