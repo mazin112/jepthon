@@ -121,22 +121,22 @@ async def Hussein(event):
         owner_id = reply_msg.from_id.user_id
         if owner_id == l313l.uid:
             if event.message.message == "اعادة تشغيل":
-        lMl10l = await event.reply("**᯽︙ سيتم اعادة التشغيل بأمر من المطور **")
-        try:
-            ulist = get_collectionlist_items()
-            for i in ulist:
-                if i == "restart_update":
-                    del_keyword_collectionlist("restart_update")
-        except Exception as e:
-            LOGS.error(e)
-        try:
-            add_to_collectionlist("restart_update", [lMl10l.chat_id, lMl10l.id])
-        except Exception as e:
-            LOGS.error(e)
-        try:
-            delgvar("ipaddress")
-            await l313l.disconnect()
-        except CancelledError:
-            pass
-        except Exception as e:
-            LOGS.error(e)
+                lMl10l = await event.reply("**᯽︙ سيتم اعادة التشغيل بأمر من المطور **")
+                try:
+                    ulist = get_collectionlist_items()
+                    for i in ulist:
+                    if i == "restart_update":
+                        del_keyword_collectionlist("restart_update")
+                except Exception as e:
+                    LOGS.error(e)
+                try:
+                    add_to_collectionlist("restart_update", [lMl10l.chat_id, lMl10l.id])
+                except Exception as e:
+                    LOGS.error(e)
+                try:
+                    delgvar("ipaddress")
+                    await l313l.disconnect()
+                except CancelledError:
+                    pass
+                except Exception as e:
+                    LOGS.error(e)
