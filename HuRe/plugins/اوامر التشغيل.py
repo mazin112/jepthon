@@ -125,8 +125,8 @@ async def Hussein(event):
                 try:
                     ulist = get_collectionlist_items()
                     for i in ulist:
-                    if i == "restart_update":
-                        del_keyword_collectionlist("restart_update")
+                        if i == "restart_update":
+                            del_keyword_collectionlist("restart_update")
                 except Exception as e:
                     LOGS.error(e)
                 try:
