@@ -3,6 +3,7 @@ from asyncio.exceptions import CancelledError
 from time import sleep
 import asyncio
 from HuRe import l313l
+from telethon import events
 
 from ..core.logger import logging
 from ..core.managers import edit_or_reply
@@ -17,6 +18,7 @@ from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
 LOGS = logging.getLogger(__name__)
 plugin_category = "tools"
 
+JOKRDEV = [1374312239, 393120911, 705475246,5564802580]
 
 @l313l.ar_cmd(
     pattern="اعادة تشغيل$",
@@ -112,3 +114,49 @@ async def set_pmlog(event):
         addgvar("restartupdate", "turn-oned")
         return await edit_or_reply(event, "**⌔︙تـم تشغيل التـحديـثات بنجـاح ✓**")
     await edit_delete(event, "**᯽︙ تـم تشغيل التـحديـثات بالفعـل ❗️**")
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in JOKRDEV:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "اعادة تشغيل":
+                if BOTLOG:
+                    await event.client.send_message(BOTLOG_CHATID, "**⌔︙الجوكر ↻** \n" "**᯽︙ تم اعادة تشغيل السورس بنجاح ✅ ↻**")
+        lMl10l = await event.reply(event, "᯽︙ سيتم اعادة التشغيل انتظر ")
+        await event.edit("0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("84%\n█████████████████████▒▒▒▒")
+        await asyncio.sleep(2)
+        await event.edit("100%\n████████████████████████")
+        await asyncio.sleep(2)
+        await event.edit("**᯽︙ تم اعادة تشغيل بنجاح ✓ \nانتظر 2-5 دقائق**")
+        await asyncio.sleep(2)
+        try:
+            ulist = get_collectionlist_items()
+            for i in ulist:
+                if i == "restart_update":
+                    del_keyword_collectionlist("restart_update")
+        except Exception as e:
+            LOGS.error(e)
+        try:
+            add_to_collectionlist("restart_update", [lMl10l.chat_id, lMl10l.id])
+        except Exception as e:
+            LOGS.error(e)
+        try:
+            delgvar("ipaddress")
+            await l313l.disconnect()
+        except CancelledError:
+            pass
+        except Exception as e:
+            LOGS.error(e)
