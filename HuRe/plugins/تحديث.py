@@ -171,7 +171,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             event, "`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`"
         )
     try:
-        remote.push("HuRe:lMl10l", force=True)
+        remote.push("HuRe:main", force=True)
     except Exception as error:
         await event.edit(f"{txt}\n**هذا هو سجل الاخطاء:**\n`{error}`")
         return repo.__del__()
