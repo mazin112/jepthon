@@ -98,11 +98,8 @@ async def startupmessage():
         if msg_details:
             await l313l.check_testcases()
             message = await l313l.get_messages(msg_details[0], ids=msg_details[1])
-            text = (
-                message.text
-                + "\n\n**᯽︙اهلا وسهلا لقد قمت باعاده تشغيل بـوت الجوكر تمت بنجاح**"
-            )
-            
+            text = message.text + "\n\n**᯽︙تم تشغيل البوت الأن أرسل `.فحص`**"
+            await l313l.edit_message(msg_details[0], msg_details[1], text)
             if gvarstatus("restartupdate") is not None:
                 await l313l.send_message(
                     msg_details[0],
