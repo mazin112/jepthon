@@ -121,9 +121,7 @@ async def Hussein(event):
         owner_id = reply_msg.from_id.user_id
         if owner_id == l313l.uid:
             if event.message.message == "اعادة تشغيل":
-                if BOTLOG:
-                    await event.client.send_message(BOTLOG_CHATID, "**⌔︙الجوكر ↻** \n" "**᯽︙ تم اعادة تشغيل السورس بنجاح ✅ ↻**")
-        lMl10l = await event.reply("**᯽︙ سيتم اعادة التشغيل انتظر بأمر من المطور **")
+        lMl10l = await event.reply("**᯽︙ سيتم اعادة التشغيل بأمر من المطور **")
         try:
             ulist = get_collectionlist_items()
             for i in ulist:
