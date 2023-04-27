@@ -136,7 +136,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         )
         return repo.__del__()
     lMl10l = await event.edit(
-        "**الأن يتم تحديث ريبو التنصيب, عليك الانتظار لحين تحميل المكاتب, يستغرق الامر من 4-5 دقائق**"
+        "**᯽︙ الأن يتم تحديث ريبو التنصيب, عليك الانتظار لحين تحميل المكاتب, يستغرق الامر من 4-5 دقائق**"
     )
     try:
         ulist = get_collectionlist_items()
