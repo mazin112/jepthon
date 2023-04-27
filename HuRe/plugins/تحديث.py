@@ -113,7 +113,73 @@ async def update(event, repo, ups_rem, ac_br):
     )
     await event.client.reload(jasme)
 
+async def deploy(event, repo, ups_rem, ac_br, txt):
+    if HEROKU_API_KEY is None:
+        return await event.edit("`Please set up`  **HEROKU_API_KEY**  ` Var...`")
+    heroku = heroku3.from_key(HEROKU_API_KEY)
+    heroku_applications = heroku.apps()
+    if HEROKU_APP_NAME is None:
+        await event.edit(
+            "`Please set up the` **HEROKU_APP_NAME** `Var`"
+            " to be able to deploy your userbot...`"
+        )
+        repo.__del__()
+        return
+    heroku_app = next(
+        (app for app in heroku_applications if app.name == HEROKU_APP_NAME),
+        None,
+    )
 
+    if heroku_app is None:
+        await event.edit(
+            f"{txt}\n" "`Invalid Heroku credentials for deploying userbot dyno.`"
+        )
+        return repo.__del__()
+    sandy = await event.edit(
+        "`Userbot dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
+    )
+    try:
+        ulist = get_collectionlist_items()
+        for i in ulist:
+            if i == "restart_update":
+                del_keyword_collectionlist("restart_update")
+    except Exception as e:
+        LOGS.error(e)
+    try:
+        add_to_collectionlist("restart_update", [sandy.chat_id, sandy.id])
+    except Exception as e:
+        LOGS.error(e)
+    ups_rem.fetch(ac_br)
+    repo.git.reset("--hard", "FETCH_HEAD")
+    heroku_git_url = heroku_app.git_url.replace(
+        "https://", f"https://api:{HEROKU_API_KEY}@"
+    )
+
+    if "heroku" in repo.remotes:
+        remote = repo.remote("heroku")
+        remote.set_url(heroku_git_url)
+    else:
+        remote = repo.create_remote("heroku", heroku_git_url)
+    try:
+        remote.push(refspec="HEAD:refs/heads/HuRe", force=True)
+    except Exception as error:
+        await event.edit(f"{txt}\n**حدث خطأ:**\n`{error}`")
+        return repo.__del__()
+    build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
+    if build_status.status == "failed":
+        return await edit_delete(
+            event, "`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`"
+        )
+    try:
+        remote.push("HuRe:lMl10l", force=True)
+    except Exception as error:
+        await event.edit(f"{txt}\n**هذا هو سجل الاخطاء:**\n`{error}`")
+        return repo.__del__()
+    await event.edit("`فشل التحديث, جار اعادة التشغيل`")
+    with contextlib.suppress(CancelledError):
+        await event.client.disconnect()
+        if HEROKU_APP is not None:
+            HEROKU_APP.restart()
 
 @l313l.ar_cmd(
     pattern="تحديث(| الان)?$",
