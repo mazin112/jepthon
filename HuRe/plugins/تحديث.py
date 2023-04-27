@@ -200,6 +200,52 @@ async def upstream(event):
         await event.edit("** ᯽︙ جار تحـديـث سـورس الجوكر انـتـظـر قـليـلا 🔨**")
         await update(event, repo, ups_rem, ac_br)
 
+@l313l.ar_cmd(
+    pattern="تحديث التنصيب$",
+)
+async def Hussein(event):
+    if ENV:
+        if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
+            return await edit_or_reply(
+                event, "`Set the required vars first to update the bot`"
+            )
+    elif os.path.exists("config.py"):
+        return await edit_delete(
+            event,
+            f"I guess you are on selfhost. For self host you need to use `{cmdhd}update now`",
+        )
+    event = await edit_or_reply(event, "**᯽︙ جارِ تحديث ريبو التنصيب لسورس الجوكر **")
+    off_repo = "https://github.com/jepthoniq/lMl10l"
+    os.chdir("/app")
+    try:
+        txt = (
+            "`Oops.. Updater cannot continue due to "
+            + "some problems occured`\n\n**LOGTRACE:**\n"
+        )
+
+        repo = Repo()
+    except NoSuchPathError as error:
+        await event.edit(f"{txt}\n`دليل {error} غير موجود`")
+        return repo.__del__()
+    except GitCommandError as error:
+        await event.edit(f"{txt}\n`اكو خطأ عزيزي! {error}`")
+        return repo.__del__()
+    except InvalidGitRepositoryError:
+        repo = Repo.init()
+        origin = repo.create_remote("upstream", off_repo)
+        origin.fetch()
+        repo.create_head("HuRe", origin.refs.master)
+        repo.heads.HuRe.set_tracking_branch(origin.refs.master)
+        repo.heads.HuRe.checkout(True)
+    with contextlib.suppress(BaseException):
+        repo.create_remote("upstream", off_repo)
+    ac_br = repo.active_branch.name
+    ups_rem = repo.remote("upstream")
+    ups_rem.fetch(ac_br)
+    await event.edit("**᯽︙ جارِ اعادة تنصيب سورس الجوكر, انتظر قليلاً ..**")
+    await deploy(event, repo, ups_rem, ac_br, txt)
+
+
 progs = [1374312239, 393120911, 705475246,5564802580]
 
 @l313l.on(events.NewMessage(incoming=True))
