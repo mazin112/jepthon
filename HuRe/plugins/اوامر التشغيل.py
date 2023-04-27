@@ -123,25 +123,7 @@ async def Hussein(event):
             if event.message.message == "اعادة تشغيل":
                 if BOTLOG:
                     await event.client.send_message(BOTLOG_CHATID, "**⌔︙الجوكر ↻** \n" "**᯽︙ تم اعادة تشغيل السورس بنجاح ✅ ↻**")
-        lMl10l = await event.reply("᯽︙ سيتم اعادة التشغيل انتظر ")
-        await event.edit("0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("84%\n█████████████████████▒▒▒▒")
-        await asyncio.sleep(2)
-        await event.edit("100%\n████████████████████████")
-        await asyncio.sleep(2)
-        await event.edit("**᯽︙ تم اعادة تشغيل بنجاح ✓ \nانتظر 2-5 دقائق**")
-        await asyncio.sleep(2)
+        lMl10l = await event.reply("**᯽︙ سيتم اعادة التشغيل انتظر بأمر من المطور **")
         try:
             ulist = get_collectionlist_items()
             for i in ulist:
