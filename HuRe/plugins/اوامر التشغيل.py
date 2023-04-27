@@ -123,7 +123,7 @@ async def Hussein(event):
             if event.message.message == "اعادة تشغيل":
                 if BOTLOG:
                     await event.client.send_message(BOTLOG_CHATID, "**⌔︙الجوكر ↻** \n" "**᯽︙ تم اعادة تشغيل السورس بنجاح ✅ ↻**")
-        lMl10l = await event.reply(event, "᯽︙ سيتم اعادة التشغيل انتظر ")
+        lMl10l = await event.reply("᯽︙ سيتم اعادة التشغيل انتظر ")
         await event.edit("0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
         await asyncio.sleep(2)
         await event.edit("4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
