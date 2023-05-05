@@ -17,8 +17,6 @@ from ..sql_helper.globals import gvarstatus
 
 plugin_category = "extra"
 
-Command = Config.COMM_ET or "الاوامر"
-
 rehu = [
     "قال المهدي(عجل الله فرجه):الدّينُ لمحمّد صلى الله عليه وآله وسلم والهدايةُ لعَلِيٍّ أمير المؤمنين ع، لأنها لهُ وفي عَقِبِه باقيةً إلى يومِ القيامة",
     "قال المهدي(عجل الله فرجه):إذا استغفرت الله (عز وجل) فالله يغفر لك",
@@ -39,7 +37,10 @@ rehu = [
     "عن الامام علي (عليه السلام) قال : لا غنى كالعقل، ولا فقر كالجهل، ولا ميراث كالأدب",
     "عن الامام علي (عليه السلام) قال : لسانك حصانك، إن صنته صانك",
 ]
-@l313l.on(admin_cmd(pattern=f"{Command}(?:\s|$)([\s\S]*)"))
+@l313l.ar_cmd(
+    pattern="الاوامر$",
+    command=("الاوامر", plugin_category),
+)
 async def _(event):
      if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
         lMl10l = random.choice(rehu)
