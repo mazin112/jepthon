@@ -24,8 +24,10 @@ from . import mention
 plugin_category = "utils"
 
 #كتـابة وتعـديل:  @lMl10l
-ALIVE_ET = Config.ALIVE_ET or "فحص"
-@l313l.on(admin_cmd(pattern=f"{ALIVE_ET}(?:\s|$)([\s\S]*)"))
+@l313l.ar_cmd(
+    pattern="فحص$",
+    command=("فحص", plugin_category),
+)
 async def amireallyalive(event):
     "للتـأكد من ان البـوت يعـمـل"
     reply_to_id = await reply_id(event)
