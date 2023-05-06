@@ -96,6 +96,7 @@ class HuReClient(TelegramClient):
                     await edit_delete(check, "**انت محظور من استعمال السورس من قبل المطور**")
                     return
                 chat = check.chat
+                #code by Ultroid
                 if hasattr(chat, "title"):
                     if( "ᵛ²" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
                     ):
