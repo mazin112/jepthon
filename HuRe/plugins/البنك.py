@@ -1,6 +1,7 @@
 import random
 import re
 import time
+import asyncio
 from datetime import datetime
 
 from telethon.errors.rpcerrorlist import (
@@ -21,7 +22,7 @@ plugin_category = "utils"
 #كتـابة وتعـديل:  @lMl10l
 @l313l.ar_cmd(pattern="بنك(?:\s|$)([\s\S]*)")
 
-async def JokerPing(event):
+async def jokerping(event):
     "للتـأكد من ان البـوت يعـمـل"
     reply_to_id = await reply_id(event)
     start = datetime.now()
