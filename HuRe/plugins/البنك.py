@@ -20,7 +20,7 @@ plugin_category = "utils"
 
 #كتـابة وتعـديل:  @lMl10l
 @l313l.ar_cmd(pattern="بنك(?:\s|$)([\s\S]*)")
-    
+
 async def JokerPing(event):
     "للتـأكد من ان البـوت يعـمـل"
     reply_to_id = await reply_id(event)
