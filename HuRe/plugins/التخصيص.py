@@ -57,6 +57,9 @@ async def custom_HuRe(event):
     if input_str == "اشتراك كروب" or input_str == "اشتراك الكروب":
         addgvar("gchan", text)
         var = "gchan"
+    if input_str == "امر النشر" or input_str == "امر نشر":
+        addgvar("MUKRR_ET", text)
+        var = "MUKRR_ET"
     if input_str == "كليشة الفحص" or input_str == "كليشه الفحص" or input_str == "كليشه فحص" or input_str == "كليشه فحص":
         addgvar("ALIVE_TEMPLATE", text)
         var = "ALIVE_TEMPLATE"
