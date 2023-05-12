@@ -46,6 +46,7 @@ class Config(object):
     ALIVE_ET = os.environ.get("ALIVE_ET", None)
     UP_ET = os.environ.get("UP_ET", None)
     DOWN_ET = os.environ.get("DOWN_ET", None)
+    MUKRR_ET = os.environ.get("MUKRR_ET", None)
     WEL_ET = os.environ.get("WEL_ET", None)
     DEFAULT_PIC = os.environ.get("DEFAULT_PIC", None)
     COLOR_TIME = os.environ.get("COLOR_TIME", None)
