@@ -6,13 +6,14 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
 
 from HuRe import l313l
+from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
 
-Mukrr = gvarstatus("MUKTR_ET") or "مكرر"
+Mukrr = Config.MUKTR_ET or "مكرر"
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
 
     counter = int(l313l[0])
