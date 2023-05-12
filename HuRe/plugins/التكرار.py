@@ -12,7 +12,7 @@ from ..helpers.utils import _catutils
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
 
-
+Mukrr = gvarstatus("MUKTR_ET") or "مكرر"
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
 
     counter = int(l313l[0])
@@ -127,7 +127,7 @@ async def spammer(event):
     addgvar("spamwork", True)
     await spam_function(event, HuRe, l313l, sleeptimem, sleeptimet)
 
-@l313l.on(admin_cmd(pattern="(مكرر|مؤقت|موقت)"))
+@l313l.on(admin_cmd(pattern=f"{Mukrr}"))
 async def spammer(event):
     reply = await event.get_reply_message()
     input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
