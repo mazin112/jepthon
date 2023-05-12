@@ -99,6 +99,20 @@ async def variable(var):
                 "**⌔∮ تم بنجاح تغيير فار البايو\n\n❃ جار اعادة تشغيل السورس انتظر من 2-5 دقائق ليتشغل مره اخرى**",
             )
         heroku_var[variable] = vra
+    if exe == "امر نشر" or exe == "امر النشر" or exe == "مكرر":
+        variable = "MUKRR_ET"
+        await asyncio.sleep(1)
+        if variable in heroku_var:
+            await edit_or_reply(
+                var,
+                "**⌔∮ تم بنجاح تغيير امر النشر التلقائي\n\n❃ جار اعادة تشغيل السورس انتظر من 2-5 دقائق ليتشغل مره اخرى**",
+            )
+        else:
+            await edit_or_reply(
+                var,
+                "**⌔∮ تم بنجاح تغيير امر النشر التلقائي\n\n❃ جار اعادة تشغيل السورس انتظر من 2-5 دقائق ليتشغل مره اخرى**",
+            )
+        heroku_var[variable] = vra
     if exe == "القروب" or exe == "الكروب" or exe == "كروب":
         variable = "DEFAULT_GROUP"
         await asyncio.sleep(1)
