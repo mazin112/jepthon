@@ -64,10 +64,10 @@ async def Reda (event):
         
         if replied_msg.media:
             
-            await client.send_message(chat_id=event.chat_id, message=replied_msg.message, file=replied_msg.media, caption=replied_msg.caption)
+            await l313l.send_message(chat_id=event.chat_id, message=replied_msg.message, file=replied_msg.media, caption=replied_msg.caption)
         else:
             
-            await client.send_message(chat_id=event.chat_id, message=replied_msg.message)
+            await l313l.send_message(chat_id=event.chat_id, message=replied_msg.message)
     else:
         await edit_delete(event, "**قم بالرد على رسالة أولاً **")
 
