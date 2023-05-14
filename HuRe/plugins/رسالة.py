@@ -55,3 +55,19 @@ async def catbroadcast_add(event):
     else:
         msg = await event.client.send_message(user.id, reply)
     await edit_delete(event, "• تـم ارسال رسالتك بنجاح ✅ •")
+
+@l313l.ar_cmd(pattern="ازالة التوجيه")
+async def Reda (event):
+    if event.message.reply_to_msg_id:
+        
+        replied_msg = await event.get_reply_message()
+        
+        if replied_msg.media:
+            
+            await client.send_message(chat_id=event.chat_id, message=replied_msg.message, file=replied_msg.media, caption=replied_msg.caption)
+        else:
+            
+            await client.send_message(chat_id=event.chat_id, message=replied_msg.message)
+    else:
+        await edit_delete(event, "**قم بالرد على رسالة أولاً **")
+
