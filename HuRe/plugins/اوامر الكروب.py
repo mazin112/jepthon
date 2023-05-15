@@ -1038,3 +1038,17 @@ async def Hussein (event):
             await event.edit("**᯽︙ ليس لديك قنوات في حسابك لمغادرتها !**")
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
+
+@l313l.ar_cmd(pattern="زوار")
+async def Aljoker (event):
+us = await l313l.get_me()
+visitors = await l313l(functions.users.GetFullUserRequest(us.username))
+text = "- قائمة زوار بروفايلك -"
+for visit in visitors.profile_visits:
+    await event.reply(str(visit))
+    text += f"[{visit.username}](tg://user?id={visit.user_id})   {visit.date}\n"
+text += "@jepthon - ©️"
+try:
+    await l313.send_message(event.chat_id, text)
+except Exception as r:
+    await l313l.send_message(event.chat_id, f"حدث خطأ قم بتوجيه الرسالة للمطور @rd0r0\n{r}")
