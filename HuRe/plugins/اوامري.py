@@ -90,7 +90,7 @@ async def repo(event):
 @l313l.tgbot.on(CallbackQuery(data=re.compile(rb"l313l0")))
 @check_owner
 async def _(event):
-    await event.reply(str(event))
+    await event.reply(f"msg\n{event}")
     print(event)
     buttons = [
     [
