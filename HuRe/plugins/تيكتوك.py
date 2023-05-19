@@ -43,7 +43,7 @@ async def tiktok_dl(message):
     #Using the default one can stop working any moment 
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
-            r = requests.get(api, params=params, headers=headers).json() #['videoLinks']['download']
+            r = requests.get(api, params=params, headers=headers).json()['videoLinks']['download']
             await l313l.send_message(message.chat.id, str(r))
             directory = str(round(time.time()))
             filename = str(int(time.time()))+'.mp4'
@@ -53,7 +53,7 @@ async def tiktok_dl(message):
                 os.mkdir(directory)
             except:
                 pass
-            r = r['videoLinks']['download']
+            #r = r['videoLinks']['download']
             with requests.get(r, timeout=(50, 10000), stream=True) as r:
                 r.raise_for_status()
                 with open(f'./{directory}/{filename}', 'wb') as f:
