@@ -44,7 +44,7 @@ async def tiktok_dl(message):
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
             r = requests.get(api, params=params, headers=headers).json()['videoLinks']['download']
-            await l313l.send_message(message.chat.id, str(r))
+            #await l313l.send_message(message.chat.id, str(r))
             directory = str(round(time.time()))
             filename = str(int(time.time()))+'.mp4'
             size = int(requests.head(r).headers['Content-Length'])
