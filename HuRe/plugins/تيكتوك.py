@@ -19,7 +19,7 @@ from HuRe import l313l
 @l313l.ar_cmd(func=lambda m:'reda')
 async def tiktok_dl(message):
     ms = message.text
-    #await l313l.send_message("@WKKKN", f"{message.sender}")
+    
     if message.sender is None or message.sender.id == Config.OWNER_ID or message.sender.id in Config.SUDO_USERS:
 
         if ".تك https://vm.tiktok.com/" in ms:
@@ -44,7 +44,7 @@ async def tiktok_dl(message):
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
             r = requests.get(api, params=params, headers=headers).json() #['videoLinks']['download']
-            await l313l.send_message(event.chat_id, str(r))
+            await l313l.send_message(message.chat.id, str(r))
             directory = str(round(time.time()))
             filename = str(int(time.time()))+'.mp4'
             size = int(requests.head(r).headers['Content-Length'])
