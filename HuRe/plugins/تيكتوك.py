@@ -5,6 +5,7 @@
 import asyncio 
 import shutil
 import requests
+from requests.exceptions import JSONDecodeError
 import json
 import os
 import re
@@ -43,7 +44,12 @@ async def tiktok_dl(message):
     #Using the default one can stop working any moment 
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
-            r = requests.get(api, params=params, headers=headers).json()['videoLinks']['download']
+            try:
+            	r = requests.get(api, params=params, headers=headers).json()['videoLinks']['download']
+            except JSONDecodeError:
+            	await a.edit("الرابط غير صحيح تأكد منه!")
+            except Exception as er:
+            	await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
             #await l313l.send_message(message.chat.id, str(r))
             directory = str(round(time.time()))
             filename = str(int(time.time()))+'.mp4'
