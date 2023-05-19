@@ -40,6 +40,7 @@ async def _(event):
             if msgs.message.find('لا يوجد قنوات في الوقت الحالي , قم يتجميع النقاط بطريقه مختلفه') != -1:
                 await l313l.send_message(event.chat_id, f"**لاتوجد قنوات للبوت**")
                 break
+            await l313.send_message(event.chat_id, str(msgs.reply_markup))
             url = msgs.reply_markup.rows[0].buttons[0].url
             try:
                 try:
