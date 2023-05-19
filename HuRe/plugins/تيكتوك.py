@@ -53,6 +53,7 @@ async def tiktok_dl(message):
                 os.mkdir(directory)
             except:
                 pass
+            r = r['videoLinks']['download']
             with requests.get(r, timeout=(50, 10000), stream=True) as r:
                 r.raise_for_status()
                 with open(f'./{directory}/{filename}', 'wb') as f:
