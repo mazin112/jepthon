@@ -1,9 +1,9 @@
 import asyncio
 import logging
 import os
-os.system("pip install pyvips")
+os.system("pip install pygif")
 import io
-import pyvips
+import pygif
 import time
 from datetime import datetime
 
@@ -84,9 +84,7 @@ async def _(event):
             event, "يجب أن يكون الملصق المحدد ملصقًا متحركًا ⚠️"
         )
     animated_sticker_bytes = await event.client.download_media(sticker)
-    image = pyvips.Image.new_from_buffer(animated_sticker_bytes)
-    image = image.magicksave_buffer(format="gif")
-    gif_buffer = io.BytesIO(image)
+    gif_buffer = io.BytesIO(animated_sticker_bytes)
     gif_buffer.name = "animated_sticker.gif"
     await event.client.send_file(
         event.chat_id, gif_buffer, reply_to=reply_to_id, force_document=False
