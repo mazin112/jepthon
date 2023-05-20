@@ -1,6 +1,8 @@
 import asyncio
 import logging
 import os
+import io
+import pyvips
 import time
 from datetime import datetime
 
@@ -59,8 +61,8 @@ async def _(event):
     await output[0].delete()
 
 @l313l.ar_cmd(
-    pattern="تحويل متحركة$",
-    command=("تحويل متحركة", plugin_category),
+    pattern="تحويل ملصق متحرك$",
+    command=("تحويل ملصق متحرك", plugin_category),
     info={
         "header": "قم بالرد على الملصق المتحرك لتحويله إلى صورة متحركة GIF.",
         "description": "يتم تحويل الملصق المتحرك إلى صورة متحركة GIF.",
@@ -76,13 +78,17 @@ async def _(event):
             event, "يجب عليك الرد على الملصق المتحرك لتحويله إلى صورة متحركة ⚠️"
         )
     sticker = reply.sticker
-    if not sticker.mime_type == "image/gif":
+    if not sticker.mime_type == "image/webp":
         return await edit_delete(
-            event, "يجب أن يكون الملصق المحدد ملصقًا متحركًا GIF ⚠️"
+            event, "يجب أن يكون الملصق المحدد ملصقًا متحركًا ⚠️"
         )
-    await event.client.download_media(sticker, "animated_sticker.gif")
+    animated_sticker_bytes = await event.client.download_media(sticker)
+    image = pyvips.Image.new_from_buffer(animated_sticker_bytes)
+    image = image.magicksave_buffer(format="gif")
+    gif_buffer = io.BytesIO(image)
+    gif_buffer.name = "animated_sticker.gif"
     await event.client.send_file(
-        event.chat_id, "animated_sticker.gif", reply_to=reply_to_id, force_document=False
+        event.chat_id, gif_buffer, reply_to=reply_to_id, force_document=False
     )
     await event.delete()
 
