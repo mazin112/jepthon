@@ -81,8 +81,8 @@ async def check_cancel(event):
         cancel_process = True
 
 @l313l.ar_cmd(
-    pattern="حفظ الميديا(?: |$)(.*) (\d+)",
-    command=("حفظ الميديا", plugin_category),
+    pattern="سيف(?: |$)(.*) (\d+)",
+    command=("سيف", plugin_category),
     info={
         "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
         "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
