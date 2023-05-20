@@ -58,6 +58,33 @@ async def _(event):
     )
     await output[0].delete()
 
+@l313l.ar_cmd(
+    pattern="تحويل متحركة$",
+    command=("تحويل متحركة", plugin_category),
+    info={
+        "header": "قم بالرد على الملصق المتحرك لتحويله إلى صورة متحركة GIF.",
+        "description": "يتم تحويل الملصق المتحرك إلى صورة متحركة GIF.",
+        "usage": "{tr}تحويل ملصق متحرك",
+    },
+)
+async def _(event):
+    "تحويل الملصق المتحرك إلى صورة متحركة GIF."
+    reply_to_id = await reply_id(event)
+    reply = await event.get_reply_message()
+    if not reply or not reply.sticker:
+        return await edit_delete(
+            event, "يجب عليك الرد على الملصق المتحرك لتحويله إلى صورة متحركة ⚠️"
+        )
+    sticker = reply.sticker
+    if not sticker.mime_type == "image/gif":
+        return await edit_delete(
+            event, "يجب أن يكون الملصق المحدد ملصقًا متحركًا GIF ⚠️"
+        )
+    await event.client.download_media(sticker, "animated_sticker.gif")
+    await event.client.send_file(
+        event.chat_id, "animated_sticker.gif", reply_to=reply_to_id, force_document=False
+    )
+    await event.delete()
 
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
