@@ -25,7 +25,7 @@ welpriv = Config.PRV_ET or "رحب"
 delwelpriv = Config.DELPRV_ET or "حذف رحب"
 
 @l313l.on(events.ChatAction)
-async def _(event):
+async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     cws = getcurrent_welcome_settings(event.chat_id)
     if (
         cws
@@ -35,13 +35,11 @@ async def _(event):
         a_user = await event.get_user()
         chat = await event.get_chat()
         me = await event.client.get_me()
-        title = chat.title or "هـذه الـدردشـه"
+        title = get_display_name(await event.get_chat()) or "this chat"
         participants = await event.client.get_participants(chat)
         count = len(participants)
-        mention = "<a href='tg://user?id={}'>{}</a>".format(
-            a_user.id, a_user.first_name
-        )
-        my_mention = "<a href='tg://user?id={}'>{}</a>".format(me.id, me.first_name)
+        mention = f"<a href='tg://user?id={a_user.id}'>{a_user.first_name}</a>"
+        my_mention = f"<a href='tg://user?id={me.id}'>{me.first_name}</a>"
         first = a_user.first_name
         last = a_user.last_name
         fullname = f"{first} {last}" if last else first
@@ -60,8 +58,10 @@ async def _(event):
                 )
                 file_media = msg_o.media
                 current_saved_welcome_message = msg_o.message
+                link_preview = True
             elif cws.reply:
                 current_saved_welcome_message = cws.reply
+                link_preview = False
         if not pmpermit_sql.is_approved(userid):
             pmpermit_sql.approve(userid, "Due to private welcome")
         await sleep(1)
@@ -84,8 +84,8 @@ async def _(event):
             ),
             file=file_media,
             parse_mode="html",
+            link_preview=link_preview,
         )
-
 
 @l313l.on(admin_cmd(pattern=f"{welpriv}(?:\s|$)([\s\S]*)"))
 async def save_welcome(event):
