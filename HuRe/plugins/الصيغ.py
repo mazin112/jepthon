@@ -68,7 +68,7 @@ async def _(event):
         "usage": "{tr}إلغاء حفظ الميديا",
     },
 )
-async def cancel_save_media(event):
+async def Hussein(event):
     "إلغاء عملية حفظ الميديا."
     global cancel_process
     cancel_process = True
@@ -89,7 +89,7 @@ async def check_cancel(event):
         "usage": "{tr}حفظ الميديا اسم_القناة الحد",
     },
 )
-async def save_media(event):
+async def Hussein(event):
     "حفظ الميديا من القنوات ذات تقييد المحتوى."
     global cancel_process
     
@@ -102,37 +102,43 @@ async def save_media(event):
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
     
-    channel_entity = await l313l.get_entity(channel_username)
-    messages = await l313l.get_messages(channel_entity, limit=limit)
-    
-    for message in messages:
-        if message.media:
-            file_ext = ""
-            if message.photo:
-                file_ext = ".jpg"
-            elif message.video:
-                file_ext = ".mp4"
-            elif message.document:
-                if message.document.mime_type == "application/octet-stream":
-                    file_ext = ""
-                else:
-                    file_ext = os.path.splitext(message.document.file_name)[1]
-            
-            if not file_ext:
-                continue
-            
-            file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-            await message.download_media(file=file_path)
-            await l313l.send_file("me", file=file_path)
-            os.remove(file_path)
+    try:
+        channel_entity = await l313l.get_entity(channel_username)
+        messages = await l313l.get_messages(channel_entity, limit=limit)
+    except Exception as e:
+        return await event.edit(f"حدث خطأ أثناء جلب الرسائل من القناة. الخطأ: {str(e)}")
 
-        if cancel_process:
-            await event.edit("تم إلغاء عملية حفظ الميديا.")
-            cancel_process = False
-            return
+    for message in messages:
+        try:
+            if message.media:
+                file_ext = ""
+                if message.photo:
+                    file_ext = ".jpg"
+                elif message.video:
+                    file_ext = ".mp4"
+                elif message.document:
+                    if message.document.mime_type == "application/octet-stream":
+                        file_ext = ""
+                    else:
+                        file_ext = os.path.splitext(message.document.file_name)[1]
+                
+                if not file_ext:
+                    continue
+                
+                file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+                await message.download_media(file=file_path)
+                await l313l.send_file("me", file=file_path)
+                os.remove(file_path)
+            
+            if cancel_process:
+                await event.edit("تم إلغاء عملية حفظ الميديا.")
+                cancel_process = False
+                return
+        except Exception as e:
+            print(f"حدث خطأ أثناء حفظ الرسالة {message.id}. الخطأ: {str(e)}")
+            continue
 
     await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
-
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
     command=("تحويل ملصق", plugin_category),
