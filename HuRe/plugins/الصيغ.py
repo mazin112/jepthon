@@ -59,8 +59,8 @@ async def _(event):
     await output[0].delete()
 
 @l313l.ar_cmd(
-    pattern="حفظ الميديا(?: |$)(.*)",
-    command=("حفظ الميديا", plugin_category),
+    pattern="سيف(?: |$)(.*)",
+    command=("سيف", plugin_category),
     info={
         "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
         "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
