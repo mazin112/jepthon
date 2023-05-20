@@ -119,17 +119,21 @@ async def Hussein(event):
                 file_ext = ""
                 if message.photo:
                     file_ext = ".jpg"
+                    media = message.photo
                 elif message.video:
                     file_ext = ".mp4"
+                    media = message.video
                 elif message.document:
                     if hasattr(message.document, "file_name"):
                         file_ext = os.path.splitext(message.document.file_name)[1]
+                    media = message.document
                 
-                file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-                await message.download_media(file=file_path)
-                
-                await l313l.send_file("me", file=file_path, caption=caption)
-                os.remove(file_path)
+                if media and not media.empty:
+                    file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+                    await l313l.download_media(media, file=file_path)
+                    
+                    await l313l.send_file("me", file=file_path, caption=caption)
+                    os.remove(file_path)
             
             if cancel_process:
                 await event.edit("تم إلغاء عملية حفظ الميديا.")
@@ -140,6 +144,7 @@ async def Hussein(event):
             continue
 
     await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
+    
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
     command=("تحويل ملصق", plugin_category),
