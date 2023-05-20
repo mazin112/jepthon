@@ -81,8 +81,8 @@ async def check_cancel(event):
         cancel_process = True
 
 @l313l.ar_cmd(
-    pattern="سيف(?: |$)(.*) (\d+)",
-    command=("سيف", plugin_category),
+    pattern="حفظ الميديا(?: |$)(.*) (\d+)",
+    command=("حفظ الميديا", plugin_category),
     info={
         "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
         "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
@@ -117,10 +117,11 @@ async def Hussein(event):
                 elif message.video:
                     file_ext = ".mp4"
                 elif message.document:
-                    if message.document.mime_type == "application/octet-stream":
-                        file_ext = ""
-                    else:
+                    if hasattr(message.document, "file_name"):
                         file_ext = os.path.splitext(message.document.file_name)[1]
+                    else:
+                        # Handle documents without file_name attribute
+                        file_ext = ""
                 
                 if not file_ext:
                     continue
@@ -139,6 +140,7 @@ async def Hussein(event):
             continue
 
     await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
+ 
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
     command=("تحويل ملصق", plugin_category),
