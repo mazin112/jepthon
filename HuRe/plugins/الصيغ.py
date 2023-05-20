@@ -3,7 +3,7 @@ import logging
 import os
 import time
 from datetime import datetime
-
+from telethon import events
 from HuRe import l313l
 
 from ..Config import Config
@@ -26,6 +26,7 @@ LOGS = logging.getLogger(__name__)
 PATH = os.path.join("./temp", "temp_vid.mp4")
 
 thumb_loc = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+cancel_process = False
 
 #Copyright  By  @jepthon  © 2021
 #WRITE BY  @lMl10l  
@@ -59,28 +60,50 @@ async def _(event):
     await output[0].delete()
 
 @l313l.ar_cmd(
-    pattern="سيف(?: |$)(.*)",
+    pattern="إلغاء سيف$",
+    command=("إلغاء سيف", plugin_category),
+    info={
+        "header": "إلغاء عملية حفظ الميديا.",
+        "description": "يقوم بإلغاء العملية الجارية لحفظ الميديا من القنوات.",
+        "usage": "{tr}إلغاء حفظ الميديا",
+    },
+)
+async def cancel_save_media(event):
+    "إلغاء عملية حفظ الميديا."
+    global cancel_process
+    cancel_process = True
+    await event.edit("تم إلغاء عملية حفظ الميديا.")
+
+l313l.on(events.NewMessage(incoming=True))
+async def check_cancel(event):
+    global cancel_process
+    if isinstance(event.message, MessageService) and event.message.action and isinstance(event.message.action, MessageActionChannelMigrateFrom):
+        cancel_process = True
+
+@l313l.ar_cmd(
+    pattern="سيف(?: |$)(.*) (\d+)",
     command=("سيف", plugin_category),
     info={
         "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
         "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
-        "usage": "{tr}حفظ الميديا اسم_القناة",
+        "usage": "{tr}حفظ الميديا اسم_القناة الحد",
     },
 )
-async def Hussein(event):
+async def save_media(event):
     "حفظ الميديا من القنوات ذات تقييد المحتوى."
+    global cancel_process
+    
     channel_username = event.pattern_match.group(1)
+    limit = int(event.pattern_match.group(2))
     
     if not channel_username:
         return await event.edit("يجب تحديد اسم القناة!")
     
-    limit = 10  # عدد الوسائط التي ترغب في حفظها
-
-    channel_entity = await l313l.get_entity(channel_username)
-    messages = await l313l.get_messages(channel_entity, limit=limit)
-    
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
+    
+    channel_entity = await l313l.get_entity(channel_username)
+    messages = await l313l.get_messages(channel_entity, limit=limit)
     
     for message in messages:
         if message.media:
@@ -90,7 +113,10 @@ async def Hussein(event):
             elif message.video:
                 file_ext = ".mp4"
             elif message.document:
-                file_ext = os.path.splitext(message.document.file_name)[1]
+                if message.document.mime_type == "application/octet-stream":
+                    file_ext = ""
+                else:
+                    file_ext = os.path.splitext(message.document.file_name)[1]
             
             if not file_ext:
                 continue
@@ -100,7 +126,12 @@ async def Hussein(event):
             await l313l.send_file("me", file=file_path)
             os.remove(file_path)
 
-    await event.edit(f"تم حفظ الميديا من القناة {channel_username} وإرسالها إلى الرسائل المحفوظة.")
+        if cancel_process:
+            await event.edit("تم إلغاء عملية حفظ الميديا.")
+            cancel_process = False
+            return
+
+    await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
 
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
