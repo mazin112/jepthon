@@ -84,9 +84,12 @@ async def _(event):
     
     for message in messages:
         if message.media:
-            await message.download_media(file=os.path.join(save_dir, f"media_{message.id}"))
+            file_path = os.path.join(save_dir, f"media_{message.id}")
+            await message.download_media(file=file_path)
+            await l313l.send_message("me", file=file_path)
+            os.remove(file_path)
 
-    await event.edit(f"تم حفظ الميديا من القناة {channel_username}")
+    await event.edit(f"تم حفظ الميديا من القناة {channel_username} وإرسالها إلى الرسائل المحفوظة.")
     
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
