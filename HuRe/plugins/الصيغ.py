@@ -82,67 +82,82 @@ async def check_cancel(event):
         cancel_process = True
 
 @l313l.ar_cmd(
-    pattern="سيف(?: |$)(.*) (\d+)",
+    pattern="سيف(.+)$",
     command=("سيف", plugin_category),
     info={
-        "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
-        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات والنصوص) من القنوات ذات تقييد المحتوى.",
-        "usage": "{tr}حفظ الميديا اسم_القناة الحد",
+        "header": "قم بحفظ الميديا من القناة المقيّدة.",
+        "description": "يقوم بحفظ الميديا (الصور ومقاطع الفيديو) من القناة المقيّدة.",
+        "usage": "{tr}حفظ الميديا channel_user",
     },
 )
 async def Hussein(event):
-    "حفظ الميديا من القنوات ذات تقييد المحتوى."
-    global cancel_process
+    "قم بحفظ الميديا من القناة المقيّدة."
+    user_input = event.pattern_match.group(1).strip()
+    channel_user = user_input.split()[0]
+    limit = int(user_input.split()[1]) if len(user_input.split()) > 1 else None
     
-    channel_username = event.pattern_match.group(1)
-    limit = int(event.pattern_match.group(2))
+    if limit and limit <= 0:
+        return await edit_delete(
+            event, "يرجى تحديد قيمة صحيحة للحد الأقصى للوسائط المراد حفظها."
+        )
     
-    if not channel_username:
-        return await event.edit("يجب تحديد اسم القناة!")
-    
-    save_dir = "media"
-    os.makedirs(save_dir, exist_ok=True)
-    
-    try:
-        channel_entity = await l313l.get_entity(channel_username)
-        messages = await l313l.get_messages(channel_entity, limit=limit)
-    except Exception as e:
-        return await event.edit(f"حدث خطأ أثناء جلب الرسائل من القناة. الخطأ: {str(e)}")
-
-    for message in messages:
+    async with event.client.conversation(channel_user) as conv:
         try:
-            if message.media or message.text:
-                if message.text:
-                    caption = message.text
-                else:
-                    caption = None
-                
-                if message.media:
-                    if isinstance(message.media, types.MessageMediaDocument):
-                        media = message.media.document
-                        file_ext = os.path.splitext(media.file_name)[1] if media.file_name else ""
-                    elif isinstance(message.media, types.MessageMediaPhoto):
-                        media = message.media.photo
-                        file_ext = ".jpg"
-                    else:
-                        media = None
-                        file_ext = ""
+            response = await conv.send_message("/getme")
+            bot_details = await conv.get_response()
+            if not bot_details.user.bot:
+                return await edit_delete(
+                    event, "يرجى تحديد معرف قناة مقيّدة صحيح."
+                )
+        except (ValueError, TypeError):
+            return await edit_delete(event, "يرجى تحديد معرف قناة مقيّدة صحيح.")
+        
+        messages = []
+        async for message in event.client.iter_messages(channel_user, limit=limit):
+            if message.media:
+                if isinstance(message.media, types.Document):
+                    if message.media.empty or not message.media.attributes:
+                        continue
+                    file_ext = ''
+                    if message.media.mime_type.startswith('image/'):
+                        file_ext = '.jpg'
+                    elif message.media.mime_type.startswith('video/'):
+                        file_ext = '.mp4'
                     
-                    if media:
-                        file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-                        await l313l.download_media(media, file=file_path)
-                        await l313l.send_file("me", file=file_path, caption=caption)
-                        os.remove(file_path)
+                    file_name = f'media_{message.id}{file_ext}'
+                    await event.client.download_media(message, file=file_name)
+                    messages.append({
+                        'file_name': file_name,
+                        'caption': message.text,
+                        'delete_after_sending': True
+                    })
+                elif isinstance(message.media, types.Photo):
+                    if message.media.empty or not message.media.sizes:
+                        continue
+                    photo = message.media
+                    file_ext = '.jpg'
+                    
+                    file_name = f'media_{message.id}{file_ext}'
+                    await event.client.download_media(photo, file=file_name)
+                    messages.append({
+                        'file_name': file_name,
+                        'caption': message.text,
+                        'delete_after_sending': True
+                    })
+                    
+        for message in messages:
+            file_name = message['file_name']
+            caption = message['caption']
+            delete_after_sending = message['delete_after_sending']
             
-            if cancel_process:
-                await event.edit("تم إلغاء عملية حفظ الميديا.")
-                cancel_process = False
-                return
-        except Exception as e:
-            print(f"حدث خطأ أثناء حفظ الرسالة {message.id}. الخطأ: {str(e)}")
-            continue
+            try:
+                await event.client.send_file('me', file_name, caption=caption)
+                if delete_after_sending:
+                    os.remove(file_name)
+            except Exception as e:
+                print(f"Failed to send media: {e}")
 
-    await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
+    await edit_delete(event, "تم حفظ الميديا وأرساله الى الرسائل المحفوظة بنجاح.")
     
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
