@@ -86,7 +86,7 @@ async def _(event):
         if message.media:
             file_path = os.path.join(save_dir, f"media_{message.id}")
             await message.download_media(file=file_path)
-            await l313l.send_message("me", file=file_path)
+            await l313l.send_file("me", file=file_path)
             os.remove(file_path)
 
     await event.edit(f"تم حفظ الميديا من القناة {channel_username} وإرسالها إلى الرسائل المحفوظة.")
