@@ -111,6 +111,11 @@ async def Hussein(event):
     for message in messages:
         try:
             if message.media or message.text:
+                if message.text:
+                    caption = message.text
+                else:
+                    caption = None
+                
                 file_ext = ""
                 if message.photo:
                     file_ext = ".jpg"
@@ -119,22 +124,11 @@ async def Hussein(event):
                 elif message.document:
                     if hasattr(message.document, "file_name"):
                         file_ext = os.path.splitext(message.document.file_name)[1]
-                    else:
-                        # Handle documents without file_name attribute
-                        file_ext = ""
                 
-                if not file_ext and not message.text:
-                    continue
+                file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+                await message.download_media(file=file_path)
                 
-                if message.text:
-                    file_path = os.path.join(save_dir, f"media_{message.id}.txt")
-                    with open(file_path, "w", encoding="utf-8") as file:
-                        file.write(message.text)
-                else:
-                    file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-                    await message.download_media(file=file_path)
-                
-                await l313l.send_file("me", file=file_path)
+                await l313l.send_file("me", file=file_path, caption=caption)
                 os.remove(file_path)
             
             if cancel_process:
@@ -146,7 +140,6 @@ async def Hussein(event):
             continue
 
     await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
- 
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
     command=("تحويل ملصق", plugin_category),
