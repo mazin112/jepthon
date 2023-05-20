@@ -116,24 +116,22 @@ async def Hussein(event):
                 else:
                     caption = None
                 
-                file_ext = ""
-                if message.photo:
-                    file_ext = ".jpg"
-                    media = message.photo
-                elif message.video:
-                    file_ext = ".mp4"
-                    media = message.video
-                elif message.document:
-                    if hasattr(message.document, "file_name"):
-                        file_ext = os.path.splitext(message.document.file_name)[1]
-                    media = message.document
-                
-                if media and not media.empty:
-                    file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-                    await l313l.download_media(media, file=file_path)
+                if message.media:
+                    if isinstance(message.media, types.MessageMediaDocument):
+                        media = message.media.document
+                        file_ext = os.path.splitext(media.file_name)[1] if media.file_name else ""
+                    elif isinstance(message.media, types.MessageMediaPhoto):
+                        media = message.media.photo
+                        file_ext = ".jpg"
+                    else:
+                        media = None
+                        file_ext = ""
                     
-                    await l313l.send_file("me", file=file_path, caption=caption)
-                    os.remove(file_path)
+                    if media:
+                        file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+                        await l313l.download_media(media, file=file_path)
+                        await l313l.send_file("me", file=file_path, caption=caption)
+                        os.remove(file_path)
             
             if cancel_process:
                 await event.edit("تم إلغاء عملية حفظ الميديا.")
