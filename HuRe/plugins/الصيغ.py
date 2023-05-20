@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 from telethon import events
 from HuRe import l313l
+from telethon import types
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
