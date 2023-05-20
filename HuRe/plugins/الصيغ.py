@@ -1,9 +1,6 @@
 import asyncio
 import logging
 import os
-os.system("pip install pygif")
-import io
-import pygif
 import time
 from datetime import datetime
 
@@ -62,34 +59,34 @@ async def _(event):
     await output[0].delete()
 
 @l313l.ar_cmd(
-    pattern="تحويل متحركة$",
-    command=("تحويل متحركة", plugin_category),
+    pattern="حفظ الميديا(?: |$)(.*)",
+    command=("حفظ الميديا", plugin_category),
     info={
-        "header": "قم بالرد على الملصق المتحرك لتحويله إلى صورة متحركة GIF.",
-        "description": "يتم تحويل الملصق المتحرك إلى صورة متحركة GIF.",
-        "usage": "{tr}تحويل ملصق متحرك",
+        "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
+        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
+        "usage": "{tr}حفظ الميديا اسم_القناة",
     },
 )
 async def _(event):
-    "تحويل الملصق المتحرك إلى صورة متحركة GIF."
-    reply_to_id = await reply_id(event)
-    reply = await event.get_reply_message()
-    if not reply or not reply.sticker:
-        return await edit_delete(
-            event, "يجب عليك الرد على الملصق المتحرك لتحويله إلى صورة متحركة ⚠️"
-        )
-    sticker = reply.sticker
-    if not sticker.mime_type.startswith("image/"):
-        return await edit_delete(
-            event, "يجب أن يكون الملصق المحدد ملصقًا متحركًا ⚠️"
-        )
-    animated_sticker_bytes = await event.client.download_media(sticker)
-    gif_buffer = io.BytesIO(animated_sticker_bytes)
-    gif_buffer.name = "animated_sticker.gif"
-    await event.client.send_file(
-        event.chat_id, gif_buffer, reply_to=reply_to_id, force_document=False
-    )
-    await event.delete()
+    "حفظ الميديا من القنوات ذات تقييد المحتوى."
+    channel_username = event.pattern_match.group(1)
+    
+    if not channel_username:
+        return await event.edit("يجب تحديد اسم القناة!")
+    
+    limit = 10  # عدد الوسائط التي ترغب في حفظها
+
+    channel_entity = await l313l.get_entity(channel_username)
+    messages = await l313l.get_messages(channel_entity, limit=limit)
+    
+    save_dir = "media"
+    os.makedirs(save_dir, exist_ok=True)
+    
+    for message in messages:
+        if message.media:
+            await message.download_media(file=os.path.join(save_dir, f"media_{message.id}"))
+
+    await event.edit(f"تم حفظ الميديا من القناة {channel_username}")
     
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
