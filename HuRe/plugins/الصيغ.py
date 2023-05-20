@@ -85,7 +85,7 @@ async def check_cancel(event):
     command=("سيف", plugin_category),
     info={
         "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
-        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
+        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات والنصوص) من القنوات ذات تقييد المحتوى.",
         "usage": "{tr}حفظ الميديا اسم_القناة الحد",
     },
 )
@@ -110,7 +110,7 @@ async def Hussein(event):
 
     for message in messages:
         try:
-            if message.media:
+            if message.media or message.text:
                 file_ext = ""
                 if message.photo:
                     file_ext = ".jpg"
@@ -123,11 +123,17 @@ async def Hussein(event):
                         # Handle documents without file_name attribute
                         file_ext = ""
                 
-                if not file_ext:
+                if not file_ext and not message.text:
                     continue
                 
-                file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-                await message.download_media(file=file_path)
+                if message.text:
+                    file_path = os.path.join(save_dir, f"media_{message.id}.txt")
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        file.write(message.text)
+                else:
+                    file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+                    await message.download_media(file=file_path)
+                
                 await l313l.send_file("me", file=file_path)
                 os.remove(file_path)
             
