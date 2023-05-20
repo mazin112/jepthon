@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+os.system("pip install pyvips")
 import io
 import pyvips
 import time
