@@ -33,18 +33,17 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
-
 @l313l.ar_cmd(
     pattern=r"سيفف (.+)",
     command=("سيفف", plugin_category),
     info={
-        "header": "حفظ الميديا ورابط الرسالة.",
-        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) ورابط الرسالة التي تحتوي عليها.",
+        "header": "حفظ الميديا والنص إذا وجد في الرسالة.",
+        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) والنص إذا وجد في الرسالة.",
         "usage": "{tr}حفظ الميديا <رابط الرسالة>",
     },
 )
 async def save_media(event):
-    "حفظ الميديا ورابط الرسالة."
+    "حفظ الميديا والنص إذا وجد في الرسالة."
     global cancel_process
     
     message_link = event.pattern_match.group(1)
@@ -56,7 +55,6 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        # تحويل الرابط إلى معرّف القناة ومعرّف الرسالة
         parts = message_link.split("/")
         channel_username = parts[-2]
         message_id = int(parts[-1])
@@ -85,7 +83,6 @@ async def save_media(event):
                 if hasattr(message.document, "file_name"):
                     file_ext = os.path.splitext(message.document.file_name)[1]
                 else:
-                    # Handle documents without file_name attribute
                     file_ext = ""
             
             if not file_ext:
@@ -93,7 +90,11 @@ async def save_media(event):
             
             file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
             await message.download_media(file=file_path)
-            await l313l.send_file("me", file=file_path)
+            if message.text:
+                text_file_path = os.path.join(save_dir, f"text_{message.id}.txt")
+                with open(text_file_path, "w", encoding="utf-8") as text_file:
+                text_file.write(message.text)
+            await l313l.send_file("me", file=file_path, caption=message.text)
             os.remove(file_path)
             await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_link}")
         else:
