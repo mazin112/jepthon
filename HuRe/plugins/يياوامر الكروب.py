@@ -10,6 +10,7 @@ from telethon.errors import (
 )
 from telethon.tl import functions
 from telethon.tl.functions.messages import DeleteHistoryRequest
+from telethon.tl.functions.contacts import GetContactsRequest
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
