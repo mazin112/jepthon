@@ -5,7 +5,6 @@ import time
 from datetime import datetime
 from telethon import events
 from telethon.utils import get_peer_id
-from telethon.tl.types import PeerChannel
 from HuRe import l313l
 from telethon import types
 from ..Config import Config
@@ -63,15 +62,14 @@ async def save_media(event):
         return await event.edit(f"An error occurred while parsing the message link. Error: {str(e)}")
 
     try:
-        if channel_username_or_id.startswith('@'):
-            entity = await l313l.get_entity(channel_username_or_id)
-        else:
-            channel_id = int(channel_username_or_id)
-            entity = PeerChannel(channel_id)
+        entity = await l313l.get_entity(channel_username_or_id)
+        if not entity:
+            return await event.edit("Invalid channel or entity not found!")
 
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("Invalid message link or message not found!")
+
     except Exception as e:
         return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
     else:
