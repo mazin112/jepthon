@@ -1040,16 +1040,8 @@ async def Hussein (event):
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
-@l313l.ar_cmd(
-    pattern="تصفية الخاص$",
-    command=("تصفية الخاص", plugin_category),
-    info={
-        "header": "يقوم بحذف جميع المحادثات الخاصة من الطرفين.",
-        "usage": "{tr}حذف المحادثات الخاصة",
-    },
-)
-async def Hussein(event):
-    "حذف جميع المحادثات الخاصة من الطرفين."
+@l313l.ar_cmd(pattern="تصفية الخاص")
+async def Hussein (event):
     await event.edit("**᯽︙ جارِ حذف جميع الرسائل الخاصه الموجوده في حسابك ...**")
         dialogs = await event.client.get_dialogs()
         for dialog in dialogs:
