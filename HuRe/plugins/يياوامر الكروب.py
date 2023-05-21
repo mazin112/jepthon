@@ -1043,7 +1043,7 @@ async def Hussein (event):
 @l313l.ar_cmd(pattern="تصفية الخاص")
 async def Hussein (event):
     await event.edit("**᯽︙ جارِ حذف جميع الرسائل الخاصه الموجوده في حسابك ...**")
-        dialogs = await event.client.get_dialogs()
+    dialogs = await event.client.get_dialogs()
         for dialog in dialogs:
             if dialog.is_user:
                 try:
