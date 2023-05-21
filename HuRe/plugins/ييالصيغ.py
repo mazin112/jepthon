@@ -51,6 +51,8 @@ async def save_media(event):
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
 
+    channel_id = None
+    channel_username = None
     try:
         parts = message_link.split("/")
         if len(parts) == 3:
@@ -60,7 +62,21 @@ async def save_media(event):
             channel_username = parts[-2]
             message_id = int(parts[-1])
     except Exception as e:
-        return await event.edit(f"حدث خطأ اثناء تحويل الرساله : الخطأ: {str(e)}")
+        return await event.edit(f"An error occurred while parsing the message link. Error: {str(e)}")
+
+    if channel_id is not None:
+        try:
+            message = await l313l.get_messages(int(channel_id), ids=message_id)
+        except Exception as e:
+            return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
+    elif channel_username is not None:
+        try:
+            channel = await l313l.get_entity(channel_username)
+            message = await l313l.get_messages(channel, ids=message_id)
+        except Exception as e:
+            return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
+    else:
+        return await event.edit("Invalid message link format.")
     try:
         message = await l313l.get_messages(channel_id, ids=message_id)
         if not message:
