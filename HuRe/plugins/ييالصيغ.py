@@ -56,8 +56,12 @@ async def Hussein(event):
     
     try:
         parsed_link = urlsplit(message_link)
-        channel_id = parsed_link.path.split("/")[2]
-        message_id = parsed_link.path.split("/")[3]
+        path_parts = parsed_link.path.split("/")
+        if len(path_parts) < 4:
+            return await event.edit("رابط الرسالة غير صالح!")
+        
+        channel_id = path_parts[2]
+        message_id = path_parts[3]
         
         message = await l313l.get_messages(channel_id, ids=message_id)
     except Exception as e:
