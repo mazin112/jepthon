@@ -86,7 +86,7 @@ async def check_cancel(event):
     command=("سيف", plugin_category),
     info={
         "header": "حفظ الميديا من القنوات ذات تقييد المحتوى.",
-        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات والنصوص) من القنوات ذات تقييد المحتوى.",
+        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) من القنوات ذات تقييد المحتوى.",
         "usage": "{tr}حفظ الميديا اسم_القناة الحد",
     },
 )
@@ -111,25 +111,26 @@ async def Hussein(event):
 
     for message in messages:
         try:
-            if message.media or message.text:
-                if message.text:
-                    caption = message.text
-                else:
-                    caption = None
+            if message.media:
+                file_ext = ""
+                if message.photo:
+                    file_ext = ".jpg"
+                elif message.video:
+                    file_ext = ".mp4"
+                elif message.document:
+                    if hasattr(message.document, "file_name"):
+                        file_ext = os.path.splitext(message.document.file_name)[1]
+                    else:
+                        # Handle documents without file_name attribute
+                        file_ext = ""
                 
-                if message.media:
-                    if isinstance(message.media, types.Document):
-                        if message.media.empty or not message.media.attributes:
-                            continue
-                        file_ext = ''
-                        if message.media.mime_type.startswith('image/'):
-                            file_ext = '.jpg'
-                        elif message.media.mime_type.startswith('video/'):
-                            file_ext = '.mp4'
-                        file_name = f'media_{msg_id}{file_ext}'
-                        await event.client.download_media(media, file=file_name)
-                        await event.client.send_file('me', file_name, caption=message_text)
-                        os.remove(file_name)
+                if not file_ext:
+                    continue
+                
+                file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+                await message.download_media(file=file_path)
+                await l313l.send_file("me", file=file_path)
+                os.remove(file_path)
             
             if cancel_process:
                 await event.edit("تم إلغاء عملية حفظ الميديا.")
@@ -139,7 +140,7 @@ async def Hussein(event):
             print(f"حدث خطأ أثناء حفظ الرسالة {message.id}. الخطأ: {str(e)}")
             continue
 
-    await event.edit(f"حفظ الميديا من القناة {channel_username}.”)
+    await event.edit(f"تم حفظ الميديا من القناة {channel_username} بنجاح.")
 @l313l.ar_cmd(
     pattern="تحويل ملصق$",
     command=("تحويل ملصق", plugin_category),
