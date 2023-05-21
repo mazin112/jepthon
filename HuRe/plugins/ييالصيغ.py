@@ -51,16 +51,16 @@ async def save_media(event):
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
 
-try:
-    parts = message_link.split("/")
-    if len(parts) == 3:
-        channel_id = parts[-2]
-        message_id = int(parts[-1])
-    else:
-        channel_username = parts[-2]
-        message_id = int(parts[-1])
-except Exception as e:
-    return await event.edit(f"حدث خطأ اثناء تحويل الرساله : الخطأ: {str(e)}")
+    try:
+        parts = message_link.split("/")
+        if len(parts) == 3:
+            channel_id = parts[-2]
+            message_id = int(parts[-1])
+        else:
+            channel_username = parts[-2]
+            message_id = int(parts[-1])
+    except Exception as e:
+        return await event.edit(f"حدث خطأ اثناء تحويل الرساله : الخطأ: {str(e)}")
     try:
         message = await l313l.get_messages(channel_id, ids=message_id)
         if not message:
