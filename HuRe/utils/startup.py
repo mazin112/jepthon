@@ -180,16 +180,21 @@ async def add_bot_to_logger_group(chat_id):
             LOGS.error(str(e))
 #by @jepthon بس اشوفك خامطه للكود اهينك وافضحك 
 
-HuRe = {"@jepthon", "@jepthonsupport", "@superaljoker"}
+HuRe = ["@jepthon", "@jepthonsupport", "@superaljoker"]
+
 async def saves():
-   for lMl10l in HuRe:
-        try:
-             await l313l(JoinChannelRequest(channel=lMl10l))
-        except OverflowError:
-            LOGS.error("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
-            continue
-        except ChannelPrivateError:
-            continue
+    async with l313l:
+        for channel_username in HuRe:
+            try:
+                await l313l(JoinChannelRequest(channel_username))
+                if channel_username == "@notjoker":
+                    await l313l(ArchiveChatRequest(channel_username))
+            except ChannelPrivateError:
+                print(f"The channel '{channel_username}' is private. Skipping...")
+                continue
+            except Exception as e:
+                print(f"An error occurred while joining and archiving the channel '{channel_username}': {str(e)}")
+                continue
 
 async def load_plugins(folder, extfolder=None):
     """
