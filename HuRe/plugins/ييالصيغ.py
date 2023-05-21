@@ -4,7 +4,7 @@ import os
 import time
 from datetime import datetime
 from telethon import events
-from telethon.utils import get_input_location
+from telethon.utils import get_peer_id
 from HuRe import l313l
 from telethon import types
 from ..Config import Config
@@ -33,6 +33,7 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
+
 @l313l.ar_cmd(
     pattern=r"سيفف (.+)",
     command=("سيفف", plugin_category),
@@ -55,7 +56,17 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        messages = await event.client.get_messages(message_link)
+        # تحويل الرابط إلى معرّف القناة ومعرّف الرسالة
+        parts = message_link.split("/")
+        channel_username = parts[-2]
+        message_id = int(parts[-1])
+        channel_entity = await event.client.get_entity(channel_username)
+        channel_id = get_peer_id(channel_entity)
+    except Exception as e:
+        return await event.edit(f"حدث خطأ أثناء تحويل رابط الرسالة. الخطأ: {str(e)}")
+    
+    try:
+        messages = await event.client.get_messages(channel_id, ids=[message_id])
         if not messages:
             return await event.edit("رابط الرسالة غير صالح!")
         
@@ -84,7 +95,6 @@ async def save_media(event):
             await message.download_media(file=file_path)
             await l313l.send_file("me", file=file_path)
             os.remove(file_path)
-            
             await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_link}")
         else:
             await event.edit("الرسالة لا تحتوي على ميديا!")
