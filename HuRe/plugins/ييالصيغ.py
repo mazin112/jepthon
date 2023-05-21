@@ -4,7 +4,7 @@ import os
 import time
 from datetime import datetime
 from telethon import events
-from urllib.parse import urlsplit
+from telethon.utils import get_input_location
 from HuRe import l313l
 from telethon import types
 from ..Config import Config
@@ -42,7 +42,7 @@ cancel_process = False
         "usage": "{tr}حفظ الميديا <رابط الرسالة>",
     },
 )
-async def Hussein(event):
+async def save_media(event):
     "حفظ الميديا ورابط الرسالة."
     global cancel_process
     
@@ -55,15 +55,7 @@ async def Hussein(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        parsed_link = urlsplit(message_link)
-        path_parts = parsed_link.path.split("/")
-        if len(path_parts) < 4:
-            return await event.edit("رابط الرسالة غير صالح!")
-        
-        channel_id = path_parts[2]
-        message_id = path_parts[3]
-        
-        message = await l313l.get_messages(channel_id, ids=message_id)
+        chat, message = await event.client.get_chat_and_message(message_link)
     except Exception as e:
         return await event.edit(f"حدث خطأ أثناء جلب الرسالة. الخطأ: {str(e)}")
     
