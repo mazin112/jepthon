@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 from telethon import events
 from telethon.utils import get_peer_id
+from telethon.tl.types import PeerChannel
 from HuRe import l313l
 from telethon import types
 from ..Config import Config
@@ -51,30 +52,28 @@ async def save_media(event):
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
 
-    channel_id = None
-    channel_username = None
     try:
-        parts = message_link.split("/")
-        if len(parts) == 3:
-            channel_id = parts[-2]
-            message_id = int(parts[-1])
+        message_link_parts = message_link.split("/")
+        if len(message_link_parts) >= 2:
+            channel_username_or_id = message_link_parts[-2]
+            message_id = int(message_link_parts[-1])
         else:
-            channel_username = parts[-2]
-            message_id = int(parts[-1])
+            return await event.edit("Invalid message link format.")
     except Exception as e:
         return await event.edit(f"An error occurred while parsing the message link. Error: {str(e)}")
 
-    if channel_id is not None:
-        try:
-            message = await l313l.get_messages(int(channel_id), ids=message_id)
-        except Exception as e:
-            return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
-    elif channel_username is not None:
-        try:
-            channel = await l313l.get_entity(channel_username)
-            message = await l313l.get_messages(channel, ids=message_id)
-        except Exception as e:
-            return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
+    try:
+        if channel_username_or_id.startswith('@'):
+            entity = await l313l.get_entity(channel_username_or_id)
+        else:
+            channel_id = int(channel_username_or_id)
+            entity = PeerChannel(channel_id)
+
+        message = await l313l.get_messages(entity, ids=message_id)
+        if not message:
+            return await event.edit("Invalid message link or message not found!")
+    except Exception as e:
+        return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
     else:
         return await event.edit("Invalid message link format.")
     try:
