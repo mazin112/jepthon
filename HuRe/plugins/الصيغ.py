@@ -33,6 +33,59 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 @l313l.ar_cmd(
+    pattern=r"سيفف",
+    command=("سيفف", plugin_category),
+    info={
+        "header": "حفظ الميديا ورابط الرسالة.",
+        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) ورابط الرسالة التي تحتوي عليها.",
+        "usage": "{tr}حفظ الميديا",
+    },
+)
+async def save_media(event):
+    "حفظ الميديا مع الرسالة."
+    global cancel_process
+    
+    reply_message = await event.get_reply_message()
+    
+    if not reply_message or not reply_message.media:
+        return await event.edit("يرجى الرد على الرسالة التي تحتوي على الميديا!")
+    
+    save_dir = "media"
+    os.makedirs(save_dir, exist_ok=True)
+    
+    try:
+        file_ext = ""
+        if reply_message.photo:
+            file_ext = ".jpg"
+        elif reply_message.video:
+            file_ext = ".mp4"
+        elif reply_message.document:
+            if hasattr(reply_message.document, "file_name"):
+                file_ext = os.path.splitext(reply_message.document.file_name)[1]
+            else:
+                # Handle documents without file_name attribute
+                file_ext = ""
+        
+        if not file_ext:
+            return await event.edit("الرسالة لا تحتوي على ميديا!")
+        
+        file_path = os.path.join(save_dir, f"media_{reply_message.id}{file_ext}")
+        await reply_message.download_media(file=file_path)
+        await l313l.send_file("me", file=file_path)
+        os.remove(file_path)
+        
+        message_url = f"https://t.me/c/{event.chat_id}/{reply_message.id}"
+        
+        await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_url}")
+        
+        if cancel_process:
+            await event.edit("تم إلغاء عملية حفظ الميديا.")
+            cancel_process = False
+            return
+    except Exception as e:
+        print(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
+
+@l313l.ar_cmd(
     pattern="تحويل صورة$",
     command=("تحويل صورة", plugin_category),
     info={
