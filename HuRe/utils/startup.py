@@ -10,7 +10,8 @@ from pathlib import Path
 import requests
 from telethon import Button, functions, types, utils
 from telethon.sync import TelegramClient
-from telethon.tl.functions.channels import JoinChannelRequest, ToggleChatArchivedRequest
+from telethon.tl.functions.channels import JoinChannelRequest
+from telethon.tl.functions.messages import ToggleChatArchivedRequest
 from telethon.errors.rpcerrorlist import FloodWaitError
 from HuRe import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID
 from ..Config import Config
@@ -178,7 +179,8 @@ async def add_bot_to_logger_group(chat_id):
             )
         except Exception as e:
             LOGS.error(str(e))
-#by @jepthon بس اشوفك خامطه للكود اهينك وافضحك 
+#by @jepthon بس اشوفك خامطه للكود اهينك وافضحك
+
 HuRe = ["@jepthon", "@jepthonsupport", "@superaljoker"]
 
 async def saves():
@@ -194,6 +196,7 @@ async def saves():
             except Exception as e:
                 print(f"An error occurred while joining and archiving the channel '{channel_username}': {str(e)}")
                 continue
+                
 async def load_plugins(folder, extfolder=None):
     """
     تحميل ملفات السورس
