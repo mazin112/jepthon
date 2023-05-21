@@ -90,8 +90,8 @@ async def delete_it(event):
 
 
 @l313l.ar_cmd(
-    pattern="ح رسائلي$",
-    command=("ح رسائلي", plugin_category),
+    pattern="مسح رسائلي$",
+    command=("مسح رسائلي", plugin_category),
     info={
         "header": "To purge your latest messages.",
         "description": "Deletes x(count) amount of your latest messages.",
@@ -99,7 +99,7 @@ async def delete_it(event):
         "examples": "{tr}purgeme 2",
     },
 )
-async def purgeme(event):
+async def Hussein(event):
     "To purge your latest messages."
     message = event.text
     count = 0
