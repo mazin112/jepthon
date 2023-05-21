@@ -102,22 +102,19 @@ async def delete_it(event):
 async def purgeme(event):
     "To purge your latest messages."
     message = event.text
-    count = int(message.split()[1])
-    i = 1
-    async for message in event.client.iter_messages(event.chat_id, from_user="me"):
-        if i > count + 1:
-            break
-        i += 1
+    count = 0
+    async for message in event.client.iter_messages(event.chat_id, from_user='me'):
+        count += 1
         await message.delete()
 
     smsg = await event.client.send_message(
         event.chat_id,
-        "**᯽︙ أنتـهى التـنظيف ** تـم حـذف  " + str(count) + " من الـرسائـل",
+    "**أنتهى التنظيف** تم حذف " + str(count) + " من الرسائل التي تم إرسالها من قبلك في المجموعة.",    
     )
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "**᯽︙ أنتـهى التـنظيف ** تـم حـذف  " + str(count) + " من الـرسائـل",
+        "**أنتهى التنظيف** تم حذف " + str(count) + " من الرسائل التي تم إرسالها من قبلك في المجموعة.",    
     )
     await sleep(5)
     await smsg.delete()
