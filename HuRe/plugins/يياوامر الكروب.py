@@ -1040,21 +1040,25 @@ async def Hussein (event):
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
+from telethon.tl.functions.messages import DeleteHistoryRequest
+
 @l313l.ar_cmd(
     pattern="تصفية الخاص$",
     command=("تصفية الخاص", plugin_category),
     info={
-        "header": "يقوم بحذف جميع المحادثات الخاصة.",
+        "header": "يقوم بحذف جميع المحادثات الخاصة من الطرفين.",
         "usage": "{tr}حذف المحادثات الخاصة",
     },
 )
 async def Hussein(event):
-    "حذف جميع المحادثات الخاصة."
-    dialogs = await event.client.get_dialogs()
-    for dialog in dialogs:
-        if dialog.is_user:
-            try:
-                await event.client(DeleteHistoryRequest(dialog.id, max_id=0, just_clear=False))
-            except Exception as e:
-                print(f"حدث خطأ أثناء حذف المحادثة الخاصة: {e}")
-    await event.edit("تم حذف جميع المحادثات الخاصة بنجاح.")
+    "حذف جميع المحادثات الخاصة من الطرفين."
+    await event.edit("**᯽︙ جارِ حذف جميع الرسائل الخاصه الموجوده في حسابك ...**")
+        dialogs = await event.client.get_dialogs()
+        for dialog in dialogs:
+            if dialog.is_user:
+                try:
+                    await event.client(DeleteHistoryRequest(dialog.id, max_id=0, just_clear=True))
+                except Exception as e:
+                    print(f"حدث خطأ أثناء حذف المحادثة الخاصة: {e}")
+    
+        await event.edit("**᯽︙ تم تصفية جميع محادثاتك الخاصه بنجاح ✓ **")
