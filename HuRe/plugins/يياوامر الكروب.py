@@ -1040,8 +1040,6 @@ async def Hussein (event):
     except BaseException as er:
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
-from telethon.tl.functions.messages import DeleteHistoryRequest
-
 @l313l.ar_cmd(
     pattern="تصفية الخاص$",
     command=("تصفية الخاص", plugin_category),
