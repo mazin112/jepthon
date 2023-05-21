@@ -1,12 +1,12 @@
 import asyncio
 import logging
 import os
+import re
 import time
 from datetime import datetime
 from telethon import events
 from HuRe import l313l
 from telethon import types
-from telethon.utils import parse_message_link
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import media_type, progress, thumb_from_audio
@@ -55,9 +55,17 @@ async def Hussein(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        link = parse_message_link(message_link)
-        channel_id = link.channel_id
-        message_id = link.message_id
+        match = re.search(r"(?<=t.me\/\w+\/)\d+", message_link)
+        if match:
+            channel_id = int(match.group(0))
+        else:
+            return await event.edit("رابط الرسالة غير صحيح!")
+        
+        match = re.search(r"(?<=\/)\d+", message_link)
+        if match:
+            message_id = int(match.group(0))
+        else:
+            return await event.edit("رابط الرسالة غير صحيح!")
         
         message = await l313l.get_messages(channel_id, ids=message_id)
     except Exception as e:
@@ -95,6 +103,7 @@ async def Hussein(event):
             return
     except Exception as e:
         print(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
+        
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
     command=("تحويل صورة", plugin_category),
