@@ -1065,13 +1065,3 @@ async def Hussrin(event):
         except Exception as e:
             print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
-
-@l313l.ar_cmd(pattern="تصفية رسائلي")
-async def Hussein(event):
-    if event.is_group:
-        await event.edit("**᯽︙ جارٍ حذف جميع رسائلي في المجموعة ...**")
-        chat_id = event.chat_id
-        await event.client(DeleteHistoryRequest(chat_id, max_id=0, just_clear=True, revoke=True))
-        await event.edit("**᯽︙ تم حذف جميع رسائلي في المجموعة بنجاح ✓ **")
-    else:
-        await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات! **")
