@@ -77,9 +77,9 @@ async def save_media(event):
                 return await event.edit("الرسالة لا تحتوي على ميديا!")
 
             file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-            await client.download_media(message, file=file_path)
+            await l313l.download_media(message, file=file_path)
 
-            await client.send_file('me', file=file_path, caption=message.text)
+            await l313l.send_file('me', file=file_path, caption=message.text)
 
             os.remove(file_path)
             await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_link}")
