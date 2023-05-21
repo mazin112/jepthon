@@ -34,15 +34,15 @@ cancel_process = False
 #Edited By Reda 
 
 @l313l.ar_cmd(
-    pattern=r"سيفف (.+)",
-    command=("سيفف", plugin_category),
+    pattern=r"حفظ_المحتوى (.+)",
+    command=("حفظ_المحتوى", plugin_category),
     info={
         "header": "حفظ الميديا والنص إذا وجد في الرسالة.",
         "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) والنص إذا وجد في الرسالة.",
         "usage": "{tr}حفظ الميديا <رابط الرسالة>",
     },
 )
-async def save_media(event):
+async def Hussein(event):
     "حفظ الميديا والنص إذا وجد في الرسالة."
     global cancel_process
     
@@ -136,8 +136,8 @@ async def _(event):
     await output[0].delete()
 
 @l313l.ar_cmd(
-    pattern="إلغاء سيف$",
-    command=("إلغاء سيف", plugin_category),
+    pattern="الغاء سيف$",
+    command=("الغاء سيف", plugin_category),
     info={
         "header": "إلغاء عملية حفظ الميديا.",
         "description": "يقوم بإلغاء العملية الجارية لحفظ الميديا من القنوات.",
