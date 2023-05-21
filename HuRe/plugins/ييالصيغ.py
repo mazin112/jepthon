@@ -1,10 +1,10 @@
 import asyncio
 import logging
 import os
-import re
 import time
 from datetime import datetime
 from telethon import events
+from urllib.parse import urlsplit
 from HuRe import l313l
 from telethon import types
 from ..Config import Config
@@ -55,9 +55,9 @@ async def Hussein(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        channel_id, message_id = re.findall(r"\d+", message_link)
-        channel_id = int(channel_id)
-        message_id = int(message_id)
+        parsed_link = urlsplit(message_link)
+        channel_id = parsed_link.path.split("/")[2]
+        message_id = parsed_link.path.split("/")[3]
         
         message = await l313l.get_messages(channel_id, ids=message_id)
     except Exception as e:
