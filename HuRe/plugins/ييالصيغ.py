@@ -42,37 +42,27 @@ cancel_process = False
         "usage": "{tr}حفظ الميديا <رابط الرسالة>",
     },
 )
-async def Hussein(event):
-    "حفظ الميديا والنص إذا وجد في الرسالة."
-    global cancel_process
-    
+async def save_media(event):
     message_link = event.pattern_match.group(1)
-    
+
     if not message_link:
         return await event.edit("يرجى تحديد رابط الرسالة!")
-    
+
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
-    
+
     try:
         parts = message_link.split("/")
-        channel_username = parts[-2]
+        channel_id = int(parts[-2])
         message_id = int(parts[-1])
-        channel_entity = await event.client.get_entity(channel_username)
-        channel_id = get_peer_id(channel_entity)
     except Exception as e:
         return await event.edit(f"حدث خطأ أثناء تحويل رابط الرسالة. الخطأ: {str(e)}")
-    
+
     try:
-        messages = await event.client.get_messages(channel_id, ids=[message_id])
-        if not messages:
+        message = await client.get_messages(channel_id, ids=message_id)
+        if not message:
             return await event.edit("رابط الرسالة غير صالح!")
-        
-        message = messages[0]
-    except Exception as e:
-        return await event.edit(f"حدث خطأ أثناء جلب الرسالة. الخطأ: {str(e)}")
-    
-    try:
+
         if message.media:
             file_ext = ""
             if message.photo:
@@ -82,30 +72,22 @@ async def Hussein(event):
             elif message.document:
                 if hasattr(message.document, "file_name"):
                     file_ext = os.path.splitext(message.document.file_name)[1]
-                else:
-                    file_ext = ""
-            
+
             if not file_ext:
                 return await event.edit("الرسالة لا تحتوي على ميديا!")
-            
+
             file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
-            await message.download_media(file=file_path)
-            if message.text:
-                text_file_path = os.path.join(save_dir, f"text_{message.id}.txt")
-                with open(text_file_path, "w", encoding="utf-8") as text_file:
-                    text_file.write(message.text)
-            await l313l.send_file("me", file=file_path, caption=message.text)
+            await client.download_media(message, file=file_path)
+
+            await client.send_file('me', file=file_path, caption=message.text)
+
             os.remove(file_path)
             await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_link}")
         else:
             await event.edit("الرسالة لا تحتوي على ميديا!")
-        
-        if cancel_process:
-            await event.edit("تم إلغاء عملية حفظ الميديا.")
-            cancel_process = False
-            return
     except Exception as e:
         print(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
+
         
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
