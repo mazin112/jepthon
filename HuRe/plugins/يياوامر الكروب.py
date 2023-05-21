@@ -1041,14 +1041,13 @@ async def Hussein (event):
      await event.reply(f"حدث خطأ\n{er}\n{entity}")
 
 @l313l.ar_cmd(pattern="تصفية الخاص")
-async def Hussein (event):
-    await event.edit("**᯽︙ جارِ حذف جميع الرسائل الخاصه الموجوده في حسابك ...**")
+async def hussein(event):
+    await event.edit("**᯽︙ جارِ حذف جميع الرسائل الخاصة الموجودة في حسابك ...**")
     dialogs = await event.client.get_dialogs()
     for dialog in dialogs:
         if dialog.is_user:
-    try:
-        await event.client(DeleteHistoryRequest(dialog.id, max_id=0, just_clear=True))
-    except Exception as e:
-        print(f"حدث خطأ أثناء حذف المحادثة الخاصة: {e}")
-    
-    await event.edit("**᯽︙ تم تصفية جميع محادثاتك الخاصه بنجاح ✓ **")
+            try:
+                await event.client(DeleteHistoryRequest(dialog.id, max_id=0, just_clear=True))
+            except Exception as e:
+                print(f"حدث خطأ أثناء حذف المحادثة الخاصة: {e}")
+    await event.edit("**᯽︙ تم تصفية جميع محادثاتك الخاصة بنجاح ✓ **")
