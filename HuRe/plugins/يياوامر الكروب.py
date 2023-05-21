@@ -1087,10 +1087,13 @@ async def toggle_listen(event):
         else:
             listening_enabled = False
             await event.reply("Disabled group monitoring.")
+    else:
+        await event.reply("يرجى استخدام هذا الأمر في محادثة المجموعة.")
 
 @l313l.on(events.NewMessage(chats=events.ChatAction))
 async def handle_event(event):
     global kicked_count
+
     if not listening_enabled:
         return
     if event.message.from_id in await l313l.get_participants(group_id, filter=ChannelParticipantsAdmins):
@@ -1103,6 +1106,5 @@ async def handle_event(event):
                                               delete_messages=False, ban_users=False,
                                               invite_users=False, pin_messages=False,
                                               add_admins=False))
-            
                 await l313l(EditAdminRequest(group_id, event.message.from_id, rank=''))
                 kicked_count = 0
