@@ -55,7 +55,11 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        chat, message = await event.client.get_chat_and_message(message_link)
+        messages = await event.client.get_messages(message_link)
+        if not messages:
+            return await event.edit("رابط الرسالة غير صالح!")
+        
+        message = messages[0]
     except Exception as e:
         return await event.edit(f"حدث خطأ أثناء جلب الرسالة. الخطأ: {str(e)}")
     
