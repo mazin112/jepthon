@@ -90,8 +90,8 @@ async def delete_it(event):
 
 
 @l313l.ar_cmd(
-    pattern="حذف رسائلي$",
-    command=("حذف رسائلي", plugin_category),
+    pattern="حذف مسج$",
+    command=("حذف مسج", plugin_category),
     info={
         "header": "To purge your latest messages.",
         "description": "Deletes x(count) amount of your latest messages.",
