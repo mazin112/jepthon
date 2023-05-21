@@ -59,7 +59,7 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ أثناء تحويل رابط الرسالة. الخطأ: {str(e)}")
 
     try:
-        message = await client.get_messages(channel_id, ids=message_id)
+        message = await l313l.get_messages(channel_id, ids=message_id)
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
 
