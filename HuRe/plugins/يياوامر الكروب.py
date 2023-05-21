@@ -1051,3 +1051,16 @@ async def hussein(event):
             except Exception as e:
                 print(f"حدث خطأ أثناء حذف المحادثة الخاصة: {e}")
     await event.edit("**᯽︙ تم تصفية جميع محادثاتك الخاصة بنجاح ✓ **")
+from telethon.tl.functions.messages import DeleteHistoryRequest
+
+@l313l.ar_cmd(pattern="تصفية البوتات")
+async def Hussrin(event):
+    await event.edit("**᯽︙ جارٍ حذف جميع محادثات البوتات في الحساب ...**")
+    result = await event.client(GetContactsRequest(0))
+    bots = [user for user in result.users if user.bot]
+    for bot in bots:
+        try:
+            await event.client(DeleteHistoryRequest(bot.id, max_id=0, just_clear=True))
+        except Exception as e:
+            print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
+    await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
