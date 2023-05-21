@@ -90,8 +90,8 @@ async def delete_it(event):
 
 
 @l313l.ar_cmd(
-    pattern="حذف مسج$",
-    command=("حذف مسج", plugin_category),
+    pattern="ح رسائلي$",
+    command=("ح رسائلي", plugin_category),
     info={
         "header": "To purge your latest messages.",
         "description": "Deletes x(count) amount of your latest messages.",
@@ -102,7 +102,7 @@ async def delete_it(event):
 async def purgeme(event):
     "To purge your latest messages."
     message = event.text
-    count = int(message[9:])
+    count = int(message.split()[1])
     i = 1
     async for message in event.client.iter_messages(event.chat_id, from_user="me"):
         if i > count + 1:
