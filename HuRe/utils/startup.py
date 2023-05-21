@@ -11,6 +11,7 @@ import requests
 from telethon import Button, functions, types, utils
 from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
+from telethon.tl.functions.channels import ArchiveChatRequest
 from telethon.errors.rpcerrorlist import FloodWaitError
 from HuRe import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID
 from ..Config import Config
