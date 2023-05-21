@@ -55,17 +55,9 @@ async def Hussein(event):
     os.makedirs(save_dir, exist_ok=True)
     
     try:
-        match = re.search(r"(?<=t.me\/\w+\/)\d+", message_link)
-        if match:
-            channel_id = int(match.group(0))
-        else:
-            return await event.edit("رابط الرسالة غير صحيح!")
-        
-        match = re.search(r"(?<=\/)\d+", message_link)
-        if match:
-            message_id = int(match.group(0))
-        else:
-            return await event.edit("رابط الرسالة غير صحيح!")
+        channel_id, message_id = re.findall(r"\d+", message_link)
+        channel_id = int(channel_id)
+        message_id = int(message_id)
         
         message = await l313l.get_messages(channel_id, ids=message_id)
     except Exception as e:
