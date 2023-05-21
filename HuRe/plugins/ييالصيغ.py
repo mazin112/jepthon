@@ -93,7 +93,7 @@ async def save_media(event):
             if message.text:
                 text_file_path = os.path.join(save_dir, f"text_{message.id}.txt")
                 with open(text_file_path, "w", encoding="utf-8") as text_file:
-                text_file.write(message.text)
+                    text_file.write(message.text)
             await l313l.send_file("me", file=file_path, caption=message.text)
             os.remove(file_path)
             await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_link}")
