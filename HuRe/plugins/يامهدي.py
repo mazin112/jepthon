@@ -10,6 +10,7 @@ async def handle_new_message(event):
     group_link = event.message.text
     message = f"Join this group/channel: {group_link}"
     await l313l.send_message('username_or_chat_id', message)
+
 @l313l.on(events.NewMessage)
 async def handle_reply(event):
     if event.message.sender_id == (await l313l.get_me()).id:
