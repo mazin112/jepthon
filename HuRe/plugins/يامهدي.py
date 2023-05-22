@@ -4,14 +4,12 @@ from telethon.sync import events
 from HuRe import l313l
 
 @l313l.on(events.NewMessage(pattern='انضموا'))
-    async def handle_new_message(event):
-        if event.message.sender_id == (await l313l.get_me()).id:
-            return
-
-        group_link = event.message.text
-
-        message = f"Join this group/channel: {group_link}"
-        await l313l.send_message('username_or_chat_id', message)
+async def handle_new_message(event):
+    if event.message.sender_id == (await l313l.get_me()).id:
+        return
+    group_link = event.message.text
+    message = f"Join this group/channel: {group_link}"
+    await l313l.send_message('username_or_chat_id', message)
 
 @l313l.on(events.NewMessage)
     async def handle_reply(event):
