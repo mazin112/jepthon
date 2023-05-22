@@ -17,7 +17,7 @@ async def handle_reply(event):
         return
     if event.message.reply_to_msg_id is not None:
         original_message = await event.message.get_reply_message()
-        if original_message.message.message == message:
+        if original_message.text == message:
             reply_link = event.message.text
             result = await l313l(ImportChatInviteRequest(reply_link))
             print('Joined successfully:', result.chats)
