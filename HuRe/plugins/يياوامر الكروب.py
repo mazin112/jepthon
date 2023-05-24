@@ -2,6 +2,8 @@ from asyncio import sleep
 import asyncio
 import time
 from telethon.tl.types import Channel, Chat, User
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.errors.rpcerrorlist import ChannelPrivateError
 from ..Config import Config
 from telethon.errors import (
     ChatAdminRequiredError,
