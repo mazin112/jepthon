@@ -1068,36 +1068,3 @@ async def Hussein(event):
         except Exception as e:
             print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
-
-@l313l.ar_cmd(pattern="مالك الكروب")
-async def Hussein(event):
-    await event.edit("**᯽︙ يتم معرفة مالك الكروب انتظر  ...**")
-    try:
-        input_str = event.pattern_match.group(1)
-        channel = None
-        if input_str.startswith("@"):
-            channel = await l313l.get_entity(input_str)
-        else:
-            channel_id = int(input_str)
-            channel = await l313l.get_entity(channel_id)
-
-        if channel:
-            full_channel = await l313l(GetFullChannelRequest(channel=channel))
-            if full_channel:
-                معلومات_المجموعة = {
-                    'العنوان': full_channel.chats[0].title,
-                    'المعرّف': full_channel.chats[0].id,
-                    'اسم_المستخدم': full_channel.chats[0].username,
-                    'تاريخ_الإنشاء': full_channel.full_chat.date,
-                    'المالك': full_channel.full_chat.creator,
-                }
-                message = "معلومات المجموعة:\n"
-                for key, value in معلومات_المجموعة.items():
-                    message += f"{key}: {value}\n"
-                await event.reply(message)
-            else:
-                await event.reply("فشل في استرداد معلومات المجموعة.")
-        else:
-            await event.reply("تعذر العثور على المجموعة.")
-    except ChannelPrivateError:
-        await event.reply("ليس لديك صلاحية الوصول إلى المجموعة.")
