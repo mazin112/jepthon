@@ -762,7 +762,7 @@ async def banall(event):
          pass
 @l313l.ar_cmd(pattern="كتم_الكل(?:\s|$)([\s\S]*)")
 async def muteall(event):
-ض     if event.is_private:
+     if event.is_private:
          return await edit_or_reply(event, "** ᯽︙ هذا الامر يستعمل للقنوات والمجموعات فقط !**")
      msg = "كتم"
      is_admin = False
