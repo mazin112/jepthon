@@ -1068,3 +1068,20 @@ async def Hussrin(event):
         except Exception as e:
             print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
+  from telethon import events, TelegramClient
+
+@l313l.on(events.NewMessage(pattern=r"مالك القناة"))
+async def Hussein(event):
+    await event.edit("**᯽︙ يتم معرفة مالك القناة انتظر  ...**")
+    try:
+        channel_identifier = event.pattern_match.group(1)
+        entity = await l313l.get_entity(channel_identifier)
+        if entity:
+            if entity.creator:
+                await event.reply(f"مالك القناة هو: {entity.creator.first_name} {entity.creator.last_name}")
+            else:
+                await event.reply("لم يتم العثور على مالك القناة!")
+        else:
+            await event.reply("القناة غير صالحة أو غير موجودة!")
+    except Exception as e:
+        await event.reply(f"حدث خطأ أثناء استرداد معلومات القناة. الخطأ: {str(e)}")
