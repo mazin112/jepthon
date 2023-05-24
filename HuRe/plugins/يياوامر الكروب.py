@@ -762,8 +762,7 @@ async def banall(event):
          pass
 @l313l.ar_cmd(pattern="كتم_الكل(?:\s|$)([\s\S]*)")
 async def muteall(event):
-     chat_id = event.chat_id
-     if event.is_private:
+ض     if event.is_private:
          return await edit_or_reply(event, "** ᯽︙ هذا الامر يستعمل للقنوات والمجموعات فقط !**")
      msg = "كتم"
      is_admin = False
@@ -1067,7 +1066,6 @@ async def Hussrin(event):
         except Exception as e:
             print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
-  from telethon import events, TelegramClient
 
 @l313l.ar_cmd(pattern="مالك القناة")
 async def Hussein(event):
