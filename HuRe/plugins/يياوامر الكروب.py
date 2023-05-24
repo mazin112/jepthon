@@ -1076,20 +1076,16 @@ async def Hussein(event):
         if entity:
             if entity.megagroup:
                 group_type = "مجموعة كبيرة"
-            elif entity.broadcast:
-                group_type = "قناة"
+                creator = await l313l.get_entity(entity.creator_id)
+                creator_info = f"مالك المجموعة: {creator.first_name} {creator.last_name}\n" \
+                               f"معرّف المالك: {creator.id}\n" \
+                               f"معرّف المجموعة: {entity.id}\n" \
+                               f"تأسست في: {entity.date}"
+                await event.reply(f"اسم المجموعة: {entity.title}\n"
+                                  f"نوع المجموعة: {group_type}\n"
+                                  f"{creator_info}")
             else:
-                group_type = "مجموعة"
-
-            creator = await l313l.get_entity(entity.creator_id)
-            creator_info = f"مالك المجموعة: {creator.first_name} {creator.last_name}\n" \
-                           f"معرّف المالك: {creator.id}\n" \
-                           f"معرّف المجموعة: {entity.id}\n" \
-                           f"تأسست في: {entity.date}"
-
-            await event.reply(f"اسم المجموعة: {entity.title}\n"
-                              f"نوع المجموعة: {group_type}\n"
-                              f"{creator_info}")
+                await event.reply("هذا الأمر يتطلب مجموعة كبيرة!")
         else:
             await event.reply("المجموعة غير صالحة أو غير موجودة!")
     except Exception as e:
