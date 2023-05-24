@@ -1070,15 +1070,15 @@ async def Hussrin(event):
 @l313l.ar_cmd(pattern="مالك القناة")
 async def Hussein(event):
     await event.edit("**᯽︙ يتم معرفة مالك القناة انتظر  ...**")
-        try:
-            channel_identifier = event.pattern_match.group(1)
-            entity = await l313l.get_entity(channel_identifier)
-            if entity:
-                if entity.creator:
-                    await event.reply(f"مالك القناة هو: {entity.creator.first_name} {entity.creator.last_name}")
-                else:
-                    await event.reply("لم يتم العثور على مالك القناة!")
+    try:
+        channel_identifier = event.pattern_match.group(1)
+        entity = await l313l.get_entity(channel_identifier)
+        if entity:
+            if entity.creator:
+                await event.reply(f"مالك القناة هو: {entity.creator.first_name} {entity.creator.last_name}")
             else:
-                await event.reply("القناة غير صالحة أو غير موجودة!")
-        except Exception as e:
-            await event.reply(f"حدث خطأ أثناء استرداد معلومات القناة. الخطأ: {str(e)}")
+                await event.reply("لم يتم العثور على مالك القناة!")
+        else:
+            await event.reply("القناة غير صالحة أو غير موجودة!")
+    except Exception as e:
+        await event.reply(f"حدث خطأ أثناء استرداد معلومات القناة. الخطأ: {str(e)}")
