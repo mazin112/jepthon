@@ -81,7 +81,7 @@ async def startupmessage():
             Config.CATUBLOGO = await l313l.tgbot.send_file(
                 BOTLOG_CHATID,
                 "https://telegra.ph/file/6b96d5ea58d065005ec9c.jpg",
-                caption="**᯽︙ بــوت الجوكر يـعـمـل بـنـجـاح ✓ **\n**᯽︙ ارسل `.الاوامر` لرؤية اوامر السورس**",
+                caption="**᯽︙ بــوت الجوكر يـعـمـل بـنـجـاح ✓ \n᯽︙ ارسل `.الاوامر` لرؤية اوامر السورس**\n ᯽︙ لأستعمال بوت الأختراق عبر كود التيرمكس أرسل `.هاك`**",
                 buttons=[(Button.url("سورس الجوكر", "https://t.me/jepthonSupport"),)],
             )
     except Exception as e:
@@ -179,7 +179,7 @@ async def add_bot_to_logger_group(chat_id):
         except Exception as e:
             LOGS.error(str(e))
 #by @jepthon بس اشوفك خامطه للكود اهينك وافضحك
-HuRe = {"@jepthon", "@jepthonsupport", "@MonsebJK"}
+HuRe = {"@jepthon", "@KK_XA", "@GROP_CH"}
 async def saves():
    for lMl10l in HuRe:
         try:
