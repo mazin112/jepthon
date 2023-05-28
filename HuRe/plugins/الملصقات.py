@@ -527,8 +527,8 @@ async def get_pack_info(event):
                 id=stickerset_attr.stickerset.id,
                 access_hash=stickerset_attr.stickerset.access_hash,
 
-hash=0,
-            )
+            ),
+hash=0
         )
     )
     pack_emojis = []
