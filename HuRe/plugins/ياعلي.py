@@ -43,7 +43,7 @@ async def reda (event):
         return await edit_delete(event, "**᯽︙ قم بكتابة نوع الاشتراك الاجباري لإلغائه**")
     if cc == "كروب":
         if not gvarstatus ("subgroup"):
-            return await edit_delete("**᯽︙ لم تفعل الاشتراك الاجباري للكروب لإلغائه**")
+            return await edit_delete(event, "**᯽︙ لم تفعل الاشتراك الاجباري للكروب لإلغائه**")
         if gvarstatus ("subgroup"):
             delgvar ("subgroup")
             return await edit_delete(event, "**᯽︙ تم الغاء الاشتراك الاجباري للكروب بنجاح ✓**")
