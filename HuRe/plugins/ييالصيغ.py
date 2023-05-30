@@ -54,7 +54,7 @@ async def save_media(event):
     try:
         message_link_parts = message_link.split("/")
         await event.reply(f"{message_link_parts}")
-        if len(message_link_parts) >= 2:
+        if message_link_parts:
             if message_link_parts[-2] == "c":
                 channel_username_or_id = message_link_parts[-3]
                 message_id = int(message_link_parts[-1])
@@ -62,7 +62,7 @@ async def save_media(event):
                 channel_username_or_id = message_link_parts[-2]
                 message_id = int(message_link_parts[-1])
         else:
-            return await event.edit("Invalid message link format.")
+            return await event.edit("تحقق من الرابط ، لانه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
 
