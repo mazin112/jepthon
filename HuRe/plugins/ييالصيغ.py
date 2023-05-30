@@ -69,6 +69,9 @@ async def save_media(event):
 
 
     try:
+        if int(channel_username_or_id):
+            channel_username_or_id = f"-100{channel_username_or_id}"
+            channel_username_or_id = int(channel_username_or_id)
         entity = await l313l.get_entity(channel_username_or_id)
         if not entity:
             return await event.edit("Invalid channel or entity not found!")
