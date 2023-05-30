@@ -4,6 +4,7 @@ import os
 import time
 from datetime import datetime
 from telethon import events
+from telethon.errors import ChannelPrivateError
 from telethon.utils import get_peer_id
 from HuRe import l313l
 from telethon import types
@@ -79,7 +80,8 @@ async def save_media(event):
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("Invalid message link or message not found!")
-
+    except ChannelPrivateError:
+        await event.edit("يجب ان تنضم للقناة أولاً لتستطيع الحفظ منها")
     except Exception as e:
         return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
     #else:
