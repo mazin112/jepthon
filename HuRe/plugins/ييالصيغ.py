@@ -76,7 +76,7 @@ async def save_media(event):
         entity = await l313l.get_entity(channel_username_or_id)
         if not entity:
             return await event.edit("Invalid channel or entity not found!")
-
+        await event.reply(channel_username_or_id)
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("Invalid message link or message not found!")
