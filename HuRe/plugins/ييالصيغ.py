@@ -79,7 +79,7 @@ async def save_media(event):
     except Exception as e:
         return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
     else:
-        return await event.edit("Invalid message link format\n{enity}\n{message_id}")
+        return await event.edit(f"Invalid message link format\n{enity}\n{message_id}")
     try:
         message = await l313l.get_messages(channel_id, ids=message_id)
         if not message:
