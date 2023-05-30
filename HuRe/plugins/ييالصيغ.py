@@ -81,7 +81,7 @@ async def save_media(event):
     #else:
         #return await event.edit(f"Invalid message link format\n{entity}\n{message_id}")
     try:
-        message = await l313l.get_messages(channel_id, ids=message_id)
+        message = await l313l.get_messages(channel_username_or_id, ids=message_id)
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
 
@@ -108,7 +108,7 @@ async def save_media(event):
         else:
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
-        print(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
+        await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
 
         
 @l313l.ar_cmd(
