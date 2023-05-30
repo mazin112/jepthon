@@ -53,7 +53,8 @@ async def save_media(event):
 
     try:
         message_link_parts = message_link.split("/")
-        if len(message_link_parts) >= 4:
+        await event.reply(f"{message_link_parts}")
+        if len(message_link_parts) >= 2:
             if message_link_parts[-2] == "c":
                 channel_username_or_id = message_link_parts[-3]
                 message_id = int(message_link_parts[-1])
