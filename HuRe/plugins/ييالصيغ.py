@@ -57,7 +57,7 @@ async def save_media(event):
         if message_link_parts:
             if message_link_parts[-2] == "c":
                 channel_username_or_id = message_link_parts[-3]
-                channel_username_or_id = "-100" + channel_username_or_id
+                channel_username_or_id = f"-100{channel_username_or_id}"
                 message_id = int(message_link_parts[-1])
             else:
                 channel_username_or_id = message_link_parts[-2]
