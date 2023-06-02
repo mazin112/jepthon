@@ -170,7 +170,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         build_id = build_status.id
         headers = {
             "Accept": "application/vnd.heroku+json; version=3",
-            "Authorization": f"Bearer {HEROKU_API_TOKEN}"
+            "Authorization": f"Bearer {HEROKU_API_KEY}"
         }
         response = requests.get(f"https://api.heroku.com/apps/{HEROKU_APP_NAME}/builds/{build_id}/log-sessions", headers=headers)
         log_session_url = response.json()["logplex_url"]
