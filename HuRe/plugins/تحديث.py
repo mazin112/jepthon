@@ -168,8 +168,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
         build_id = build_status.id
-        headers = {"Authorization": f"Bearer {HEROKU_API_KEY}",
-        "application/vnd.heroku+json; version=3"
+        headers = {
+            "Authorization": f"Bearer {HEROKU_API_KEY}",
+            "Accept": "application/vnd.heroku+json; version=3"
         }
         response = requests.get(f"https://api.heroku.com/apps/{HEROKU_APP_NAME}/builds/{build_id}/log", headers=headers)
         build_log = response.text
