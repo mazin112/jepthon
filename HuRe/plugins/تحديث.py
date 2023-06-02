@@ -174,7 +174,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         }
         response = requests.get(f"https://api.heroku.com/apps/{HEROKU_APP_NAME}/builds/{build_id}/log-sessions", headers=headers)
         log_session_url = response.json()["logplex_url"]
-        response = requests.get(log_session_url, headers=headers)
+        response = requests.get(f"https://api.heroku.com/apps/{HEROKU_APP_NAME}/builds/{build_id}/log-sessions", headers=headers)
         build_log = response.text
         log_filename = "build_log.txt"
         with open(log_filename, "w") as file:
