@@ -3,7 +3,7 @@ import os
 import contextlib
 import sys
 from asyncio.exceptions import CancelledError
-
+import requests
 import heroku3
 import urllib3
 from git import Repo
@@ -168,7 +168,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
         build_id = build_status.id
-        build_log = heroku_app.builds(order_by="created_at", sort="desc")[0].stream_log()
+        headers = {"Authorization": f"Bearer {HEROKU_API_KEY}"}
+        response = requests.get(f"https://api.heroku.com/apps/{HEROKU_APP_NAME}/builds/{build_id}/log", headers=headers)
+        build_log = response.text
         log_filename = "build_log.txt"
         with open(log_filename, "w") as file:
             file.write(build_log)
