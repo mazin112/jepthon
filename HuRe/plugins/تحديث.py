@@ -169,7 +169,12 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     if build_status.status == "failed":
         build_id = build_status.id
         build_log = heroku_app.builds(build_id).stream_log()
-        
+        log_filename = "build_log.txt"
+        with open(log_filename, "w") as file:
+            file.write(build_log)
+
+        await event.reply(file=log_filename)
+        os.remove(log_filename)
         return await edit_delete(
             event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n{build_log}"
         )
