@@ -49,7 +49,8 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                         except BaseException as er:
                             print(f"صار خطأ\n{er}")
                     else:
-                        await LOG_CHATS_.NEWPM.edit(
+                        await event.client.send_message(
+Config.PM_LOGGER_GROUP_ID,
                             LOG_CHATS_.NEWPM.text.replace(
                                 " **📮┊رسـاله جـديده**", f"{LOG_CHATS_.COUNT} **رسـائل**"
                             )
