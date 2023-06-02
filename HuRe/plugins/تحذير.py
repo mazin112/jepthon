@@ -1,13 +1,12 @@
 import html
 
 from HuRe import l313l
-
 from ..core.managers import edit_or_reply
 from ..sql_helper import warns_sql as sql
 
 plugin_category = "admin"
 
-
+#warn
 @l313l.ar_cmd(
     pattern="تحذير(?:\s|$)([\s\S]*)",
     command=("تحذير", plugin_category),
