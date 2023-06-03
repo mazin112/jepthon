@@ -64,7 +64,7 @@ async def Reda (event):
         
         if replied_msg.media:
             
-            await l313l.send_message(event.chat_id, replied_msg.message, file=replied_msg.media)
+            await l313l.send_message(event.chat_id, "", file=replied_msg.media)
         else:
             
             await l313l.send_message(chat_id=event.chat_id, message=replied_msg.message)
