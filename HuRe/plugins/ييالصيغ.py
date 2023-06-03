@@ -4,9 +4,6 @@ import os
 import time
 from datetime import datetime
 from telethon import events
-import cv2
-
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 from telethon.errors import ChannelPrivateError
 from telethon.utils import get_peer_id
@@ -37,48 +34,6 @@ cancel_process = False
 #Copyright  By  @jepthon  © 2021
 #WRITE BY  @lMl10l  
 #Edited By Reda 
-
-@l313l.ar_cmd(pattern="غوش")
-async def Reda(event):
-    if event.message.reply_to_msg_id and event.message.reply_to_msg_id.media and hasattr(event.message.reply_to_msg_id.media, 'video'):
-        
-        video = await event.client.download_media(event.message.reply_to_msg_id.media)
-        
-        cap = cv2.VideoCapture(video)
-        fps = cap.get(cv2.CAP_PROP_FPS)
-
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        output_path = 'output_video.mp4'
-        output = cv2.VideoWriter(output_path, fourcc, fps, (int(cap.get(3)), int(cap.get(4))))
-
-        while True:
-            ret, frame = cap.read()
-
-            if not ret:
-                break
-
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        
-            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
-
-            for (x, y, w, h) in faces:
-                face_roi = frame[y:y + h, x:x + w]
-                blurred_face = cv2.GaussianBlur(face_roi, (99, 99), 30)
-                frame[y:y + h, x:x + w] = blurred_face
-            output.write(frame)
-            cv2.imshow('Video', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-
-        cap.release()
-        output.release()
-        cv2.destroyAllWindows()
-        await event.reply(file=output_path)
-        os.remove(output_path)
-    else:
-        await event.reply('No video found in the reply message.')  
-
 
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
