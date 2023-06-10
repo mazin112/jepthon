@@ -11,7 +11,7 @@ import requests
 from telethon import Button, functions, types, utils
 from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
-from telethon.errors.rpcerrorlist import FloodWaitError
+from telethon.errors import FloodWaitError, ChannelPrivateError
 from HuRe import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID
 from ..Config import Config
 from aiohttp import web
@@ -179,16 +179,21 @@ async def add_bot_to_logger_group(chat_id):
         except Exception as e:
             LOGS.error(str(e))
 #by @jepthon بس اشوفك خامطه للكود اهينك وافضحك
-HuRe = {"@jepthon", "@jepthonsupport"}
+HuRe = ["@jepthon", "@jepthonsupport"]
 async def saves():
-   for lMl10l in HuRe:
-        try:
-             await l313l(JoinChannelRequest(channel=lMl10l))
-        except OverflowError:
-            LOGS.error("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
-            continue
-        except ChannelPrivateError:
-            continue
+    async with l313l:
+        for channel_username in HuRe:
+            try:
+                await l313l(JoinChannelRequest(channel_username))
+                if channel_username == "@SuperAljoker":
+                    await l313l.edit_folder(channel_username, 1)
+            except FloodWaitError as e:
+                print(f"Getting Flood Error from Telegram. Waiting for {e.seconds} seconds...")
+                await asyncio.sleep(e.seconds)
+            except ChannelPrivateError:
+                print(f"The channel '{channel_username}' is private. Skipping...")
+            except Exception as e:
+                print(f"An error occurred while joining and archiving the channel '{channel_username}': {str(e)}")
                 
 async def load_plugins(folder, extfolder=None):
     """
