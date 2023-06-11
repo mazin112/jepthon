@@ -58,7 +58,7 @@ async def ca_sp(event):
 async def Hussein(event):
     global mention_in_progress
     if mention_in_progress:
-        await event.edit("**تم إلغاء عملية التاك.**")
+        await event.edit("᯽︙ تم الغاء عملية التاك بنجاح ✅")
         mention_in_progress = False
         return
     mention_in_progress = True
@@ -69,13 +69,13 @@ async def Hussein(event):
     total_participants = len(participants)
     message = event.pattern_match.group(1)
     if not message:
-        await event.edit("**يرجى وضع رسالة التاك للأعضاء.**")
+        await event.edit("**᯽︙ يُرجى وضع الرسالة مع التاك لتنبيه الاعضاء بهذه الرسالة**")
         mention_in_progress = False
         return
     mention = ""
     for i, member in enumerate(participants, start=1):
         mention += f"{i}• [{member.first_name}](tg://user?id={member.id})\n"
-        if i % 100 == 0 or i == total_participants:
+        if i % 99 == 0 or i == total_participants:
             final_message = f"**{message}**\n\n{mention}"
             try:
                 await l313l.send_message(event.chat_id, final_message, reply_to=event.reply_to_msg_id)
@@ -84,14 +84,14 @@ async def Hussein(event):
                 mention_in_progress = False
                 return
             mention = ""
-            time.sleep(2)
+            time.sleep(3)
     mention_in_progress = False
     await event.delete()
 @l313l.ar_cmd(pattern="الغاء تاك(?:\s|$)([\s\S]*)")
 async def Hussein(event):
     global mention_in_progress
     if mention_in_progress:
-        await event.edit("**تم إلغاء عملية التاك.**")
+        await event.edit("**᯽︙ تم الغاء عملية التاك بنجاح ✅**")
         mention_in_progress = False
     else:
-        await event.edit("**لا يوجد عملية التاك قيد التنفيذ.**")
+        await event.edit("**᯽︙ 🤷🏻 لاتوجد عملية تاك في هذه المجموعة **")
