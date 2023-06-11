@@ -54,12 +54,11 @@ async def ca_sp(event):
     except:
       pass
     return await edit_or_reply(event, "** ᯽︙ تم الغاء المنشن بنجاح ✓**")
-
-@l313l.ar_cmd(pattern="تاكك(?:\s|$)([\s\S]*)")
+@l313l.ar_cmd(pattern="تاك(?:\s|$)([\s\S]*)")
 async def Hussein(event):
     global mention_in_progress
     if mention_in_progress:
-        await event.respond("**تم إلغاء عملية mention.**")
+        await event.edit("**تم إلغاء عملية التاك.**")
         mention_in_progress = False
         return
     mention_in_progress = True
@@ -68,26 +67,31 @@ async def Hussein(event):
     async for member in l313l.iter_participants(chat):
         participants.append(member)
     total_participants = len(participants)
+    message = event.pattern_match.group(1)
+    if not message:
+        await event.edit("**يرجى وضع رسالة التاك للأعضاء.**")
+        mention_in_progress = False
+        return
     mention = ""
     for i, member in enumerate(participants, start=1):
-        mention += f"[{member.first_name}](tg://user?id={member.id}) "
+        mention += f"{i}. [{member.first_name}](tg://user?id={member.id})\n"
         if i % 200 == 0 or i == total_participants:
+            final_message = f"{message}\n{mention}"
             try:
-                await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
+                await l313l.send_message(event.chat_id, final_message, reply_to=event.reply_to_msg_id)
             except Exception as e:
                 print(f"حدث خطأ أثناء الإرسال: {e}")
                 mention_in_progress = False
                 return
             mention = ""
-            time.sleep(3)
+            time.sleep(2)
     mention_in_progress = False
     await event.delete()
-
-@l313l.ar_cmd(pattern="الغاء تاكك(?:\s|$)([\s\S]*)")
+@l313l.ar_cmd(pattern="الغاء تاك(?:\s|$)([\s\S]*)")
 async def Hussein(event):
     global mention_in_progress
     if mention_in_progress:
-        await event.respond("**تم إلغاء عملية mention.**")
+        await event.edit("**تم إلغاء عملية التاك.**")
         mention_in_progress = False
     else:
-        await event.respond("**لا يوجد عملية mention قيد التنفيذ.**")
+        await event.edit("**لا يوجد عملية التاك قيد التنفيذ.**")
