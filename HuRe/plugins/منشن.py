@@ -11,6 +11,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 
 spam_chats = []
+mention_in_progress = False
 
 @l313l.ar_cmd(pattern="منشن(?:\s|$)([\s\S]*)")
 async def menall(event):
@@ -52,8 +53,15 @@ async def ca_sp(event):
     except:
       pass
     return await edit_or_reply(event, "** ᯽︙ تم الغاء المنشن بنجاح ✓**")
+
 @l313l.ar_cmd(pattern="تاكك(?:\s|$)([\s\S]*)")
 async def Hussein(event):
+    global mention_in_progress
+    if mention_in_progress:
+        await event.respond("**تم إلغاء عملية mention.**")
+        mention_in_progress = False
+        return
+    mention_in_progress = True
     chat = await event.get_chat()
     mention = ""
     async for member in l313l.iter_participants(chat):
@@ -62,4 +70,14 @@ async def Hussein(event):
         await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
     except Exception as e:
         print(f"حدث خطأ أثناء الإرسال: {e}")
+    mention_in_progress = False
     await event.delete()
+
+@l313l.ar_cmd(pattern="الغاء تاكك(?:\s|$)([\s\S]*)")
+async def Hussein(event):
+    global mention_in_progress
+    if mention_in_progress:
+        await event.respond("**تم إلغاء عملية المنشن.**")
+        mention_in_progress = False
+    else:
+        await event.respond("**لا يوجد عملية منشن قيد التنفيذ.**")
