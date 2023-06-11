@@ -3,6 +3,7 @@
 # شعندك داخل للملف تريد تخمطة ههههههههه اخمط ونسبة لنفسك ماوصيك :*
 from HuRe import l313l
 import asyncio
+import time
 from ..core.managers import edit_or_reply
 from telethon import events
 from telethon.tl.types import ChannelParticipantAdmin
@@ -63,13 +64,22 @@ async def Hussein(event):
         return
     mention_in_progress = True
     chat = await event.get_chat()
-    mention = ""
+    participants = []
     async for member in l313l.iter_participants(chat):
+        participants.append(member)
+    total_participants = len(participants)
+    mention = ""
+    for i, member in enumerate(participants, start=1):
         mention += f"[{member.first_name}](tg://user?id={member.id}) "
-    try:
-        await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
-    except Exception as e:
-        print(f"حدث خطأ أثناء الإرسال: {e}")
+        if i % 200 == 0 or i == total_participants:
+            try:
+                await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
+            except Exception as e:
+                print(f"حدث خطأ أثناء الإرسال: {e}")
+                mention_in_progress = False
+                return
+            mention = ""
+            time.sleep(3)
     mention_in_progress = False
     await event.delete()
 
@@ -77,7 +87,7 @@ async def Hussein(event):
 async def Hussein(event):
     global mention_in_progress
     if mention_in_progress:
-        await event.respond("**تم إلغاء عملية المنشن.**")
+        await event.respond("**تم إلغاء عملية mention.**")
         mention_in_progress = False
     else:
-        await event.respond("**لا يوجد عملية منشن قيد التنفيذ.**")
+        await event.respond("**لا يوجد عملية mention قيد التنفيذ.**")
