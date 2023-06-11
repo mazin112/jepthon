@@ -55,10 +55,11 @@ async def ca_sp(event):
 @l313l.ar_cmd(pattern="تاكك(?:\s|$)([\s\S]*)")
 async def Hussein(event):
     chat = await event.get_chat()
+    mention = ""
     async for member in l313l.iter_participants(chat):
-        mention = f"[{member.first_name}](tg://user?id={member.id})"
-        try:
-            await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
-        except Exception as e:
-            print(f"حدث خطأ أثناء الإرسال: {e}")
+        mention += f"[{member.first_name}](tg://user?id={member.id}) "
+    try:
+        await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
+    except Exception as e:
+        print(f"حدث خطأ أثناء الإرسال: {e}")
     await event.delete()
