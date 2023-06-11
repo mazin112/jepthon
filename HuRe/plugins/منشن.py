@@ -52,7 +52,7 @@ async def ca_sp(event):
     except:
       pass
     return await edit_or_reply(event, "** ᯽︙ تم الغاء المنشن بنجاح ✓**")
-@l313l.on(events.NewMessage(pattern="تاك للكل"))
+@l313l.ar_cmd(pattern="تاكك(?:\s|$)([\s\S]*)")
 async def Hussein(event):
     chat = await event.get_chat()
     async for member in l313l.iter_participants(chat):
