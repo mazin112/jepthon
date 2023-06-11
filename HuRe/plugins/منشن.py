@@ -4,6 +4,7 @@
 from HuRe import l313l
 import asyncio
 from ..core.managers import edit_or_reply
+from telethon import events
 from telethon.tl.types import ChannelParticipantAdmin
 from telethon.tl.types import ChannelParticipantCreator
 from telethon.tl.functions.channels import GetParticipantRequest
@@ -51,3 +52,13 @@ async def ca_sp(event):
     except:
       pass
     return await edit_or_reply(event, "** ᯽︙ تم الغاء المنشن بنجاح ✓**")
+@l313l.on(events.NewMessage(pattern="تاك للكل"))
+async def Hussein(event):
+    chat = await event.get_chat()
+    async for member in l313l.iter_participants(chat):
+        mention = f"[{member.first_name}](tg://user?id={member.id})"
+        try:
+            await l313l.send_message(event.chat_id, mention, reply_to=event.reply_to_msg_id)
+        except Exception as e:
+            print(f"حدث خطأ أثناء الإرسال: {e}")
+    await event.delete()
