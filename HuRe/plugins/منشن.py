@@ -74,9 +74,9 @@ async def Hussein(event):
         return
     mention = ""
     for i, member in enumerate(participants, start=1):
-        mention += f"{i}. [{member.first_name}](tg://user?id={member.id})\n"
-        if i % 200 == 0 or i == total_participants:
-            final_message = f"{message}\n{mention}"
+        mention += f"{i}• [{member.first_name}](tg://user?id={member.id})\n"
+        if i % 100 == 0 or i == total_participants:
+            final_message = f"**{message}**\n\n{mention}"
             try:
                 await l313l.send_message(event.chat_id, final_message, reply_to=event.reply_to_msg_id)
             except Exception as e:
