@@ -29,6 +29,8 @@ DEFAULTUSERBIO = (
 )
 
 
+from telethon.tl.functions.photos import GetUserPhotosRequest
+
 @l313l.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
 async def _(event):
     mid = await l313l.get_me()
@@ -61,13 +63,13 @@ async def _(event):
     if user_bio is None:
         user_bio = ""
     fname = mid.first_name
-    if fname == None:
+    if fname is None:
         fname = ""
     lname = mid.last_name
-    if lname == None:
+    if lname is None:
         lname = ""
     oabout = me.about
-    if oabout == None:
+    if oabout is None:
         oabout = ""
     addgvar("fname", fname)
     addgvar("lname", lname)
@@ -76,15 +78,15 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     try:
-    with open(photos, 'rb') as file:
-        pfile = await event.client.upload_file(file)
+        with open(photos, 'rb') as file:
+            pfile = await event.client.upload_file(file)
     except Exception as e:
         delgvar("fname")
         delgvar("lname")
         delgvar("oabout")
         return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "**⌁︙تـم نسـخ الـحساب بـنجاح ،✅**")
+    await edit_delete(event, "**⌁︙تـم نسـخ الحساب بنجاح، ✅**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
