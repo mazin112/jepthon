@@ -45,8 +45,8 @@ async def _(event):
     profile_pic = await event.client.get_profile_photos(user_id)
     profile_pic = list(reversed(profile_pic)) 
     for photo in profile_pic:
-        photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
-        await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(photo_file)))
+        pfile = await event.client.download_media(photo, Config.TEMP_DIR)
+        await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(pfile)))
     first_name = html.escape(replied_user.first_name)
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
