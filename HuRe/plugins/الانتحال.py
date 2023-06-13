@@ -34,7 +34,7 @@ async def _(event):
     me = (await event.client(GetFullUserRequest(mid.id))).full_user
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
-        return await edit_delete(event, "**يجب الرد على رسالة أولاً**")
+        return await edit_delete(event, "**يجب الرد على رسالة اولاً**")
     if replied_user.id == 705475246:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     if replied_user.id == 393120911:
@@ -42,9 +42,23 @@ async def _(event):
     if replied_user.id == 1374312239:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
-    user_profile_photos = await event.client.get_profile_photos(user_id)
-    if not user_profile_photos:
-        return await edit_delete(event, "**لا يوجد صور في ملف الشخصي للمستخدم**")
+    profile_pic = await event.client.get_profile_photos(user_id)
+    for photo in profile_pic:
+        photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
+        await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(photo_file)))
+    first_name = html.escape(replied_user.first_name)
+    if first_name is not None:
+        first_name = first_name.replace("\u2060", "")
+    last_name = replied_user.last_name
+    if last_name is not None:
+        last_name = html.escape(last_name)
+        last_name = last_name.replace("\u2060", "")
+    if last_name is None:
+        last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
+    replied_user = (await event.client(GetFullUserRequest(replied_user.id))).full_user
+    user_bio = replied_user.about
+    if user_bio is None:
+        user_bio = ""
     fname = mid.first_name
     if fname == None:
         fname = ""
@@ -57,38 +71,23 @@ async def _(event):
     addgvar("fname", fname)
     addgvar("lname", lname)
     addgvar("oabout", oabout)
-    for photo in user_profile_photos:
-        profile_pic = await event.client.download_media(photo, Config.TEMP_DIR)
-        first_name = html.escape(replied_user.first_name)
-        if first_name is not None:
-            first_name = first_name.replace("\u2060", "")
-        last_name = replied_user.last_name
-        if last_name is not None:
-            last_name = html.escape(last_name)
-            last_name = last_name.replace("\u2060", "")
-        if last_name is None:
-            last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
-        replied_user = (await event.client(GetFullUserRequest(replied_user.id))).full_user
-        user_bio = replied_user.about
-        if user_bio is None:
-            user_bio = ""
-        await event.client(functions.account.UpdateProfileRequest(first_name=first_name))
-        await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
-        await event.client(functions.account.UpdateProfileRequest(about=user_bio))
-        try:
-            pfile = await event.client.upload_file(profile_pic)
-            await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-        except Exception as e:
-            delgvar("fname")
-            delgvar("lname")
-            delgvar("oabout")
-            return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
-            await edit_delete(event, "**⌁︙تـم نسـخ الحساب بنجاح، ✅**")
-            if BOTLOG:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#الانتحال\nتم انتحال المستخدم: [{first_name}](tg://user?id={user_id })",
-                )
+    await event.client(functions.account.UpdateProfileRequest(first_name=first_name))
+    await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
+    await event.client(functions.account.UpdateProfileRequest(about=user_bio))
+    try:
+        pfile = await event.client.upload_file(profile_pic)
+    except Exception as e:
+        delgvar("fname")
+        delgvar("lname")
+        delgvar("oabout")
+        return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
+    await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
+    await edit_delete(event, "**⌁︙تـم نسـخ الـحساب بـنجاح ،✅**")
+    if BOTLOG:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"#الانتحال\nتم انتحال المستخدم: [{first_name}](tg://user?id={user_id })",
+        )
 
 
 @l313l.ar_cmd(
