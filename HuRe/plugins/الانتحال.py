@@ -43,11 +43,10 @@ async def _(event):
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
     profile_pic = await event.client.get_profile_photos(user_id)
-    profile_pic = list(reversed(profile_pic)) 
+    profile_pic = reversed(profile_pic)
     for photo in profile_pic:
         photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
-        with open(photo_file, 'rb') as file:
-            await event.client(functions.photos.UploadProfilePhotoRequest(file.read()))
+        await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(photo_file)))
     first_name = html.escape(replied_user.first_name)
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
