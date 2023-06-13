@@ -42,8 +42,8 @@ async def _(event):
     if replied_user.id == 1374312239:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
-    profile_pics = await event.client.get_profile_photos(user_id)
-    for photo in profile_pics:
+    profile_pic = await event.client.get_profile_photos(user_id)
+    for photo in profile_pic:
         photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
         await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(photo_file)))
     first_name = html.escape(replied_user.first_name)
