@@ -43,6 +43,7 @@ async def _(event):
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
     profile_pic = await event.client.get_profile_photos(user_id)
+    profile_pic = list(reversed(profile_pic)) 
     for photo in profile_pic:
         photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
         await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(photo_file)))
