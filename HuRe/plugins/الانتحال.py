@@ -2,6 +2,7 @@
 # FILES WRITTEN BY  @lMl10l
 import html
 import base64
+from io import BytesIO
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl import functions, types
