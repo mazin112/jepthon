@@ -29,11 +29,6 @@ DEFAULTUSERBIO = (
     else "الحمد لله دائماً وابداً 🎀 𝑆𝐻 : @jepthon"
 )
 
-from io import BytesIO
-import html
-
-# ...
-
 @l313l.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
 async def impersonate_user(event):
     mid = await l313l.get_me()
