@@ -28,16 +28,13 @@ DEFAULTUSERBIO = (
     else "الحمد لله دائماً وابداً 🎀 𝑆𝐻 : @jepthon"
 )
 
-
-from telethon.tl.functions.photos import GetUserPhotosRequest
-
 @l313l.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
 async def _(event):
     mid = await l313l.get_me()
     me = (await event.client(GetFullUserRequest(mid.id))).full_user
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
-        return await edit_delete(event, "**يجب الرد على رسالة اولاً**")
+        return await edit_delete(event, "**يجب الرد على رسالة أولاً**")
     if replied_user.id == 705475246:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     if replied_user.id == 393120911:
@@ -49,6 +46,11 @@ async def _(event):
     for photo in photos.photos:
         photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
         await event.client.upload_file(photo_file)
+    profile_pics = await event.client.get_profile_photos(user_id)
+    if not profile_pics:
+        return await edit_delete(event, "**لا يوجد صور ملف شخصي لهذا المستخدم**")
+    profile_pic = profile_pics[0]
+    pfile = await event.client.download_media(profile_pic)
     first_name = html.escape(replied_user.first_name)
     if first_name is not None:
         first_name = first_name.replace("\u2060", "")
@@ -78,7 +80,7 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     try:
-        with open(photos, 'rb') as file:
+        with open(pfile, 'rb') as file:
             pfile = await event.client.upload_file(file)
     except Exception as e:
         delgvar("fname")
