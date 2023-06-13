@@ -2,9 +2,7 @@
 # FILES WRITTEN BY  @lMl10l
 import html
 import base64
-from io import BytesIO
 from telethon.tl.functions.channels import GetFullChannelRequest
-from telethon.tl.functions.photos import GetUserPhotosRequest
 from telethon.tl import functions, types
 from telethon.tl.functions.users import GetFullUserRequest
 from telethon.errors import ChatAdminRequiredError, FloodWaitError
@@ -30,32 +28,42 @@ DEFAULTUSERBIO = (
 )
 
 @l313l.ar_cmd(pattern="انتحال(?:\s|$)([\s\S]*)")
-async def impersonate_user(event):
+async def _(event):
     mid = await l313l.get_me()
     me = (await event.client(GetFullUserRequest(mid.id))).full_user
     replied_user, error_i_a = await get_user_from_event(event)
     if replied_user is None:
-        return await edit_delete(event, "**يجب الرد على رسالة أولاً**")
-    if replied_user.id == 705475246 or replied_user.id == 393120911 or replied_user.id == 1374312239:
+        return await edit_delete(event, "**يجب الرد على رسالة اولاً**")
+    if replied_user.id == 705475246:
+        return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
+    if replied_user.id == 393120911:
+        return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
+    if replied_user.id == 1374312239:
         return await edit_delete(event, "**لا تحاول تنتحل المطورين ادبسز!**")
     user_id = replied_user.id
-    profile_pics = await event.client.get_profile_photos(user_id)
-    profile_pics = reversed(profile_pics)
-    for photo in profile_pics:
-        photo_file = BytesIO()
-        await event.client.download_media(photo, photo_file)
-        photo_file.seek(0)  # إعادة تعيين مؤشر الملف إلى البداية
-        await event.client(functions.photos.UploadProfilePhotoRequest(await event.client.upload_file(photo_file, file_name='photo.jpg')))
-    first_name = html.escape(replied_user.first_name or "")
-    last_name = html.escape(replied_user.last_name or "")
-    last_name = last_name.replace("\u2060", "")
+    profile_pic = await event.client.download_profile_photo(user_id, Config.TEMP_DIR)
+    first_name = html.escape(replied_user.first_name)
+    if first_name is not None:
+        first_name = first_name.replace("\u2060", "")
+    last_name = replied_user.last_name
+    if last_name is not None:
+        last_name = html.escape(last_name)
+        last_name = last_name.replace("\u2060", "")
     if last_name is None:
         last_name = "⁪⁬⁮⁮⁮⁮ ‌‌‌‌"
     replied_user = (await event.client(GetFullUserRequest(replied_user.id))).full_user
-    user_bio = replied_user.about or ""
-    fname = mid.first_name or ""
-    lname = mid.last_name or ""
-    oabout = me.about or ""
+    user_bio = replied_user.about
+    if user_bio is None:
+        user_bio = ""
+    fname = mid.first_name
+    if fname == None:
+        fname = ""
+    lname = mid.last_name
+    if lname == None:
+        lname = ""
+    oabout = me.about
+    if oabout == None:
+        oabout = ""
     addgvar("fname", fname)
     addgvar("lname", lname)
     addgvar("oabout", oabout)
@@ -63,14 +71,14 @@ async def impersonate_user(event):
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     try:
-        pfile = await event.client.upload_file(photo_file, file_name='photo.jpg')
+        pfile = await event.client.upload_file(profile_pic)
     except Exception as e:
         delgvar("fname")
         delgvar("lname")
         delgvar("oabout")
         return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "**⌁︙تـم نسـخ الـحساب بـنجاح، ✅**")
+    await edit_delete(event, "**⌁︙تـم نسـخ الـحساب بـنجاح ،✅**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
