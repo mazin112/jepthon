@@ -83,13 +83,12 @@ async def _(event):
             delgvar("lname")
             delgvar("oabout")
             return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
-        await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-        await edit_delete(event, "**⌁︙تـم نسـخ الحساب بنجاح، ✅**")
-        if BOTLOG:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#الانتحال\nتم انتحال المستخدم: [{first_name}](tg://user?id={user_id })",
-            )
+            await edit_delete(event, "**⌁︙تـم نسـخ الحساب بنجاح، ✅**")
+            if BOTLOG:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#الانتحال\nتم انتحال المستخدم: [{first_name}](tg://user?id={user_id })",
+                )
 
 
 @l313l.ar_cmd(
