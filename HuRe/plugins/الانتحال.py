@@ -44,7 +44,7 @@ async def _(event):
     user_id = replied_user.id
     profile_pic = await event.client.get_profile_photos(user_id)
     profile_pic = list(reversed(profile_pic)) 
-    for photo in profile_pics:
+    for photo in profile_pic:
         photo_file = await event.client.download_media(photo, Config.TEMP_DIR)
         with open(photo_file, 'rb') as file:
             await event.client(functions.photos.UploadProfilePhotoRequest(file.read()))
