@@ -75,13 +75,13 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     try:
-        pfile = await event.client.upload_file(profile_pic)
+        photo_file = await event.client.upload_file(profile_pic)
     except Exception as e:
         delgvar("fname")
         delgvar("lname")
         delgvar("oabout")
         return await edit_delete(event, f"**فشل في الانتحال بسبب:**\n__{e}__")
-    await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
+    await event.client(functions.photos.UploadProfilePhotoRequest(photo_file))
     await edit_delete(event, "**⌁︙تـم نسـخ الـحساب بـنجاح ،✅**")
     if BOTLOG:
         await event.client.send_message(
