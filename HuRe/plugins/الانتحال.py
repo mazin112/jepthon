@@ -76,7 +76,8 @@ async def _(event):
     await event.client(functions.account.UpdateProfileRequest(last_name=last_name))
     await event.client(functions.account.UpdateProfileRequest(about=user_bio))
     try:
-        pfile = await event.client.upload_file(photos)
+    with open(profile_pic, 'rb') as file:
+        pfile = await event.client.upload_file(file)
     except Exception as e:
         delgvar("fname")
         delgvar("lname")
