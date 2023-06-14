@@ -4,8 +4,8 @@ except ImportError as e:
     raise AttributeError from e
 from sqlalchemy import Column, String, UnicodeText
 
-class kickname(BASE):
-    __tablename__ = "kickname"
+class Globals(BASE):
+    __tablename__ = "globals"
     variable = Column(String, primary_key=True, nullable=False)
     value = Column(UnicodeText, primary_key=True, nullable=False)
 
@@ -14,14 +14,14 @@ class kickname(BASE):
         self.value = value
 
 
-kickname.__table__.create(checkfirst=True)
+Globals.__table__.create(checkfirst=True, extend_existing=True)
 
 
 def gvarstatus(variable):
     try:
         return (
-            SESSION.query(kickname)
-            .filter(kickname.variable == str(variable))
+            SESSION.query(Globals)
+            .filter(Globals.variable == str(variable))
             .first()
             .value
         )
@@ -32,17 +32,17 @@ def gvarstatus(variable):
 
 
 def addgvar(variable, value):
-    if SESSION.query(kickname).filter(kickname.variable == str(variable)).one_or_none():
+    if SESSION.query(Globals).filter(Globals.variable == str(variable)).one_or_none():
         delgvar(variable)
     value_str = ",".join(value)  # تحويل القيمة إلى سلسلة نصية
-    adder = kickname(str(variable), value_str)
+    adder = Globals(str(variable), value_str)
     SESSION.add(adder)
     SESSION.commit()
 
 def delgvar(variable):
     rem = (
-        SESSION.query(kickname)
-        .filter(kickname.variable == str(variable))
+        SESSION.query(Globals)
+        .filter(Globals.variable == str(variable))
         .delete(synchronize_session="fetch")
     )
     if rem:
