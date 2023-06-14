@@ -4,7 +4,6 @@ except ImportError as e:
     raise AttributeError from e
 from sqlalchemy import Column, String, UnicodeText
 
-
 class kickname(BASE):
     __tablename__ = "kickname"
     variable = Column(String, primary_key=True, nullable=False)
