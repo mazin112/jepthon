@@ -2,48 +2,30 @@ try:
     from . import BASE, SESSION
 except ImportError as e:
     raise AttributeError from e
-from sqlalchemy import Column, String, UnicodeText
+from sqlalchemy import Column, String, UnicodeText, Table
 
-class Globals(BASE):
-    __tablename__ = "globals"
-    variable = Column(String, primary_key=True, nullable=False)
-    value = Column(UnicodeText, primary_key=True, nullable=False)
+if 'globals' in BASE.metadata.tables:
+    globals_table = Table('globals', BASE.metadata, autoload=True, autoload_with=SESSION.bind)
+else:
+    globals_table = Table(
+        'globals', BASE.metadata,
+        Column('variable', String, primary_key=True, nullable=False),
+        Column('value', UnicodeText, primary_key=True, nullable=False)
+    )
 
+class Globals:
     def __init__(self, variable, value):
         self.variable = str(variable)
         self.value = value
 
-
-Globals.__table__.create(checkfirst=True, extend_existing=True)
-
-
-def gvarstatus(variable):
-    try:
-        return (
-            SESSION.query(Globals)
-            .filter(Globals.variable == str(variable))
-            .first()
-            .value
-        )
-    except BaseException:
-        return None
-    finally:
-        SESSION.close()
-
-
 def addgvar(variable, value):
-    if SESSION.query(Globals).filter(Globals.variable == str(variable)).one_or_none():
+    if SESSION.query(globals_table).filter(globals_table.c.variable == str(variable)).one_or_none():
         delgvar(variable)
-    value_str = ",".join(value)  # تحويل القيمة إلى سلسلة نصية
-    adder = Globals(str(variable), value_str)
-    SESSION.add(adder)
+    ins = globals_table.insert().values(variable=str(variable), value=value)
+    SESSION.execute(ins)
     SESSION.commit()
 
 def delgvar(variable):
-    rem = (
-        SESSION.query(Globals)
-        .filter(Globals.variable == str(variable))
-        .delete(synchronize_session="fetch")
-    )
-    if rem:
-        SESSION.commit()
+    dele = globals_table.delete().where(globals_table.c.variable == str(variable))
+    SESSION.execute(dele)
+    SESSION.commit()
