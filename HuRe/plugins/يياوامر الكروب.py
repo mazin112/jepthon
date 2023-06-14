@@ -1,7 +1,7 @@
 from asyncio import sleep
 import asyncio
 import time
-from telethon.tl.types import Channel, Chat, User
+from telethon.tl.types import Channel, Chat, User, ChannelParticipantsAdmins
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.errors.rpcerrorlist import ChannelPrivateError
 from ..Config import Config
@@ -30,6 +30,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 from HuRe import l313l
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 from ..core.logger import logging
@@ -55,6 +56,10 @@ BANNED_RIGHTS = ChatBannedRights(
     embed_links=True,
 )
 
+banned_names_variable = "banned_names"
+banned_names = gvarstatus(banned_names_variable)
+if banned_names is None:
+    banned_names = []
 
 async def ban_user(chat_id, i, rights):
     try:
@@ -1068,3 +1073,46 @@ async def Hussein(event):
         except Exception as e:
             print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
+
+banned_names_variable = "banned_names"
+banned_names = gvarstatus(banned_names_variable)
+if banned_names is None:
+    banned_names = []
+
+@l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
+async def add_banned_name(event):
+    name = event.pattern_match.group(1)
+    banned_names.append(name)
+    addgvar(banned_names_variable, banned_names)
+    await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
+
+@l313l.ar_cmd(pattern=r"(?:منع|حظر) اسم (?!\.list$)(.+)")
+async def kick_banned_name(event):
+    banned_name = event.pattern_match.group(1)
+    await event.edit(f"**᯽︙ جارٍ تنفيذ الأمر لمنع اسم {banned_name} ...**")
+    try:
+        async with event.client as client:
+            is_admin = await client.is_admin(event.chat_id, event.sender_id)
+            if is_admin:
+                async for message in client.iter_messages(event.chat_id, from_user='me', search=f'(?:منع|حظر) اسم {banned_name}'):
+                    group_entity = message.chat_id
+                    participants = client.get_participants(group_entity)
+                    for participant in participants:
+                        if any(name.lower() in participant.first_name.lower() for name in banned_names):
+                            try:
+                                await event.client.kick_participant(group_entity, participant)
+                                print(f"Kicked {participant.first_name} {participant.last_name}")
+                                await event.client.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
+                            except FloodWaitError as e:
+                                print(f"Flood wait error occurred: {e}")
+            else:
+                await event.reply("**᯽︙ ليس لديك صلاحيات لأجراء هذا الأمر. يجب أن تكون مشرفًا لتنفيذه.**")
+    except ChatAdminRequiredError:
+        await event.reply("**᯽︙ ليس لديك صلاحيات لأجراء هذا الأمر. يجب أن تكون مشرفًا لتنفيذه.**")
+
+    await event.edit(f"**᯽︙ تم تنفيذ الأمر بنجاح لمنع اسم {banned_name} ✓ **")
+
+@l313l.ar_cmd(pattern=r"القائمة السوداء$")
+async def list_banned_names(event):
+    banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
+    await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
