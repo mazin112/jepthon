@@ -5,8 +5,8 @@ except ImportError as e:
 from sqlalchemy import Column, String, UnicodeText
 
 
-class Globals(BASE):
-    __tablename__ = "globals"
+class kickname(BASE):
+    __tablename__ = "kickname"
     variable = Column(String, primary_key=True, nullable=False)
     value = Column(UnicodeText, primary_key=True, nullable=False)
 
@@ -15,14 +15,14 @@ class Globals(BASE):
         self.value = value
 
 
-Globals.__table__.create(checkfirst=True)
+kickname.__table__.create(checkfirst=True)
 
 
 def gvarstatus(variable):
     try:
         return (
-            SESSION.query(Globals)
-            .filter(Globals.variable == str(variable))
+            SESSION.query(kickname)
+            .filter(kickname.variable == str(variable))
             .first()
             .value
         )
@@ -33,17 +33,17 @@ def gvarstatus(variable):
 
 
 def addgvar(variable, value):
-    if SESSION.query(Globals).filter(Globals.variable == str(variable)).one_or_none():
+    if SESSION.query(kickname).filter(kickname.variable == str(variable)).one_or_none():
         delgvar(variable)
     value_str = ",".join(value)  # تحويل القيمة إلى سلسلة نصية
-    adder = Globals(str(variable), value_str)
+    adder = kickname(str(variable), value_str)
     SESSION.add(adder)
     SESSION.commit()
 
 def delgvar(variable):
     rem = (
-        SESSION.query(Globals)
-        .filter(Globals.variable == str(variable))
+        SESSION.query(kickname)
+        .filter(kickname.variable == str(variable))
         .delete(synchronize_session="fetch")
     )
     if rem:
