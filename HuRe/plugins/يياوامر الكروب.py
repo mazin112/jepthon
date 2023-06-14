@@ -30,7 +30,7 @@ from telethon.tl.types import (
     UserStatusRecently,
 )
 from HuRe import l313l
-from ..sql_helper.kickname import addgvar, delgvar, gvarstatus
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.errors import UserNotParticipantError
 from ..core.logger import logging
