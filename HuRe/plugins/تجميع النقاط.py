@@ -243,4 +243,39 @@ async def hussein(event):
         await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+@l313l.on(admin_cmd(pattern="سرقة وعد"))
+async def steal_promise(event):
+    if event.is_group and event.reply_to_msg_id:
+        reply_msg = await event.get_reply_message()
+        target = reply_msg.sender_id
+        if target:
+            await event.edit("**᯽︙ تم تفعيل سرقة وعد بنجاح، سيتم الرد برسالة سرقة لهذا الشخص كل 10 دقائق**")
+            global steal_active
+            steal_active_status = gvarstatus("steal_active")
+            if steal_active_status != "True":
+                addgvar("steal_active", "True")
+                await send_steal_message(event, target)
+            else:
+                await event.edit("**سرقة وعد قيد التشغيل بالفعل!**")
+        else:
+            await event.edit("**لا يمكن تحديد الشخص المستهدف! الرجاء المحاولة مرة أخرى**")
+    else:
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات وعند الرد على رسالة الشخص المستهدف!**")
+async def send_steal_message(event, target):
+    steal_active_status = gvarstatus("steal_active")
+    if steal_active_status == "True":
+        await event.client.send_message(event.chat_id, f"زرف", reply_to=target)
+        await asyncio.sleep(10)
+        await send_steal_message(event, target)
 
+@l313l.on(admin_cmd(pattern="إيقاف سرقة الوعد"))
+async def stop_steal(event):
+    if event.is_group:
+        steal_active_status = gvarstatus("steal_active")
+        if steal_active_status == "True":
+            delgvar("steal_active")
+            await event.edit("**تم إيقاف سرقة الوعد بنجاح!**")
+        else:
+            await event.edit("**سرقة الوعد ليست قيد التشغيل حاليًا!**")
+    else:
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
