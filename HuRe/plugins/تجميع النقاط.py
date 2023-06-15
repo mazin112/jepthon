@@ -199,19 +199,17 @@ async def hussein(event):
         is_active_status = gvarstatus("is_active")
         if is_active_status != "True":
             addgvar("is_active", "True")
-            await send_salary(event)
+            await send_reham(event)
         else:
-            await event.respond("**راتب وعد قيد التشغيل بالفعل!**")
+            await event.edit("**راتب وعد قيد التشغيل بالفعل!**")
     else:
-        await event.respond("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-
-
-async def send_salary(event):
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+async def send_reham(event):
     is_active_status = gvarstatus("is_active")
     if is_active_status == "True":
         await event.respond('راتب')
-        await asyncio.sleep(10)
-        await send_salary(event)  
+        await asyncio.sleep(660)
+        await send_reham(event)  
 @l313l.on(admin_cmd(pattern="ايقاف راتب وعد"))
 async def hussein(event):
     if event.is_group:
@@ -222,20 +220,22 @@ async def hussein(event):
 @l313l.on(admin_cmd(pattern="بخشيش وعد"))
 async def hussein(event):
     if event.is_group:
-        await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم ارسال بخشيش كُل 11 دقيقة**")
-        global is_aljoker
+        await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم أرسال راتب كل 11 دقيقة**")
+        global is_active
         is_aljoker_status = gvarstatus("is_aljoker")
-        if is_aljoker_status != "True":
+        if is_alojker_status != "True":
             addgvar("is_aljoker", "True")
-            await event.respond('بخشيش')
-            while is_aljoker_status == "True":
-                await asyncio.sleep(660)
-                is_aljoker_status = gvarstatus("is_aljoker")
+            await send_aljoker(event)
         else:
-            await event.edit("**᯽︙ بخشيش وعد قيد التشغيل بالفعل!**")
+            await event.edit("**راتب وعد قيد التشغيل بالفعل!**")
     else:
-        await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-        
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+async def send_aljoker(event):
+    is_aljoker_status = gvarstatus("is_aljoker")
+    if is_aljoker_status == "True":
+        await event.respond('بخشيش')
+        await asyncio.sleep(660)
+        await send_aljoker(event)  
 @l313l.on(admin_cmd(pattern="ايقاف بخشيش وعد"))
 async def hussein(event):
     if event.is_group:
