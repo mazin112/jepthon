@@ -14,7 +14,7 @@ bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
-
+is_active = False
 
 @l313l.on(admin_cmd(pattern="(تجميع المليار|تجميع مليار)"))
 async def _(event):
@@ -188,3 +188,18 @@ async def _(event):
 
     else:
         await event.edit("يجب الدفع لاستعمال هذا الامر !")
+
+@l313l.on(admin_cmd(pattern="راتب وعد"))
+async def hussein(event):
+    global is_active
+    if not is_active:
+        is_active = True
+        while is_active:
+            await event.respond('راتب')
+            await asyncio.sleep(660)
+
+@l313l.on(admin_cmd(pattern="تعطيل راتب وعد"))
+async def hussein(event):
+    global is_active
+    is_active = False
+    await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
