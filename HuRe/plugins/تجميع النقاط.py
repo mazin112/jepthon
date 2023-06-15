@@ -5,6 +5,7 @@ from HuRe import l313l
 from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import requests
 import asyncio
 from telethon import events
@@ -193,37 +194,38 @@ async def _(event):
 @l313l.on(admin_cmd(pattern="راتب وعد"))
 async def hussein(event):
     if event.is_group:
-        await event.edit("**᯽︙ تم تفعيل راتب وعد بنجاح سيتم أرسال راتب كل 11 دقيقه**")
+        await event.edit("**᯽︙ تم تفعيل راتب وعد بنجاح سيتم أرسال راتب كل 11 دقيقة**")
         global is_active
-        if not is_active:
-            is_active = True
-            while is_active:
+        is_active_status = gvarstatus("is_active")
+        if is_active_status != "True":
+            addgvar("is_active", "True")
+            while is_active_status == "True":
                 await event.respond('راتب')
                 await asyncio.sleep(660)
+                is_active_status = gvarstatus("is_active")
         else:
             await event.respond("**راتب وعد قيد التشغيل بالفعل!**")
     else:
         await event.respond("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-    
 @l313l.on(admin_cmd(pattern="ايقاف راتب وعد"))
 async def hussein(event):
     if event.is_group:
-        global is_active
-        is_active = False
+        delgvar("is_active")
         await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-
 @l313l.on(admin_cmd(pattern="بخشيش وعد"))
 async def hussein(event):
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم ارسال بخشيش كُل 11 دقيقة**")
         global is_aljoker
-        if not is_aljoker:
-            is_aljoker = True
-            while is_aljoker:
+        is_aljoker_status = gvarstatus("is_aljoker")
+        if is_aljoker_status != "True":
+            addgvar("is_aljoker", "True")
+            while is_aljoker_status == "True":
                 await event.respond('بخشيش')
                 await asyncio.sleep(660)
+                is_aljoker_status = gvarstatus("is_aljoker")
         else:
             await event.respond("**᯽︙ بخشيش وعد قيد التشغيل بالفعل!**")
     else:
@@ -232,8 +234,7 @@ async def hussein(event):
 @l313l.on(admin_cmd(pattern="ايقاف بخشيش وعد"))
 async def hussein(event):
     if event.is_group:
-        global is_aljoker
-        is_aljoker = False
+        delgvar("is_aljoker")
         await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
