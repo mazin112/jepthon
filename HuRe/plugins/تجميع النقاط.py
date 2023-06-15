@@ -244,39 +244,33 @@ async def hussein(event):
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 
-@l313l.on(admin_cmd(pattern="سرقة وعد"))
-async def steal_promise(event):
-    if event.is_group and event.reply_to_msg_id:
-        reply_msg = await event.get_reply_message()
-        target = reply_msg.sender_id
-        if target:
-            await event.edit("**᯽︙ تم تفعيل سرقة وعد بنجاح، سيتم الرد برسالة سرقة لهذا الشخص كل 10 دقائق**")
-            global steal_active
-            steal_active_status = gvarstatus("steal_active")
-            if steal_active_status != "True":
-                addgvar("steal_active", "True")
-                addgvar("steal_target", str(target))
-                await send_steal_message(event)
-            else:
-                await event.respond("**سرقة وعد قيد التشغيل بالفعل!**")
-        else:
-            await event.respond("**لا يمكن تحديد الشخص المستهدف! الرجاء المحاولة مرة أخرى**")
-    else:
-        await event.respond("**هذا الأمر يمكن استخدامه فقط في المجموعات وعند الرد على رسالة الشخص المستهدف!**")
-async def send_steal_message(event):
-    steal_active_status = gvarstatus("steal_active")
-    if steal_active_status == "True":
-        target = int(gvarstatus("steal_target"))
-        await event.client.send_message(event.chat_id, "زرف", reply_to=target)
-        await asyncio.sleep(10)
-        await send_steal_message(event)
-
-@l313l.on(admin_cmd(pattern="ايقاف سرقة الوعد"))
-async def stop_steal(event):
+@l313l.on(admin_cmd(pattern="سرقة وعد(.*)"))
+async def hussein(event):
     if event.is_group:
-        steal_active_status = gvarstatus("steal_active")
-        if steal_active_status == "True":
-            delgvar("steal_active")
+        message = event.pattern_match.group(1).strip()
+        await event.edit(f"**᯽︙ تم تفعيل سرقة وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة زرف كل 10 دقائق**")
+        global its_hussein
+        its_hussein_status = gvarstatus("its_hussein")
+        if its_hussein_status != "True":
+            addgvar("its_hussein", "True")
+            await send_message(event, message)
+        else:
+            await event.edit("**سرقة وعد قيد التشغيل بالفعل!**")
+    else:
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+async def send_message(event, message):
+    its_hussein_status = gvarstatus("its_hussein")
+    if its_hussein_status == "True":
+        await event.respond(f"{message} زرف")
+        await asyncio.sleep(600)
+        await send_message(event, message)
+
+@l313l.on(admin_cmd(pattern="ايقاف سرقة وعد"))
+async def Reham(event):
+    if event.is_group:
+        its_hussein_status = gvarstatus("its_hussein")
+        if its_hussein_status == "True":
+            delgvar("its_hussein")
             await event.edit("**تم إيقاف سرقة الوعد بنجاح!**")
         else:
             await event.edit("**سرقة الوعد ليست قيد التشغيل حاليًا!**")
