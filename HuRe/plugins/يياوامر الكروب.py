@@ -1,5 +1,6 @@
 from asyncio import sleep
 import asyncio
+import requests
 import time
 from telethon.tl.types import Channel, Chat, User, ChannelParticipantsAdmins
 from telethon.tl.functions.channels import GetFullChannelRequest
@@ -39,7 +40,6 @@ from ..sql_helper.locks_sql import *
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import readable_time
 from . import BOTLOG, BOTLOG_CHATID
-from telethon import events
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "admin"
@@ -1116,3 +1116,15 @@ async def kick_banned_name(event):
 async def list_banned_names(event):
     banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
     await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
+
+@l313l.ar_cmd(pattern=r"الذكاء$")
+async def handle_command(event):
+    await event.edit("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
+    command = event.pattern_match.group(1)
+    message = event.reply_to_msg
+    if message:
+        text = message.text
+        response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+        await event.edit(response)
+    else:
+        await event.edit(f"لم يتم تحديد الرسالة المراد الاستجابة لها مع الأمر {command}.")
