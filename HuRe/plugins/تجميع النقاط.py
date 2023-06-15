@@ -199,8 +199,8 @@ async def hussein(event):
         is_active_status = gvarstatus("is_active")
         if is_active_status != "True":
             addgvar("is_active", "True")
+            await event.respond('راتب')
             while is_active_status == "True":
-                await event.respond('راتب')
                 await asyncio.sleep(660)
                 is_active_status = gvarstatus("is_active")
         else:
@@ -222,14 +222,14 @@ async def hussein(event):
         is_aljoker_status = gvarstatus("is_aljoker")
         if is_aljoker_status != "True":
             addgvar("is_aljoker", "True")
+            await event.respond('بخشيش')
             while is_aljoker_status == "True":
-                await event.respond('بخشيش')
                 await asyncio.sleep(660)
                 is_aljoker_status = gvarstatus("is_aljoker")
         else:
-            await event.respond("**᯽︙ بخشيش وعد قيد التشغيل بالفعل!**")
+            await event.edit("**᯽︙ بخشيش وعد قيد التشغيل بالفعل!**")
     else:
-        await event.respond("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+        await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
         
 @l313l.on(admin_cmd(pattern="ايقاف بخشيش وعد"))
 async def hussein(event):
