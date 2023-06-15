@@ -69,12 +69,15 @@ async def Hussein(event):
     total_participants = len(participants)
     message = event.pattern_match.group(1)
     if not message:
-        await event.edit("**᯽︙ يُرجى وضع الرسالة مع التاك لتنبيه الاعضاء بهذه الرسالة**")
+        await event.edit("**᯽︙ يُرجى وضع الرسالة مع التاك لتنبيه الأعضاء بهذه الرسالة**")
         mention_in_progress = False
         return
     mention = ""
     for i, member in enumerate(participants, start=1):
-        mention += f"{i}• [{member.first_name}](tg://user?id={member.id})\n"
+        if member.username:
+            mention += f"{i}• @{member.username}\n"
+        else:
+            mention += f"{i}• [{member.first_name}](tg://user?id={member.id})\n"
         if i % 99 == 0 or i == total_participants:
             final_message = f"**{message}**\n\n{mention}"
             try:
