@@ -1117,14 +1117,12 @@ async def list_banned_names(event):
     banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
     await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
 
-@l313l.ar_cmd(pattern=r"الذكاء$")
-async def handle_command(event):
+@l313l.ar_cmd(pattern=r"الذكاء(.*)")
+async def hussein(event):
     await event.edit("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
-    command = event.pattern_match.group(1)
-    message = event.reply_to_msg
-    if message:
-        text = message.text
+    text = event.pattern_match.group(1).strip()
+    if text:
         response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
         await event.edit(response)
     else:
-        await event.edit(f"لم يتم تحديد الرسالة المراد الاستجابة لها مع الأمر {command}.")
+        await event.edit("يُرجى كتابة رسالة مع الأمر للحصول على إجابة.")
