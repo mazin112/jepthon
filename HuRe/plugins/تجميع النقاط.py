@@ -218,10 +218,10 @@ async def hussein(event):
 async def hussein(event):
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم ارسال بخشيش كُل 11 دقيقة**")
-        global is_active
-        if not is_active:
-            is_active = True
-            while is_active:
+        global is_aljoker
+        if not is_aljoker:
+            is_aljoker = True
+            while is_aljoker:
                 await event.respond('بخشيش')
                 await asyncio.sleep(660)
         else:
@@ -232,8 +232,8 @@ async def hussein(event):
 @l313l.on(admin_cmd(pattern="ايقاف بخشيش وعد"))
 async def hussein(event):
     if event.is_group:
-        global is_active
-        is_active = False
+        global is_aljoker
+        is_aljoker = False
         await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
