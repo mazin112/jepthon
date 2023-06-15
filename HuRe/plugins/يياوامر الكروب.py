@@ -1117,7 +1117,7 @@ async def list_banned_names(event):
     banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
     await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
 # الكود من كتابة فريق الجوكر بس تسرقة تنشر بقناة الفضايح انتَ وقناتك 🖤
-@l313l.ar_cmd(pattern=r"(الذكاء|ذكاء)(.*)")
+@l313l.ar_cmd(pattern=r"ذكاء(.*)")
 async def hussein(event):
     await event.edit("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
     text = event.pattern_match.group(1).strip()
