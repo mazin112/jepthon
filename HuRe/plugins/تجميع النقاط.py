@@ -199,14 +199,19 @@ async def hussein(event):
         is_active_status = gvarstatus("is_active")
         if is_active_status != "True":
             addgvar("is_active", "True")
-            await event.respond('راتب')
-            while is_active_status == "True":
-                await asyncio.sleep(660)
-                is_active_status = gvarstatus("is_active")
+            await send_salary(event)
         else:
             await event.respond("**راتب وعد قيد التشغيل بالفعل!**")
     else:
         await event.respond("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
+
+async def send_salary(event):
+    is_active_status = gvarstatus("is_active")
+    if is_active_status == "True":
+        await event.respond('راتب')
+        await asyncio.sleep(10)
+        await send_salary(event)  
 @l313l.on(admin_cmd(pattern="ايقاف راتب وعد"))
 async def hussein(event):
     if event.is_group:
