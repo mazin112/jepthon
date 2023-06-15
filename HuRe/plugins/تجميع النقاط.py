@@ -243,6 +243,7 @@ async def hussein(event):
         await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
 @l313l.on(admin_cmd(pattern="سرقة وعد"))
 async def steal_promise(event):
     if event.is_group and event.reply_to_msg_id:
@@ -254,21 +255,23 @@ async def steal_promise(event):
             steal_active_status = gvarstatus("steal_active")
             if steal_active_status != "True":
                 addgvar("steal_active", "True")
-                await send_steal_message(event, target)
+                addgvar("steal_target", str(target))
+                await send_steal_message(event)
             else:
-                await event.edit("**سرقة وعد قيد التشغيل بالفعل!**")
+                await event.respond("**سرقة وعد قيد التشغيل بالفعل!**")
         else:
-            await event.edit("**لا يمكن تحديد الشخص المستهدف! الرجاء المحاولة مرة أخرى**")
+            await event.respond("**لا يمكن تحديد الشخص المستهدف! الرجاء المحاولة مرة أخرى**")
     else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات وعند الرد على رسالة الشخص المستهدف!**")
-async def send_steal_message(event, target):
+        await event.respond("**هذا الأمر يمكن استخدامه فقط في المجموعات وعند الرد على رسالة الشخص المستهدف!**")
+async def send_steal_message(event):
     steal_active_status = gvarstatus("steal_active")
     if steal_active_status == "True":
-        await event.client.send_message(event.chat_id, f"زرف", reply_to=target)
+        target = int(gvarstatus("steal_target"))
+        await event.client.send_message(event.chat_id, "زرف", reply_to=target)
         await asyncio.sleep(10)
-        await send_steal_message(event, target)
+        await send_steal_message(event)
 
-@l313l.on(admin_cmd(pattern="إيقاف سرقة الوعد"))
+@l313l.on(admin_cmd(pattern="ايقاف سرقة الوعد"))
 async def stop_steal(event):
     if event.is_group:
         steal_active_status = gvarstatus("steal_active")
