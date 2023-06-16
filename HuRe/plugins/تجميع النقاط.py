@@ -7,6 +7,7 @@ from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import requests
+import re
 import asyncio
 from telethon import events
 c = requests.session()
@@ -242,11 +243,11 @@ async def hussein(event):
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 
-@l313l.on(admin_cmd(pattern="استثمار وعد(.*)"))
+@l313l.on(admin_cmd(pattern="استثمار وعد (\d+)"))
 async def hussein(event):
     if event.is_group:
         message = event.pattern_match.group(1).strip()
-        if message:
+        if re.match("^\d+$", message):
             await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
             global its_hussein
             its_hussein_status = gvarstatus("its_hussein")
@@ -256,7 +257,7 @@ async def hussein(event):
             else:
                 await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
         else:
-            await event.edit("**يرجى كتابة رقم الاستثمار مع الامر!**")
+            await event.edit("**يرجى كتابة عدد المبلغ الاستثمار مع الامر!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def send_message(event, message):
