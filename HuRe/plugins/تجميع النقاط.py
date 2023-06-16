@@ -246,7 +246,7 @@ async def hussein(event):
 @l313l.on(admin_cmd(pattern="استثمار وعد"))
 async def hussein(event):
     if event.is_group:
-        message = event.pattern_match.group(1).strip()
+        message = event.pattern_match.group(1) if event.pattern_match.group(1) else ""
         if re.match("^\d+$", message):
             await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
             global its_hussein
