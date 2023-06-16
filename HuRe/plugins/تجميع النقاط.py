@@ -221,7 +221,7 @@ async def hussein(event):
         await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم أرسال بخشيش كل 11 دقيقة**")
         global is_aljoker
         is_aljoker_status = gvarstatus("is_aljoker")
-        if is_alojker_status != "True":
+        if is_aljoker_status != "True":
             addgvar("is_aljoker", "True")
             await send_aljoker(event)
         else:
