@@ -262,7 +262,7 @@ async def send_message(event, message):
     its_hussein_status = gvarstatus("its_hussein")
     if its_hussein_status == "True":
         await event.respond(f"استثمار {message}")
-        await asyncio.sleep(600)
+        await asyncio.sleep(660)
         await send_message(event, message)
 
 @l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
