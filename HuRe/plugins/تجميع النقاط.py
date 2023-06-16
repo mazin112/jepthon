@@ -270,6 +270,9 @@ async def Reham_english(event, message):
             await Reham_english(event, message)
         else:
             await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
+    else:
+        if not re.match("^\d+$", message):
+            await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
             
 @l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
 async def Reham(event):
