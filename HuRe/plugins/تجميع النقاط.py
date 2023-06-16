@@ -269,7 +269,7 @@ async def Reham_english(event, message):
     if its_hussein_status == "True":
         if message.isnumeric():
             await event.respond(f"استثمار {message}")
-            await asyncio.sleep(660)
+            await asyncio.sleep(10)
             await Reham_english(event, message)
         else:
             await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
