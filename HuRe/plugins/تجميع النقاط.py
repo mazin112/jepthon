@@ -242,28 +242,28 @@ async def hussein(event):
         await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-
-@l313l.on(admin_cmd(pattern="استثمار وعد (.+)"))
+@l313l.on(admin_cmd(pattern="استثمار وعد(?:\s+(.*))?"))
 async def hussein(event):
     if event.is_group:
-        match = re.search(r"استثمار وعد (.+)", event.raw_text)
+        match = re.search(r"استثمار وعد(?:\s+(.*))?", event.raw_text)
         if match:
             message = match.group(1)
-            if message.isnumeric():
-                await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
-                global its_hussein
-                its_hussein_status = gvarstatus("its_hussein")
-                if its_hussein_status != "True":
-                    addgvar("its_hussein", "True")
-                    await Reham_english(event, message)
+            if message:
+                if message.isnumeric():
+                    await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
+                    global its_hussein
+                    its_hussein_status = gvarstatus("its_hussein")
+                    if its_hussein_status != "True":
+                        addgvar("its_hussein", "True")
+                        await Reham_english(event, message)
+                    else:
+                        await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
                 else:
-                    await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
+                    await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
             else:
-                await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-        else:
-            await event.edit("**يرجى كتابة رقم الاستثمار مع الأمر!**")
+                await event.edit("**تنبيه: يرجى كتابة رقم الاستثمار مع الأمر!**")
     else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+        await event.edit("**تنبيه: هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def Reham_english(event, message):
     its_hussein_status = gvarstatus("its_hussein")
     if its_hussein_status == "True":
