@@ -205,7 +205,7 @@ async def hussein(event):
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def send_reham(event):
     is_active_status = gvarstatus("is_active")
-    if is_active_status != "True":
+    if is_active_status == "True":
         await event.respond('راتب')
         await asyncio.sleep(660)
         await send_reham(event)  
