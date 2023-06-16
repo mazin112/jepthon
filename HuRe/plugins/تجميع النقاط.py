@@ -219,7 +219,7 @@ async def hussein(event):
 async def hussein(event):
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم أرسال بخشيش كل 11 دقيقة**")
-        global is_active
+        global is_aljoker
         is_aljoker_status = gvarstatus("is_aljoker")
         if is_alojker_status != "True":
             addgvar("is_aljoker", "True")
