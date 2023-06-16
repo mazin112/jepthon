@@ -15,8 +15,6 @@ bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
-is_active = False
-is_aljoker = False
 
 @l313l.on(admin_cmd(pattern="(تجميع المليار|تجميع مليار)"))
 async def _(event):
