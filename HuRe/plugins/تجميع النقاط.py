@@ -261,7 +261,7 @@ async def hussein(event):
 async def send_message(event, message):
     its_hussein_status = gvarstatus("its_hussein")
     if its_hussein_status == "True":
-        await event.respond(f"@{message} زرف")
+        await event.respond(f"{message}@ زرف")
         await asyncio.sleep(600)
         await send_message(event, message)
 
