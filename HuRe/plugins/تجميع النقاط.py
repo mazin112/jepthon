@@ -303,7 +303,7 @@ async def send_message(event, message):
         await asyncio.sleep(660)
         await send_message(event, message)
 
-@l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
+@l313l.on(admin_cmd(pattern="ايقاف سرقة وعد"))
 async def Reham(event):
     if event.is_group:
         its_reda_status = gvarstatus("its_reda")
