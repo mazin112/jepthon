@@ -246,14 +246,17 @@ async def hussein(event):
 async def hussein(event):
     if event.is_group:
         message = event.pattern_match.group(1).strip()
-        await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
-        global its_hussein
-        its_hussein_status = gvarstatus("its_hussein")
-        if its_hussein_status != "True":
-            addgvar("its_hussein", "True")
-            await send_message(event, message)
+        if message:
+            await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
+            global its_hussein
+            its_hussein_status = gvarstatus("its_hussein")
+            if its_hussein_status != "True":
+                addgvar("its_hussein", "True")
+                await send_message(event, message)
+            else:
+                await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
         else:
-            await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
+            await event.edit("**يرجى كتابة رقم الاستثمار مع الامر!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def send_message(event, message):
@@ -274,3 +277,41 @@ async def Reham(event):
             await event.edit("**استثمار وعد ليست قيد التشغيل حاليًا!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
+@l313l.on(admin_cmd(pattern="سرقة وعد(.*)"))
+async def hussein(event):
+    if event.is_group:
+        message = event.pattern_match.group(1).strip()
+        if message:
+            await event.edit(f"**᯽︙ تم تفعيل سرقة وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة سرقة كل 10 دقائق**")
+            global its_reda
+            its_reda_status = gvarstatus("its_reda")
+            if its_reda_status != "True":
+                addgvar("its_reda", "True")
+                await send_message(event, message)
+            else:
+                await event.edit("**سرقة وعد قيد التشغيل بالفعل!**")
+        else:
+            await event.edit("**يرجى كتابة ايدي الشخص مع الامر!**")
+    else:
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
+async def send_message(event, message):
+    its_reda_status = gvarstatus("its_reda")
+    if its_reda_status == "True":
+        await event.respond(f"زرف {message}")
+        await asyncio.sleep(660)
+        await send_message(event, message)
+
+@l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
+async def Reham(event):
+    if event.is_group:
+        its_reda_status = gvarstatus("its_reda")
+        if its_reda_status == "True":
+            delgvar("its_reda")
+            await event.edit("**تم إيقاف سرقة الوعد بنجاح!**")
+        else:
+            await event.edit("**استثمار وعد ليست قيد التشغيل حاليًا!**")
+    else:
+        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
