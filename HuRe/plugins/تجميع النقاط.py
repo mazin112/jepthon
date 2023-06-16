@@ -253,20 +253,22 @@ async def hussein(event):
             its_hussein_status = gvarstatus("its_hussein")
             if its_hussein_status != "True":
                 addgvar("its_hussein", "True")
-                await send_message(event, message)
+                await reham_english(event, message)
             else:
                 await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
         else:
-            await event.edit("**يرجى كتابة عدد المبلغ الاستثمار مع الامر!**")
+            await event.edit("**يرجى كتابة رقم الاستثمار مع الامر!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-async def send_message(event, message):
+async def reham_english(event, message):
     its_hussein_status = gvarstatus("its_hussein")
     if its_hussein_status == "True":
-        await event.respond(f"استثمار {message}")
-        await asyncio.sleep(660)
-        await send_message(event, message)
-
+        if re.match("^\d+$", message):
+            await event.respond(f"استثمار {message}")
+            await asyncio.sleep(660)
+            await reham_english(event, message)
+        else:
+            await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
 @l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
 async def Reham(event):
     if event.is_group:
