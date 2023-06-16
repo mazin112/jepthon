@@ -243,11 +243,12 @@ async def hussein(event):
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 
-@l313l.on(admin_cmd(pattern="استثمار وعد"))
+@l313l.on(admin_cmd(pattern="استثمار وعد (\d+)"))
 async def hussein(event):
     if event.is_group:
-        message = event.pattern_match.group(1) if event.pattern_match.group(1) else ""
-        if re.match("^\d+$", message):
+        match = re.search(r"استثمار وعد (\d+)", event.raw_text)
+        if match:
+            message = match.group(1)
             await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
             global its_hussein
             its_hussein_status = gvarstatus("its_hussein")
@@ -269,6 +270,7 @@ async def Reham_english(event, message):
             await Reham_english(event, message)
         else:
             await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
+            
 @l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
 async def Reham(event):
     if event.is_group:
