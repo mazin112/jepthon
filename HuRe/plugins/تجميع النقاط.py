@@ -243,20 +243,23 @@ async def hussein(event):
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 
-@l313l.on(admin_cmd(pattern="استثمار وعد (\d+)"))
+@l313l.on(admin_cmd(pattern="استثمار وعد (.+)"))
 async def hussein(event):
     if event.is_group:
-        match = re.search(r"استثمار وعد (\d+)", event.raw_text)
+        match = re.search(r"استثمار وعد (.+)", event.raw_text)
         if match:
             message = match.group(1)
-            await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
-            global its_hussein
-            its_hussein_status = gvarstatus("its_hussein")
-            if its_hussein_status != "True":
-                addgvar("its_hussein", "True")
-                await Reham_english(event, message)
+            if message.isnumeric():
+                await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
+                global its_hussein
+                its_hussein_status = gvarstatus("its_hussein")
+                if its_hussein_status != "True":
+                    addgvar("its_hussein", "True")
+                    await Reham_english(event, message)
+                else:
+                    await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
             else:
-                await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
+                await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
         else:
             await event.edit("**يرجى كتابة رقم الاستثمار مع الأمر!**")
     else:
@@ -264,16 +267,15 @@ async def hussein(event):
 async def Reham_english(event, message):
     its_hussein_status = gvarstatus("its_hussein")
     if its_hussein_status == "True":
-        if re.match("^\d+$", message):
+        if message.isnumeric():
             await event.respond(f"استثمار {message}")
             await asyncio.sleep(660)
             await Reham_english(event, message)
         else:
-            await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-    else:
-        if not re.match("^\d+$", message):
             await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-            
+    else:
+        if not message.isnumeric():
+            await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
 @l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
 async def Reham(event):
     if event.is_group:
