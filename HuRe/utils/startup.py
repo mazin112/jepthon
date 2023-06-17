@@ -84,7 +84,7 @@ async def startupmessage():
                 caption="**᯽︙ بــوت الجوكر يـعـمـل بـنـجـاح ✓ \n᯽︙ أرسل .الاوامر لرؤية اوامر السورس \n  ᯽︙ لأستعمال بوت الأختراق عبر كود التيرمكس أرسل .هاك **",
                 buttons=[(Button.url("سورس الجوكر", "https://t.me/jepthonSupport"),)],
             )
-            await l313l.tgbot.send_voice(
+            await l313l.tgbot.send_file(
                 BOTLOG_CHATID,
                 "https://t.me/MemeSoundJep/24"  
             )
