@@ -55,22 +55,28 @@ async def rfilm(event):
     if 'results' in movie_data:
         for video in movie_data["results"]:
             url = "https://www.youtube.com/watch?v={}".format(video["key"])
-            buttons =[
-                [Button.url("مشاهدة الفيديو",url)],
-            ]
-            print(buttons)
-            #buttons.append(x)
+            x = [Button.url("مشاهدة الفيديو",url)]
+            
+            buttons.append(x)
 
     await event.delete()
-    print(buttons)
-    await l313l.tgbot.send_message(
-        event.chat_id,
-        moviet,
-        buttons=buttons,
-        file=moviep,
-        force_document=False,
-        link_preview=False,
-    )
+    try:
+        await l313l.tgbot.send_message(
+            event.chat_id,
+            moviet,
+            buttons=buttons,
+            file=moviep,
+            force_document=False,
+            link_preview=False,
+        )
+    except ValueError:
+        await l313l.send_message(
+            event.chat_id,
+            moviet,
+            file=moviep,
+            force_document=False,
+            link_preview=False,
+        )
 
 
     
