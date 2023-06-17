@@ -190,7 +190,7 @@ async def _(event):
     else:
         await event.edit("يجب الدفع لاستعمال هذا الامر !")
 
-@l313l.on(admin_cmd(pattern="راتب وعد"))
+@l313l.ar_cmd(pattern="راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل راتب وعد بنجاح سيتم أرسال راتب كل 11 دقيقة**")
@@ -209,14 +209,14 @@ async def send_reham(event):
         await event.respond('راتب')
         await asyncio.sleep(660)
         await send_reham(event)  
-@l313l.on(admin_cmd(pattern="ايقاف راتب وعد"))
+@l313l.ar_cmd(pattern="ايقاف راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
         delgvar("is_active")
         await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-@l313l.on(admin_cmd(pattern="بخشيش وعد"))
+@l313l.ar_cmd(pattern="بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم أرسال بخشيش كل 11 دقيقة**")
@@ -235,14 +235,14 @@ async def send_aljoker(event):
         await event.respond('بخشيش')
         await asyncio.sleep(660)
         await send_aljoker(event)  
-@l313l.on(admin_cmd(pattern="ايقاف بخشيش وعد"))
+@l313l.ar_cmd(pattern="ايقاف بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
         delgvar("is_aljoker")
         await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
     else:
         await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-@l313l.on(admin_cmd(pattern="استثمار وعد(?:\s+(.*))?"))
+@l313l.ar_cmd(pattern="استثمار وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
         match = re.search(r"استثمار وعد(?:\s+(.*))?", event.raw_text)
@@ -276,7 +276,7 @@ async def Reham_english(event, message):
     else:
         if not message.isnumeric():
             await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-@l313l.on(admin_cmd(pattern="ايقاف استثمار وعد"))
+@l313l.ar_cmd(pattern="ايقاف استثمار وعد(?:\s|$)([\s\S]*)")
 async def Reham(event):
     if event.is_group:
         its_hussein_status = gvarstatus("its_hussein")
@@ -288,7 +288,7 @@ async def Reham(event):
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 
-@l313l.on(admin_cmd(pattern="سرقة وعد(.*)"))
+@l313l.ar_cmd(pattern="سرقة وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     if event.is_group:
         message = event.pattern_match.group(1).strip()
@@ -313,7 +313,7 @@ async def send_message(event, message):
         await asyncio.sleep(660)
         await send_message(event, message)
 
-@l313l.on(admin_cmd(pattern="ايقاف سرقة وعد"))
+@l313l.ar_cmd(pattern="ايقاف سرقة وعد(?:\s|$)([\s\S]*)")
 async def Reham(event):
     if event.is_group:
         its_reda_status = gvarstatus("its_reda")
