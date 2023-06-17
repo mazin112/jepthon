@@ -46,12 +46,24 @@ async def rfilm(event):
     else:
         moviep = "https://telegra.ph/file/15480332b663adae49205.jpg"
     moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}\nالقصة:\n{movied}"
+    buttons = []
+    if movie.get("videos"):
+        promo_videos = movie["videos"]["results"]
+        for video in promo_videos:
+            buttons.append(Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}"))
     await event.delete()
-    await l313l.send_file(
-                event.chat_id,
-                moviep,
-                caption=moviet,
-                )
+    await l313.send_file(
+        moviet,
+        buttons=buttons,
+        file=moviep,
+        force_document=False
+    )
+    ##await event.delete()
+    #await l313l.send_file(
+     #           event.chat_id,
+       #         moviep,
+        #        caption=moviet,
+         #       )
     
 #Reda
 
