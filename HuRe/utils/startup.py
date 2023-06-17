@@ -81,8 +81,12 @@ async def startupmessage():
             Config.CATUBLOGO = await l313l.tgbot.send_file(
                 BOTLOG_CHATID,
                 "https://telegra.ph/file/6b96d5ea58d065005ec9c.jpg",
-                caption="**᯽︙ بــوت الجوكر يـعـمـل بـنـجـاح ✓ \n᯽︙ أرسل `.الاوامر` لرؤية اوامر السورس \n  ᯽︙ لأستعمال بوت الأختراق عبر كود التيرمكس أرسل .هاك **",
+                caption="**᯽︙ بــوت الجوكر يـعـمـل بـنـجـاح ✓ \n᯽︙ أرسل .الاوامر لرؤية اوامر السورس \n  ᯽︙ لأستعمال بوت الأختراق عبر كود التيرمكس أرسل .هاك **",
                 buttons=[(Button.url("سورس الجوكر", "https://t.me/jepthonSupport"),)],
+            )
+            await l313l.tgbot.send_voice(
+                BOTLOG_CHATID,
+                "https://t.me/MemeSoundJep/24"  
             )
     except Exception as e:
         LOGS.error(e)
