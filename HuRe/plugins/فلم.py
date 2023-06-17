@@ -53,6 +53,7 @@ async def rfilm(event):
             buttons.append(Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}"))
     await event.delete()
     await l313l.send_file(
+        event.chat_id,
         moviet,
         buttons=buttons,
         file=moviep,
