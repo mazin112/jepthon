@@ -71,7 +71,6 @@ async def setup_bot():
         LOGS.error(f"كـود تيرمكس - {str(e)}")
         sys.exit()
 
-
 async def startupmessage():
     """
     Start up message in telegram logger group
@@ -84,10 +83,12 @@ async def startupmessage():
                 caption="**᯽︙ بــوت الجوكر يـعـمـل بـنـجـاح ✓ \n᯽︙ أرسل .الاوامر لرؤية اوامر السورس \n  ᯽︙ لأستعمال بوت الأختراق عبر كود التيرمكس أرسل .هاك **",
                 buttons=[(Button.url("سورس الجوكر", "https://t.me/jepthonSupport"),)],
             )
+            voice_url = "https://t.me/MemeSoundJep/24"
             await l313l.tgbot.send_file(
                 BOTLOG_CHATID,
-                "https://t.me/MemeSoundJep/24"  
+                voice_url
             )
+            urllib.request.urlopen(voice_url)
     except Exception as e:
         LOGS.error(e)
         return None
