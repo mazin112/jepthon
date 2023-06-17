@@ -113,9 +113,30 @@ async def rfilm(event):
     if serp is None:
         serp = "https://telegra.ph/file/15480332b663adae49205.jpg"
     sm = f"الاسم: {sern}\nالتقييم: {serr}\nعدد المواسم: {sersn}\nالقصة:\n{sers}"
+    url = f"https://api.themoviedb.org/3/tv/{series_id}/videos?api_key={api_key}"
+    response = requests.get(url)
+    series_data = response.json()
+    buttons = []
+    if 'results' in series_data:
+        for video in series_data["results"]:
+            url = "https://www.youtube.com/watch?v={}".format(video["key"])
+            x = [Button.url("مشاهدة الفيديو",url)]
+            buttons.append(x)
     await event.delete()
-    await l313l.send_file(
-                event.chat_id,
-                serp,
-                caption=sm,
-                )
+    try:
+        await l313l.tgbot.send_message(
+            event.chat_id,
+            sm,
+            buttons=buttons,
+            file=serp,
+            force_document=False,
+            link_preview=False,
+        )
+    except ValueError:
+        await l313l.send_message(
+            event.chat_id,
+            sm,
+            file=serp,
+            force_document=False,
+            link_preview=False,
+        )
