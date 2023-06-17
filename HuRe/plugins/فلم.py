@@ -47,7 +47,7 @@ async def rfilm(event):
         moviep = "https://telegra.ph/file/15480332b663adae49205.jpg"
 
     moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}\nالقصة:\n{movied}"
-    buttons = []
+    buttons = {}
     url = f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={api_key}"
     response = requests.get(url)
     movie_data = response.json()
