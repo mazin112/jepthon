@@ -51,14 +51,18 @@ async def rfilm(event):
     if movie.get("videos"):
         promo_videos = movie["videos"]["results"]
         for video in promo_videos:
-            buttons.append(Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}"))
+            buttons.append(
+                [Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}")]
+            )
 
     await event.delete()
     await event.respond(
         moviet,
         buttons=buttons,
         file=moviep,
-        force_document=False
+        force_document=False,
+        link_preview=False,
+        reply_to=event.reply_to_msg_id,
     )
 
 
