@@ -66,7 +66,6 @@ async def rfilm(event):
         file=moviep,
         force_document=False,
         link_preview=False,
-        reply_to=event.reply_to_msg_id,
     )
 
 
