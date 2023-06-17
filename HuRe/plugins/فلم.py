@@ -1,7 +1,8 @@
 #HuRe ©
 #By Reda telegram: @rd0r0
 
-from telethon.tl.custom import Button
+from telethon.tl.custom import InlineKeyboardButton, InlineKeyboardMarkup
+
 from cryptography.fernet import Fernet
 import requests
 from html_telegraph_poster.upload_images import upload_image
@@ -54,13 +55,14 @@ async def rfilm(event):
     if 'results' in movie_data:
         for video in movie_data['results']:
             buttons.append(
-            Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}")
+            [InlineKeyboardButton("مشاهدة الفيديو", url=f"https://www.youtube.com/watch?v={video['key']}")]
         )
 
     await event.delete()
+    keyboard = InlineKeyboardMarkup(buttons)
     await event.respond(
         moviet,
-        buttons=buttons,
+        buttons=keyboard,
         file=moviep,
         force_document=False,
         link_preview=False,
