@@ -30,7 +30,7 @@ async def rfilm(event):
     response = requests.get(url)
     movie = response.json()
     movied = movie["overview"]
-    movien = movie["title"]
+    movien = random_movie["title"]
     rating = movie["vote_average"]
     year = movie["release_date"][:4]
     poster_path = movie["poster_path"]
@@ -70,7 +70,7 @@ async def rfilm(event):
     url = f"https://api.themoviedb.org/3/tv/{series_id}?api_key={api_key}&language=ar"
     response = requests.get(url)
     series = response.json()
-    sern = series["name"]
+    sern = random_series["name"]
     serr = series["vote_average"]
     sers = series["overview"]
     sersn = series["number_of_seasons"]
