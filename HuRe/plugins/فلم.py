@@ -53,13 +53,11 @@ async def rfilm(event):
     movie_data = response.json()
     if 'results' in movie_data:
         for video in movie_data['results']:
-            print(str(video))
             buttons.append(
-                [Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}")]
-            )  
+            Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}")
+        )
 
     await event.delete()
-    await l313l.send_message(event.chat_id, "مقاطع البرومو", buttons=buttons)
     await event.respond(
         moviet,
         buttons=buttons,
