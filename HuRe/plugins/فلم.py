@@ -64,11 +64,11 @@ async def rfilm(event):
     await event.delete()
     print(buttons)
     await l313l.send_message(
-        event.chat_id
+        event.chat_id,
         moviet,
         buttons=buttons,
         file=moviep,
-        force_document=Fallse,
+        force_document=False,
         link_preview=False,
     )
 
