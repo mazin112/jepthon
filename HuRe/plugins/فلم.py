@@ -58,6 +58,7 @@ async def rfilm(event):
             )  
 
     await event.delete()
+    await l313l.send_message(event.chat_id, "مقاطع البرومو", buttons=buttons)
     await event.respond(
         moviet,
         buttons=buttons,
