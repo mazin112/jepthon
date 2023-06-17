@@ -74,11 +74,11 @@ async def rfilm(event):
     serr = series["vote_average"]
     sers = series["overview"]
     sersn = series["number_of_seasons"]
-    poster_path = series["poster_path"]
+    poster_path = random_series["poster_path"]
     serp = f"https://image.tmdb.org/t/p/w500{poster_path}"
     if any(serp.endswith(ext) for ext in valid_extensions):
         try:
-            serp = upload_image(moviep) 
+            serp = upload_image(serp) 
         except BaseException:
             serp = None
     else:
