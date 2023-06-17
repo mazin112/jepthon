@@ -38,6 +38,22 @@ if ENV:
 elif os.path.exists("config.py"):
     VPS_NOLOAD = ["هيروكو"]
 
+async def check_dyno_type():
+    headers = {
+        "Accept": "application/vnd.heroku+json; version=3",
+        "Authorization": f"Bearer {Config.HEROKU_API_KEY}"
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://api.heroku.com/apps/{Config.HEROKU_APP_NAME}/dynos", headers=headers) as resp:
+            if resp.status == 200:
+                dynos = await resp.json()
+                for dyno in dynos:
+                    if dyno["type"] != "standard-1X":
+                        return False
+            else:
+                return False
+    return True
+
 async def setup_bot():
     """
     To set up bot for HuRe
@@ -57,7 +73,7 @@ async def setup_bot():
                 break
         bot_details = await l313l.tgbot.get_me()
         Config.TG_BOT_USERNAME = f"@{bot_details.username}"
-        # await l313l.start(bot_token=Config.TG_BOT_USERNAME)
+        
         app = web.AppRunner(await web_server())
         await app.setup()
         bind_address = "0.0.0.0"
@@ -67,6 +83,8 @@ async def setup_bot():
         l313l.uid = l313l.tgbot.uid = utils.get_peer_id(l313l.me)
         if Config.OWNER_ID == 0:
             Config.OWNER_ID = utils.get_peer_id(l313l.me)
+        if not check_dyno_type:
+            LOGS.error("قد تحدث مشكلة ولن يعمل السورس لان نوع الداينو ليس بيسك قم بتحويله الى basic")
     except Exception as e:
         LOGS.error(f"كـود تيرمكس - {str(e)}")
         sys.exit()
