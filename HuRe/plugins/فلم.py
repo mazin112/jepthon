@@ -51,17 +51,18 @@ async def rfilm(event):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key={api_key}"
     response = requests.get(url)
     movie_data = response.json()
-    buttons = []
+    buttonss = []
     if 'results' in movie_data:
         for video in movie_data["results"]:
             x = [Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}")]
-            buttons.append(x)
+            buttonss.append(x)
 
     await event.delete()
-    print(buttons)
-    await event.respond(
+    print(buttonss)
+    await l313l.send_message(
+        event.chat_id,
         moviet,
-        buttons=buttons,
+        buttons=buttonss,
         file=moviep,
         force_document=False,
         link_preview=False,
