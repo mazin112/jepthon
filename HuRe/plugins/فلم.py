@@ -58,7 +58,7 @@ async def rfilm(event):
             buttons.append(x)
 
     await event.delete()
-    
+    print(buttons)
     await event.respond(
         moviet,
         buttons=buttons,
