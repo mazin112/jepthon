@@ -52,10 +52,10 @@ async def rfilm(event):
     response = requests.get(url)
     movie_data = response.json()
     if 'results' in movie_data:
-        print(movie_data['results'])
+        buttons = [(Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={movie_data['results']['key']}"),)]
 
     await event.delete()
-    buttons = []
+    #buttons = []
     await event.respond(
         moviet,
         buttons=buttons,
