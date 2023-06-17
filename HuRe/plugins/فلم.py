@@ -52,7 +52,7 @@ async def rfilm(event):
         for video in promo_videos:
             buttons.append(Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}"))
     await event.delete()
-    await l313.send_file(
+    await l313l.send_file(
         moviet,
         buttons=buttons,
         file=moviep,
