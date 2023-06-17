@@ -63,8 +63,6 @@ async def rfilm(event):
         event.chat_id,
         moviet,
         buttons=buttonss,
-        file=moviep,
-        force_document=False,
         link_preview=False,
     )
 
