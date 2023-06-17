@@ -17,7 +17,7 @@ ea = "gAAAAABkjWzgEQUUyMxIeTnRVCY3kcNOhIy6RYiQnFm9CCrfZFNcJJyIBbUJPsahTXyOIjCPkD
 
 @l313l.ar_cmd(pattern="فلم")
 async def rfilm(event):
-    await event.edit("يرجى الانتضار جاري البحث على فلم...")
+    await event.edit("يرجى الانتظار جاري البحث عن فيلم...")
     dk = ek.encode()
     nk = ea.encode()
     cipher_suite = Fernet(dk)
@@ -38,20 +38,21 @@ async def rfilm(event):
     moviep = f"https://image.tmdb.org/t/p/w500{poster_path}"
     if movied is None:
         movied = "-"
-    
     if any(moviep.endswith(ext) for ext in valid_extensions):
         try:
-            moviep = upload_image(moviep) 
+            moviep = upload_image(moviep)
         except BaseException:
-            moveip = None
+            moviep = None
     else:
         moviep = "https://telegra.ph/file/15480332b663adae49205.jpg"
+
     moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}\nالقصة:\n{movied}"
     buttons = []
     if movie.get("videos"):
         promo_videos = movie["videos"]["results"]
         for video in promo_videos:
             buttons.append(Button.url("مشاهدة الفيديو", f"https://www.youtube.com/watch?v={video['key']}"))
+
     await event.delete()
     await event.respond(
         moviet,
@@ -59,12 +60,8 @@ async def rfilm(event):
         file=moviep,
         force_document=False
     )
-    ##await event.delete()
-    #await l313l.send_file(
-     #           event.chat_id,
-       #         moviep,
-        #        caption=moviet,
-         #       )
+
+
     
 #Reda
 
