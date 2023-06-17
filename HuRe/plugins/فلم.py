@@ -44,8 +44,8 @@ async def rfilm(event):
         except BaseException:
             moveip = None
     else:
-        moviep = f"https://telegra.ph/file/15480332b663adae49205.jpg"
-    moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}\nالقصة: {movied}"
+        moviep = "https://telegra.ph/file/15480332b663adae49205.jpg"
+    moviet = f"الاسم: {movien}\nالسنة: {year}\nالتقييم: {rating}\nالقصة:\n{movied}"
     await event.delete()
     await l313l.send_file(
                 event.chat_id,
@@ -53,3 +53,42 @@ async def rfilm(event):
                 caption=moviet,
                 )
     
+#Reda
+
+@l313l.ar_cmd(pattern="مسلسل")
+async def rfilm(event):
+    await event.edit("يرجى الانتضار جاري البحث على مسلسل...")
+    dk = ek.encode()
+    nk = ea.encode()
+    cipher_suite = Fernet(dk)
+    api_key = cipher_suite.decrypt(nk).decode()
+    url = f"https://api.themoviedb.org/3/tv/top_rated?api_key={api_key}"
+    response = requests.get(url)
+    top_series = response.json()["results"]
+    random_series = random.choice(top_series)
+    series_id = random_series["id"]
+    url = f"https://api.themoviedb.org/3/tv/{series_id}?api_key={api_key}"
+    response = requests.get(url)
+    series = response.json()
+    sern = series["name"]
+    serr = series["vote_average"]
+    sers = series["overview"]
+    sersn = series["number_of_seasons"]
+    poster_path = series["poster_path"]
+    serp = f"https://image.tmdb.org/t/p/w500{poster_path}"
+    if any(serp.endswith(ext) for ext in valid_extensions):
+        try:
+            serp = upload_image(moviep) 
+        except BaseException:
+            serp = None
+    else:
+        serp = "https://telegra.ph/file/15480332b663adae49205.jpg"
+    if serp is None:
+        serp = "https://telegra.ph/file/15480332b663adae49205.jpg"
+    sm = f"الاسم: {sern}\nالتقييم: {serr}\nعدد المواسم: {sersn}\nالقصة:\n{sers}"
+    await event.delete()
+    await l313l.send_file(
+                event.chat_id,
+                serp,
+                caption=sm,
+                )
