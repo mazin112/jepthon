@@ -33,7 +33,7 @@ async def rfilm(event):
     movien = movie["title"]
     rating = movie["vote_average"]
     year = movie["release_date"][:4]
-    poster_path = movie_details["poster_path"]
+    poster_path = movie["poster_path"]
     moviep = f"https://image.tmdb.org/t/p/w500{poster_path}"
     if movied is None:
         movied = "-"
