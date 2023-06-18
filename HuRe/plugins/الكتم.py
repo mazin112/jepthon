@@ -109,7 +109,7 @@ async def mutejep(event):
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
-
+            await delete.event()
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.on(admin_cmd(pattern=f"الغاء كتم(?:\s|$)([\s\S]*)"))
