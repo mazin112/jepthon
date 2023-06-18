@@ -3,6 +3,7 @@ from HuRe import bot, l313l
 #By Source joker @jepthon
 from telethon import events, functions, types, Button
 from datetime import timedelta
+from HuRe.utils import admin_cmd
 import asyncio
 from ..Config import Config
 import os, asyncio, re
@@ -219,13 +220,13 @@ keyboard = [
     ]
 ]
 
-@bot.on(admin_cmd(outgoing=True, pattern="هاك"))
-async def op(event):
-    HuRe = Bot_Username.replace("@","")
-    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{HuRe} \n وكتابة الامر /hack**"
-    url = f"https://t.me/{HuRe}?start=hack"  # رابط البوت
+@borg.on(admin_cmd(pattern="هاك$"))
+async def Hussein(event):
+    bot_username = await event.client.get_me().username
+    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{bot_username} \n وكتابة الامر /hack**"
+    url = f"https://t.me/{bot_username}?start=hack"
     button = Button.url("اضغط هنا", url)
-    await l313l.tgbot.send_message(text, buttons=button, parse_mode='markdown')
+    await event.client.send_message(event.chat_id, text, buttons=button, parse_mode='markdown')
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
