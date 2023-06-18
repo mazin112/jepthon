@@ -220,11 +220,11 @@ keyboard = [
     ]
 ]
 
-@borg.on(events.InlineQuery(pattern=" هاك$"))
+@borg.on(events.InlineQuery(pattern="هاك$"))
 async def inline_handler(event):
     builder = event.builder
     bot_username = await borg.get_me().username
-    text = "اضغط على زر الانلاين لأستخدام اختراق كود تيرمكس"
+    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{bot_username} \n وكتابة الامر /hack**"
     url = f"https://t.me/{bot_username}?start=hack"
     button = Button.url("اضغط هنا", url)
     await event.answer([builder.article("1", text, text, buttons=button)])
