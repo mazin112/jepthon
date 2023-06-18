@@ -219,17 +219,18 @@ keyboard = [
     ]
 ]
 
-      
-       
-@l313l.on(
-    admin_cmd(
-       pattern="هاك$"
-    )
-)
-async def op(event):
-    HuRe = Bot_Username.replace("@","")       
-    await event.edit(f"**᯽︙ قم بالدخول لبوتك من هنا @{HuRe} \n وكتابة الامر /hack** ")
- 
+@l313l.ar_cmd(pattern="هاك(?:\s|$)([\s\S]*)")
+async def Hussein(event):
+    HuRe = Bot_Username.replace("@","")
+    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{HuRe} \n وكتابة الامر /hack**"
+    button_data = f"{HuRe}_hack"
+    button = Button.inline("اضغط هنا", data=button_data)
+    await event.respond(text, buttons=button)
+
+@l313l.ar_cmd(incoming=True)
+async def inline_joker(event):
+    if event.data.startswith(Bot_Username.replace("@","") + "_hack"):
+        await event.respond("/hack") 
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
