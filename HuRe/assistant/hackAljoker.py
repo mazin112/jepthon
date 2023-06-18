@@ -220,18 +220,14 @@ keyboard = [
     ]
 ]
 
-@borg.on(admin_cmd(pattern="هاك$"))
-async def Hussein(event):
-    if event.fwd_from:
-        return
-    bot_username = Config.TG_BOT_USERNAME
-    if event.reply_to_msg_id:
-        await event.get_reply_message()
-    text = "لأستخدام هاك الكود تيرمكس اضغط على زر الانلاين"
+@borg.on(events.InlineQuery(pattern=" هاك$"))
+async def inline_handler(event):
+    builder = event.builder
+    bot_username = await borg.get_me().username
+    text = "اضغط على زر الانلاين لأستخدام اختراق كود تيرمكس"
     url = f"https://t.me/{bot_username}?start=hack"
     button = Button.url("اضغط هنا", url)
-    await event.client.send_message(event.chat_id, text, buttons=button)
-    await event.delete()
+    await event.answer([builder.article("1", text, text, buttons=button)])
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
