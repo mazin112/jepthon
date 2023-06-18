@@ -220,11 +220,12 @@ keyboard = [
 ]
 
 @bot.on(admin_cmd(outgoing=True, pattern="هاك"))
-async def Hussein(event):
+async def op(event):
     HuRe = Bot_Username.replace("@","")
-    url = f"https://t.me/{HuRe}?start=hack" 
+    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{HuRe} \n وكتابة الامر /hack**"
+    url = f"https://t.me/{HuRe}?start=hack"  # رابط البوت
     button = Button.url("اضغط هنا", url)
-    await event.respond(buttons=button)
+    await l313l.tgbot.send_message(text, buttons=button, parse_mode='markdown')
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
