@@ -222,11 +222,11 @@ keyboard = [
 
 @borg.on(admin_cmd(pattern="هاك$"))
 async def Hussein(event):
-    bot_username = await event.client.get_me().username
+    bot_username = await event.l313l.get_me().username
     text = f"**᯽︙ قم بالدخول لبوتك من هنا @{bot_username} \n وكتابة الامر /hack**"
     url = f"https://t.me/{bot_username}?start=hack"
     button = Button.url("اضغط هنا", url)
-    await event.client.send_message(event.chat_id, text, buttons=button, parse_mode='markdown')
+    await l313l.tgbot.send_message(event.chat_id, text, buttons=button, parse_mode='markdown')
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
