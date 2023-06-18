@@ -21,7 +21,7 @@ joker_mute = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
 joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
-@l313l.on(admin_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)"))
+@l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
 async def mutejep(event):
     await event.delete()
     if event.is_private:
@@ -39,7 +39,11 @@ async def mutejep(event):
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
-            await event.edit("** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**")
+            return await event.client.send_file(
+                event.chat_id,
+                joker_mute,
+                caption="** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**",
+            )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -112,7 +116,7 @@ async def mutejep(event):
             ) 
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
-@l313l.on(admin_cmd(pattern=f"الغاء كتم(?:\s|$)([\s\S]*)"))
+@l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
 async def unmutejep(event):
     await event.delete()
     if event.is_private:
