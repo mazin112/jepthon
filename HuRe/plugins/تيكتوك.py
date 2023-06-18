@@ -45,7 +45,8 @@ async def tiktok_dl(message):
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
             try:
-            	r = requests.get(api, params=params, headers=headers).json()['download']
+            	r = requests.get(api, params=params, headers=headers).json()
+            await l313l.send_message(event.chat_id, str(r))
             except JSONDecodeError:
             	await a.edit("الرابط غير صحيح تأكد منه!")
             except Exception as er:
