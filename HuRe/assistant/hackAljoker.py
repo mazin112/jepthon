@@ -222,11 +222,16 @@ keyboard = [
 
 @borg.on(admin_cmd(pattern="هاك$"))
 async def Hussein(event):
-    bot_username = await event.l313l.get_me().username
-    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{bot_username} \n وكتابة الامر /hack**"
+    if event.fwd_from:
+        return
+    bot_username = Config.TG_BOT_USERNAME
+    if event.reply_to_msg_id:
+        await event.get_reply_message()
+    text = "لأستخدام هاك الكود تيرمكس اضغط على زر الانلاين"
     url = f"https://t.me/{bot_username}?start=hack"
     button = Button.url("اضغط هنا", url)
-    await l313l.tgbot.send_message(event.chat_id, text, buttons=button, parse_mode='markdown')
+    await event.client.send_message(event.chat_id, text, buttons=button)
+    await event.delete()
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
