@@ -8,12 +8,12 @@ from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
-import pyminifier
-os.system('pip install pyminifier')
-@l313.ar_cmd(pattern="تشفير")
-async def Reda(event):
-    await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
+from python_minifier import minify
 
+@l313.ar_cmd(pattern="تشفير")
+async def obfuscate_code(event):
+    # Ask the user for code
+    await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
     response = await event.get_reply_message()
 
     if response.text:
@@ -22,20 +22,20 @@ async def Reda(event):
         with open(original_file, "w") as file:
             file.write(code)
 
-        obfuscated_code = pyminifier.remove_comments_and_docstrings(code)
+        obfuscated_code = minify(original_file)
 
-    
+        
         obfuscated_file = "obfuscated_code.py"
         with open(obfuscated_file, "w") as file:
             file.write(obfuscated_code)
 
         
         await event.respond(file=obfuscated_file, force_document=True)
-
         os.remove(original_file)
         os.remove(obfuscated_file)
     else:
         await event.reply("لم يتم توفير الكود. يرجى إعادة المحاولة.")
+
 
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
