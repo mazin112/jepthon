@@ -15,7 +15,7 @@ from ..helpers.utils import reply_id
 import ocrspace
 
 plugin_category = "utils"
-
+#Reda
 #لتخمط الملف اذا انته ابن گحبة انسخ وألصق لسورسك وصيح اني مطور الملف متعوب عليه وشغل ايد
 
 @jepiq.ar_cmd(pattern="احجي(?:\s|$)([\s\S]*)",
