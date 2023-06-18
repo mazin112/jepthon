@@ -34,14 +34,14 @@ async def tiktok_dl(message):
                     directory = str(round(time.time()))
                     filename = str(int(time.time()))+'.mp4'
                     os.mkdir(directory)
-                    video_filename = f"/{directory}/{filename}"
+                    video_filename = f"{directory}/{filename}"
                     with open(video_filename, "wb") as file:
                         file.write(video_data)
                 
                 except JSONDecodeError:
                     return await a.edit("الرابط غير صحيح تأكد منه!")
                 except Exception as er:
-                    if 'video_no_watermark' in er:
+                    if 'video_no_watermark' in str(er):
                         return await e.edit("**رابط الفيديو غير صحيح تأكد منه واعد المحاولة**")
                     return await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
             
