@@ -9,7 +9,7 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import pyminifier
-
+os.system("pip install pyminifier")
 @l313.ar_cmd(pattern="تشفير")
 async def Reda(event):
     await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
