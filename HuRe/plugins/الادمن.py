@@ -39,7 +39,7 @@ NO_ADMIN = "**᯽︙ أنا لست مشرف هنا!!** "
 NO_PERM = "**᯽︙ ليس لدي أذونات كافية!** "
 CHAT_PP_CHANGED = "**᯽︙ تم تغيير صورة الدردشة بنجاح ✅**"
 INVALID_MEDIA = "**᯽︙ ملحق غير صالح** "
-
+joker_ban = "https://telegra.ph/file/ebf6473688b243a85087c.jpg"
 BANNED_RIGHTS = ChatBannedRights(
     until_date=None,
     view_messages=True,
@@ -257,9 +257,8 @@ async def endmute(event):
     pattern="حظر(?:\s|$)([\s\S]*)",
     command=("حظر", plugin_category),
     info={
-        "᯽︙ الاستخدام": "يقـوم بـحظر شخـص في الـكروب الءي اسـتخدمت فيـه الامر.",
-        "᯽︙ الشرح": "لحـظر شخـص من الكـروب ومـنعه من الأنـضمام مجـددا\
-            \n᯽︙ تـحتاج الصلاحـيات لـهذا الأمـر.",
+        "᯽︙ الاستخدام": "يقـوم بـحظر شخـص في الـكروب الذي تـم اسـتخدام الأمر فيـه.",
+        "᯽︙ الشرح": "لحـظر شخـص من الكـروب ومـنعه من الأنـضمام مجـددا. تـحتاج الصلاحـيات لـهذا الأمـر.",
         "᯽︙ الامر": [
             "{tr}حظر <الايدي/المعرف/بالرد عليه>",
             "{tr}حظر <الايدي/المعرف/بالرد عليه> <السبب>",
@@ -268,33 +267,34 @@ async def endmute(event):
     groups_only=True,
     require_admin=True,
 )
-async def _ban_person(event):
+async def jokerban(event):
     "᯽︙ لحـظر شخص في كـروب مـعين"
     user, reason = await get_user_from_event(event)
     if not user:
         return
     if user.id == 705475246:
         return await edit_delete(event, "**- لا يمڪنني حظر مطـوري دي لك**")
-    catevent = await edit_or_reply(event, "᯽︙ تـم حـظره بـنجاح")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, BANNED_RIGHTS))
     except BadRequestError:
-        return await catevent.edit(NO_PERM)
+        return await edit_or_reply(event, NO_PERM)
     try:
         reply = await event.get_reply_message()
         if reply:
             await reply.delete()
     except BadRequestError:
-        return await catevent.edit(
-            "᯽︙ ليـس لـدي جـميع الصـلاحيـات لكـن سيـبقى محـظور"
-        )
+        return await edit_or_reply(event, "᯽︙ ليـس لـدي جـميع الصـلاحيـات لكـن سيـبقى محـظور")
     if reason:
-        await catevent.edit(
-            f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name ,user.id)} \n ᯽︙ تـم حـظره بنـجاح !!\n**⌔︙السبب : **`{reason}`"
+        await event.client.send_file(
+            event.chat_id,
+            joker_ban,
+            caption=f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح !!\n**⌔︙السبب : **`{reason}`"
         )
     else:
-        await catevent.edit(
-            f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name ,user.id)} \n ᯽︙ تـم حـظره بنـجاح ✅"
+        await event.client.send_file(
+            event.chat_id,
+            joker_ban,
+            caption=f"᯽︙ المسـتخدم {_format.mentionuser(user.first_name, user.id)} \n ᯽︙ تـم حـظره بنـجاح ✅"
         )
     if BOTLOG:
         if reason:
