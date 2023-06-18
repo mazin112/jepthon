@@ -27,6 +27,7 @@ async def tiktok_dl(message):
                 try:
                     response = requests.get(f"https://godownloader.com/api/tiktok-no-watermark-free?url={link}&key=godownloader.com")
                     data = response.json()
+                    print(data)
                     video_link = data["video_no_watermark"]
                     response = requests.get(video_link)
                     video_data = response.content
