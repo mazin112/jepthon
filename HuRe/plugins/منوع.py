@@ -10,38 +10,28 @@ from ..core.managers import edit_delete, edit_or_reply
 import os
 from python_minifier import minify
 
-@l313.ar_cmd(pattern="تشفير")
+@l313l.ar_cmd(pattern="تشفير")
 async def obfuscate_code(event):
-    # Ask the user for code
     await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
     response = await event.get_reply_message()
-
     if response.text:
         code = response.text
         original_file = "original_code.py"
         with open(original_file, "w") as file:
             file.write(code)
-
         obfuscated_code = minify(original_file)
-
-        
         obfuscated_file = "obfuscated_code.py"
         with open(obfuscated_file, "w") as file:
             file.write(obfuscated_code)
-
-        
         await event.respond(file=obfuscated_file, force_document=True)
         os.remove(original_file)
         os.remove(obfuscated_file)
     else:
         await event.reply("لم يتم توفير الكود. يرجى إعادة المحاولة.")
-
-
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
     xx = await event.client(getvc(mm.full_chat.call))
     return xx.call
-
 def user_list(l, n):
     for i in range(0, len(l), n):
         yield l[i : i + n]
