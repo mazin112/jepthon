@@ -42,7 +42,7 @@ async def tiktok_dl(message):
                     return await a.edit("الرابط غير صحيح تأكد منه!")
                 except Exception as er:
                     if 'video_no_watermark' in str(er):
-                        return await e.edit("**رابط الفيديو غير صحيح تأكد منه واعد المحاولة**")
+                        return await a.edit("**رابط الفيديو غير صحيح تأكد منه واعد المحاولة**")
                     return await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
             
             
