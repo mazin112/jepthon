@@ -9,7 +9,7 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
-from pyminifier import minify
+from python_minifier import minify
 from telethon import events
 
 @l313l.ar_cmd(pattern="تشفير نص")
