@@ -17,6 +17,8 @@ from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
 
 plugin_category = "admin"
 
+joker_photo = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
+
 #=================== الكـــــــــــــــتم  ===================  #
 
 @l313l.on(admin_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)"))
@@ -92,11 +94,13 @@ async def mutejep(event):
             await edit_or_reply(
                 event,
                 f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n**- السـبب :** {reason}",
+                file=joker_photo,
             )
         else:
             await edit_or_reply(
                 event,
                 f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
+                file=joker_photo,
             )
         if BOTLOG:
             await event.client.send_message(
