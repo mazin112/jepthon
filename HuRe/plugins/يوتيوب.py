@@ -347,7 +347,7 @@ async def kakashi(event):
     chat = "@instasavegrambot"
     link = event.pattern_match.group(1)
     if "www.instagram.com" not in link:
-        await edit_or_reply(
+        return await edit_or_reply(
             event, "᯽︙ - يجب كتابة رابط من الانستغرام لتحميله ❕"
         )
     else:
