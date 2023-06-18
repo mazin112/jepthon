@@ -23,6 +23,7 @@ joker_photo = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
 
 @l313l.on(admin_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)"))
 async def mutejep(event):
+    await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
@@ -108,8 +109,7 @@ async def mutejep(event):
                 "#الكــتم\n"
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
-            )
-    await event.delete() 
+            ) 
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.on(admin_cmd(pattern=f"الغاء كتم(?:\s|$)([\s\S]*)"))
