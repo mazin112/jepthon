@@ -15,14 +15,14 @@ from telethon import events
 @l313l.ar_cmd(pattern="تشفير")
 async def obfuscate_code(event):
     async def get_code_text():
-        await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
+        await event.respond("قم بإرسال الكود الذي ترغب في تشفيره:")
         response = await event.client.get_messages(event.chat_id, limit=1)
         if response and response[0].text:
             return response[0].text
         return None
 
     async def get_code_file():
-        await event.reply("قم بإرسال الملف الذي يحتوي على الكود الذي ترغب في تشفيره:")
+        await event.respond("قم بإرسال الملف الذي يحتوي على الكود الذي ترغب في تشفيره:")
         response = await event.client.get_messages(event.chat_id, limit=1)
         if response and response[0].media and response[0].media.document.mime_type == "text/x-python":
             temp_dir = tempfile.mkdtemp()
@@ -33,7 +33,7 @@ async def obfuscate_code(event):
         return None
 
     async def handle_error(error_message):
-        await event.reply(f"حدث خطأ أثناء تشفير الكود:\n\n{error_message}")
+        await event.respond(f"حدث خطأ أثناء تشفير الكود:\n\n{error_message}")
 
     async def obfuscate_and_send_code(code):
         try:
@@ -41,7 +41,7 @@ async def obfuscate_code(event):
             obfuscated_file_path = os.path.join(tempfile.mkdtemp(), "obfuscated_code.py")
             with open(obfuscated_file_path, "w") as file:
                 file.write(obfuscated_code)
-            await event.reply(file=obfuscated_file_path, force_document=True)
+            await event.respond(file=obfuscated_file_path, force_document=True)
             os.remove(obfuscated_file_path)
         except Exception as e:
             await handle_error(str(e))
@@ -55,6 +55,7 @@ async def obfuscate_code(event):
         await obfuscate_and_send_code(code_file)
     else:
         await handle_error("لم يتم توفير الكود أو الملف الصحيح. يرجى إعادة المحاولة.")
+
 
 
 async def get_call(event):
