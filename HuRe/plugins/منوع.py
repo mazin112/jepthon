@@ -9,7 +9,6 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
-from telethon.tl.types import Message
 from python_minifier import minify
 from telethon import events
 
@@ -17,18 +16,18 @@ from telethon import events
 async def obfuscate_code(event):
     async def get_code_text():
         await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
-        response = await event.client.listen(event.chat_id)
-        if isinstance(response.message, Message) and response.message.text:
-            return response.message.text
+        response = await event.client.get_messages(event.chat_id, limit=1)
+        if response and response[0].text:
+            return response[0].text
         return None
 
     async def get_code_file():
         await event.reply("قم بإرسال الملف الذي يحتوي على الكود الذي ترغب في تشفيره:")
-        response = await event.client.listen(event.chat_id)
-        if isinstance(response.message, Message) and response.message.media and response.message.media.document.mime_type == "text/x-python":
+        response = await event.client.get_messages(event.chat_id, limit=1)
+        if response and response[0].media and response[0].media.document.mime_type == "text/x-python":
             temp_dir = tempfile.mkdtemp()
             file_path = os.path.join(temp_dir, "code.py")
-            await response.download_media(file_path)
+            await event.client.download_media(response[0].media, file_path)
             with open(file_path, "r") as file:
                 return file.read()
         return None
@@ -47,23 +46,15 @@ async def obfuscate_code(event):
         except Exception as e:
             await handle_error(str(e))
 
-    async with event.client.conversation(event.chat_id) as conv:
-        await conv.send_message("هل تود إدخال الكود كنص أم كملف؟\n\n1. نص\n2. ملف")
-        response = await conv.get_response()
-        if response.message == "1":
-            code = await get_code_text()
-            if code:
-                await obfuscate_and_send_code(code)
-            else:
-                await handle_error("لم يتم توفير الكود. يرجى إعادة المحاولة.")
-        elif response.message == "2":
-            code = await get_code_file()
-            if code:
-                await obfuscate_and_send_code(code)
-            else:
-                await handle_error("لم يتم توفير الملف الصحيح. يرجى إعادة المحاولة.")
-        else:
-            await handle_error("الخيار غير صالح. يرجى إعادة المحاولة.")
+    code_text = await get_code_text()
+    code_file = await get_code_file()
+
+    if code_text:
+        await obfuscate_and_send_code(code_text)
+    elif code_file:
+        await obfuscate_and_send_code(code_file)
+    else:
+        await handle_error("لم يتم توفير الكود أو الملف الصحيح. يرجى إعادة المحاولة.")
 
 
 async def get_call(event):
