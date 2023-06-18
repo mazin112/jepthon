@@ -56,7 +56,7 @@ async def tiktok_dl(event):
                 filesize = filesize_bytes / (1024 * 1024)
                 catid = await reply_id(event.message)
                 await l313l.send_file(
-                   event.chat_id, f"{directory}/{filename}", reply_to=catid,     force_document=True, parse_mode='md',     caption=f"**الملف : ** {filename}\n**الحجم :**     {round(filesize, 1)} MB"
+                   event.chat_id, f"{directory}/{filename}", reply_to=catid,     force_document=Flase,     caption=f"**الملف : ** {filename}\n**الحجم :**     {round(filesize, 1)} MB"
                  )
         
                 await a.delete()
