@@ -50,13 +50,13 @@ async def obfuscate_code(event):
     async with event.client.conversation(event.chat_id) as conv:
         await conv.send_message("هل تود إدخال الكود كنص أم كملف؟\n\n1. نص\n2. ملف")
         response = await conv.get_response()
-        if response.text == "1":
+        if response.message == "1":
             code = await get_code_text()
             if code:
                 await obfuscate_and_send_code(code)
             else:
                 await handle_error("لم يتم توفير الكود. يرجى إعادة المحاولة.")
-        elif response.text == "2":
+        elif response.message == "2":
             code = await get_code_file()
             if code:
                 await obfuscate_and_send_code(code)
