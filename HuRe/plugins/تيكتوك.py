@@ -60,5 +60,5 @@ async def tiktok_dl(message):
                 await a.delete()
      
                 shutil.rmtree(directory)
-    else:
-        return None
+    #else:
+       # return None
