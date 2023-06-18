@@ -91,16 +91,16 @@ async def mutejep(event):
         except Exception as e:
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         if reason:
-            await edit_or_reply(
-                event,
-                f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n**- السـبب :** {reason}",
-                file=joker_photo,
+            await event.client.send_file(
+                event.chat_id,
+                joker_photo,
+                caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n**- السـبب :** {reason}",
             )
         else:
-            await edit_or_reply(
-                event,
-                f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
-                file=joker_photo,
+            await event.client.send_file(
+                event.chat_id,
+                joker_photo,
+                caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
             )
         if BOTLOG:
             await event.client.send_message(
