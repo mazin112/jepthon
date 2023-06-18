@@ -269,6 +269,7 @@ async def endmute(event):
 )
 async def jokerban(event):
     "᯽︙ لحـظر شخص في كـروب مـعين"
+    await event.delete()
     user, reason = await get_user_from_event(event)
     if not user:
         return
