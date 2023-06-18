@@ -19,11 +19,11 @@ from HuRe import l313l
 async def tiktok_dl(message):
     ms = message.text
     if message.sender.id == Config.OWNER_ID or message.sender.id in Config.SUDO_USERS:
-        if ".تك https://tiktok.com/" or ".تك https://vm.tiktok.com/" in ms:
+            if ms.startswith(".تك") and ("https://tiktok.com/" in ms or "https://vm.tiktok.com/" in ms):
             await message.delete()
             a = await l313l.send_message(message.chat.id, 'يجري البحث عن الملف..', parse_mode='md')
             link = re.findall(r'\bhttps?://.*[(tiktok|douyin)]\S+', message.text)[0]
-            link = link.split("?")[0]
+
             try:
                 response = requests.get(f"https://godownloader.com/api/tiktok-no-watermark-free?url={link}&key=godownloader.com")
                 data = response.json()
