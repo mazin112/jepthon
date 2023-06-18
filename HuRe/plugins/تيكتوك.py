@@ -45,13 +45,13 @@ async def tiktok_dl(message):
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
             try:
-            	r = requests.get(api, params=params, headers=headers).json()
-            await l313l.send_message(event.chat_id, str(r))
+                r = requests.get(api, params=params, headers=headers).json()
+                await l313l.send_message(message.chat.id, str(r))
             except JSONDecodeError:
-            	await a.edit("الرابط غير صحيح تأكد منه!")
+                await a.edit("الرابط غير صحيح تأكد منه!")
             except Exception as er:
-            	await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
-            #await l313l.send_message(message.chat.id, str(r))
+                await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
+            
             directory = str(round(time.time()))
             filename = str(int(time.time()))+'.mp4'
             size = int(requests.head(r).headers['Content-Length'])
