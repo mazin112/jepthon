@@ -8,26 +8,64 @@ from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
+import tempfile
+from telethon.tl.types import Message
 from python_minifier import minify
+from telethon import events
 
 @l313l.ar_cmd(pattern="تشفير")
 async def obfuscate_code(event):
-    await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
-    response = await event.get_reply_message()
-    if response.text:
-        code = response.text
-        original_file = "original_code.py"
-        with open(original_file, "w") as file:
-            file.write(code)
-        obfuscated_code = minify(original_file)
-        obfuscated_file = "obfuscated_code.py"
-        with open(obfuscated_file, "w") as file:
-            file.write(obfuscated_code)
-        await event.respond(file=obfuscated_file, force_document=True)
-        os.remove(original_file)
-        os.remove(obfuscated_file)
-    else:
-        await event.reply("لم يتم توفير الكود. يرجى إعادة المحاولة.")
+    async def get_code_text():
+        await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
+        response = await event.client.listen(event.chat_id)
+        if isinstance(response.message, Message) and response.message.text:
+            return response.message.text
+        return None
+
+    async def get_code_file():
+        await event.reply("قم بإرسال الملف الذي يحتوي على الكود الذي ترغب في تشفيره:")
+        response = await event.client.listen(event.chat_id)
+        if isinstance(response.message, Message) and response.message.media and response.message.media.document.mime_type == "text/x-python":
+            temp_dir = tempfile.mkdtemp()
+            file_path = os.path.join(temp_dir, "code.py")
+            await response.download_media(file_path)
+            with open(file_path, "r") as file:
+                return file.read()
+        return None
+
+    async def handle_error(error_message):
+        await event.reply(f"حدث خطأ أثناء تشفير الكود:\n\n{error_message}")
+
+    async def obfuscate_and_send_code(code):
+        try:
+            obfuscated_code = minify(code)
+            obfuscated_file_path = os.path.join(tempfile.mkdtemp(), "obfuscated_code.py")
+            with open(obfuscated_file_path, "w") as file:
+                file.write(obfuscated_code)
+            await event.reply(file=obfuscated_file_path, force_document=True)
+            os.remove(obfuscated_file_path)
+        except Exception as e:
+            await handle_error(str(e))
+
+    async with event.client.conversation(event.chat_id) as conv:
+        await conv.send_message("هل تود إدخال الكود كنص أم كملف؟\n\n1. نص\n2. ملف")
+        response = await conv.get_response()
+        if response.text == "1":
+            code = await get_code_text()
+            if code:
+                await obfuscate_and_send_code(code)
+            else:
+                await handle_error("لم يتم توفير الكود. يرجى إعادة المحاولة.")
+        elif response.text == "2":
+            code = await get_code_file()
+            if code:
+                await obfuscate_and_send_code(code)
+            else:
+                await handle_error("لم يتم توفير الملف الصحيح. يرجى إعادة المحاولة.")
+        else:
+            await handle_error("الخيار غير صالح. يرجى إعادة المحاولة.")
+
+
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
     xx = await event.client(getvc(mm.full_chat.call))
