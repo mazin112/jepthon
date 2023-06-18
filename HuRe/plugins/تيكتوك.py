@@ -23,8 +23,7 @@ async def tiktok_dl(event):
             if ("https://tiktok.com/" in ms or "https://vm.tiktok.com/" in ms):
                 await event.message.delete()
                 a = await l313l.send_message(event.chat_id, 'يجري البحث عن الملف..')
-                link = re.findall(r'\bhttps?://.*[(tiktok|douyin)]\S+', ms)[0]
-
+                link = ms.strip()
                 try:
                     response = requests.get(f"https://godownloader.com/api/tiktok-no-watermark-free?url={link}&key=godownloader.com")
                     data = response.json()
