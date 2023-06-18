@@ -9,7 +9,7 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
-from python_minifier import minify
+from pyminifier import minify
 from telethon import events
 
 @l313l.ar_cmd(pattern="تشفير نص")
@@ -17,42 +17,51 @@ async def obfuscate_text(event):
     if event.sender_id != event.client.uid:
         return  # Only proceed if the owner of the event triggered the command
 
-    await event.respond("قم بإرسال النص الذي ترغب في تشفيره:")
-    response = await event.client.get_messages(event.chat_id, limit=1)
-    if response and response[0].text:
-        code = response[0].text
-        try:
-            obfuscated_code = minify(code)
-            await event.respond(obfuscated_code)
-        except Exception as e:
-            await event.respond(f"حدث خطأ أثناء تشفير النص:\n\n{str(e)}")
-    else:
-        await event.respond("لم يتم توفير النص. يرجى إعادة المحاولة.")
+    async with event.client.conversation(event.chat_id) as conv:
+        await conv.send_message("قم بإرسال النص الذي ترغب في تشفيره:")
+        response = await conv.get_response()
+
+        if response.text:
+            code = response.text
+            try:
+                obfuscated_code = minify(code, remove_literal_statements=True)
+                await conv.send_message(obfuscated_code)
+            except Exception as e:
+                await conv.send_message(f"حدث خطأ أثناء تشفير النص:\n\n{str(e)}")
+        else:
+            await conv.send_message("لم يتم توفير النص. يرجى إعادة المحاولة.")
 
 @l313l.ar_cmd(pattern="تشفير ملف")
 async def obfuscate_file(event):
     if event.sender_id != event.client.uid:
         return  # Only proceed if the owner of the event triggered the command
 
-    await event.respond("قم بإرسال الملف الذي يحتوي على الكود الذي ترغب في تشفيره:")
-    response = await event.client.get_messages(event.chat_id, limit=1)
-    if response and response[0].media and response[0].media.document.mime_type == "text/x-python":
-        temp_dir = tempfile.mkdtemp()
-        file_path = os.path.join(temp_dir, "code.py")
-        await event.client.download_media(response[0].media, file_path)
-        with open(file_path, "r") as file:
-            code = file.read()
-        try:
-            obfuscated_code = minify(code)
-            obfuscated_file_path = os.path.join(tempfile.mkdtemp(), "obfuscated_code.py")
-            with open(obfuscated_file_path, "w") as file:
-                file.write(obfuscated_code)
-            await event.respond(file=obfuscated_file_path, force_document=True)
-            os.remove(obfuscated_file_path)
-        except Exception as e:
-            await event.respond(f"حدث خطأ أثناء تشفير الملف:\n\n{str(e)}")
-    else:
-        await event.respond("لم يتم توفير ملف صحيح. يرجى إعادة المحاولة.")
+    async with event.client.conversation(event.chat_id) as conv:
+        await conv.send_message("قم بإرسال الملف الذي يحتوي على الكود الذي ترغب في تشفيره:")
+        response = await conv.get_response()
+
+        if response.media and response.media.document.mime_type == "text/x-python":
+            temp_dir = tempfile.mkdtemp()
+            file_path = os.path.join(temp_dir, "code.py")
+            await response.download_media(file_path)
+
+            with open(file_path, "r") as file:
+                code = file.read()
+
+            try:
+                obfuscated_code = minify(code, remove_literal_statements=True)
+                obfuscated_file_path = os.path.join(tempfile.mkdtemp(), "obfuscated_code.py")
+
+                with open(obfuscated_file_path, "w") as file:
+                    file.write(obfuscated_code)
+
+                await conv.send_file(file=obfuscated_file_path, force_document=True)
+                os.remove(obfuscated_file_path)
+            except Exception as e:
+                await conv.send_message(f"حدث خطأ أثناء تشفير الملف:\n\n{str(e)}")
+        else:
+            await conv.send_message("لم يتم توفير ملف صحيح. يرجى إعادة المحاولة.")
+
 
 
 
