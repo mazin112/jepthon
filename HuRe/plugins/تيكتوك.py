@@ -34,7 +34,7 @@ async def tiktok_dl(message):
                     directory = str(round(time.time()))
                     filename = str(int(time.time()))+'.mp4'
                     os.mkdir(directory)
-                    video_filename = f"{directory}/{filename}"
+                    video_filename = f"/{directory}/{filename}"
                     with open(video_filename, "wb") as file:
                         file.write(video_data)
                 
@@ -53,7 +53,7 @@ async def tiktok_dl(message):
                 filesize = filesize_bytes / (1024 * 1024)
                 catid = await reply_id(message)
                 await message.client.send_file(
-                   message.chat_id, f"./.   {directory}/{filename}", reply_to=catid,     force_document=True, parse_mode='md',     caption=f"**الملف : ** {filename}\n**الحجم :**     {filesize} MB"
+                   message.chat_id, f"/{directory}/{filename}", reply_to=catid,     force_document=True, parse_mode='md',     caption=f"**الملف : ** {filename}\n**الحجم :**     {filesize} MB"
                  )
         
                 await a.delete()
