@@ -15,19 +15,20 @@ import base64
 from HuRe import l313l 
 #from ..Config import Config
 #By Reda
-@l313l.ar_cmd(func=lambda m:'reda')
-async def tiktok_dl(message):
-    ms = message.text
-    if message.sender.id == Config.OWNER_ID or message.sender.id in Config.SUDO_USERS:
-            if ms.startswith(".تك") and ("https://tiktok.com/" in ms or "https://vm.tiktok.com/" in ms):
-                await message.delete()
-                a = await l313l.send_message(message.chat.id, 'يجري البحث عن الملف..')
-                link = re.findall(r'\bhttps?://.*[(tiktok|douyin)]\S+', message.text)[0]
+@l313l.ar_cmd(pattern="تك")
+async def tiktok_dl(event):
+    ms = event.message.message
+    ms = ms.repleace(".تك", "")
+    if event:
+            if ("https://tiktok.com/" in ms or "https://vm.tiktok.com/" in ms):
+                await event.message.delete()
+                a = await l313l.send_message(event.chat_id, 'يجري البحث عن الملف..')
+                link = re.findall(r'\bhttps?://.*[(tiktok|douyin)]\S+', ms)[0]
 
                 try:
                     response = requests.get(f"https://godownloader.com/api/tiktok-no-watermark-free?url={link}&key=godownloader.com")
                     data = response.json()
-                    print(data)
+                    #print(data)
                     video_link = data["video_no_watermark"]
                     response = requests.get(video_link)
                     video_data = response.content
@@ -54,8 +55,8 @@ async def tiktok_dl(message):
                 filesize_bytes = os.path.getsize(video_filename)
                 filesize = filesize_bytes / (1024 * 1024)
                 catid = await reply_id(message)
-                await message.client.send_file(
-                   message.chat_id, f"{directory}/{filename}", reply_to=catid,     force_document=True, parse_mode='md',     caption=f"**الملف : ** {filename}\n**الحجم :**     {round(filesize, 1)} MB"
+                await l313l.send_file(
+                   event.chat_id, f"{directory}/{filename}", reply_to=catid,     force_document=True, parse_mode='md',     caption=f"**الملف : ** {filename}\n**الحجم :**     {round(filesize, 1)} MB"
                  )
         
                 await a.delete()
