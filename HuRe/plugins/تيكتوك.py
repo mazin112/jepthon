@@ -18,7 +18,7 @@ from HuRe import l313l
 @l313l.ar_cmd(pattern="تك")
 async def tiktok_dl(event):
     ms = event.message.message
-    ms = ms.repleace(".تك", "")
+    ms = ms.replace(".تك", "")
     if event:
             if ("https://tiktok.com/" in ms or "https://vm.tiktok.com/" in ms):
                 await event.message.delete()
