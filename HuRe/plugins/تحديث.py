@@ -167,9 +167,9 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         return repo.__del__()
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
-        
+        await l313l.send_message(event.chat_id, str(build_status))
         return await edit_delete(
-            event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n{build_status}"
+            event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n"
         )
     try:
         remote.push("HuRe:main", force=True)
