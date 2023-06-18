@@ -38,14 +38,12 @@ async def tiktok_dl(message):
                         file.write(video_data)
                 
                 except JSONDecodeError:
-                    await a.edit("الرابط غير صحيح تأكد منه!")
+                    return await a.edit("الرابط غير صحيح تأكد منه!")
                 except Exception as er:
-                    await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
+                    return await a.edit(f"حدث خطأ قم بتوجيه الرسالة الى مطوري @rd0r0\n{er}")
             
             
-                except:
-                    pass
-            
+                
                 await a.edit(f' يجري التحميل للخادم..!\n'
                    f' يجري الرفع للتلجرام⏳__')
                 start = time.time()
