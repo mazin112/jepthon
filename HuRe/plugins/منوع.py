@@ -1,13 +1,41 @@
 import asyncio
 from collections import deque
 from random import choice
-
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
 from telethon.tl.functions.phone import InviteToGroupCallRequest as invitetovc
 from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
+import os
+import pyminifier
+
+@l313.ar_cmd(pattern="تشفير")
+async def Reda(event):
+    await event.reply("قم بإرسال الكود الذي ترغب في تشفيره:")
+
+    response = await event.get_reply_message()
+
+    if response.text:
+        code = response.text
+        original_file = "original_code.py"
+        with open(original_file, "w") as file:
+            file.write(code)
+
+        obfuscated_code = pyminifier.remove_comments_and_docstrings(code)
+
+    
+        obfuscated_file = "obfuscated_code.py"
+        with open(obfuscated_file, "w") as file:
+            file.write(obfuscated_code)
+
+        
+        await event.respond(file=obfuscated_file, force_document=True)
+
+        os.remove(original_file)
+        os.remove(obfuscated_file)
+    else:
+        await event.reply("لم يتم توفير الكود. يرجى إعادة المحاولة.")
 
 async def get_call(event):
     mm = await event.client(getchat(event.chat_id))
