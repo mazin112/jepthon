@@ -21,7 +21,7 @@ async def tiktok_dl(message):
     if message.sender.id == Config.OWNER_ID or message.sender.id in Config.SUDO_USERS:
             if ms.startswith(".تك") and ("https://tiktok.com/" in ms or "https://vm.tiktok.com/" in ms):
             await message.delete()
-            a = await l313l.send_message(message.chat.id, 'يجري البحث عن الملف..', parse_mode='md')
+            a = await l313l.send_message(message.chat.id, 'يجري البحث عن الملف..')
             link = re.findall(r'\bhttps?://.*[(tiktok|douyin)]\S+', message.text)[0]
 
             try:
