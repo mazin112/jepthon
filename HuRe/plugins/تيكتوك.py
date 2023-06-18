@@ -54,7 +54,7 @@ async def tiktok_dl(event):
                 title = "فيديو"
                 filesize_bytes = os.path.getsize(video_filename)
                 filesize = filesize_bytes / (1024 * 1024)
-                catid = await reply_id(message)
+                catid = await reply_id(event.message)
                 await l313l.send_file(
                    event.chat_id, f"{directory}/{filename}", reply_to=catid,     force_document=True, parse_mode='md',     caption=f"**الملف : ** {filename}\n**الحجم :**     {round(filesize, 1)} MB"
                  )
