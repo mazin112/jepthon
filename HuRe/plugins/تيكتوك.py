@@ -45,7 +45,7 @@ async def tiktok_dl(message):
     
             api = f"https://tiktok-info.p.rapidapi.com/dl/"
             try:
-            	r = requests.get(api, params=params, headers=headers).json()['videoLinks']['download']
+            	r = requests.get(api, params=params, headers=headers).json()['download']
             except JSONDecodeError:
             	await a.edit("الرابط غير صحيح تأكد منه!")
             except Exception as er:
