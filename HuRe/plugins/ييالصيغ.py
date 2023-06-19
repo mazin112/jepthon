@@ -57,7 +57,7 @@ async def save_media(event):
 
     try:
         message_link_parts = str(message_link).split("/")
-        await event.reply(f"{message_link_parts}")
+        
         if message_link_parts:
             if message_link_parts[-2] == "c":
                 channel_username_or_id = int(message_link_parts[-3])
@@ -69,7 +69,7 @@ async def save_media(event):
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
-    await event.reply(str(channel_username_or_id))
+    
     try:
         entity = await l313l.get_entity(channel_username_or_id)
         if not entity:
