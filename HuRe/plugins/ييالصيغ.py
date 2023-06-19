@@ -71,8 +71,7 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     
     try:
-        await l313l.send_message(event.chat_id, "working")
-        entity = await l313l.get_entity(channel_username_or_id)
+        entity = await l313l.get_input_entity(channel_username_or_id)
         
         if not entity:
             return await event.edit("Invalid channel or entity not found!")
