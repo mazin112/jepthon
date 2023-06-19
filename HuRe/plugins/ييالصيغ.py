@@ -73,11 +73,9 @@ async def save_media(event):
     
     try:
         if int(channel_username_or_id):
-            channel_username_or_id = int(channel_username_or_id)
+            channel_username_or_id = int("-100" + str(channel_username_or_id))
         
-        input_peer = InputPeerChannel(channel_username_or_id)
-        print(input_peer)
-        entity = await l313l.get_entity(input_peer)      
+        entity = await l313l.get_entity(channel_username_or_id)      
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("الرابط غلط او الرسالة غير موجوده")
