@@ -220,17 +220,23 @@ keyboard = [
     ]
 ]
 
-@bot.on(admin_cmd(outgoing=True, pattern="هاك"))
-async def handle_hack_command(event):
-    joker = Bot_Username.replace("@", "")
-    button = Button.inline(
-        "اضغط هنا",
-        data="/hack",
-    )
-    await event.reply(
+@bot.on(admin_cmd(outgoing=True, pattern="هاك$"))
+async def Hussein(event):
+    if event.fwd_from:
+        return
+    button = Button.inline("اضغط هنا", data="/hack")
+        await event.client.send_message(
+        event.chat_id,
         f"**᯽︙ قم بالدخول لبوتك من هنا @{joker} \n وكتابة الامر /hack**",
-        buttons=[[button]],
+        buttons=button,
+        reply_to=event.reply_to_msg_id
     )
+    joker = Bot_Username.replace("@", "")
+    if event.reply_to_msg_id:
+        await event.get_reply_message()
+    response = await event.client.inline_query(joker, button)
+    await response[0].click(event.chat_id)
+    await event.delete()
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
