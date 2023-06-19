@@ -71,14 +71,10 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     
     try:
-        entity = await l313l.get_input_entity(channel_username_or_id)
-        
-        if not entity:
-            return await event.edit("Invalid channel or entity not found!")
-        
+        entity = await l313l.get_entity(channel_username_or_id)      
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
-            return await event.edit("Invalid message link or message not found!")
+            return await event.edit("الرابط غلط او الرسالة غير موجوده")
     except ChannelPrivateError:
         await event.edit("يجب أن تنضم للقناة أولاً لتستطيع الحفظ منها")
     except Exception as e:
