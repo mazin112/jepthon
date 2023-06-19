@@ -220,14 +220,20 @@ keyboard = [
     ]
 ]
 
-@borg.on(events.InlineQuery(pattern="هاك$"))
-async def inline_handler(event):
+@l313l.on(admin_cmd(pattern="هاك$"))
+async def Hussein(event):
+    joker = Bot_Username.replace("@", "")
     builder = event.builder
-    bot_username = await borg.get_me().username
-    text = f"**᯽︙ قم بالدخول لبوتك من هنا @{bot_username} \n وكتابة الامر /hack**"
-    url = f"https://t.me/{bot_username}?start=hack"
-    button = Button.url("اضغط هنا", url)
-    await event.answer([builder.article("1", text, text, buttons=button)])
+    button = builder.article(
+        title="Click to Hack",
+        description="Click this button to initiate the hack process",
+        text="/hack",
+        buttons=[Button.switch_inline("Hack", query="hack", same_peer=True)],
+    )
+    await event.reply(
+        f"**᯽︙ قم بالدخول لبوتك من هنا @{joker} \n وكتابة الامر /hack**",
+        buttons=button,
+    )
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
   global menu
