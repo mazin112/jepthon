@@ -72,7 +72,7 @@ async def save_media(event):
     
     try:
         entity = await l313l.get_entity(channel_username_or_id)
-        await l313l.send_message(event.chat_id, f"entity\n{entity}")
+        
         if not entity:
             return await event.edit("Invalid channel or entity not found!")
         
@@ -82,7 +82,7 @@ async def save_media(event):
     except ChannelPrivateError:
         await event.edit("يجب أن تنضم للقناة أولاً لتستطيع الحفظ منها")
     except Exception as e:
-        return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
+        return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}\n{entity}")
 
     try:
         message = await l313l.get_messages(channel_username_or_id, ids=message_id)
