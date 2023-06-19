@@ -1,15 +1,45 @@
-from HuRe import l313l
+from HuRe import l313l, bot
 from HuRe import BOTLOG_CHATID
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import asyncio
 from ..Config import Config
 import requests
-from telethon import Button
+from telethon import Button, events
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from ..core.managers import edit_delete, edit_or_reply
 #ياعلي
 #اخ اخ اخ اخ اخ اخ اخممممممط ياطويل العمر اخمطط 😂
 #Reda
+Bot_Username = Config.TG_BOT_USERNAME
+if Config.TG_BOT_USERNAME is not None and tgbot is not None:
+    
+    @tgbot.on(events.InlineQuery)
+    async def inline_handler(event):
+        builder = event.builder
+        result = None
+        joker = Bot_Username.replace("@", "")
+        query = event.text
+        await bot.get_me()
+        if query.startswith("هاك") and event.query.user_id == bot.uid:
+            buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}?start=hack")
+            result = builder.article(
+                title="Aljoker 🤡",
+                description="اضغط على الزر لعرض الأوامر.",
+                text="**᯽︙ قم بالضغط على زر ادناه لأستخدام امر اختراق عبر كود التيرمكس",
+                buttons=buttons
+            )
+        await event.answer([result] if result else None)
+@bot.on(admin_cmd(outgoing=True, pattern="هاك"))
+async def repo(event):
+    if event.fwd_from:
+        return
+    lMl10l = Config.TG_BOT_USERNAME
+    if event.reply_to_msg_id:
+        await event.get_reply_message()
+    response = await bot.inline_query(lMl10l, "هاك")
+    await response[0].click(event.chat_id)
+    await event.delete()
+
 @l313l.ar_cmd(pattern="اشتراك")
 async def reda(event):
     ty = event.text
