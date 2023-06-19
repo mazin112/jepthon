@@ -99,7 +99,7 @@ async def save_media(event):
                     file_ext = os.path.splitext(message.document.file_name)[1]
 
             if not file_ext:
-                return await event.edit("الرسالة لا تحتوي على ميديا!")
+                return await event.edit(f"الرسالة لا تحتوي على ميديا!\n{message.message}")
 
             file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
             await l313l.download_media(message, file=file_path)
