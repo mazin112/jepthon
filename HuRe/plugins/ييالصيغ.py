@@ -35,13 +35,14 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
+
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
     command=("حفظ_المحتوى", plugin_category),
     info={
-        "header": "حفظ الميديا والنص إذا وجد في الرسالة.",
-        "description": "يقوم بحفظ الميديا (الصور والفيديوهات والملفات) والنص إذا وجد في الرسالة.",
-        "usage": "{tr}حفظ الميديا <رابط الرسالة>",
+        "header": "حفظ الصور والفيديوهات والملفات إذا وجد في الرسالة.",
+        "description": "يقوم بحفظ الصور والفيديوهات والملفات والنص إذا وجد في الرسالة.",
+        "usage": "{tr}حفظ الصور <رابط الرسالة>",
     },
 )
 async def save_media(event):
@@ -54,7 +55,7 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
 
     try:
-        message_link_parts = message_link.split("/")
+        message_link_parts = str(message_link).split("/")
         await event.reply(f"{message_link_parts}")
         if message_link_parts:
             if message_link_parts[-2] == "c":
@@ -65,10 +66,9 @@ async def save_media(event):
                 channel_username_or_id = message_link_parts[-2]
                 message_id = int(message_link_parts[-1])
         else:
-            return await event.edit("تحقق من الرابط ، لانه غير صحيح")
+            return await event.edit("تحقق من الرابط، لأنه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
-
 
     try:
         if int(channel_username_or_id):
@@ -82,11 +82,10 @@ async def save_media(event):
         if not message:
             return await event.edit("Invalid message link or message not found!")
     except ChannelPrivateError:
-        await event.edit("يجب ان تنضم للقناة أولاً لتستطيع الحفظ منها")
+        await event.edit("يجب أن تنضم للقناة أولاً لتستطيع الحفظ منها")
     except Exception as e:
         return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
-    #else:
-        #return await event.edit(f"Invalid message link format\n{entity}\n{message_id}")
+
     try:
         message = await l313l.get_messages(channel_username_or_id, ids=message_id)
         if not message:
