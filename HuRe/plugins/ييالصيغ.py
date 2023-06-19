@@ -3,8 +3,7 @@ import logging
 import os
 import time
 from datetime import datetime
-from telethon import events
-from telethon.tl.types InputPeerChannel
+from telethon import events, InputPeerChannel
 from telethon.errors import ChannelPrivateError
 from telethon.utils import get_peer_id
 from HuRe import l313l
