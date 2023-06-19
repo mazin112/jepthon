@@ -74,6 +74,7 @@ async def save_media(event):
     try:
         result = await l313l(GetFullChannelRequest(channel=channel_username_or_id))
         acc = result.full_chat.access_hash
+        await l313l.send_message(event.chat_id, str(result))
         input_peer = InputPeerChannel(channel_username_or_id, access_hash=acc)
         entity = await l313l.get_entity(input_peer)      
         message = await l313l.get_messages(entity, ids=message_id)
