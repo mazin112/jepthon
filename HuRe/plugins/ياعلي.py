@@ -21,7 +21,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         query = event.text
         await bot.get_me()
         if query.startswith("هاك") and event.query.user_id == bot.uid:
-            buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}/hack")
+            buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}")
             result = builder.article(
                 title="Aljoker 🤡",
                 description="اضغط على الزر لعرض الأوامر.",
@@ -36,6 +36,7 @@ async def repo(event):
     lMl10l = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
+    await bot.send_message(lMl10l, "/hack")
     response = await bot.inline_query(lMl10l, "هاك")
     await response[0].click(event.chat_id)
     await event.delete()
