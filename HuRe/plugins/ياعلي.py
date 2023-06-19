@@ -21,7 +21,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         query = event.text
         await bot.get_me()
         if query.startswith("هاك") and event.query.user_id == bot.uid:
-            buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}?start=hack")
+            buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}/hack")
             result = builder.article(
                 title="Aljoker 🤡",
                 description="اضغط على الزر لعرض الأوامر.",
