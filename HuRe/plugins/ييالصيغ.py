@@ -75,7 +75,7 @@ async def save_media(event):
         if int(channel_username_or_id):
             channel_username_or_id = int(channel_username_or_id)
         
-        input_peer = InputPeerChannel(channel_username_or_id, access_hash=None)
+        input_peer = InputPeerChannel(channel_username_or_id)
         print(input_peer)
         entity = await l313l.get_entity(input_peer)      
         message = await l313l.get_messages(entity, ids=message_id)
