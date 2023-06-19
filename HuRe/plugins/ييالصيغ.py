@@ -69,12 +69,12 @@ async def save_media(event):
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
-    await event.reply(channel_username_or_id)
+    await event.reply(str(channel_username_or_id))
     try:
         entity = await l313l.get_entity(channel_username_or_id)
         if not entity:
             return await event.edit("Invalid channel or entity not found!")
-        await event.reply(channel_username_or_id)
+        
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("Invalid message link or message not found!")
