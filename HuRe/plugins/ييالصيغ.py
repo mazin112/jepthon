@@ -72,20 +72,19 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     
     try:
-        print(type(channel_username_or_id))
         result = await l313l(GetFullChannelRequest(channel_username_or_id))
         acc = result.full_chat.access_hash
         await l313l.send_message(event.chat_id, str(result))
         input_peer = InputPeerChannel(channel_username_or_id, access_hash=acc)
         print(input_peer)
-        #entity = await l313l.get_entity(input_peer)      
+        entity = await l313l.get_entity(input_peer)      
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("الرابط غلط او الرسالة غير موجوده")
     except ChannelPrivateError:
         await event.edit("يجب أن تنضم للقناة أولاً لتستطيع الحفظ منها")
-    except Exception as e:
-        return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
+    #except Exception as e:
+       # return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
 
     try:
         message = await l313l.get_messages(channel_username_or_id, ids=message_id)
