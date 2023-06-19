@@ -72,10 +72,10 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     
     try:
-        result = await l313l(GetFullChannelRequest(int(channel_username_or_id)))
-        acc = result.full_chat.access_hash
-        await l313l.send_message(event.chat_id, str(result))
-        input_peer = InputPeerChannel(channel_username_or_id, access_hash=acc)
+        if int(channel_username_or_id):
+            channel_username_or_id = int(channel_username_or_id)
+        
+        input_peer = InputPeerChannel(channel_username_or_id, access_hash=None)
         print(input_peer)
         entity = await l313l.get_entity(input_peer)      
         message = await l313l.get_messages(entity, ids=message_id)
