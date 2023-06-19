@@ -3,7 +3,7 @@ import logging
 import os
 import time
 from datetime import datetime
-from telethon import events
+from telethon import events, GetFullChannelRequest
 from telethon.tl.types import InputPeerChannel
 from telethon.errors import ChannelPrivateError
 from telethon.utils import get_peer_id
@@ -71,7 +71,9 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     
     try:
-        input_peer = InputPeerChannel(channel_username_or_id, access_hash=None)
+        result = await l313l(GetFullChannelRequest(channel=channel_username_or_id))
+        acc = result.full_chat.access_hash
+        input_peer = InputPeerChannel(channel_username_or_id, access_hash=acc)
         entity = await l313l.get_entity(input_peer)      
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
