@@ -225,7 +225,7 @@ async def Hussein(event):
     if event.fwd_from:
         return
     button = Button.inline("اضغط هنا", data="/hack")
-        await event.client.send_message(
+    await event.client.send_message(
         event.chat_id,
         f"**᯽︙ قم بالدخول لبوتك من هنا @{joker} \n وكتابة الامر /hack**",
         buttons=button,
