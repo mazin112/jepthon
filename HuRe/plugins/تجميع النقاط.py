@@ -54,7 +54,10 @@ async def _(event):
                 chs += 1
                 await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
             except Exception as er:
-                await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**\n{er}")
+                if "not valid anymore" in str(er):
+                    await l313l.send_message(event.chat_id, f"**القناة التي حاولت الاشتراك بها غير موجودة\nخطأ من بوت التمويل**")
+                else:
+                    await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**\n{er}")
                 break
         await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع !**")
 
