@@ -219,23 +219,23 @@ keyboard = [
     Button.url("سورس الجوكر 🤡", "https://t.me/jepthon")
     ]
 ]
-
-@tgbot.on(events.InlineQuery)
-async def inline_handler(event):
-    builder = event.builder
-    result = None
-    joker = Bot_Username.replace("@", "")
-    query = event.text
-    await bot.get_me()
-    if query.startswith("هاك") and event.query.user_id == bot.uid:
-        buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}?start=hack")
-        result = builder.article(
-            title="Aljoker 🤡",
-            description="اضغط على الزر لعرض الأوامر.",
-            text="**᯽︙ قم بالضغط على زر ادناه لأستخدام امر اختراق عبر كود التيرمكس",
-            buttons=buttons
-        )
-    await event.answer([result] if result else None)
+if Config.TG_BOT_USERNAME is not None and tgbot is not None:
+    @tgbot.on(events.InlineQuery)
+    async def inline_handler(event):
+        builder = event.builder
+        result = None
+        joker = Bot_Username.replace("@", "")
+        query = event.text
+        await bot.get_me()
+        if query.startswith("هاك") and event.query.user_id == bot.uid:
+            buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}?start=hack")
+            result = builder.article(
+                title="Aljoker 🤡",
+                description="اضغط على الزر لعرض الأوامر.",
+                text="**᯽︙ قم بالضغط على زر ادناه لأستخدام امر اختراق عبر كود التيرمكس",
+                buttons=buttons
+            )
+        await event.answer([result] if result else None)
 @bot.on(admin_cmd(outgoing=True, pattern="هاك"))
 async def repo(event):
     if event.fwd_from:
