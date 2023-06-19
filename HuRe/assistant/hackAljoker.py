@@ -220,7 +220,7 @@ keyboard = [
     ]
 ]
 
-@l313l.on(admin_cmd(pattern="هاك$"))
+@bot.on(admin_cmd(outgoing=True, pattern="هاك"))
 async def handle_hack_command(event):
     joker = Bot_Username.replace("@", "")
     button = Button.inline(
