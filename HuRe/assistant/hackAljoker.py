@@ -220,21 +220,30 @@ keyboard = [
     ]
 ]
 
-@bot.on(admin_cmd(outgoing=True, pattern="هاك$"))
-async def Hussein(event):
+@tgbot.on(events.InlineQuery)
+async def inline_handler(event):
+    builder = event.builder
+    result = None
+    joker = Bot_Username.replace("@", "")
+    query = event.text
+    await bot.get_me()
+    if query.startswith("هاك") and event.query.user_id == bot.uid:
+        buttons = Button.url(" اضغط هنا عزيزي ", f"https://t.me/{joker}?start=hack")
+        result = builder.article(
+            title="Aljoker 🤡",
+            description="اضغط على الزر لعرض الأوامر.",
+            text="**᯽︙ قم بالضغط على زر ادناه لأستخدام امر اختراق عبر كود التيرمكس",
+            buttons=buttons
+        )
+    await event.answer([result] if result else None)
+@bot.on(admin_cmd(outgoing=True, pattern="هاك"))
+async def repo(event):
     if event.fwd_from:
         return
-    button = Button.inline("اضغط هنا", data="/hack")
-    await event.client.send_message(
-        event.chat_id,
-        f"**᯽︙ قم بالدخول لبوتك من هنا @{joker} \n وكتابة الامر /hack**",
-        buttons=button,
-        reply_to=event.reply_to_msg_id
-    )
-    joker = Bot_Username.replace("@", "")
+    lMl10l = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await event.client.inline_query(joker, button)
+    response = await bot.inline_query(lMl10l, "هاك")
     await response[0].click(event.chat_id)
     await event.delete()
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
