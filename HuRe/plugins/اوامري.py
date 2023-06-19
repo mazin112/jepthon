@@ -53,6 +53,14 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
                     Button.inline("♰ الانتحال والتقليد ♰", data="uscuxrz"),
                 ],
             ]
+    @tgbot.on(events.InlineQuery)
+    async def inline_handler(event):
+        builder = event.builder
+        result = None
+        query = event.text
+        await bot.get_me()
+        if query.startswith("هاك") and event.query.user_id == bot.uid:
+            buttons = [Button.inline("♰ اضغط هنا ♰", data="/hack")]
             if JEP_IC and JEP_IC.endswith((".jpg", ".png", "gif", "mp4")):
                 result = builder.photo(
                     JEP_IC, text=ROE, buttons=buttons, link_preview=False
@@ -83,6 +91,17 @@ async def repo(event):
     if event.reply_to_msg_id:
         await event.get_reply_message()
     response = await bot.inline_query(lMl10l, "اوامري")
+    await response[0].click(event.chat_id)
+    await event.delete()
+    
+@bot.on(admin_cmd(outgoing=True, pattern="هاك"))
+async def repo(event):
+    if event.fwd_from:
+        return
+    lMl10l = Config.TG_BOT_USERNAME
+    if event.reply_to_msg_id:
+        await event.get_reply_message()
+    response = await bot.inline_query(lMl10l, "هاك")
     await response[0].click(event.chat_id)
     await event.delete()
 
