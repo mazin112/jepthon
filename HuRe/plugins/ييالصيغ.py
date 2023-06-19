@@ -3,7 +3,8 @@ import logging
 import os
 import time
 from datetime import datetime
-from telethon import events, GetFullChannelRequest
+from telethon import events
+from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import InputPeerChannel
 from telethon.errors import ChannelPrivateError
 from telethon.utils import get_peer_id
