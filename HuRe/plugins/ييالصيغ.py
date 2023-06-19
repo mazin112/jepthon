@@ -36,6 +36,7 @@ cancel_process = False
 #Edited By Reda 
 
 
+
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
     command=("حفظ_المحتوى", plugin_category),
@@ -59,11 +60,10 @@ async def save_media(event):
         await event.reply(f"{message_link_parts}")
         if message_link_parts:
             if message_link_parts[-2] == "c":
-                channel_username_or_id = message_link_parts[-3]
-                channel_username_or_id = f"-100{channel_username_or_id}"
+                channel_username_or_id = int(message_link_parts[-3])
                 message_id = int(message_link_parts[-1])
             else:
-                channel_username_or_id = message_link_parts[-2]
+                channel_username_or_id = int(message_link_parts[-2])
                 message_id = int(message_link_parts[-1])
         else:
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
@@ -71,9 +71,6 @@ async def save_media(event):
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
 
     try:
-        if int(channel_username_or_id):
-            channel_username_or_id = f"-100{channel_username_or_id}"
-            channel_username_or_id = int(channel_username_or_id)
         entity = await l313l.get_entity(channel_username_or_id)
         if not entity:
             return await event.edit("Invalid channel or entity not found!")
