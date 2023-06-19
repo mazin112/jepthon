@@ -221,18 +221,15 @@ keyboard = [
 ]
 
 @l313l.on(admin_cmd(pattern="هاك$"))
-async def Hussein(event):
+async def handle_hack_command(event):
     joker = Bot_Username.replace("@", "")
-    builder = event.builder
-    button = builder.article(
-        title="Click to Hack",
-        description="Click this button to initiate the hack process",
-        text="/hack",
-        buttons=[Button.switch_inline("Hack", query="hack", same_peer=True)],
+    button = Button.inline(
+        "اضغط هنا",
+        data="/hack",
     )
     await event.reply(
         f"**᯽︙ قم بالدخول لبوتك من هنا @{joker} \n وكتابة الامر /hack**",
-        buttons=button,
+        buttons=[[button]],
     )
 @tgbot.on(events.NewMessage(pattern="/hack", func = lambda x: x.is_private))
 async def start(event):
