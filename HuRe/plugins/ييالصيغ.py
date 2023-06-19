@@ -63,7 +63,7 @@ async def save_media(event):
                 channel_username_or_id = int(message_link_parts[-3])
                 message_id = int(message_link_parts[-1])
             else:
-                channel_username_or_id = int(message_link_parts[-2])
+                channel_username_or_id = message_link_parts[-2]
                 message_id = int(message_link_parts[-1])
         else:
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
