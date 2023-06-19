@@ -53,8 +53,8 @@ async def _(event):
                 await msg2[0].click(text='تحقق')
                 chs += 1
                 await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
-            except:
-                await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**")
+            except Exception as er:
+                await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**\n{er}")
                 break
         await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع !**")
 
@@ -96,8 +96,8 @@ async def _(event):
                 await msg2[0].click(text='تحقق')
                 chs += 1
                 await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
-            except:
-                await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**")
+            except Exception as er:
+                await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**\n{er}")
                 break
         await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع !**")
 
