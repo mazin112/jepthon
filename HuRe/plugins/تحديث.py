@@ -113,27 +113,27 @@ async def update(event, repo, ups_rem, ac_br):
     )
     await event.client.reload(jasme)
 
-def stream_build_logs(appsetup_id): 
-     appsetup = Heroku.get_appsetup(appsetup_id) 
-     build_iterator = appsetup.build.stream(timeout=2) 
-     try: 
-         for line in build_iterator: 
-             if line: 
-                 print("{0}".format(line.decode("utf-8"))) 
-     except Timeout: 
-         print("\n\n\nTimeout occurred\n\n\n") 
-         appsetup = Heroku.get_appsetup(appsetup_id) 
-         if appsetup.build.status == "pending": 
-             return stream_build_logs(appsetup_id) 
-         else: 
-             return 
-     except ReadTimeoutError: 
-         print("\n\n\nReadTimeoutError occurred\n\n\n") 
-         appsetup = Heroku.get_appsetup(appsetup_id) 
-         if appsetup.build.status == "pending": 
-             return stream_build_logs(appsetup_id) 
-         else: 
-             return
+def stream_build_logs(appsetup_id):
+    appsetup = Heroku.get_appsetup(appsetup_id)
+    build_iterator = appsetup.build.stream(timeout=2)
+    try:
+        for line in build_iterator:
+            if line:
+                print("{0}".format(line.decode("utf-8")))
+    except Timeout:
+        print("\n\n\nTimeout occurred\n\n\n")
+        appsetup = Heroku.get_appsetup(appsetup_id)
+        if appsetup.build.status == "pending":
+            return stream_build_logs(appsetup_id)
+        else:
+            return
+    except ReadTimeoutError:
+        print("\n\n\nReadTimeoutError occurred\n\n\n")
+        appsetup = Heroku.get_appsetup(appsetup_id)
+        if appsetup.build.status == "pending":
+            return stream_build_logs(appsetup_id)
+        else:
+            return
 
 async def deploy(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is None:
