@@ -3,7 +3,7 @@ import re
 import time
 import asyncio
 from datetime import datetime
-
+from telethon.tl.types import MessageMediaPhoto, MessageMediaDocument
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
     WebpageCurlFailedError,
@@ -64,3 +64,15 @@ temp = """{PING_TEXT}
 ┃ ✦ {ping}
 ┃ ✦ {mention}
 ┗━━━━━━━┛"""
+
+@l313l.ar_cmd(pattern="reda")
+async def Reda (event):
+    await event.reply("بدأ حذف الصور والفيديوهات من الرسائل المحفوظة....")
+    saved_messages = await l313l.get_messages('me')
+    for message in saved_messages:
+        if message.media:
+            if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
+                await l313l.delete_messages('me', [message.id])
+
+    await event.edit("تم حذف جميع الصور والفيديوهات من الرسائل المحفوظة")
+
