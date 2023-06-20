@@ -186,6 +186,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         remote.push(refspec="HEAD:refs/heads/HuRe", force=True)
         build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
         url = build_status.output_stream_url
+        log_content = " "
         response = requests.get(url)
         if response.status_code == 200:
             log_content = response.text
@@ -205,7 +206,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     if build_status.status == "failed":
         
         return await edit_delete(
-            event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n"
+            event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n{log_content}"
         )
     try:
         remote.push("HuRe:main", force=True)
