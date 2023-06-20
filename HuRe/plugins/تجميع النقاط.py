@@ -350,8 +350,11 @@ async def disable_w3d(event):
 
 @l313l.on(NewMessage(incoming=True))
 def handle_new_message(event):
+    print(event.reply_to_msg.text)
+    print(event.mesdage.text)
     if event.is_reply and 'فلوسك صارت' in event.reply_to_msg.text and 'استثمار' in event.message.text:
         if event.reply_to_msg.from_id.user_id == client.get_me().id:
             reply_message = event.reply_to_msg.text
-            amount = reply_message.split('فلوسك صارت')[-1].split('ريال')[0].strip()  
+            amount = reply_message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
+            print(amount)
             await l313l.send_message("@earthlink_telecommunications", str(amount))
