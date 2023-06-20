@@ -184,7 +184,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         remote = repo.create_remote("heroku", heroku_git_url)
     try:
         remote.push(refspec="HEAD:refs/heads/HuRe", force=True)
-        stream_build_logs(HEROKU_APP_NAME)
+        #stream_build_logs(HEROKU_APP_NAME)
     except Exception as error:
         await event.edit(f"{txt}\n**حدث خطأ:**\n`{error}`")
         return repo.__del__()
