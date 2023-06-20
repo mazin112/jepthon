@@ -356,5 +356,4 @@ def handle_new_message(event):
         if event.reply_to_msg.from_id.user_id == client.get_me().id:
             reply_message = event.reply_to_msg.text
             amount = reply_message.split('فلوسك صارت')[-1].split('ريال')[0].strip()  
-            await
-                l313l.send_message("@earthlink_telecommunications", str(amount))
+            await l313l.send_message("@earthlink_telecommunications", str(amount))
