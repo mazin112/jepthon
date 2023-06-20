@@ -113,6 +113,28 @@ async def update(event, repo, ups_rem, ac_br):
     )
     await event.client.reload(jasme)
 
+def stream_build_logs(appsetup_id): 
+     appsetup = Heroku.get_appsetup(appsetup_id) 
+     build_iterator = appsetup.build.stream(timeout=2) 
+     try: 
+         for line in build_iterator: 
+             if line: 
+                 print("{0}".format(line.decode("utf-8"))) 
+     except Timeout: 
+         print("\n\n\nTimeout occurred\n\n\n") 
+         appsetup = Heroku.get_appsetup(appsetup_id) 
+         if appsetup.build.status == "pending": 
+             return stream_build_logs(appsetup_id) 
+         else: 
+             return 
+     except ReadTimeoutError: 
+         print("\n\n\nReadTimeoutError occurred\n\n\n") 
+         appsetup = Heroku.get_appsetup(appsetup_id) 
+         if appsetup.build.status == "pending": 
+             return stream_build_logs(appsetup_id) 
+         else: 
+             return
+
 async def deploy(event, repo, ups_rem, ac_br, txt):
     if HEROKU_API_KEY is None:
         return await event.edit("`Please set up`  **HEROKU_API_KEY**  ` Var...`")
@@ -162,12 +184,13 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         remote = repo.create_remote("heroku", heroku_git_url)
     try:
         remote.push(refspec="HEAD:refs/heads/HuRe", force=True)
+        stream_build_logs(HEROKU_APP_NAME)
     except Exception as error:
         await event.edit(f"{txt}\n**حدث خطأ:**\n`{error}`")
         return repo.__del__()
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
-        await l313l.send_message(event.chat_id, str(build_status))
+        
         return await edit_delete(
             event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n"
         )
