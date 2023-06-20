@@ -204,10 +204,16 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         print(f"{attribute_name}: {attribute_value}")
 
     if build_status.status == "failed":
-        
-        return await edit_delete(
-            event, f"حدث خطأ بالبناء\n{log_content}"
+        with open('log_file.txt', 'w') as file:
+        file.write(log_content)
+
+    
+        with open('log_file.txt', 'rb') as file:
+        await l313l.send_file(
+            event.chat_id, "log_file.txt", caption="حدث خطأ بالبناء"
         )
+        os.remove("log_file.txt")
+        return
     try:
         remote.push("HuRe:main", force=True)
     except Exception as error:
