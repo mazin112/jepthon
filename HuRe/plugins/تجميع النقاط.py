@@ -349,7 +349,7 @@ async def disable_w3d(event):
     await event.edit("**تم تعطيل عملية الاستثمار وعد.**")
 
 @l313l.on(NewMessage(incoming=True))
-def handle_new_message(event):
+async def handle_new_message(event):
     print(event.reply_to_msg)
     print(event.message)
     if event.is_reply and 'فلوسك صارت' in event.reply_to_msg.text and 'استثمار' in event.message.text:
