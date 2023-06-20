@@ -9,14 +9,19 @@ from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import requests
 import re
 import asyncio
+import pyarabic.araby as araby
+import pyperclip
 from telethon import events
+import os
+os.system('pip install pyarabic')
+os.system('pip install pyperclip')
 c = requests.session()
 bot_username = '@zmmbot'
 bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
-
+its_Reham = False
 @l313l.on(admin_cmd(pattern="(تجميع المليار|تجميع مليار)"))
 async def _(event):
     if HuRe[0] == "yes":
@@ -323,4 +328,27 @@ async def Reham(event):
             await event.edit("**استثمار وعد ليست قيد التشغيل حاليًا!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+        
+
+@l313l.ar_cmd(pattern="استثمار بوت وعد")
+async def aljoker_money_w3d(event):
+    global its_Reham
+    if event.is_group:
+        await event.respond("فلوسي")
+        while its_Reham:
+            response = await event.client.listen(event.chat_id, timeout=10)
+            if response and response.raw_text.startswith("⇜ فلوسك"):
+                message = response.raw_text
+                amount = araby.numbers.from_string(araby.strip_tashkeel(message.split()[2]))
+                pyperclip.copy(str(amount))
+                await event.respond(f"استثمار {amount}")
+            await asyncio.sleep(60)
+    else:
+        await event.respond("**تنبيه: هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
+@l313l.ar_cmd(pattern="تعطيل استثمار وعد")
+async def disable_w3d(event):
+    global its_Reham
+    its_Reham = False
+    await event.edit("**تم تعطيل عملية الاستثمار وعد.**")
 
