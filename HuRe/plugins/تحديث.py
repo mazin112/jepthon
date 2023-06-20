@@ -184,6 +184,14 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         remote = repo.create_remote("heroku", heroku_git_url)
     try:
         remote.push(refspec="HEAD:refs/heads/HuRe", force=True)
+        build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
+        url = build_status.output_stream_url
+        response = requests.get(url)
+        if response.status_code == 200:
+            log_content = response.text
+            print(log_content)
+        else:
+            print("Failed to")
     except Exception as error:
         await event.edit(f"{txt}\n**حدث خطأ:**\n`{error}`")
         return repo.__del__()
