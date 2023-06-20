@@ -9,12 +9,7 @@ from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import requests
 import re
 import asyncio
-import pyarabic.araby as araby
-import pyperclip
 from telethon import events
-import os
-os.system('pip install pyarabic')
-os.system('pip install pyperclip')
 c = requests.session()
 bot_username = '@zmmbot'
 bot_username2 = '@A_MAN9300BOT'
