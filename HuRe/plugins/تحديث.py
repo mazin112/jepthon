@@ -205,11 +205,10 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
 
     if build_status.status == "failed":
         with open('log_file.txt', 'w') as file:
-        file.write(log_content)
+        	file.write(log_content)
 
-    
         with open('log_file.txt', 'rb') as file:
-        await l313l.send_file(
+            await l313l.send_file(
             event.chat_id, "log_file.txt", caption="حدث خطأ بالبناء"
         )
         os.remove("log_file.txt")
