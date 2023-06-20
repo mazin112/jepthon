@@ -69,7 +69,7 @@ temp = """{PING_TEXT}
 async def Reda (event):
     await event.reply("بدأ حذف الصور والفيديوهات من الرسائل المحفوظة....")
     
-    for message in await l313l.iter_messages("me"):
+    for message in l313l.iter_messages("me"):
         if message.media:
             if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
                 await l313l.delete_messages('me', [message.id])
