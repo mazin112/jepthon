@@ -348,9 +348,7 @@ async def disable_w3d(event):
     its_Reham = False
     await event.edit("**تم تعطيل عملية الاستثمار وعد.**")
 
-
-
-@l313l.ar_cmd(pattern="استثمار بوت وعد")
+@l313l.on(NewMessage(incoming=True))
 def handle_new_message(event):
     if event.is_reply and 'فلوسك صارت' in event.reply_to_msg.text and 'استثمار' in event.message.text:
         if event.reply_to_msg.from_id.user_id == client.get_me().id:
