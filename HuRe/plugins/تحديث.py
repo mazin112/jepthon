@@ -189,7 +189,11 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
         return repo.__del__()
    
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
-    print(build_status)
+    
+    for attribute_name in dir(build_status):
+        attribute_value = getattr(build_status, attribute_name)
+        print(f"{attribute_name}: {attribute_value}")
+
     if build_status.status == "failed":
         
         return await edit_delete(
