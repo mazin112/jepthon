@@ -337,7 +337,7 @@ async def aljoker_money_w3d(event):
         await event.respond("فلوسي")
         while its_Reham:
             response = await event.client.listen(event.chat_id, timeout=10)
-            if response and response.raw_text.startswith("⇜ فلوسك"):
+            if response and response.raw_text.startswith("⇜ فلوسك 54841 ريال 💸"):
                 message = response.raw_text
                 amount = araby.numbers.from_string(araby.strip_tashkeel(message.split()[2]))
                 pyperclip.copy(str(amount))
