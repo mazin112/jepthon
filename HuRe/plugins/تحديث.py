@@ -206,7 +206,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     if build_status.status == "failed":
         
         return await edit_delete(
-            event, f"`خطا بلبناء!\n" "تم الالغاء او حدث خطأ...`\n{log_content}"
+            event, f"حدث خطأ بالبناء\n{log_content}"
         )
     try:
         remote.push("HuRe:main", force=True)
