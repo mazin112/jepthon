@@ -323,7 +323,7 @@ async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
 
 
-@l313l.on(admin_cmd(pattern="انضم$"))
+@l313l.on(admin_cmd(pattern="انضم"))
 async def Hussein(event):
     try:
         channel_input = event.pattern_match.group(1)
