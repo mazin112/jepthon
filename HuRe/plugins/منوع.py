@@ -323,17 +323,16 @@ async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
 
 
-@l313l.on(admin_cmd(pattern="أنضم$"))
+@l313l.on(admin_cmd(pattern="انضم$"))
 async def Hussein(event):
     try:
         channel_input = event.pattern_match.group(1)
         entity = await l313l.get_entity(channel_input)
-        joined = await l313l.is_user_authorized(entity)
-        if joined:
-            response = "أنت مُنضم بالفعل إلى القناة!"
-        else:
-            await l313l(JoinChannelRequest(entity))
+        result = await l313l(JoinChannelRequest(entity))
+        if result:
             response = "تم الانضمام إلى القناة بنجاح!"
+        else:
+            response = "لم يتم الانضمام إلى القناة."
     except ValueError:
         response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
     await event.respond(response)
