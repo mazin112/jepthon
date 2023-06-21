@@ -325,10 +325,14 @@ async def ithker(knopis):
 
 @l313l.on(admin_cmd(pattern="انضم"))
 async def Hussein(event):
+    channel_username = event.message.message
     try:
-        channel_input = event.message.message
-        channel_input = channel_input.replace("انضم", "")
-        entity = await l313l.get_entity(channel_input.strip())
-        result = await l313l(JoinChannelRequest(entity))
+        entity = await l313l.get_entity(channel_username)
+        await l313l(JoinChannelRequest(entity))
+        response = "تم الانضمام إلى القناة بنجاح!"
     except ValueError:
-        response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
+        response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة بشكل صحيح."
+    except ChannelInvalidError:
+        response = "المعرّف الذي تم إدخاله ليس لقناة صالحة."
+    await event.respond(response)
+ة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
