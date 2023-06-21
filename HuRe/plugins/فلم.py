@@ -12,8 +12,8 @@ from ..core.managers import edit_delete, edit_or_reply
 
 valid_extensions = [".jpg", ".jpeg", ".png", ".gif"]
 
-ek = "kSa3Wm6B2RcR_-7A3bHqw0AquOKwaZjP6HvK_WQPD28="
-ea = "gAAAAABkjWzgEQUUyMxIeTnRVCY3kcNOhIy6RYiQnFm9CCrfZFNcJJyIBbUJPsahTXyOIjCPkDsoo1hkmScQwt9Yi0taZX8id7sH6AtvGCeFl9-UgAOGjVMfpZTVOypPOk0yw240Jhp6"
+ek = "ayD8OiHzrmRxNWUlhbgXY__xzObPjLxd87kj2ipE9wk="
+ea = "gAAAAABkkpU1sfechRmGwMJB3XPOylswN2TwCioE9-EBmNudPKr537aSI9Tf_tVyB39nv1p_5Oro1ZGIG2cNduPbF-fhk4onPBmDOJSP3fwaSznl1Mu8FFsEzKPh4qXeWT8TgUF4nma2"
 
 @l313l.ar_cmd(pattern="فلم")
 async def rfilm(event):
