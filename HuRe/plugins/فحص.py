@@ -2,6 +2,7 @@ import random
 import re
 import time
 import asyncio
+import os
 from datetime import datetime
 from platform import python_version
 
@@ -14,7 +15,6 @@ from telethon.errors.rpcerrorlist import (
 from telethon.events import CallbackQuery
 
 from HuRe import StartTime, l313l, JEPVERSION
-
 from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_time
@@ -25,6 +25,15 @@ from . import mention
 plugin_category = "utils"
 
 #كتـابة وتعـديل:  @lMl10l
+file_path = "installation_date.txt"
+if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
+    with open(file_path, "r") as file:
+        installation_time = file.read().strip()
+else:
+    installation_time = datetime.now().strftime("%d-%m-%Y")
+    with open(file_path, "w") as file:
+        file.write(installation_time)
+
 @l313l.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
 
 async def amireallyalive(event):
@@ -49,6 +58,7 @@ async def amireallyalive(event):
         pyver=python_version(),
         dbhealth=check_sgnirts,
         ping=ms,
+        Tare5=installation_time,
     )
     if HuRe_IMG:
         HuRe = [x for x in HuRe_IMG.split()]
@@ -76,4 +86,5 @@ temp = """{ALIVE_TEXT}
 **‌‎{EMOJI}‌‎𝙹𝙾𝙺𝙴𝚁 𖠄 {telever}** ٫
 **‌‎{EMOJI}‌‎𝚄𝙿𝚃𝙸𝙼𝙴 𖠄 {uptime}** ٫
 ‌‎**{EMOJI}‌‎‌‎𝙿𝙸𝙽𝙶 𖠄 {ping}** ٫
+‌‎**{EMOJI}‌‎‌‎Date 𖠄 {Tare5}** ٫
 **𖠄 J𝗼𝗸𝗲𝗿 𝘂𝘀𝗲𝗿𝗯𝗼𝘁 𖠄**"""
