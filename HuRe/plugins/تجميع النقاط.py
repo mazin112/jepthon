@@ -352,6 +352,7 @@ async def disable_w3d(event):
 @l313l.on(NewMessage(incoming=True))
 async def handle_new_message(event):
     if event.reply_to and event.sender_id == 1421907917:
+        reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         if owner_id == l313l.uid and 'فلوسك صارت' in event.message.message and 'استثمار' in event.message.message:
             amount = event.message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
