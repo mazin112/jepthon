@@ -1,6 +1,7 @@
 #by Hussein For HuRe-HuRe
 # IDK
 # يمنع منعاً باتاً تخمط الملف خلي عندك كرامه ولتسرقة
+# Added some f. by Reda
 from HuRe import l313l
 from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.functions.channels import JoinChannelRequest
@@ -355,7 +356,8 @@ async def handle_new_message(event):
         reply_msg = await event.get_reply_message()
         owner_id = reply_msg.from_id.user_id
         if owner_id == l313l.uid and 'فلوسك صارت' in event.message.message and 'استثمار' in event.message.message:
-            amount = event.message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
+            amount_t = event.message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
+            amount = re.sub(r'\D', '', amount_t)
             print(amount)
             await l313l.send_message("me", str(amount))
 
