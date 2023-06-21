@@ -10,6 +10,8 @@ from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
 from python_minifier import minify
+from telethon.events import NewMessage
+from telethon.errors.rpcerrorlist import ChannelInvalidError
 from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
 
@@ -335,4 +337,3 @@ async def Hussein(event):
     except ChannelInvalidError:
         response = "المعرّف الذي تم إدخاله ليس لقناة صالحة."
     await event.respond(response)
-ة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
