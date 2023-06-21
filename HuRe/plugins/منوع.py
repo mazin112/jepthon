@@ -10,8 +10,7 @@ from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
 from python_minifier import minify
-from telethon.events import NewMessage
-from telethon.errors.rpcerrorlist import ChannelInvalidError
+from telethon.tl.types import InputChannel, InputPeerChannel
 from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
 
@@ -327,15 +326,29 @@ async def ithker(knopis):
 
 @l313l.on(admin_cmd(pattern="انضم"))
 async def Hussein(event):
-    channel_username = event.message.message
-    try:
-        entity = await l313l.get_input_entity(channel_username)
-        if isinstance(entity, InputPeerChannel) or isinstance(entity, InputPeerChat):
-            await l313l(JoinChannelRequest(entity))
-            response = "تم الانضمام إلى القناة بنجاح!"
+    message = event.message
+    if message.reply_to_msg_id:
+        reply_message = await message.get_reply_message()
+        if reply_message.sender_id is None:
+            entities = reply_message.entities
+            for entity in entities:
+                if isinstance(entity, InputChannel):
+                    channel_entity = entity
+                    break
+            else:
+                response = "الرجاء الرد على رابط القناة أو معرّف القناة."
+                await event.respond(response)
+                return
+
+            try:
+                await l313l(JoinChannelRequest(channel_entity))
+                response = "تم الانضمام إلى القناة بنجاح!"
+            except ValueError:
+                response = "خطأ في العثور على القناة. يرجى التأكد من رابط القناة أو معرّف القناة بشكل صحيح."
         else:
-            response = "المعرّف الذي تم إدخاله ليس لقناة صالحة."
-    except ValueError:
-        response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة بشكل صحيح."
+            response = "يجب أن يكون الرد على رابط القناة أو معرّف القناة وليس على الرسائل الأخرى."
+    else:
+        response = "الرجاء الرد على رابط القناة أو معرّف القناة."
     await event.respond(response)
+
 
