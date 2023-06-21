@@ -351,6 +351,7 @@ async def disable_w3d(event):
 
 @l313l.on(NewMessage(incoming=True))
 async def handle_new_message(event):
+    print(event.reply_to)
     if event.is_reply and 'فلوسك صارت' in event.reply_to.raw_text and 'استثمار' in event.message.text:
         if event.reply_to.from_id.user_id == client.get_me().id:
             reply_message = event.reply_to.raw_text
