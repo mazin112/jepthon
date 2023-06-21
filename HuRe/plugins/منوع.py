@@ -11,6 +11,7 @@ import os
 import tempfile
 from python_minifier import minify
 from telethon import events
+from telethon.tl.functions.channels import JoinChannelRequest
 
 @l313l.ar_cmd(pattern="تشفير نص")
 async def obfuscate_text(event):
@@ -320,3 +321,24 @@ HuRe_Bosa = [
 @l313l.on(admin_cmd(pattern="بوسة$"))
 async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
+
+
+@l313l.on(admin_cmd(pattern="انضم$"))
+async def Hussein(event):
+    try:
+        channel_input = event.pattern_match.group(1)
+        channel = await l313l.get_entity(channel_input)
+        participants = await l313l.get_participants(channel)
+        joined = False
+        for participant in participants:
+            if participant.id == l313l.get_me().id:
+                joined = True
+                break
+        if joined:
+            response = "أنت مُنضم بالفعل إلى القناة!"
+        else:
+            await l313l(JoinChannelRequest(channel))
+            response = "تم الانضمام إلى القناة بنجاح!"
+    except ValueError:
+        response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
+    await event.respond(response)ة
