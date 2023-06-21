@@ -329,11 +329,13 @@ async def ithker(knopis):
 async def Hussein(event):
     channel_username = event.message.message
     try:
-        entity = await l313l.get_entity(channel_username)
-        await l313l(JoinChannelRequest(entity))
-        response = "تم الانضمام إلى القناة بنجاح!"
+        entity = await l313l.get_input_entity(channel_username)
+        if isinstance(entity, InputPeerChannel) or isinstance(entity, InputPeerChat):
+            await l313l(JoinChannelRequest(entity))
+            response = "تم الانضمام إلى القناة بنجاح!"
+        else:
+            response = "المعرّف الذي تم إدخاله ليس لقناة صالحة."
     except ValueError:
         response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة بشكل صحيح."
-    except ChannelInvalidError:
-        response = "المعرّف الذي تم إدخاله ليس لقناة صالحة."
     await event.respond(response)
+
