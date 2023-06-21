@@ -324,31 +324,20 @@ async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
 
 
-@l313l.on(admin_cmd(pattern="انضم"))
+@l313l.on(admin_cmd(pattern=r"انضمام(\s+@\w+)?$"))
 async def Hussein(event):
     message = event.message
-    if message.reply_to_msg_id:
-        reply_message = await message.get_reply_message()
-        if reply_message.sender_id is None:
-            entities = reply_message.entities
-            for entity in entities:
-                if isinstance(entity, InputChannel):
-                    channel_entity = entity
-                    break
-            else:
-                response = "الرجاء الرد على رابط القناة أو معرّف القناة."
-                await event.respond(response)
-                return
-
-            try:
-                await l313l(JoinChannelRequest(channel_entity))
-                response = "تم الانضمام إلى القناة بنجاح!"
-            except ValueError:
-                response = "خطأ في العثور على القناة. يرجى التأكد من رابط القناة أو معرّف القناة بشكل صحيح."
-        else:
-            response = "يجب أن يكون الرد على رابط القناة أو معرّف القناة وليس على الرسائل الأخرى."
+    channel_username = None
+    if len(message.text.split()) > 1:
+        channel_username = message.text.split()[1].replace("@", "")
+    if channel_username:
+        try:
+            await l313l(JoinChannelRequest(channel_username))
+            response = "تم الانضمام إلى القناة بنجاح!"
+        except ValueError:
+            response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح للقناة."
     else:
-        response = "الرجاء الرد على رابط القناة أو معرّف القناة."
+        response = "الرجاء تحديد معرف القناة بشكل صحيح مع الأمر."
     await event.respond(response)
 
 
