@@ -341,4 +341,4 @@ async def Hussein(event):
             response = "تم الانضمام إلى القناة بنجاح!"
     except ValueError:
         response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
-    await event.respond(response)ة
+    await event.respond(response)
