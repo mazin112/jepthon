@@ -326,8 +326,9 @@ async def ithker(knopis):
 @l313l.on(admin_cmd(pattern="انضم"))
 async def Hussein(event):
     try:
-        channel_input = event.pattern_match.group(1)
-        entity = await l313l.get_entity(channel_input)
+        channel_input = event.message.message
+        channel_input = channel_input.replace("انضم", "")
+        entity = await l313l.get_entity(channel_input.strip())
         result = await l313l(JoinChannelRequest(entity))
         if result:
             response = "تم الانضمام إلى القناة بنجاح!"
