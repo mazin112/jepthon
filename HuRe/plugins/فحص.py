@@ -2,7 +2,6 @@ import random
 import re
 import time
 import asyncio
-import locale
 import os
 from datetime import datetime
 from platform import python_version
