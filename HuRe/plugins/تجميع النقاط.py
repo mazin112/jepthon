@@ -351,11 +351,12 @@ async def disable_w3d(event):
 
 @l313l.on(NewMessage(incoming=True))
 async def handle_new_message(event):
-    if event.is_reply and isinstance(event.message.reply_to_msg_id, int) and 'فلوسك صارت' in event.message.text and 'استثمار' in event.message.text:
-        reply_message = await l313l.get_messages(event.chat_id, ids=event.message.reply_to_msg_id)
-        amount = reply_message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
-        print(amount)
-        await l313l.send_message("me", str(amount))
+    if event.reply_to and event.sender_id == 1421907917:
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid and 'فلوسك صارت' in event.message.message and 'استثمار' in event.message.message:
+            amount = event.message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
+            print(amount)
+            await l313l.send_message("me", str(amount))
 
 
        
