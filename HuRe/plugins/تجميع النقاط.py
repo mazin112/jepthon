@@ -351,10 +351,10 @@ async def disable_w3d(event):
 
 @l313l.on(NewMessage(incoming=True))
 async def handle_new_message(event):
-    print(event.reply_to)
-    if event.is_reply and 'فلوسك صارت' in event.reply_to.raw_text and 'استثمار' in event.message.text:
-        if event.reply_to.from_id.user_id == client.get_me().id:
-            reply_message = event.reply_to.raw_text
+    reda = await l313l.get_me()
+    if isinstance(event.message.reply_to_msg_id, int) and 'فلوسك صارت' in event.message.reply_to_msg.message and 'استثمار' in event.message.text:
+        if event.message.reply_to_msg.from_id.user_id == reda.id:
+            reply_message = event.message.reply_to_msg.message
             amount = reply_message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
             print(amount)
             await l313l.send_message("me", str(amount))
