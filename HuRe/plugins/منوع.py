@@ -330,10 +330,5 @@ async def Hussein(event):
         channel_input = channel_input.replace("انضم", "")
         entity = await l313l.get_entity(channel_input.strip())
         result = await l313l(JoinChannelRequest(entity))
-        if result:
-            response = "تم الانضمام إلى القناة بنجاح!"
-        else:
-            response = "لم يتم الانضمام إلى القناة."
     except ValueError:
         response = "خطأ في العثور على القناة. يرجى التأكد من إدخال معرّف القناة أو الـ ID بشكل صحيح."
-    await event.respond(response)
