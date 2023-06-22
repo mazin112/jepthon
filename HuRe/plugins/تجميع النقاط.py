@@ -358,8 +358,7 @@ async def handle_new_message(event):
         if owner_id == l313l.uid and 'فلوسك صارت' in event.message.message and 'استثمار' in event.message.message:
             amount_t = event.message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
             amount = re.sub(r'\D', '', amount_t)
-            print(amount)
-            await l313l.send_message("me", str(amount))
+            
 
 
        
