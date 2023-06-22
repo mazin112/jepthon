@@ -3,6 +3,7 @@ import base64
 import io
 import urllib.parse
 import os
+os.system('pip install arabic_reshaper python-bidi')
 from pathlib import Path
 
 from ShazamAPI import Shazam
@@ -77,7 +78,9 @@ async def _(event):
         if stderr:
             return await catevent.edit(f"**خطأ :** `{stderr}`")
         catname = os.path.splitext(catname)[0]
-        song_file = Path(f"{catname}.mp3")
+        reshaped_catname = arabic_reshaper.reshape(catname)
+        bidi_catname = get_display(reshaped_catname)
+        song_file = Path(f"{bidi_catname}.mp3")
         catname = urllib.parse.unquote(catname)
     except:
         pass
