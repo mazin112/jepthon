@@ -3,13 +3,10 @@ import base64
 import io
 import urllib.parse
 import os
-os.system('pip install arabic_reshaper python-bidi')
 from pathlib import Path
 
 from ShazamAPI import Shazam
 from telethon import types
-from arabic_reshaper import arabic_reshaper
-from bidi.algorithm import get_display
 from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
@@ -82,9 +79,8 @@ async def _(event):
         if stderr:
             return await catevent.edit(f"**خطأ :** `{stderr}`")
         catname = os.path.splitext(catname)[0]
-        reshaped_catname = arabic_reshaper.reshape(catname)
-        bidi_catname = get_display(reshaped_catname)
-        song_file = Path(f"{bidi_catname}.mp3")
+        song_file = Path(f"{catname}.mp3")
+        catname = urllib.parse.unquote(catname)
     except:
         pass
     if not os.path.exists(song_file):
