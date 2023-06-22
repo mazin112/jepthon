@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import io
+import urllib.parse
 import os
 from pathlib import Path
 
@@ -30,7 +31,6 @@ SONG_SENDING_STRING = "<code>جارِ الارسال انتظر قليلا...</c
 # =========================================================== #
 #                                                             #
 # =========================================================== #
-
 
 @l313l.ar_cmd(
     pattern="بحث(320)?(?:\s|$)([\s\S]*)",
@@ -73,13 +73,12 @@ async def _(event):
         pass
     try:
         stderr = (await _catutils.runcmd(song_cmd))[1]
-        # if stderr:
-        # await catevent.edit(f"**خطأ :** `{stderr}`")
         catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
         if stderr:
             return await catevent.edit(f"**خطأ :** `{stderr}`")
         catname = os.path.splitext(catname)[0]
         song_file = Path(f"{catname}.mp3")
+        catname = urllib.parse.unquote(catname)
     except:
         pass
     if not os.path.exists(song_file):
