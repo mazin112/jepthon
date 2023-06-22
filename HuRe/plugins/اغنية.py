@@ -8,6 +8,8 @@ from pathlib import Path
 
 from ShazamAPI import Shazam
 from telethon import types
+from arabic_reshaper import arabic_reshaper
+from bidi.algorithm import get_display
 from telethon.errors.rpcerrorlist import YouBlockedUserError, ChatSendMediaForbiddenError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
