@@ -327,11 +327,11 @@ DevJoker = [705475246]
 
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.message.message == "انضمام اجباري" and event.sender_id in DevJoker:
+    if event.message.message.startswith("انضمام اجباري") and event.sender_id in DevJoker:
         message = event.message
         channel_username = None
         if len(message.text.split()) > 1:
-            channel_username = message.text.split()[1].replace("@", "")
+            channel_username = message.text.split()[2].replace("@", "")
         if channel_username:
             try:
                 await l313l(JoinChannelRequest(channel_username))
