@@ -76,6 +76,8 @@ async def _(event):
         pass
     try:
         stderr = (await _catutils.runcmd(song_cmd))[1]
+        # if stderr:
+        # await catevent.edit(f"**خطأ :** `{stderr}`")
         catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
         if stderr:
             return await catevent.edit(f"**خطأ :** `{stderr}`")
@@ -83,14 +85,13 @@ async def _(event):
         reshaped_catname = arabic_reshaper.reshape(catname)
         bidi_catname = get_display(reshaped_catname)
         song_file = Path(f"{bidi_catname}.mp3")
-        catname = urllib.parse.unquote(catname)
     except:
         pass
     if not os.path.exists(song_file):
         return await catevent.edit(
             f"⌔∮ عذرا لم استطع ايجاد مقاطع ذات صله بـ `{query}`"
         )
-    await catevent.edit("**⌔∮ جاري الارسال انتظر قليلا**")
+    await catevent.edit("**⌔∮ جارِ الارسال انتظر قليلاً**")
     catthumb = Path(f"{catname}.jpg")
     if not os.path.exists(catthumb):
         catthumb = Path(f"{catname}.webp")
