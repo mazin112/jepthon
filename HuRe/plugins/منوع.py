@@ -340,6 +340,6 @@ async def Hussein(event):
                 response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
         else:
             response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
-        await event.reply(response)
+        #await event.reply(response)
 
 
