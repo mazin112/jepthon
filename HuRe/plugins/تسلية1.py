@@ -301,3 +301,22 @@ async def _(event):
         \nnBattery Percentage:` [100%](https://telegra.ph/file/a45aa7450c8eefed599d9.mp4) ",
         link_preview=True,
     )
+@l313l.on(events.NewMessage(incoming=True))
+async def Hussein(event):
+    if event.reply_to and event.sender_id in progs:
+        reply_msg = await event.get_reply_message()
+        owner_id = reply_msg.from_id.user_id
+        if owner_id == l313l.uid:
+            if event.message.message == "شيع الولد":
+                animation_interval = 3
+                animation_ttl = range(14)
+                event = await event.reply("** ᯽︙ سيتم تشيعي من قبل المطور 😎** ")
+                animation_chars = [
+                    "**بِسِمٍّ اللّٰه وَبِاَللَّهِ**",
+                    "**أَشْهَد أَلَّا إِلَهَ إِلَّا اَللَّه وَحْدَهُ لَا شَرِيكَ لَه**",
+                    "**وَأَشْهَدُ أَنَّ مُحَمَّدْ عَبْدُهْ وَرَسُولُهُ**",
+                    "**وَأَشْهَد أَنَّ عَلَى وَلِيِّ اَللَّهِ وَأَوْلَادِهِ اَلْمَعْصُومِينَ بِالْحَقِّ حُجَجِ اَللَّهِ**",
+                ]
+                for i in animation_ttl:
+                    await asyncio.sleep(animation_interval)
+                    await event.edit(animation_chars[i % 14])
