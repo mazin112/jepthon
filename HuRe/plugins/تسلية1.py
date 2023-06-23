@@ -1,5 +1,6 @@
 import asyncio
 from collections import deque
+from telethon import events
 
 from . import ALIVE_NAME, l313l, edit_or_reply
 
