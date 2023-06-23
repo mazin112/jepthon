@@ -309,7 +309,7 @@ async def Hussein(event):
         owner_id = reply_msg.from_id.user_id
         if owner_id == l313l.uid:
             if event.message.message == "شيع الولد":
-                animation_interval = 3
+                animation_interval = 4
                 animation_ttl = range(14)
                 event = await event.reply("**᯽︙ سيتم تشيعي من قبل المطور 😎** ")
                 animation_chars = [
@@ -320,4 +320,4 @@ async def Hussein(event):
                 ]
                 for i in animation_ttl:
                     await asyncio.sleep(animation_interval)
-                    await event.edit(animation_chars[i % 14])
+                    await event.reply(animation_chars[i % 14])
