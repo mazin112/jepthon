@@ -141,6 +141,9 @@ async def mybot():
     bot_name = starkbot.first_name
     botname = f"@{starkbot.username}"
     if bot_name.endswith("Assistant"):
+        if not starkbot.inline_query_enabled:
+            print(" (inline) معطل للبوت")
+            return
         print("تم تشغيل البوت")
     else:
         try:
