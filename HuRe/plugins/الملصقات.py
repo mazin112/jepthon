@@ -493,11 +493,11 @@ async def HuRepkg(_):
         _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
 
 @l313l.on(admin_cmd(pattern="حزمه"))
-async def JokSte(_):
+async def HuRepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
-    if len(_.text) > 9:
+    if len(_.text) > 20:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"{_.sender_id}"
@@ -514,42 +514,46 @@ async def JokSte(_):
             )
         )
     try:
-        short_name = (await _.client(SuggestShortNameRequest(_packname))).short_name
-        HuRe_Jep = await bot(
+        HuRe_Jep = await _.client(
             functions.messages.CreateChatRequest(
                 users=[_.sender_id],
                 title=_packname,
                 random_id=random.randint(1, 1000000000),
-                reply_markup=types.ReplyInlineMarkup(
+                reply_markup=types.ReplyKeyboardMarkup(
                     rows=[
-                        types.ReplyInlineRow(
-                            [
-                                types.ReplyInlineButton(
-                                    types.InputInlineQueryResultStickerSetAnimated(
-                                        id=random.randint(0, 999999),
-                                        title="",
-                                        document=sticker.document,
-                                        stickerset=types.InputStickerSetShortName(
-                                            stickerset=types.InputStickerSetID(
-                                                id=sticker.stickerset.id,
-                                                access_hash=sticker.stickerset.access_hash,
-                                            ),
-                                            short_name=sticker.stickerset.short_name,
+                        [
+                            types.KeyboardButton(
+                                types.InputInlineQueryResultStickerSetAnimated(
+                                    id=random.randint(0, 999999),
+                                    title="",
+                                    document=sticker.document,
+                                    stickerset=types.InputStickerSetShortName(
+                                        stickerset=types.InputStickerSetID(
+                                            id=sticker.stickerset.id,
+                                            access_hash=sticker.stickerset.access_hash,
                                         ),
-                                    )
+                                        short_name=sticker.stickerset.short_name,
+                                    ),
                                 )
-                                for sticker in stiks
-                            ]
-                        )
-                    ]
+                            )
+                            for sticker in stiks
+                        ]
+                    ],
+                    resize=True,
+                    one_time=True,
                 ),
             )
         )
-    except BaseException as er:
+    except Exception as er:
         LOGS.exception(er)
         return await edit_or_reply(_, str(er))
     await edit_or_reply(
+        _,
+        f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**",
+    )
+    await edit_or_reply(
         _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
+
 @l313l.ar_cmd(
     pattern="معلومات_الملصق$",
     command=("معلومات_الملصق", plugin_category),
