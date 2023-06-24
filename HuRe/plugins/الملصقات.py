@@ -460,7 +460,7 @@ async def HuRepkg(_):
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
     if len(_.text) <= 9:
         return await edit_or_reply(_, "**- يجب عليك وضع اسم الحزمة مع الأمر.**")
-    if len(_.text) > 20:
+    if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
         _packname = f"{_.sender_id}"
