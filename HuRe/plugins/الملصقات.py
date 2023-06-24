@@ -523,17 +523,12 @@ async def HuRepkg(_):
                     rows=[
                         [
                             types.KeyboardButton(
-                                types.InputInlineQueryResultStickerSetAnimated(
-                                    id=random.randint(0, 999999),
-                                    title="",
-                                    document=sticker.document,
-                                    stickerset=types.InputStickerSetShortName(
-                                        stickerset=types.InputStickerSetID(
-                                            id=sticker.stickerset.id,
-                                            access_hash=sticker.stickerset.access_hash,
-                                        ),
-                                        short_name=sticker.stickerset.short_name,
+                                types.InputStickerSetAnimatedEmoji(
+                                    stickerset=types.InputStickerSetID(
+                                        id=sticker.stickerset.id,
+                                        access_hash=sticker.stickerset.access_hash,
                                     ),
+                                    emoji=sticker.emoji,
                                 )
                             )
                             for sticker in stiks
@@ -551,9 +546,6 @@ async def HuRepkg(_):
         _,
         f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**",
     )
-    await edit_or_reply(
-        _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
-
 @l313l.ar_cmd(
     pattern="معلومات_الملصق$",
     command=("معلومات_الملصق", plugin_category),
