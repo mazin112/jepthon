@@ -457,7 +457,9 @@ async def kang(args):  # sourcery no-metrics
 async def HuRepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
-        return await edit_or_reply(_, "**- يجب عليك الرد على حزمة  .**")
+        return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
+    if len(_.text) <= 9:
+        return await edit_or_reply(_, "**- يجب عليك وضع اسم الحزمة مع الأمر.**")
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
@@ -488,7 +490,7 @@ async def HuRepkg(_):
         LOGS.exception(er)
         return await edit_or_reply(_, str(er))
     await edit_or_reply(
-        _, f"**- تم اخذ الحزمه بنجاح ✓ \nالحزمه  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
+        _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
 
 @l313l.ar_cmd(
     pattern="معلومات_الملصق$",
