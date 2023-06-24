@@ -62,7 +62,7 @@ async def _(event):
         await event.edit("يجب الدفع لاستخدام هذا الأمر!")
 
 
-@l313l.on(admin_cmd(pattern="((الغاء التجميع|الغاء تجميع)"))
+@l313l.on(admin_cmd(pattern="(الغاء التجميع|الغاء تجميع)"))
 async def cancel_collection(event):
     await l313l.send_message(’@zmmbot’, ‘/start’)
     
