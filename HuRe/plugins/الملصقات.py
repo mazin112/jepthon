@@ -497,12 +497,15 @@ async def HuRepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
-    if len(_.text) > 20:
-        _packname = _.text.split(" ", maxsplit=1)[1]
-    else:
-        _packname = f"{_.sender_id}"
-    _id = Jep.media.sticker_set.id
-    _hash = Jep.media.sticker_set.access_hash
+    _stickerset = None
+    for attr in Jep.media.document.attributes:
+        if isinstance(attr, types.DocumentAttributeSticker):
+            _stickerset = attr.stickerset
+            break
+    if _stickerset is None:
+        return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
+    _id = _stickerset.id
+    _hash = _stickerset.access_hash
     _get_stiks = await _.client(functions.messages.GetStickerSetRequest(types.InputStickerSetID(id=_id, access_hash=_hash), hash=0))
     stiks = []
     for i in _get_stiks.documents:
@@ -514,6 +517,9 @@ async def HuRepkg(_):
             )
         )
     try:
+        _packname = ""
+        if len(_.text) > 20:
+            _packname = _.text.split(" ", maxsplit=1)[1]
         HuRe_Jep = await _.client(
             functions.messages.CreateChatRequest(
                 users=[_.sender_id],
