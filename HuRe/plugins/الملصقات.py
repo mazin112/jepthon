@@ -492,7 +492,7 @@ async def HuRepkg(_):
     await edit_or_reply(
         _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
 
-@l313l.on(admin_cmd(pattern="حزمه"))
+@l313l.on(admin_cmd(pattern="حزمة"))
 async def JokSte(_):
     Jep = await _.get_reply_message()
     if not Jep:
@@ -520,8 +520,29 @@ async def JokSte(_):
                 users=[_.sender_id],
                 title=_packname,
                 random_id=random.randint(1, 1000000000),
-                draft=get_input_draft(stiks),
-                flags=1,
+                reply_markup=types.ReplyInlineMarkup(
+                    rows=[
+                        types.ReplyInlineRow(
+                            [
+                                types.ReplyInlineButton(
+                                    types.InputInlineQueryResultStickerSetAnimated(
+                                        id=random.randint(0, 999999),
+                                        title="",
+                                        document=sticker.document,
+                                        stickerset=types.InputStickerSetShortName(
+                                            stickerset=types.InputStickerSetID(
+                                                id=sticker.stickerset.id,
+                                                access_hash=sticker.stickerset.access_hash,
+                                            ),
+                                            short_name=sticker.stickerset.short_name,
+                                        ),
+                                    )
+                                )
+                                for sticker in stiks
+                            ]
+                        )
+                    ]
+                ),
             )
         )
     except BaseException as er:
@@ -529,7 +550,6 @@ async def JokSte(_):
         return await edit_or_reply(_, str(er))
     await edit_or_reply(
         _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
-        
 @l313l.ar_cmd(
     pattern="معلومات_الملصق$",
     command=("معلومات_الملصق", plugin_category),
