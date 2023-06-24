@@ -64,7 +64,7 @@ async def _(event):
 
 @l313l.on(admin_cmd(pattern="(الغاء التجميع|الغاء تجميع)"))
 async def cancel_collection(event):
-    await l313l.send_message(’@zmmbot’, ‘/start’)
+    await l313l.send_message('@zmmbot', '/start')
     
 @l313l.on(admin_cmd(pattern="(تجميع الجوكر|تجميع جوكر)"))
 async def _(event):
