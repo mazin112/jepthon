@@ -492,7 +492,7 @@ async def HuRepkg(_):
     await edit_or_reply(
         _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
 
-@l313l.on(admin_cmd(pattern="حزمة"))
+@l313l.on(admin_cmd(pattern="حزمه"))
 async def JokSte(_):
     Jep = await _.get_reply_message()
     if not Jep:
