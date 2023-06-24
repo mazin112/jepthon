@@ -19,16 +19,16 @@ bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
 its_Reham = False
-@l313l.on(admin_cmd(pattern="(تجميع المليار|تجميع مليار)"))
+@l313l.on(admin_cmd(pattern="(تجميع النقاط|تجميع نقاط)"))
 async def _(event):
     if HuRe[0] == "yes":
-        await event.edit("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+        await event.edit("**᯽︙سيتم تجميع النقاط، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         channel_entity = await l313l.get_entity(bot_username)
         await l313l.send_message('@zmmbot', '/start')
-        await asyncio.sleep(3)
+        await asyncio.sleep(5)
         msg0 = await l313l.get_messages('@zmmbot', limit=1)
         await msg0[0].click(2)
-        await asyncio.sleep(3)
+        await asyncio.sleep(5)
         msg1 = await l313l.get_messages('@zmmbot', limit=1)
         await msg1[0].click(0)
 
@@ -36,13 +36,12 @@ async def _(event):
         for i in range(100):
             if HuRe[0] == 'no':
                 break
-            await asyncio.sleep(1)
+            await asyncio.sleep(5)
 
-            list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1,
-                                                   offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
+            list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
             msgs = list.messages[0]
-            if msgs.message.find('لا يوجد قنوات في الوقت الحالي , قم يتجميع النقاط بطريقه مختلفه') != -1:
-                await l313l.send_message(event.chat_id, f"**لاتوجد قنوات للبوت**")
+            if msgs.message.find('لا يوجد قنوات في الوقت الحالي، قم بتجميع النقاط بطريقة مختلفة') != -1:
+                await l313l.send_message(event.chat_id, "**لا توجد قنوات للبوت.**")
                 break
             url = msgs.reply_markup.rows[0].buttons[0].url
             try:
@@ -55,15 +54,17 @@ async def _(event):
                 await msg2[0].click(text='تحقق')
                 chs += 1
                 await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
-            except Exception as er:
-                if "not valid anymore" in str(er):
-                    await l313l.send_message(event.chat_id, f"**القناة التي حاولت الاشتراك بها غير موجودة\nخطأ من بوت التمويل**")
-                else:
-                    await l313l.send_message(event.chat_id, f"**خطأ , ممكن تبندت**\n{er}")
-        await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع !**")
-
+            except:
+                await l313l.send_message(event.chat_id, "**خطأ، قد يكون تم حظرك.**")
+                break
+        await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع!**")
     else:
-        await event.edit("يجب الدفع لاستعمال هذا الامر !")
+        await event.edit("يجب الدفع لاستخدام هذا الأمر!")
+
+
+@l313l.on(admin_cmd(pattern="الغاء التجميع"))
+async def cancel_collection(event):
+    await l313l
 @l313l.on(admin_cmd(pattern="(تجميع الجوكر|تجميع جوكر)"))
 async def _(event):
     if HuRe[0] == "yes":
