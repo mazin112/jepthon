@@ -19,10 +19,10 @@ bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
 its_Reham = False
-@l313l.on(admin_cmd(pattern="(تجميع النقاط|تجميع نقاط)"))
+@l313l.on(admin_cmd(pattern="(تجميع مليار|تجميع المليار)"))
 async def _(event):
     if HuRe[0] == "yes":
-        await event.edit("**᯽︙سيتم تجميع النقاط، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         channel_entity = await l313l.get_entity(bot_username)
         await l313l.send_message('@zmmbot', '/start')
         await asyncio.sleep(5)
