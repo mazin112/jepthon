@@ -730,10 +730,11 @@ async def disable_bot(event):
 @l313l.ar_cmd(incoming=True)
 async def question_handler(event):
     global is_Reham
-    if is_enabled and event.reply_to_msg_id and event.sender_id != event.client.uid:
-        reply_message = await event.get_reply_message()
-        if reply_message.sender_id == event.client.uid:
-            await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
-            text = event.text.strip()
-            response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
-            await event.reply(response)
+    if is_Reham and event.is_group and not event.is_private and event.sender_id != event.client.uid:
+        if event.message.reply_to_msg_id:
+            replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to_msg_id)
+            if replied_msg.sender_id == event.client.uid:
+                await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
+                text = event.message.text.strip()
+                response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+                await event.reply(response)
