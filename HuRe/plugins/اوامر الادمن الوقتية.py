@@ -284,21 +284,22 @@ async def cancel_t8ed(event):
     if not user:
         return
     if user.id == event.client.uid:
-        return await event.edit("عذرًا، لا يمكنك إلغاء تقييد نفسك.")
+        return await event.client.send_message(event.chat_id, "عذرًا، لا يمكنك إلغاء تقييد نفسك.")
     try:
         await event.client(
             UnbanRequest(
                 event.chat_id,
                 user.id,
             )
+        )
         await event.client.send_file(
             event.chat_id,
             joker_unt8ed,
-            caption=f"تم الغاء تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅}",
-           )
+            caption=f"تم إلغاء تقييد المستخدم {_format.mentionuser(user.first_name, user.id)} بنجاح ✅."
+        )
     except UserIdInvalidError:
-        return await event.edit("يبدو أن التقييد على هذا المستخدم تم إلغاؤه بالفعل.")
+        return await event.client.send_message(event.chat_id, "يبدو أن التقييد على هذا المستخدم تم إلغاؤه بالفعل.")
     except UserAdminInvalidError:
-        return await event.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول إلغاء تقييد مشرف هنا.")
+        return await event.client.send_message(event.chat_id, "يبدو أنك لست مشرفًا في المجموعة أو تحاول إلغاء تقييد مشرف هنا.")
     except Exception as e:
-        return await event.edit(f"`{str(e)}`")
+        return await event.client.send_message(event.chat_id, f"`{str(e)}`")
