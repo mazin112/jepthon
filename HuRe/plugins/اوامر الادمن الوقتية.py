@@ -16,6 +16,7 @@ NO_ADMIN = "**᯽︙  عذرا انا لست مشرف في المجموعة ❕*
 NO_PERM = "**᯽︙ يبـدو انه ليس لديك صلاحيات كافية هذا حزين جدا 🥱♥**"
 
 joker_t8ed = "https://telegra.ph/file/2eca302f6e4a1198792ec.jpg"
+joker_unt8ed = "https://telegra.ph/file/b5d3498a825632e7716e3.jpg"
 @l313l.ar_cmd(
     pattern="تقييد_مؤقت(?:\s|$)([\s\S]*)",
     command=("تقييد_مؤقت", plugin_category),
@@ -68,7 +69,7 @@ async def tmuter(event):  # sourcery no-metrics
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption=f"᯽︙ تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅🚫\n ᯽︙السبب  : {reason}\n ** ᯽︙ مدة الكتم : **`{cattime}`",
+                caption=f"᯽︙ تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅\n ᯽︙السبب  : {reason}\n ** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -233,7 +234,7 @@ async def T8ed_Joker(event):
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption=f"تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅. 🚫\nالسبب: {reason}",
+                caption=f"تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅.\nالسبب: {reason}",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -260,5 +261,44 @@ async def T8ed_Joker(event):
         return await event.edit("يبدو أن تقييد هذا المستخدم تم إلغاؤه.")
     except UserAdminInvalidError:
         return await event.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول تقييد مشرف هنا.")
+    except Exception as e:
+        return await event.edit(f"`{str(e)}`")
+@l313l.ar_cmd(
+    pattern="الغاء تقييد(?:\s|$)([\s\S]*)",
+    command=("الغاء تقييد", plugin_category),
+    info={
+        "header": "لالغاء التقيد المستخدم في المجموعة ",
+        "description": "يقوم بالغاء المستخدم في المجموعة.",
+        "usage": [
+            "{tr}الغاء تقييد <userid/username/reply>",
+            "{tr}الغاء تقييد <userid/username/reply> <reason>",
+        ],
+        "examples": ["{tr}الغاء تقييد @username لأسباب مختلفة"],
+    },
+    groups_only=True,
+    require_admin=True,
+)
+async def cancel_t8ed(event):
+    event.delete()
+    user, _ = await get_user_from_event(event)
+    if not user:
+        return
+    if user.id == event.client.uid:
+        return await event.edit("عذرًا، لا يمكنك إلغاء تقييد نفسك.")
+    try:
+        await event.client(
+            UnbanRequest(
+                event.chat_id,
+                user.id,
+            )
+        await event.client.send_file(
+            event.chat_id,
+            joker_unt8ed,
+            caption=f"تم الغاء تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅}",
+           )
+    except UserIdInvalidError:
+        return await event.edit("يبدو أن التقييد على هذا المستخدم تم إلغاؤه بالفعل.")
+    except UserAdminInvalidError:
+        return await event.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول إلغاء تقييد مشرف هنا.")
     except Exception as e:
         return await event.edit(f"`{str(e)}`")
