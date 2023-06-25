@@ -731,10 +731,10 @@ async def disable_bot(event):
 async def question_handler(event):
     global is_Reham
     if is_Reham and event.is_group and not event.is_private and event.sender_id != event.client.uid:
-        if event.message.reply_to_msg_id:
-            replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to_msg_id)
+        if event.message.reply_to:
+            replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to.reply_to_msg_id)
             if replied_msg.sender_id == event.client.uid:
                 await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
                 text = event.message.text.strip()
                 response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
-                await event.reply(response)
+                await event.edit(response)
