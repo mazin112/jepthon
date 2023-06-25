@@ -728,18 +728,14 @@ async def disable_bot(event):
     else:
         await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
 
-@l313l.ar_cmd(incoming=True)
+@l313l.on(incoming=True)
 async def question_handler(event):
-    global is_Reham
-    if is_Reham and event.is_group and not event.is_private and event.sender_id != event.client.uid:
+    global is_enabled
+    if is_enabled and event.is_group and not event.is_private and event.sender_id != event.client.uid:
         if event.message.reply_to:
             replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to.reply_to_msg_id)
             if replied_msg.sender_id == event.client.uid:
                 await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
                 text = event.message.text.strip()
-                response = requests.post('https://api.gptzero.me/v2/predict', json={"text": text})
-                try:
-                    response_json = response.json()
-                    await event.edit(response_json['predictions'][0]['text'])
-                except json.JSONDecodeError:
-                    await event.edit("**᯽︙ حدث خطأ في استلام البيانات من الخادم. يرجى المحاولة مرة أخرى في وقت لاحق.**")
+                response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+                await event.edit(response)
