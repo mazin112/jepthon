@@ -199,7 +199,7 @@ async def tban(event):  # sourcery no-metrics
                 f"**مـدة الحـظر : **`{cattime}`",
             )
 
-@jepiq.ar_cmd(
+@l313l.ar_cmd(
     pattern="تقييد(?:\s|$)([\s\S]*)",
     command=("تقييد", plugin_category),
     info={
