@@ -750,4 +750,4 @@ async def question_handler(event):
                 )
 
                 reply_text = response['choices'][0]['text']
-                await event.edit(reply_text)
+                await event.reply(reply_text)
