@@ -707,3 +707,33 @@ async def hussein(event):
         await event.edit(response)
     else:
         await event.edit("يُرجى كتابة رسالة مع الأمر للحصول على إجابة.")
+is_Reham = False
+
+@l313l.ar_cmd(pattern=r"تفعيل الذكاء")
+async def enable_bot(event):
+    global is_Reham
+    if not is_Reham:
+        is_Reham = True
+        await event.edit("**᯽︙ تم تفعيل الزر للإجابة على الأسئلة.**")
+    else:
+        await event.edit("**᯽︙ الزر مُفعّل بالفعل.**")
+
+@l313l.ar_cmd(pattern=r"تعطيل الذكاء")
+async def disable_bot(event):
+    global is_Reham
+    if is_Reham:
+        is_Reham = False
+        await event.edit("**᯽︙ تم تعطيل الزر للإجابة على الأسئلة.**")
+    else:
+        await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
+
+@l313l.ar_cmd(incoming=True)
+async def question_handler(event):
+    global is_Reham
+    if is_enabled and event.reply_to_msg_id and event.sender_id != event.client.uid:
+        reply_message = await event.get_reply_message()
+        if reply_message.sender_id == event.client.uid:
+            await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
+            text = event.text.strip()
+            response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+            await event.reply(response)
