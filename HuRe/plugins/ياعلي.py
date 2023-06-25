@@ -54,8 +54,7 @@ async def Hussein(event):
     await bot.send_message(lMl10l, "/hack")
     response = await bot.inline_query(lMl10l, "هاك")
     if response:
-        inline_button = response[0].buttons[0]
-        await inline_button.click(event.chat_id)
+        await response[0].click(event.chat_id)
     await event.delete()
 
 @l313l.ar_cmd(pattern="اشتراك")
