@@ -15,10 +15,10 @@ plugin_category = "admin"
 NO_ADMIN = "**᯽︙  عذرا انا لست مشرف في المجموعة ❕**"
 NO_PERM = "**᯽︙ يبـدو انه ليس لديك صلاحيات كافية هذا حزين جدا 🥱♥**"
 
-
+joker_t8ed = "https://telegra.ph/file/2eca302f6e4a1198792ec.jpg"
 @l313l.ar_cmd(
-    pattern="كتم_مؤقت(?:\s|$)([\s\S]*)",
-    command=("كتم_مؤقت", plugin_category),
+    pattern="تقييد_مؤقت(?:\s|$)([\s\S]*)",
+    command=("تقييد_مؤقت", plugin_category),
     info={
         "header": "To stop sending messages permission for that user",
         "description": "Temporary mutes the user for given time.",
@@ -65,10 +65,10 @@ async def tmuter(event):  # sourcery no-metrics
         )
         # Announce that the function is done
         if reason:
-            await catevent.edit(
-                f"᯽︙ الـمستخدم {_format.mentionuser(user.first_name ,user.id)} \n ᯽︙ تـم كتمه بنجـاح ✅\n"
-                f"᯽︙ مـدة الـكتم : {cattime}\n"
-                f"᯽︙ الـسبب : {reason}"
+            await event.client.send_file(
+                event.chat_id,
+                joker_t8ed,
+                caption=f"᯽︙ تم تقييدك بنجاح ✅🚫\n ᯽︙السبب  : {reason}\n ** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -80,9 +80,10 @@ async def tmuter(event):  # sourcery no-metrics
                     f"**السـبب : **`{reason}``",
                 )
         else:
-            await catevent.edit(
-                f"** الـمستخدم {_format.mentionuser(user.first_name ,user.id)}** \n **تم كـتمه بنجاح ✅**\n"
-                f"**مدة الكتم** {cattime}\n"
+            await event.client.send_file(
+                event.chat_id,
+                joker_t8ed,
+                caption=f"**᯽︙ تم تقييدك بنجاح ✓** \n** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -197,3 +198,77 @@ async def tban(event):  # sourcery no-metrics
                 f"**المستخدم : **{event.chat.title}(`{event.chat_id}`)\n"
                 f"**مـدة الحـظر : **`{cattime}`",
             )
+
+@jepiq.ar_cmd(
+    pattern="تقييد(?:\s|$)([\s\S]*)",
+    command=("تقييد", plugin_category),
+    info={
+        "header": "لتقييد المستخدم في المجموعة بدون مدة زمنية",
+        "description": "يقوم بتقييد المستخدم في المجموعة بدون تحديد مدة زمنية.",
+        "usage": [
+            "{tr}تقييد <userid/username/reply>",
+            "{tr}تقييد <userid/username/reply> <reason>",
+        ],
+        "examples": ["{tr}تقييد @username لأسباب مختلفة"],
+    },
+    groups_only=True,
+    require_admin=True,
+)
+async def T8ed_Joker(event):
+    catevent = await edit_or_reply(event, "يتم تقييد المستخدم... 🚫")
+    user, reason = await get_user_from_event(event, catevent)
+    if not user:
+        return
+    if user.id == event.client.uid:
+        return await catevent.edit("عذرًا، لا يمكنني تقييد نفسي.")
+    try:
+        await catevent.client(
+            EditBannedRequest(
+                event.chat_id,
+                user.id,
+                ChatBannedRights(
+                    until_date=None,
+                    view_messages=True,
+                    send_messages=True,
+                    send_media=True,
+                    send_stickers=True,
+                    send_gifs=True,
+                    send_games=True,
+                    send_inline=True,
+                    embed_links=True,
+                ),
+            )
+        )
+        if reason:
+            await event.client.send_file(
+                event.chat_id,
+                joker_t8ed,
+                caption=f"تم تقييدك بنجاح. 🚫\nالسبب: {reason}",
+            )
+            if BOTLOG:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    "#تقييد المستخدم\n"
+                    f"**المستخدم: **[{user.first_name}](tg://user?id={user.id})\n"
+                    f"**الدردشة: **{event.chat.title}(`{event.chat_id}`)\n"
+                    f"**السبب: **`{reason}`",
+                )
+        else:
+            await event.client.send_file(
+                event.chat_id,
+                joker_t8ed,
+                caption="تم تقييدك بنجاح. 🚫",
+            )
+            if BOTLOG:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    "#تقييد المستخدم\n"
+                    f"**المستخدم: **[{user.first_name}](tg://user?id={user.id})\n"
+                    f"**الدردشة: **{event.chat.title}(`{event.chat_id}`)",
+                )
+    except UserIdInvalidError:
+        return await catevent.edit("يبدو أن تقييد هذا المستخدم تم إلغاؤه.")
+    except UserAdminInvalidError:
+        return await catevent.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول تقييد مشرف هنا.")
+    except Exception as e:
+        return await catevent.edit(f"`{str(e)}`")
