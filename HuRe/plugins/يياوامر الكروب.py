@@ -730,6 +730,8 @@ async def disable_bot(event):
 async def reply_to_hussein(event):
     if not is_Reham:
         return
-    if event.is_private and event.sender_id == (await client.get_me()).id:
-        response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={event.raw_text}').text
-        await event.reply(response)
+    if event.is_private or event.is_reply:
+        text = event.pattern_match.group(1).strip()
+        if text:
+            response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+            await event.reply(response)
