@@ -736,5 +736,5 @@ async def question_handler(event):
             if replied_msg.sender_id == event.client.uid:
                 await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
                 text = event.message.text.strip()
-                response = requests.post('https://api.gptzero.me/v2/predict', json={"text": text}).json()
-                await event.edit(response['predictions'][0]['generated_text'])
+                response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+                await event.edit(response)
