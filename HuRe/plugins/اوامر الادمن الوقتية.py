@@ -41,7 +41,7 @@ joker_unt8ed = "https://telegra.ph/file/b5d3498a825632e7716e3.jpg"
 )
 async def tmuter(event):  # sourcery no-metrics
     "لكـتم شخص لمدة معينة"
-    event.delete()
+    await event.delete()
     user, reason = await get_user_from_event(event)
     if not user:
         return
@@ -216,7 +216,7 @@ async def tban(event):  # sourcery no-metrics
     require_admin=True,
 )
 async def T8ed_Joker(event):
-    event.delete()
+    await event.delete()
     user, reason = await get_user_from_event(event)
     if not user:
         return
@@ -279,7 +279,7 @@ async def T8ed_Joker(event):
     require_admin=True,
 )
 async def cancel_t8ed(event):
-    event.delete()
+    await event.delete()
     user, _ = await get_user_from_event(event)
     if not user:
         return
@@ -296,7 +296,7 @@ async def cancel_t8ed(event):
         await event.client.send_file(
             event.chat_id,
             joker_unt8ed,
-            caption=f"تم إلغاء تقييد المستخدم {_format.mentionuser(user.first_name, user.id)} بنجاح ✅."
+            caption=f"**᯽︙ تم الغاء تقييد المستخدم {_format.mentionuser(user.first_name, user.id)} بنجاح ✅.**"
         )
     except UserIdInvalidError:
         return await event.client.send_message(event.chat_id, "يبدو أن التقييد على هذا المستخدم تم إلغاؤه بالفعل.")
