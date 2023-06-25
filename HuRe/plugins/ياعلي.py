@@ -45,7 +45,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
                 )
         await event.answer([result] if result else None)
 @bot.on(admin_cmd(outgoing=True, pattern="هاك"))
-async def repo(event):
+async def Hussein(event):
     if event.fwd_from:
         return
     lMl10l = Config.TG_BOT_USERNAME
@@ -53,7 +53,9 @@ async def repo(event):
         await event.get_reply_message()
     await bot.send_message(lMl10l, "/hack")
     response = await bot.inline_query(lMl10l, "هاك")
-    await response[0].click(event.chat_id)
+    if response:
+        inline_button = response[0].buttons[0]
+        await inline_button.click(event.chat_id)
     await event.delete()
 
 @l313l.ar_cmd(pattern="اشتراك")
