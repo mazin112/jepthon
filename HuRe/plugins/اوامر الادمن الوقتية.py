@@ -40,7 +40,7 @@ joker_t8ed = "https://telegra.ph/file/2eca302f6e4a1198792ec.jpg"
 )
 async def tmuter(event):  # sourcery no-metrics
     "لكـتم شخص لمدة معينة"
-    catevent = await edit_or_reply(event, "᯽︙ يـتم  الـكتم أنتـظر 🧸♥")
+    event.delete()
     user, reason = await get_user_from_event(event, catevent)
     if not user:
         return
@@ -68,7 +68,7 @@ async def tmuter(event):  # sourcery no-metrics
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption=f"᯽︙ تم تقييدك بنجاح ✅🚫\n ᯽︙السبب  : {reason}\n ** ᯽︙ مدة الكتم : **`{cattime}`",
+                caption=f"᯽︙ تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅🚫\n ᯽︙السبب  : {reason}\n ** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -83,7 +83,7 @@ async def tmuter(event):  # sourcery no-metrics
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption=f"**᯽︙ تم تقييدك بنجاح ✓** \n** ᯽︙ مدة الكتم : **`{cattime}`",
+                caption=f"**᯽︙ تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✓** \n** ᯽︙ مدة الكتم : **`{cattime}`",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -215,7 +215,7 @@ async def tban(event):  # sourcery no-metrics
     require_admin=True,
 )
 async def T8ed_Joker(event):
-    catevent = await edit_or_reply(event, "يتم تقييد المستخدم... 🚫")
+    event.delete()
     user, reason = await get_user_from_event(event, catevent)
     if not user:
         return
@@ -233,7 +233,7 @@ async def T8ed_Joker(event):
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption=f"تم تقييدك بنجاح. 🚫\nالسبب: {reason}",
+                caption=f"تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅. 🚫\nالسبب: {reason}",
             )
             if BOTLOG:
                 await event.client.send_message(
@@ -247,7 +247,7 @@ async def T8ed_Joker(event):
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption="تم تقييدك بنجاح. 🚫",
+                caption="᯽︙تم تقييد المستخدم بنجاح ✓ : {_format.mentionuser(user.first_name ,user.id)} ",
             )
             if BOTLOG:
                 await event.client.send_message(
