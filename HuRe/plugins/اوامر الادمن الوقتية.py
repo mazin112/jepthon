@@ -41,22 +41,22 @@ joker_t8ed = "https://telegra.ph/file/2eca302f6e4a1198792ec.jpg"
 async def tmuter(event):  # sourcery no-metrics
     "لكـتم شخص لمدة معينة"
     event.delete()
-    user, reason = await get_user_from_event(event, catevent)
+    user, reason = await get_user_from_event(event)
     if not user:
         return
     if not reason:
-        return await catevent.edit("᯽︙ انـت لم تقـم بـوضـع وقـت مع الامـر")
+        return await event.edit("᯽︙ انـت لم تقـم بـوضـع وقـت مع الامـر")
     reason = reason.split(" ", 1)
     hmm = len(reason)
     cattime = reason[0].strip()
     reason = "".join(reason[1:]) if hmm > 1 else None
-    ctime = await extract_time(catevent, cattime)
+    ctime = await extract_time(event, cattime)
     if not ctime:
         return
     if user.id == event.client.uid:
-        return await catevent.edit(f"᯽︙ عـذرا لا يمـكننـي حـظر نفـسي ")
+        return await event.edit(f"᯽︙ عـذرا لا يمـكننـي حـظر نفـسي ")
     try:
-        await catevent.client(
+        await event.client(
             EditBannedRequest(
                 event.chat_id,
                 user.id,
@@ -95,13 +95,13 @@ async def tmuter(event):  # sourcery no-metrics
                 )
         # Announce to logging group
     except UserIdInvalidError:
-        return await catevent.edit("**يبدو ان كتم الشخص تم الغائه**")
+        return await event.edit("**يبدو ان كتم الشخص تم الغائه**")
     except UserAdminInvalidError:
-        return await catevent.edit(
+        return await event.edit(
             "** يبـدو أنك لسـت مشرف في المجموعة او تحاول كتم مشـرف هنا**"
         )
     except Exception as e:
-        return await catevent.edit(f"`{str(e)}`")
+        return await event.edit(f"`{str(e)}`")
 
 
 @l313l.ar_cmd(
@@ -216,13 +216,13 @@ async def tban(event):  # sourcery no-metrics
 )
 async def T8ed_Joker(event):
     event.delete()
-    user, reason = await get_user_from_event(event, catevent)
+    user, reason = await get_user_from_event(event)
     if not user:
         return
     if user.id == event.client.uid:
-        return await catevent.edit("عذرًا، لا يمكنني تقييد نفسي.")
+        return await event.edit("عذرًا، لا يمكنني تقييد نفسي.")
     try:
-        await catevent.client(
+        await event.client(
             EditBannedRequest(
                 event.chat_id,
                 user.id,
@@ -257,8 +257,8 @@ async def T8ed_Joker(event):
                     f"**الدردشة: **{event.chat.title}(`{event.chat_id}`)",
                 )
     except UserIdInvalidError:
-        return await catevent.edit("يبدو أن تقييد هذا المستخدم تم إلغاؤه.")
+        return await event.edit("يبدو أن تقييد هذا المستخدم تم إلغاؤه.")
     except UserAdminInvalidError:
-        return await catevent.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول تقييد مشرف هنا.")
+        return await event.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول تقييد مشرف هنا.")
     except Exception as e:
-        return await catevent.edit(f"`{str(e)}`")
+        return await event.edit(f"`{str(e)}`")
