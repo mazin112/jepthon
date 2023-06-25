@@ -737,7 +737,7 @@ async def question_handler(event):
         if event.message.reply_to:
             replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to.reply_to_msg_id)
             if replied_msg.sender_id == event.client.uid:
-                await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
+                await event.respond("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
                 text = event.message.text.strip()
                 response = openai.Completion.create(
                     model='text-davinci-003',
@@ -750,4 +750,4 @@ async def question_handler(event):
                 )
 
                 reply_text = response['choices'][0]['text']
-                await event.reply(reply_text)
+                await event.respond(reply_text)
