@@ -707,13 +707,14 @@ async def hussein(event):
     else:
         await event.edit("يُرجى كتابة رسالة مع الأمر للحصول على إجابة.")
 is_Reham = False
-
+No_group_Joker = "@jepthonsupport"
+# يا يلفاشل هم الك نيه تاخذه وتنشره بسورسك 🤣
 @l313l.ar_cmd(pattern=r"الذكاء تفعيل")
 async def enable_bot(event):
     global is_Reham
     if not is_Reham:
         is_Reham = True
-        await event.edit("**᯽︙ تم تفعيل الزر للإجابة على الأسئلة.**")
+        await event.edit("**᯽︙ تم تفعيل امر الذكاء الاصطناعي سيتم الرد على اسئلة الجميع عند الرد علي.**")
     else:
         await event.edit("**᯽︙ الزر مُفعّل بالفعل.**")
 
@@ -722,7 +723,7 @@ async def disable_bot(event):
     global is_Reham
     if is_Reham:
         is_Reham = False
-        await event.edit("**᯽︙ تم تعطيل الزر للإجابة على الأسئلة.**")
+        await event.edit("**᯽︙ تم تعطيل امر الذكاء الاصطناعي.**")
     else:
         await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
 
@@ -730,11 +731,14 @@ async def disable_bot(event):
 async def reply_to_hussein(event):
     if not is_Reham:
         return
-    message = event.message
-    if message.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        if reply_message.sender_id == event.client.uid:
-            text = message.text.strip()
-            response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
-            await asyncio.sleep(4)
-            await event.reply(response)
+    if event.is_private:
+        message = event.message
+        if message.reply_to_msg_id:
+            reply_message = await event.get_reply_message()
+            if reply_message.sender_id == event.client.uid:
+                text = message.text.strip()
+                if event.chat.username == No_group_Joker:
+                    return
+                response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+                await asyncio.sleep(4)
+                await event.reply(response)
