@@ -528,3 +528,21 @@ async def jepmeme(memejep):
   url = f"https://t.me/MemeSoundJep/98"
   await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
   await memejep.delete()
+@l313l.on(admin_cmd(outgoing=True, pattern="خبز يابس$"))
+async def jepmeme(memejep):
+  Jep = await reply_id(memejep)
+  url = f"https://t.me/MemeSoundJep/100"
+  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
+  await memejep.delete()
+@l313l.on(admin_cmd(outgoing=True, pattern="خيار بصل$"))
+async def jepmeme(memejep):
+  Jep = await reply_id(memejep)
+  url = f"https://t.me/MemeSoundJep/101"
+  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
+  await memejep.delete()
+@l313l.on(admin_cmd(outgoing=True, pattern="ماي ارو$"))
+async def jepmeme(memejep):
+  Jep = await reply_id(memejep)
+  url = f"https://t.me/MemeSoundJep/102"
+  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
+  await memejep.delete()
