@@ -730,8 +730,8 @@ async def disable_bot(event):
 
 @l313l.on(incoming=True)
 async def question_handler(event):
-    global is_enabled
-    if is_enabled and event.is_group and not event.is_private and event.sender_id != event.client.uid:
+    global is_Reham
+    if is_Reham and event.is_group and not event.is_private and event.sender_id != event.client.uid:
         if event.message.reply_to:
             replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to.reply_to_msg_id)
             if replied_msg.sender_id == event.client.uid:
