@@ -287,9 +287,10 @@ async def cancel_t8ed(event):
         return await event.client.send_message(event.chat_id, "عذرًا، لا يمكنك إلغاء تقييد نفسك.")
     try:
         await event.client(
-            UnbanRequest(
+            EditBannedRequest(
                 event.chat_id,
                 user.id,
+                ChatBannedRights(until_date=None, send_messages=False),
             )
         )
         await event.client.send_file(
