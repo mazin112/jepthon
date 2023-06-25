@@ -2,9 +2,6 @@ from asyncio import sleep
 import asyncio
 import requests
 import time
-import openai
-import os
-os.system('pip install openai')
 from telethon.tl.types import Channel, Chat, User, ChannelParticipantsAdmins
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.errors.rpcerrorlist import ChannelPrivateError
@@ -43,7 +40,6 @@ from ..sql_helper.locks_sql import *
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import readable_time
 from . import BOTLOG, BOTLOG_CHATID
-openai.api_key = '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'
 LOGS = logging.getLogger(__name__)
 plugin_category = "admin"
 spam_chats = []
@@ -730,24 +726,10 @@ async def disable_bot(event):
     else:
         await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
 
-@l313l.on(events.NewMessage(incoming=True))
-async def question_handler(event):
-    global is_Reham
-    if is_Reham and event.is_group and not event.is_private and event.sender_id != event.client.uid:
-        if event.message.reply_to:
-            replied_msg = await event.client.get_messages(event.chat_id, ids=event.message.reply_to.reply_to_msg_id)
-            if replied_msg.sender_id == event.client.uid:
-                await event.respond("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
-                text = event.message.text.strip()
-                response = openai.Completion.create(
-                    model='text-davinci-003',
-                    prompt=text,
-                    temperature=0.9,
-                    max_tokens=3500,
-                    top_p=1,
-                    frequency_penalty=0.0,
-                    presence_penalty=0.6,
-                )
-
-                reply_text = response['choices'][0]['text']
-                await event.respond(reply_text)
+@client.on(events.NewMessage(incoming=True))
+async def reply_to_hussein(event):
+    if not is_Reham:
+        return
+    if event.is_private and event.sender_id == (await client.get_me()).id:
+        response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={event.raw_text}').text
+        await event.reply(response)
