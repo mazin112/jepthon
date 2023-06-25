@@ -46,19 +46,15 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         await event.answer([result] if result else None)
 
 @bot.on(admin_cmd(outgoing=True, pattern="هاك"))
-async def Hussein(event):
+async def repo(event):
     if event.fwd_from:
         return
     lMl10l = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
     await bot.send_message(lMl10l, "/hack")
-    await asyncio.sleep(2)
     response = await bot.inline_query(lMl10l, "هاك")
-    if response:
-        result = response[0]
-        button = result.buttons[0]
-        await bot.send_inline_bot_result(event.chat_id, result_id=result.id, query_id=result.query_id, reply_to=event.reply_to_msg_id, hide_via=True, schedule_time=1, silent=True, buttons=button)
+    await response[0].click(event.chat_id)
     await event.delete()
 
 @l313l.ar_cmd(pattern="اشتراك")
