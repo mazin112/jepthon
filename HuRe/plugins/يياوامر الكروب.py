@@ -709,7 +709,7 @@ async def hussein(event):
         await event.edit("يُرجى كتابة رسالة مع الأمر للحصول على إجابة.")
 is_Reham = False
 
-@l313l.ar_cmd(pattern=r"تفعيل الذكاء")
+@l313l.ar_cmd(pattern=r"الذكاء تفعيا")
 async def enable_bot(event):
     global is_Reham
     if not is_Reham:
@@ -718,7 +718,7 @@ async def enable_bot(event):
     else:
         await event.edit("**᯽︙ الزر مُفعّل بالفعل.**")
 
-@l313l.ar_cmd(pattern=r"تعطيل الذكاء")
+@l313l.ar_cmd(pattern=r"الذكاء تعطيل")
 async def disable_bot(event):
     global is_Reham
     if is_Reham:
