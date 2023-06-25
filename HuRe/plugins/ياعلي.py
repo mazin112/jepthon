@@ -55,7 +55,7 @@ async def Hussein(event):
     response = await bot.inline_query(lMl10l, "هاك")
     if response:
         for result in response:
-            if result.text == "• اضغط هنا عزيزي •":
+            if result.title == "• اضغط هنا عزيزي •":
                 await result.click(event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True)
                 break
     await event.delete()
