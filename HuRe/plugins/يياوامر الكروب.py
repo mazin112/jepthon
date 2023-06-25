@@ -736,4 +736,5 @@ async def reply_to_hussein(event):
         if reply_message.sender_id == event.client.uid:
             text = message.text.strip()
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
+            await asyncio.sleep(4)
             await event.reply(response)
