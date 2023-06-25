@@ -247,7 +247,7 @@ async def T8ed_Joker(event):
             await event.client.send_file(
                 event.chat_id,
                 joker_t8ed,
-                caption="᯽︙تم تقييد المستخدم بنجاح ✓ : {_format.mentionuser(user.first_name ,user.id)} ",
+                caption=f"᯽︙تم تقييد المستخدم بنجاح ✓ : {_format.mentionuser(user.first_name ,user.id)} ",
             )
             if BOTLOG:
                 await event.client.send_message(
