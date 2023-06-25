@@ -2,6 +2,7 @@ from asyncio import sleep
 import asyncio
 import requests
 import time
+import json
 from telethon.tl.types import Channel, Chat, User, ChannelParticipantsAdmins
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.errors.rpcerrorlist import ChannelPrivateError
@@ -736,5 +737,9 @@ async def question_handler(event):
             if replied_msg.sender_id == event.client.uid:
                 await event.reply("**᯽︙ جارِ الجواب على سؤالك انتظر قليلاً ...**")
                 text = event.message.text.strip()
-                response = requests.post('https://api.gptzero.me/v2/predict', json={"text": text}).json()
-                await event.reply(response['predictions'][0]['text'])
+                response = requests.post('https://api.gptzero.me/v2/predict', json={"text": text})
+                try:
+                    response_json = response.json()
+                    await event.edit(response_json['predictions'][0]['text'])
+                except json.JSONDecodeError:
+                    await event.edit("**᯽︙ حدث خطأ في استلام البيانات من الخادم. يرجى المحاولة مرة أخرى في وقت لاحق.**")
