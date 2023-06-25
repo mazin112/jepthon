@@ -226,9 +226,7 @@ async def T8ed_Joker(event):
             EditBannedRequest(
                 event.chat_id,
                 user.id,
-                ChatBannedRights(
-                    send_messages=True,
-                ),
+                ChatBannedRights(send_messages=True),
             )
         )
         if reason:
