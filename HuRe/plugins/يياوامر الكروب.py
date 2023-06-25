@@ -726,7 +726,7 @@ async def disable_bot(event):
     else:
         await event.edit("**᯽︙ الزر مُعطّل بالفعل.**")
 
-@client.on(events.NewMessage(incoming=True))
+@l313l.on(events.NewMessage(incoming=True))
 async def reply_to_hussein(event):
     if not is_Reham:
         return
