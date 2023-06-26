@@ -9,6 +9,7 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
+import json
 from telethon.tl.types import InputChannel, InputPeerChannel
 from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
