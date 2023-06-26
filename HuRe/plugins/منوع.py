@@ -14,13 +14,22 @@ from telethon.tl.types import InputChannel, InputPeerChannel
 from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
 
-times_json = l313l.download_file('https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes')
+async def fetch_prayer_times():
+    times_json = await l313l.download_file('https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes')
+    return times_json
 
-times = json.loads(times_json)
+async def send_prayer_times(event):
+    times_json = await fetch_prayer_times()
+    times = json.loads(times_json)
+    fajr_time = times['fajir']
+    hijri_date = times['date']
+    chat_id = event.chat_id
+    message = f"Fajr Time: {fajr_time}\nHijri Date: {hijri_date}"
+    await l313l.send_message(chat_id, message)
 
-fajr_time = times['fajir']
-
-hijri_date = times['date']
+@l313l.on(events.NewMessage(pattern='صلاة'))
+async def handle_command(event):
+    await send_prayer_times(event)
 
 @l313l.on(admin_cmd(pattern="دعوه للمكالمه(?: |$)(.*)"))
 async def _(e):
@@ -286,9 +295,3 @@ async def Hussein(event):
         else:
             response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
         #await event.reply(response)
-
-@l313l.on(events.NewMessage(pattern='اوقات صلاه'))
-async def handle_command(event):
-    chat_id = event.chat_id
-    message = f"Fajr Time: {fajr_time}\nHijri Date: {hijri_date}"
-    await l313l.send_message(chat_id, message)
