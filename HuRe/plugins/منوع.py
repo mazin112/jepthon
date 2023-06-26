@@ -9,73 +9,17 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 import os
 import tempfile
-from python_minifier import minify
 from telethon.tl.types import InputChannel, InputPeerChannel
 from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest
 
-@l313l.ar_cmd(pattern="تشفير نص")
-async def obfuscate_text(event):
-    if event.sender_id != event.client.uid:
-        return  # Only proceed if the owner of the event triggered the command
+times_json = l313l.download_file('https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes')
 
-    if event.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        if reply_message.text:
-            code = reply_message.text
-            try:
-                obfuscated_code = minify(code)
-                await event.respond(obfuscated_code)
-            except Exception as e:
-                await event.respond(f"حدث خطأ أثناء تشفير النص:\n\n{str(e)}")
-        else:
-            await event.respond("لم يتم توفير النص. يرجى إعادة المحاولة.")
-    else:
-        await event.respond("يرجى الرد على النص الذي ترغب في تشفيره.")
+times = json.loads(times_json)
 
-@l313l.ar_cmd(pattern="تشفير ملف")
-async def obfuscate_file(event):
-    if event.sender_id != event.client.uid:
-        return  # Only proceed if the owner of the event triggered the command
+fajr_time = times['fajir']
 
-    if event.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        if reply_message.media and reply_message.media.document.mime_type == "text/x-python":
-            temp_dir = tempfile.mkdtemp()
-            file_path = os.path.join(temp_dir, "code.py")
-            await event.client.download_media(reply_message, file=file_path)
-
-            with open(file_path, "r") as file:
-                code = file.read()
-
-            try:
-                obfuscated_code = minify(code)
-                obfuscated_file_path = os.path.join(tempfile.mkdtemp(), "obfuscated_code.py")
-
-                with open(obfuscated_file_path, "w") as file:
-                    file.write(obfuscated_code)
-
-                await event.respond(file=obfuscated_file_path, force_document=True)
-                os.remove(obfuscated_file_path)
-            except Exception as e:
-                await event.respond(f"حدث خطأ أثناء تشفير الملف:\n\n{str(e)}")
-        else:
-            await event.respond("لم يتم توفير ملف صحيح. يرجى إعادة المحاولة.")
-    else:
-        await event.delete()
-
-
-
-
-
-
-async def get_call(event):
-    mm = await event.client(getchat(event.chat_id))
-    xx = await event.client(getvc(mm.full_chat.call))
-    return xx.call
-def user_list(l, n):
-    for i in range(0, len(l), n):
-        yield l[i : i + n]
+hijri_date = times['date']
 
 @l313l.on(admin_cmd(pattern="دعوه للمكالمه(?: |$)(.*)"))
 async def _(e):
@@ -342,4 +286,8 @@ async def Hussein(event):
             response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
         #await event.reply(response)
 
-
+@l313l.on(events.NewMessage(pattern='اوقات صلاه'))
+async def handle_command(event):
+    chat_id = event.chat_id
+    message = f"Fajr Time: {fajr_time}\nHijri Date: {hijri_date}"
+    await l313l.send_message(chat_id, message)
