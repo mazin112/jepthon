@@ -27,7 +27,7 @@ async def send_prayer_times(event):
     message = f"Fajr Time: {fajr_time}\nHijri Date: {hijri_date}"
     await l313l.send_message(chat_id, message)
 
-@l313l.on(events.NewMessage(pattern='صلاة'))
+@l313l.on(events.NewMessage(pattern="صلاه"))
 async def handle_command(event):
     await send_prayer_times(event)
 
