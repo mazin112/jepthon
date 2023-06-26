@@ -11,11 +11,11 @@ import os
 import tempfile
 import json
 from telethon.tl.types import InputChannel, InputPeerChannel
-from telethon import events
+from telethon import events, functions
 from telethon.tl.functions.channels import JoinChannelRequest
 
 async def fetch_prayer_times():
-    times_json = await l313l.download_file('https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes')
+    times_json = await client.download_file('https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes')
     return times_json
 
 async def send_prayer_times(event):
@@ -24,8 +24,8 @@ async def send_prayer_times(event):
     fajr_time = times['fajir']
     hijri_date = times['date']
     chat_id = event.chat_id
-    message = f"Fajr Time: {fajr_time}\nHijri Date: {hijri_date}"
-    await l313l.send_message(chat_id, message)
+    input_file = await client.upload_file(times_json, part_size_kb=512)
+    await client.send_file(chat_id, input_file, caption=f"وقت الفجر: {fajr_time}\nالتاريخ الهجري: {hijri_date}", force_document=True)
 
 @l313l.on(admin_cmd(pattern="صلاه(?: |$)(.*)"))
 async def handle_command(event):
