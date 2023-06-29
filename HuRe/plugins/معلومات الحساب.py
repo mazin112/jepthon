@@ -157,7 +157,6 @@ async def _(event):
 
 @l313l.on(admin_cmd(pattern="(قنواتي|قائمه قنواتي|قائمة قنواتي)$"))
 async def ViewChJok(event):  
-    catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
     cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
@@ -168,8 +167,7 @@ async def ViewChJok(event):
             channel_name = entity.title
             channel_id = entity.id
             is_owner = entity.creator
-            is_admin = entity.creator or entity.admin_rights
-            if is_owner or is_admin or entity.username:
+            if is_owner:
                 if entity.username:
                     if entity.megagroup:
                         channel_link = f"https://t.me/{entity.username}"
@@ -178,7 +176,10 @@ async def ViewChJok(event):
                 else:
                     channel_link = f"https://t.me/c/{channel_id}/1"
                 hi.append(f"- {channel_name} ({channel_link})")
-    output = "أنت أدمن في القنوات التالية:\n" + "\n".join(hi)
+    if len(hi) == 0:
+        output = "لا تمتلك أي قنوات حاليًا."
+    else:
+        output = "القنوات التي تمتلكها:\n" + "\n".join(hi)
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
