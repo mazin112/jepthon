@@ -187,7 +187,7 @@ async def ViewChJok(event):
     else:
         output = "القنوات التي تمتلكها:\n" + "\n".join(hi)
     if len(hica) > 0:
-    output += "\n\nأنت مشرف في القنوات التالية:\n" + "\n".join(hica)
+        output += "\n\nأنت مشرف في القنوات التالية:\n" + "\n".join(hica)
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
