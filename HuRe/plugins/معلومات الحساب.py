@@ -155,13 +155,15 @@ async def _(event):
         response = await conv.get_response()
         await event.client.send_read_ackno
 
-@l313l.on(admin_cmd(pattern="(قنواتي|قائمه قنواتي|قائمة قنواتي)$"))
+@l313l.on(admin_cmd(pattern="قائمه (جميع القنوات|القنوات المشرف عليها|قنواتي)"))
 async def ViewChJok(event):  
+    catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
     cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
     hi = []
     hica = []
+    hico = []
     async for dialog in event.client.iter_dialogs():
         entity = dialog.entity
         if isinstance(entity, Channel) and entity.broadcast:
@@ -169,25 +171,34 @@ async def ViewChJok(event):
             channel_id = entity.id
             is_owner = entity.creator
             is_admin = entity.admin_rights
-            if is_owner or is_admin:
-                if entity.username:
-                    if entity.megagroup:
-                        channel_link = f"https://t.me/{entity.username}"
-                        hi.append(f"{len(hi)+1}• {channel_name} - {channel_link}")
-                    else:
-                        channel_link = f"https://t.me/{entity.username}/{channel_id}"
-                        hi.append(f"{len(hi)+1}• {channel_name} - {channel_link}")
-                else:
-                    channel_link = f"https://t.me/c/{channel_id}/1"
-                    hi.append(f"{len(hi)+1}• {channel_name} - {channel_link}")
+            if entity.username:
+                channel_link = f"[{channel_name}](https://t.me/c/{channel_id}/1)"
+                if is_owner:
+                    hico.append(channel_link)
                 if is_admin:
-                    hica.append(f"{len(hica)+1}• {channel_name} - {channel_link}")
-    if len(hi) == 0:
-        output = " ᯽︙ انتَ لاتمتلك قنوات فيها مالك او ادمن فيها "
-    else:
-        output = "القنوات التي تمتلكها:\n" + "\n".join(hi)
-    if len(hica) > 0:
-        output += "\n\nأنت مشرف في القنوات التالية:\n" + "\n".join(hica)
+                    hica.append(channel_link)
+                if not is_owner and not is_admin:
+                    hi.append(channel_link)
+            else:
+                channel_link = channel_name
+                if is_owner:
+                    hico.append(channel_link)
+                if is_admin:
+                    hica.append(channel_link)
+                if not is_owner and not is_admin:
+                    hi.append(channel_link)
+    if catcmd == "جميع القنوات":
+        output = CHANNELS_STR
+        for k, channel in enumerate(hi, start=1):
+            output += f"{k}• {channel}\n"
+    elif catcmd == "القنوات المشرف عليها":
+        output = CHANNELS_ADMINSTR
+        for k, channel in enumerate(hica, start=1):
+            output += f"{k}• {channel}\n"
+    elif catcmd == "قنواتي":
+        output = CHANNELS_OWNERSTR
+        for k, channel in enumerate(hico, start=1):
+            output += f"{k}• {channel}\n"
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
