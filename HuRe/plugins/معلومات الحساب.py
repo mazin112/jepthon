@@ -155,53 +155,40 @@ async def _(event):
         response = await conv.get_response()
         await event.client.send_read_ackno
 
-@l313l.on(admin_cmd(pattern="قائمه (جميع القنوات|قنوات اديرها|قنواتي)$"))
-async def stats(event):  
+@l313l.on(admin_cmd(pattern="(قنواتي|قائمه قنواتي|قائمة قنواتي)$"))
+async def ViewChJok(event):  
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
     cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
     hi = []
-    hica = []
-    hico = []
     async for dialog in event.client.iter_dialogs():
         entity = dialog.entity
         if isinstance(entity, Channel) and entity.broadcast:
-            hi.append([entity.title, entity.id])
-            if entity.creator or entity.admin_rights:
-                hica.append([entity.title, entity.id])
-            if entity.creator:
-                hico.append([entity.title, entity.id])
-    if catcmd == "جميع القنوات":
-        output = CHANNELS_STR
-        for k, i in enumerate(hi, start=1):
-            output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
-        caption = CHANNELS_STR
-    elif catcmd == "القنوات اديرها":
-        output = CHANNELS_ADMINSTR
-        for k, i in enumerate(hica, start=1):
-            output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
-        caption = CHANNELS_ADMINSTR
-    elif catcmd == "قنواتي":
-        output = CHANNELS_OWNERSTR
-        for k, i in enumerate(hico, start=1):
-            output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
-        caption = CHANNELS_OWNERSTR
+            channel_name = entity.title
+            if entity.username:
+                if entity.megagroup:
+                    channel_link = f"https://t.me/{entity.username}"
+                else:
+                    channel_link = f"https://t.me/{entity.username}/{entity.id}"
+            else:
+                channel_link = f"https://t.me/c/{entity.id}/1"
+            hi.append([channel_name, channel_link])
+    hi = sorted(hi, key=lambda x: x[0])  # ترتيب القنوات بالأبجدية
+    output = "أنت أدمن في:\n"
+    for k, channel in enumerate(hi, start=1):
+        output += f"{k}. {channel[0]} {channel[1]}\n"
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
         await event.client(cat)
     except BaseException:
         pass
-    output += f"\n**استغرق حساب القنوات : ** {stop_time:.02f} ثانيه"
+    output += f"\n**استغرق حساب القنوات: ** {stop_time:.02f} ثانية"
     try:
         await catevent.edit(output)
     except Exception:
-        await edit_or_reply(
-            catevent,
-            output,
-            caption=caption,
-        )
+        await edit_or_reply(catevent, output)
 
 @l313l.on(admin_cmd(pattern="قائمه (جميع المجموعات|مجموعات اديرها|كروباتي)$"))
 async def stats(event):  # sourcery no-metrics
