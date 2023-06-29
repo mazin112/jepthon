@@ -155,10 +155,6 @@ async def _(event):
         response = await conv.get_response()
         await event.client.send_read_ackno
 
-import base64
-from telethon.tl.types import Channel
-import time
-
 @l313l.on(admin_cmd(pattern="قائمه (جميع القنوات|القنوات المشرف عليها|قنواتي)"))
 async def ViewChJok(event):  
     catcmd = event.pattern_match.group(1)
@@ -187,7 +183,10 @@ async def ViewChJok(event):
                 if not is_owner and not is_admin:
                     hi.append(channel_link)
             else:
-                channel_link = channel_name
+                if entity.megagroup:  # قناة عامة
+                    channel_link = f"{channel_name}"
+                else:  # قناة خاصة
+                    channel_link = f"[{channel_name}](https://t.me/c/{channel_id}/1)"
                 if is_owner:
                     hico.append(channel_link)
                 if is_admin:
