@@ -167,8 +167,9 @@ async def ViewChJok(event):
         if isinstance(entity, Channel) and entity.broadcast:
             channel_name = entity.title
             channel_id = entity.id
+            is_owner = entity.creator
             is_admin = entity.creator or entity.admin_rights
-            if is_admin or entity.username:
+            if is_owner or is_admin or entity.username:
                 if entity.username:
                     if entity.megagroup:
                         channel_link = f"https://t.me/{entity.username}"
@@ -177,7 +178,7 @@ async def ViewChJok(event):
                 else:
                     channel_link = f"https://t.me/c/{channel_id}/1"
                 hi.append(f"- {channel_name} ({channel_link})")
-    output = "أنت أدمن او مالك في القنوات التالية:\n" + "\n".join(hi)
+    output = "أنت أدمن في القنوات التالية:\n" + "\n".join(hi)
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
@@ -189,7 +190,7 @@ async def ViewChJok(event):
         await catevent.edit(output)
     except Exception:
         await edit_or_reply(catevent, output)
-
+        
 @l313l.on(admin_cmd(pattern="قائمه (جميع المجموعات|مجموعات اديرها|كروباتي)$"))
 async def stats(event):  # sourcery no-metrics
     catcmd = event.pattern_match.group(1)
