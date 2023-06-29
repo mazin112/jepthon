@@ -161,25 +161,33 @@ async def ViewChJok(event):
     start_time = time.time()
     cat = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
     hi = []
+    hica = []
     async for dialog in event.client.iter_dialogs():
         entity = dialog.entity
         if isinstance(entity, Channel) and entity.broadcast:
             channel_name = entity.title
             channel_id = entity.id
             is_owner = entity.creator
-            if is_owner:
+            is_admin = entity.admin_rights
+            if is_owner or is_admin:
                 if entity.username:
                     if entity.megagroup:
                         channel_link = f"https://t.me/{entity.username}"
+                        hi.append(f"{len(hi)+1}• {channel_name} - {channel_link}")
                     else:
                         channel_link = f"https://t.me/{entity.username}/{channel_id}"
+                        hi.append(f"{len(hi)+1}• {channel_name} - {channel_link}")
                 else:
                     channel_link = f"https://t.me/c/{channel_id}/1"
-                hi.append(f"- {channel_name} ({channel_link})")
+                    hi.append(f"{len(hi)+1}• {channel_name} - {channel_link}")
+                if is_admin:
+                    hica.append(f"{len(hica)+1}• {channel_name} - {channel_link}")
     if len(hi) == 0:
-        output = "لا تمتلك أي قنوات حاليًا."
+        output = " ᯽︙ انتَ لاتمتلك قنوات فيها مالك او ادمن فيها "
     else:
         output = "القنوات التي تمتلكها:\n" + "\n".join(hi)
+    if len(hica) > 0:
+    output += "\n\nأنت مشرف في القنوات التالية:\n" + "\n".join(hica)
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
