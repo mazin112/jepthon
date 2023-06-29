@@ -166,25 +166,25 @@ async def ViewChJok(event):
         entity = dialog.entity
         if isinstance(entity, Channel) and entity.broadcast:
             channel_name = entity.title
-            if entity.username:
-                if entity.megagroup:
-                    channel_link = f"https://t.me/{entity.username}"
+            channel_id = entity.id
+            is_admin = entity.creator or entity.admin_rights
+            if is_admin or entity.username:
+                if entity.username:
+                    if entity.megagroup:
+                        channel_link = f"https://t.me/{entity.username}"
+                    else:
+                        channel_link = f"https://t.me/{entity.username}/{channel_id}"
                 else:
-                    channel_link = f"https://t.me/{entity.username}/{entity.id}"
-            else:
-                channel_link = f"https://t.me/c/{entity.id}/1"
-            hi.append([channel_name, channel_link])
-    hi = sorted(hi, key=lambda x: x[0])  # ترتيب القنوات بالأبجدية
-    output = "أنت أدمن في:\n"
-    for k, channel in enumerate(hi, start=1):
-        output += f"{k}. {channel[0]} {channel[1]}\n"
+                    channel_link = f"https://t.me/c/{channel_id}/1"
+                hi.append(f"- {channel_name} ({channel_link})")
+    output = "أنت أدمن او مالك في القنوات التالية:\n" + "\n".join(hi)
     stop_time = time.time() - start_time
     try:
         cat = Get(cat)
         await event.client(cat)
     except BaseException:
         pass
-    output += f"\n**استغرق حساب القنوات: ** {stop_time:.02f} ثانية"
+    output += f"\n\n**استغرق حساب القنوات: **{stop_time:.02f} ثانية"
     try:
         await catevent.edit(output)
     except Exception:
