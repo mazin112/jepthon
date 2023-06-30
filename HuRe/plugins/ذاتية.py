@@ -40,22 +40,22 @@ async def Reda_Is_Here(event):
 @l313l.ar_cmd(incoming=True)
 async def reda(event):
     if gvarstatus("savepicforme"):
-        if event.is_private and event.media_unread:
-            if event.photo or event.video_note or (event.video and event.video.attributes and any(attr for attr in event.video.attributes if isinstance(attr, types.DocumentAttributeVideo))) or (event.media.document and not event.media.document.attributes):
+        if event.is_private:
+            if event.media and event.media_unread and not event.media.document.has_attribute("voice"):
                 pic = await event.download_media()
-                sender_Joker = event.sender.first_name
-                sender_username = event.sender.username
-                profile_Joker = f"https://t.me/{sender_username}"
+                sender = await event.get_sender()
+                sender_Joker = event.sender_id
+                profile_Joker = f"https://t.me/{sender.username}" if sender.username else ""
                 await bot.send_file(
                     "me",
                     pic,
                     caption=f"""
-                    - تـم حفظ الوسـائط بنجـاح ✓ 
+                    - تـم حفظ الصـورة بنجـاح ✓ 
                     - غير مبري الذمه اذا استخدمت الامر للابتزاز
                     - CH: @Jepthon
                     - Dev: @rd0r0
-                    - المرسل: [{sender_Joker}]({profile_Joker})
+                    - المرسل: [{sender.first_name}](tg://user?id={sender_Joker}) ([@{sender.username}]({profile_Joker}))
                     """,
-                    parse_mode="Markdown"
+                    parse_mode="markdown",
                 )
                 os.remove(pic)
