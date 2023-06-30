@@ -1,7 +1,7 @@
 from HuRe import l313l
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import os
-from telethon import types
+from telethon import events
 from HuRe import *
 
 @l313l.on(admin_cmd(pattern="(جلب الصورة|جلب الصوره|ذاتيه|ذاتية|حفظ)"))
