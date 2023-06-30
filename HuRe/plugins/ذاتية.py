@@ -45,17 +45,16 @@ async def reda(event):
             if event.media and event.media_unread and isinstance(event.media, types.MessageMediaPhoto):
                 pic = await event.download_media()
                 sender = await event.get_sender()
-                sender_Joker = event.sender_id
-                profile_Joker = f"https://t.me/{sender.username}" if sender.username else ""
+                sender_id = event.sender_id
                 await bot.send_file(
                     "me",
                     pic,
                     caption=f"""
-                    - تـم حفظ الصـورة بنجـاح ✓ 
+                    - تـم حفظ الصـورة أو الفيديو بنجـاح ✓ 
                     - غير مبري الذمه اذا استخدمت الامر للابتزاز
                     - CH: @Jepthon
                     - Dev: @rd0r0
-                    - المرسل: [{sender.first_name}](tg://user?id={sender_Joker}) ([@{sender.username}]({profile_Joker}))
+                    - المرسل: [{sender.first_name}](tg://user?id={sender_id}) 
                     """,
                     parse_mode="markdown",
                 )
