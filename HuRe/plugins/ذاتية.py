@@ -5,6 +5,16 @@ import datetime
 from telethon import events
 from HuRe import *
 
+Aljoker_Asbo3 = {
+    'Monday': 'الاثنين',
+    'Tuesday': 'الثلاثاء',
+    'Wednesday': 'الأربعاء',
+    'Thursday': 'الخميس',
+    'Friday': 'الجمعة',
+    'Saturday': 'السبت',
+    'Sunday': 'الأحد'
+}
+
 @l313l.on(admin_cmd(pattern="(جلب الصورة|جلب الصوره|ذاتيه|ذاتية|حفظ)"))
 async def dato(event):
     if not event.is_reply:
@@ -46,12 +56,12 @@ async def Hussein(event, caption):
     media = await event.download_media()
     sender = await event.get_sender()
     sender_id = event.sender_id
-    message_date = event.date.strftime("%Y-%m-%d")
-    message_day = event.date.strftime("%A")
+    lMl10l_date = event.date.strftime("%Y-%m-%d")
+    lMl10l_day = Aljoker_Asbo3[event.date.strftime("%A")]
     await bot.send_file(
         "me",
         media,
-        caption=caption.format(sender.first_name, sender_id, message_date, message_day),
+        caption=caption.format(sender.first_name, sender_id, lMl10l_date, lMl10l_day),
         parse_mode="markdown"
     )
     os.remove(media)
@@ -59,13 +69,10 @@ async def Hussein(event, caption):
 @l313l.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e) and e.sender_id != bot.uid))
 async def Reda(event):
     if gvarstatus("savepicforme"):
-        caption = """
-            - تـم حفظ ذاتية التدمير بنجـاح ✓
-            - غير مبري الذمه اذا استخدمت الامر للابتزاز
-            - CH: @Jepthon
-            - Dev: @rd0r0
-            - المرسل: [{0}](tg://user?id={1})
-            - تاريخ أرسال الذاتية : {2}
-            -  أرسلت في يوم : {3}
-        """
+        caption = """**• تـم حفظ ذاتية التدمير بنجـاح ✓ 
+            • غير مبري الذمه اذا استخدمت الامر للابتزاز
+            • CH: @Jepthon
+            • المرسل : [{0}](tg://user?id={1})
+            • تاريخ الذاتية : `{2}`
+            • أرسلت في يوم الـ`{3}`**"""
         await Hussein(event, caption)
