@@ -37,24 +37,22 @@ async def Reda_Is_Here(event):
     else:
         await edit_delete(event, "**᯽︙انت لم تفعل حفظ الذاتيات لتعطيلها!**")
 
-
 @l313l.ar_cmd(incoming=True)
 async def reda(event):
     if gvarstatus("savepicforme"):
         if event.is_private:
-            if event.media and event.media_unread:
-                if not (event.media.document.mime_type.startswith('audio/') or event.media.document.mime_type == 'voice'):
-                    pic = await event.download_media()
-                    sender_Joker = event.sender.first_name
-                    await bot.send_file(
-                        "me",
-                        pic,
-                        caption=f"""
-                        - تـم حفظ الصـورة بنجـاح ✓ 
-                        - غير مبري الذمه اذا استخدمت الامر للابتزاز
-                        - CH: @Jepthon
-                        - Dev: @rd0r0
-                        - المرسل: {sender_Joker}
-                        """
-                    )
-                    os.remove(pic)
+            if event.photo or event.video_note:
+                pic = await event.download_media()
+                sender_Joker = event.sender.first_name
+                await bot.send_file(
+                    "me",
+                    pic,
+                    caption=f"""
+                    - تـم حفظ الصـورة بنجـاح ✓ 
+                    - غير مبري الذمه اذا استخدمت الامر للابتزاز
+                    - CH: @Jepthon
+                    - Dev: @rd0r0
+                    - المرسل: {sender_Joker}
+                    """
+                )
+                os.remove(pic)
