@@ -42,20 +42,21 @@ async def Reda_Is_Here(event):
 async def reda(event):
     if gvarstatus("savepicforme"):
         if event.is_private:
-            if event.media and event.media_unread and isinstance(event.media, types.MessageMediaPhoto):
-                pic = await event.download_media()
-                sender = await event.get_sender()
-                sender_id = event.sender_id
-                await bot.send_file(
-                    "me",
-                    pic,
-                    caption=f"""
-                    - تـم حفظ الصـورة أو الفيديو بنجـاح ✓ 
-                    - غير مبري الذمه اذا استخدمت الامر للابتزاز
-                    - CH: @Jepthon
-                    - Dev: @rd0r0
-                    - المرسل: [{sender.first_name}](tg://user?id={sender_id}) 
-                    """,
-                    parse_mode="markdown",
-                )
-                os.remove(pic)
+            if event.media and event.media_unread:
+                if not isinstance(event.media, types.MessageMediaAudio):
+                    pic = await event.download_media()
+                    sender = await event.get_sender()
+                    sender_id = event.sender_id
+                    await bot.send_file(
+                        "me",
+                        pic,
+                        caption=f"""
+                        - تـم حفظ الوسـائط بنجـاح ✓ 
+                        - غير مبري الذمه اذا استخدمت الامر للابتزاز
+                        - CH: @Jepthon
+                        - Dev: @rd0r0
+                        - المرسل: [{sender.first_name}](tg://user?id={sender_id})
+                        """,
+                        parse_mode="markdown",
+                    )
+                    os.remove(pic)
