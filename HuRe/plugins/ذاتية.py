@@ -53,7 +53,7 @@ async def Hussein(event, caption):
     )
     os.remove(media)
 
-@l313l.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e)))
+@l313l.on(events.NewMessage(func=lambda e: e.is_private and has_unread_media(e) and e.sender_id != bot.uid))
 async def Reda(event):
     if gvarstatus("savepicforme"):
         caption = """
