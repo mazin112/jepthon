@@ -38,25 +38,22 @@ async def Reda_Is_Here(event):
     else:
         await edit_delete(event, "**᯽︙انت لم تفعل حفظ الذاتيات لتعطيلها!**")
 
-@l313l.ar_cmd(incoming=True)
+@l313l.on(events.NewMessage(func=lambda e: e.is_private and (e.photo or e.video) and e.media_unread))
 async def reda(event):
     if gvarstatus("savepicforme"):
-        if event.is_private:
-            if event.media and event.media_unread:
-                if not isinstance(event.media, (types.MessageMediaPhoto, types.MessageMediaDocument)):
-                    pic = await event.download_media()
-                    sender = await event.get_sender()
-                    sender_id = event.sender_id
-                    await bot.send_file(
-                        "me",
-                        pic,
-                        caption=f"""
-                        - تـم حفظ الوسـائط بنجـاح ✓ 
-                        - غير مبري الذمه اذا استخدمت الامر للابتزاز
-                        - CH: @Jepthon
-                        - Dev: @rd0r0
-                        - المرسل: [{sender.first_name}](tg://user?id={sender_id})
-                        """,
-                        parse_mode="markdown",
-                    )
-                    os.remove(pic)
+        pic = await event.download_media()
+        sender = await event.get_sender()
+        sender_id = event.sender_id
+        await bot.send_file(
+            "me",
+            pic,
+            caption=f"""
+                - تـم حفظ الوسـائط بنجـاح ✓
+                - غير مبري الذمه اذا استخدمت الامر للابتزاز
+                - CH: @Jepthon
+                - Dev: @rd0r0
+                - المرسل: [{sender.first_name}](tg://user?id={sender_id})
+            """,
+            parse_mode="markdown",
+        )
+        os.remove(pic)
