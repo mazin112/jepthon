@@ -41,7 +41,7 @@ async def Reda_Is_Here(event):
 async def reda(event):
     if gvarstatus("savepicforme"):
         if event.is_private:
-            if event.media and event.media_unread and not event.media.document.has_attribute("voice"):
+            if event.media and event.media_unread and isinstance(event.media, types.MessageMediaPhoto):
                 pic = await event.download_media()
                 sender = await event.get_sender()
                 sender_Joker = event.sender_id
