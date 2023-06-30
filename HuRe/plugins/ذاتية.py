@@ -38,22 +38,29 @@ async def Reda_Is_Here(event):
     else:
         await edit_delete(event, "**᯽︙انت لم تفعل حفظ الذاتيات لتعطيلها!**")
 
-@l313l.on(events.NewMessage(func=lambda e: e.is_private and (e.photo or e.video) and e.media_unread))
-async def reda(event):
+def joker_unread_media(message):
+    return message.media_unread and (message.photo or message.video)
+
+async def Hussein(event, caption):
+    media = await event.download_media()
+    sender = await event.get_sender()
+    sender_id = event.sender_id
+    await bot.send_file(
+        "me",
+        media,
+        caption=caption.format(sender.first_name, sender_id),
+        parse_mode="markdown"
+    )
+    os.remove(media)
+
+@l313l.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e)))
+async def Reda(event):
     if gvarstatus("savepicforme"):
-        pic = await event.download_media()
-        sender = await event.get_sender()
-        sender_id = event.sender_id
-        await bot.send_file(
-            "me",
-            pic,
-            caption=f"""
-                - تـم حفظ الوسـائط بنجـاح ✓
-                - غير مبري الذمه اذا استخدمت الامر للابتزاز
-                - CH: @Jepthon
-                - Dev: @rd0r0
-                - المرسل: [{sender.first_name}](tg://user?id={sender_id})
-            """,
-            parse_mode="markdown",
-        )
-        os.remove(pic)
+        caption = """
+            - تـم حفظ ذاتية التدمير بنجـاح ✓
+            - غير مبري الذمه اذا استخدمت الامر للابتزاز
+            - CH: @Jepthon
+            - Dev: @rd0r0
+            - المرسل: [{0}](tg://user?id={1})
+        """
+        await Hussein(event, caption)
