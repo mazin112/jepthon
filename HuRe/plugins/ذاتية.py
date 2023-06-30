@@ -69,10 +69,13 @@ async def Hussein(event, caption):
 @l313l.on(events.NewMessage(func=lambda e: e.is_private and joker_unread_media(e) and e.sender_id != bot.uid))
 async def Reda(event):
     if gvarstatus("savepicforme"):
-        caption = """**• تـم حفظ ذاتية التدمير بنجـاح ✓ 
-            • غير مبري الذمه اذا استخدمت الامر للابتزاز
-            • CH: @Jepthon
-            • المرسل : [{0}](tg://user?id={1})
-            • تاريخ الذاتية : `{2}`
-            • أرسلت في يوم الـ`{3}`**"""
+        caption = """**
+           ♡  غير مبري الذمة اذا استعملته للأبتزاز  ♡
+⌯|  تم حفظ الذاتية بنجاح ✓
+⌯| تم صنع الامر من قبل : @Jepthon
+⌯| أسم المرسل : {2}
+⌯|  تاريخ الذاتية : `{3}`
+⌯|  أرسلت في يوم الـ `{0}`
+       ♡    ALJOKER    ♡
+        **"""
         await Hussein(event, caption)
