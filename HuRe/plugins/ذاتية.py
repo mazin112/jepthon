@@ -43,7 +43,7 @@ async def reda(event):
     if gvarstatus("savepicforme"):
         if event.is_private:
             if event.media and event.media_unread:
-                if not isinstance(event.media, types.MessageMediaAudio):
+                if not isinstance(event.media, (MessageMediaPhoto, MessageMediaDocument)):
                     pic = await event.download_media()
                     sender = await event.get_sender()
                     sender_id = event.sender_id
