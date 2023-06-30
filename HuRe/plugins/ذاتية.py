@@ -1,6 +1,7 @@
 from HuRe import l313l
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import os
+import datetime
 from telethon import events
 from HuRe import *
 
@@ -46,10 +47,11 @@ async def Hussein(event, caption):
     sender = await event.get_sender()
     sender_id = event.sender_id
     message_date = event.date.strftime("%Y-%m-%d")
+    message_day = event.date.strftime("%A")
     await bot.send_file(
         "me",
         media,
-        caption=caption.format(sender.first_name, sender_id, message_date),
+        caption=caption.format(sender.first_name, sender_id, message_date, message_day),
         parse_mode="markdown"
     )
     os.remove(media)
@@ -61,7 +63,9 @@ async def Reda(event):
             - تـم حفظ ذاتية التدمير بنجـاح ✓
             - غير مبري الذمه اذا استخدمت الامر للابتزاز
             - CH: @Jepthon
+            - Dev: @rd0r0
             - المرسل: [{0}](tg://user?id={1})
-            - تاريخ أرسال الذاتية : {2}  
+            - تاريخ أرسال الذاتية : {2}
+            -  أرسلت في يوم : {3}
         """
         await Hussein(event, caption)
