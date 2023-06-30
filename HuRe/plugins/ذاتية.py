@@ -4,7 +4,7 @@ import os
 import datetime
 from telethon import events
 from HuRe import *
-
+#ها يالفاشل شعدك داخل هنا 🫣 اعتمد ع نفسك لتخلي سورس الجوكر مصدر طشت سورسك
 Aljoker_Asbo3 = {
     'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء',
