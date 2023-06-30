@@ -45,10 +45,11 @@ async def Hussein(event, caption):
     media = await event.download_media()
     sender = await event.get_sender()
     sender_id = event.sender_id
+    message_date = event.date.strftime("%Y-%m-%d")
     await bot.send_file(
         "me",
         media,
-        caption=caption.format(sender.first_name, sender_id),
+        caption=caption.format(sender.first_name, sender_id, message_date),
         parse_mode="markdown"
     )
     os.remove(media)
@@ -60,7 +61,7 @@ async def Reda(event):
             - تـم حفظ ذاتية التدمير بنجـاح ✓
             - غير مبري الذمه اذا استخدمت الامر للابتزاز
             - CH: @Jepthon
-            - Dev: @rd0r0
             - المرسل: [{0}](tg://user?id={1})
+            - تاريخ أرسال الذاتية : {2}  
         """
         await Hussein(event, caption)
