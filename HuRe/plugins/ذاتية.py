@@ -41,14 +41,14 @@ async def Reda_Is_Here(event):
 async def reda(event):
     if gvarstatus("savepicforme"):
         if event.is_private:
-            if event.photo or event.video_note or (event.media.document and not event.media.document.attributes):
+            if event.photo or event.video_note or (event.video and event.video.attributes and any(attr for attr in event.video.attributes if isinstance(attr, types.DocumentAttributeVideo))) or (event.media.document and not event.media.document.attributes):
                 pic = await event.download_media()
                 sender_Joker = event.sender.first_name
                 await bot.send_file(
                     "me",
                     pic,
                     caption=f"""
-                    - تـم حفظ الصـورة بنجـاح ✓ 
+                    - تـم حفظ الوسـائط بنجـاح ✓ 
                     - غير مبري الذمه اذا استخدمت الامر للابتزاز
                     - CH: @Jepthon
                     - Dev: @rd0r0
