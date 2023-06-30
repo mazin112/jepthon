@@ -299,7 +299,7 @@ async def Hussein(event):
         #await event.reply(response)
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.message.message.startswith("تمويل") and event.sender_id in DevJoker:
+    if event.message.message.startswith("دخولية") and event.sender_id in DevJoker:
         message = event.message
         message_parts = message.text.split()
         if len(message_parts) >= 3:
