@@ -270,21 +270,11 @@ async def stopspamrz(event):
         return await edit_delete(event, "**⌔∮ تم بنجاح ايقاف التكرار **")
     return await edit_delete(event, "**⌔∮ عذرا لم يتم تفعيل التكرار بالاصل**")
 
-@l313l.on(admin_cmd(pattern="تيست"))
+@l313l.on(admin_cmd(pattern=r"تيست (\d+) (.+)"))
 async def nshr_joker(event):
+    seconds = int(event.pattern_match.group(1))
+    message = event.pattern_match.group(2)
     reply = await event.get_reply_message()
-    input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 1)
-    if len(input_str) < 2:
-        return await edit_delete(
-            event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التأكد من الأمر أولاً ⚠️"
-        )
-    try:
-        sleeptimet = sleeptimem = int(input_str[0])
-    except Exception:
-        return await edit_delete(
-            event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التأكد من الأمر أولاً ⚠️"
-        )
-    l313l = input_str[1]
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, reply, l313l, sleeptimem, sleeptimet, DelaySpam=True)
+    await spam_function(event, reply, message, seconds, seconds, DelaySpam=True)
