@@ -14,24 +14,8 @@ from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
 #lياعلي مدد
 # جاي اشتغل عليه 😒
-async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
-    counter = None
-    if len(l313l) == 2:
-        spam_message = str(l313l[1])
-        while gvarstatus("spamwork"):
-            if event.reply_to_msg_id:
-                await HuRe.reply(spam_message)
-            else:
-                await event.client.send_message(event.chat_id, spam_message)
-            await asyncio.sleep(sleeptimet)
-    elif event.reply_to_msg_id and HuRe.media:
-        while gvarstatus("spamwork"):
-            HuRe = await event.client.send_file(
-                event.chat_id, HuRe, caption=HuRe.text
-            )
-            await _catutils.unsavegif(event, HuRe)
-            await asyncio.sleep(sleeptimem)
-@l313l.on(admin_cmd(pattern=f"تيست"))
+
+@l313l.on(admin_cmd(pattern=r"تيست (\d+)"))
 async def spammer(event):
     reply = await event.get_reply_message()
     input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
@@ -44,8 +28,25 @@ async def spammer(event):
     l313l = input_str[1:]
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, reply, l313l, sleeptimem, sleeptimet, DelaySpam=True)
+    await spam_function(event, reply, l313l, sleeptimem, sleeptimet)
 
+
+async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet):
+    counter = None
+    if len(l313l) == 2:
+        spam_message = str(l313l[1])
+        while gvarstatus("spamwork"):
+            if event.reply_to_msg_id:
+                await HuRe.reply(spam_message)
+            await asyncio.sleep(sleeptimet)
+    elif event.reply_to_msg_id and HuRe.media:
+        while gvarstatus("spamwork"):
+            HuRe = await event.client.send_file(
+                event.chat_id, HuRe, caption=HuRe.text
+            )
+            await _catutils.unsavegif(event, HuRe)
+            await asyncio.sleep(sleeptimem)
+    
 @l313l.ar_cmd(pattern="تعطيل التكرار")
 async def stop_spam(event):
     delgvar("spamwork")
