@@ -32,7 +32,6 @@ async def spammer(event):
 
 
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet):
-    counter = None
     if len(l313l) == 2:
         spam_message = str(l313l[1])
         while gvarstatus("spamwork"):
