@@ -29,14 +29,12 @@ async def spammer(event):
     addgvar("spamwork", True)
     await spam_function(event, HuRe, l313l, sleeptimem, sleeptimet)
 
-async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
-    counter = 0
+async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet):
     if len(l313l) == 2:
         spam_message = str(l313l[1])
         while gvarstatus("spamwork"):
             if event.reply_to_msg_id:
                 await HuRe.reply(spam_message)
-            counter += 1
             await asyncio.sleep(sleeptimet)
     elif event.reply_to_msg_id and HuRe.media:
         while gvarstatus("spamwork"):
@@ -44,7 +42,6 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
                 event.chat_id, HuRe, caption=HuRe.text
             )
             await _catutils.unsavegif(event, HuRe)
-            counter += 1
             await asyncio.sleep(sleeptimem)
     
 @l313l.ar_cmd(pattern="تعطيل التكرار")
