@@ -1,5 +1,6 @@
 from HuRe import l313l
 from datetime import datetime
+import time
 from telethon.errors import FloodWaitError
 import asyncio
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
@@ -24,7 +25,7 @@ async def autoname_loop():
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
             await asyncio.sleep(120)
-        await asyncio.sleep(1)
+        time.sleep(1)  # استخدم time.sleep(1) بدلاً من asyncio.sleep(1)
         AUTONAMESTART = gvarstatus("autoname") == "true"
 
 @l313l.on(admin_cmd(pattern=f"اسم ثواني(?:\s|$)([\s\S]*)"))
