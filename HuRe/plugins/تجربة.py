@@ -107,13 +107,7 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
                 + f"⌔∮ `{spam_message}`",
             )
 
-@l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
-async def stopspamrz(event):
-    if gvarstatus("spamwork") is not None and gvarstatus("spamwork") == "true":
-        delgvar("spamwork")
-        return await edit_delete(event, "**⌔∮ تم بنجاح ايقاف التكرار **")
-    return await edit_delete(event, "**⌔∮ عذرا لم يتم تفعيل التكرار بالاصل**")
-
+JOKER_FILE = "spam_state.txt"
 
 @l313l.ar_cmd(pattern="تيست ?(.*)")
 async def test(event):
@@ -129,6 +123,15 @@ async def test(event):
         return
     async def send_message():
         while True:
+            with open(JOKER_FILE, "r") as f:
+                status = f.readline().strip()
+            if status != "spam":
+                return
             await event.respond(reply_message)
             await asyncio.sleep(seconds)
     asyncio.create_task(send_message())
+@l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
+async def stop_spam(event):
+    with open(JOKER_FILE, "w") as f:
+        f.write("")
+    await event.respond("**⌔∮ تم بنجاح ايقاف التكرار **")
