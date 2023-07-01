@@ -16,7 +16,7 @@ from . import BOTLOG, BOTLOG_CHATID
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
 
     counter = 1
-    spam_message = ' '.join(l313l[1:])
+    spam_message = str(l313l[1])
 
     if len(l313l) >= 2:
         for _ in range(counter):
