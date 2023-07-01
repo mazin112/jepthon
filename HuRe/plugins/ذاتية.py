@@ -75,7 +75,7 @@ async def Reda(event):
 ♡ تم الصنع : @Jepthon
 ♡ أسم المرسل : [{0}](tg://user?id={1})
 ♡  تاريخ الذاتية : `{2}`
-♡  أرسلت في يوم الـ `{3}`
+♡  أرسلت في يوم `{3}`
        ♡    ALJOKER    ♡
         **"""
         await Hussein(event, caption)
