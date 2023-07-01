@@ -24,7 +24,7 @@ async def autonameS_loop():
             await l313l(functions.account.UpdateProfileRequest(last_name=name))
         except FloodWaitError as ex:
             LOGS.warning(str(ex))
-            await asyncio.sleep(120)
+            await asyncio.sleep(1)
         time.sleep(1)  # استخدم time.sleep(1) بدلاً من asyncio.sleep(1)
         AUTONAMESTART = gvarstatus("autonameS") == "true"
 
