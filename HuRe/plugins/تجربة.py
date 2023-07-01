@@ -9,9 +9,9 @@ normzltext = "1234567890"
 namerzfont = Config.JP_FN or "𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫𝟢"
 autoname_task = None
 
-async def autoname_loop():
+async def autonameS_loop():
     global autoname_task
-    AUTONAMESTART = gvarstatus("autoname") == "true"
+    AUTONAMESTART = gvarstatus("autonameS") == "true"
     while AUTONAMESTART:
         current_time = datetime.now().strftime("%H:%M:%S")
         for normal in current_time:
@@ -26,21 +26,21 @@ async def autoname_loop():
             LOGS.warning(str(ex))
             await asyncio.sleep(120)
         time.sleep(1)  # استخدم time.sleep(1) بدلاً من asyncio.sleep(1)
-        AUTONAMESTART = gvarstatus("autoname") == "true"
+        AUTONAMESTART = gvarstatus("autonameS") == "true"
 
 @l313l.on(admin_cmd(pattern=f"اسم ثواني(?:\s|$)([\s\S]*)"))
 async def _(event):
-    if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
+    if gvarstatus("autonameS") is not None and gvarstatus("autonameS") == "true":
         return await edit_delete(event, "**الاسـم الـوقتي شغـال بالأصـل 🧸♥**")
-    addgvar("autoname", True)
+    addgvar("autonameS", True)
     await edit_delete(event, "**تم تفـعيل اسـم الـوقتي بنجـاح ✓**")
     if autoname_task is None:
-        autoname_task = asyncio.create_task(autoname_loop())
+        autoname_task = asyncio.create_task(autonameS_loop())
 
 @l313l.on(admin_cmd(pattern="ايقاف ثواني$"))
 async def _(event):
-    if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
-        delgvar("autoname")
+    if gvarstatus("autonameS") is not None and gvarstatus("autonameS") == "true":
+        delgvar("autonameS")
         if autoname_task is not None:
             autoname_task.cancel()
             autoname_task = None
