@@ -117,7 +117,11 @@ async def stopspamrz(event):
 
 @l313l.ar_cmd(pattern="تيست ?(.*)")
 async def test(event):
-    seconds = int(event.pattern_match.group(1))
+    seconds = event.pattern_match.group(1)
+    if not seconds.isdigit():
+        await event.respond("⌔∮ يجب أن يكون عدد الثواني قيمة رقمية صحيحة.")
+        return
+    seconds = int(seconds)
     message = event.pattern_match.group(2)
     async def send_message():
         while True:
