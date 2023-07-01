@@ -106,21 +106,21 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
                 + f"**⌔∮ تم تنفيذ التكرار الوقتي  بنجاح في ** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع** {sleeptimet} **الثواني و مع** {counter} **رسائل الـ  ️ :** \n"
                 + f"⌔∮ `{spam_message}`",
             )
-@l313l.ar_cmd(pattern="تيست")
+@l313l.ar_cmd(pattern=r"تيست (\d+)")
 async def test(event):
     seconds = int(event.pattern_match.group(1))
     if event.reply_to_msg_id:
         message = await event.get_reply_message()
         spam_message = message.text
     else:
-        spam_message = event.pattern_match.string.split(" ", 1)[1]
+        spam_message = event.pattern_match.string.split(" ", 2)[2]
     addgvar("spamwork", True)
     while gvarstatus("spamwork"):
         await event.respond(spam_message)
         await asyncio.sleep(seconds)
     await event.respond("**⌔∮ تم إيقاف التكرار بنجاح.**")
 
-@l313l.ar_cmd(pattern="ايقاف التكرار")
+@l313l.ar_cmd(pattern="تعطيل التكرار")
 async def stop_spam(event):
     delgvar("spamwork")
     await event.respond("**⌔∮ تم إيقاف التكرار بنجاح.**")
