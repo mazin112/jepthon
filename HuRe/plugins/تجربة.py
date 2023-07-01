@@ -117,15 +117,18 @@ async def stopspamrz(event):
 
 @l313l.ar_cmd(pattern="تيست ?(.*)")
 async def test(event):
-    seconds = event.pattern_match.group(1)
+    seconds_str = event.pattern_match.group(1)
     try:
-        seconds = int(seconds)
+        seconds = int(seconds_str)
     except ValueError:
         await event.respond("⌔∮ يجب أن تقوم بإدخال قيمة رقمية صحيحة لعدد الثواني.")
         return
-    message = event.pattern_match.group(2)
+    reply_message = await event.get_reply_message()
+    if not reply_message:
+        await event.respond("⌔∮ يرجى الرد على الرسالة لتنفيذ الإجراء.")
+        return
     async def send_message():
         while True:
-            await event.respond(message)
+            await event.respond(reply_message)
             await asyncio.sleep(seconds)
     asyncio.create_task(send_message())
