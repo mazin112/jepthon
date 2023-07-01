@@ -15,23 +15,16 @@ from . import BOTLOG, BOTLOG_CHATID
 #ياعلي مدد
 # جاي اشتغل عليه 😒
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
-
-    counter = 1
-    spam_message = str(l313l[1])
-
-    if len(l313l) >= 2:
-        for _ in range(counter):
-            if gvarstatus("spamwork") is None:
-                return
+    if len(l313l) == 2:
+        spam_message = str(l313l[1])
+        while gvarstatus("spamwork"):
             if event.reply_to_msg_id:
                 await HuRe.reply(spam_message)
             else:
                 await event.client.send_message(event.chat_id, spam_message)
             await asyncio.sleep(sleeptimet)
     elif event.reply_to_msg_id and HuRe.media:
-        for _ in range(counter):
-            if gvarstatus("spamwork") is None:
-                return
+        while gvarstatus("spamwork"):
             HuRe = await event.client.send_file(
                 event.chat_id, HuRe, caption=HuRe.text
             )
@@ -107,19 +100,21 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
                 + f"**⌔∮ تم تنفيذ التكرار الوقتي  بنجاح في ** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع** {sleeptimet} **الثواني و مع** {counter} **رسائل الـ  ️ :** \n"
                 + f"⌔∮ `{spam_message}`",
             )
-@l313l.ar_cmd(pattern=r"تيست (\d+)")
+@l313l.on(admin_cmd(pattern="تيست"))
 async def test(event):
-    seconds = int(event.pattern_match.group(1))
-    if event.reply_to_msg_id:
-        message = await event.get_reply_message()
-        spam_message = message.text
-    else:
-        spam_message = event.pattern_match.string.split(" ", 2)[2]
+    reply = await event.get_reply_message()
+    input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
+    try:
+        sleeptimet = sleeptimem = int(input_str[0])
+    except Exception:
+        return await edit_delete(
+            event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️"
+        )
+    l313l = input_str[1:]
+    await event.delete()
     addgvar("spamwork", True)
-    while gvarstatus("spamwork"):
-        await event.respond(spam_message)
-        await asyncio.sleep(seconds)
-    await event.respond("**⌔∮ تم إيقاف التكرار بنجاح.**")
+    await spam_function(event, reply, l313l, sleeptimem, sleeptimet, DelaySpam=True)
+
 
 @l313l.ar_cmd(pattern="تعطيل التكرار")
 async def stop_spam(event):
