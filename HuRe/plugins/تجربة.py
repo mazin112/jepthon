@@ -15,6 +15,7 @@ from . import BOTLOG, BOTLOG_CHATID
 #ياعلي مدد
 # جاي اشتغل عليه 😒
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
+    counter = 1
     if len(l313l) == 2:
         spam_message = str(l313l[1])
         while gvarstatus("spamwork"):
@@ -100,8 +101,8 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
                 + f"**⌔∮ تم تنفيذ التكرار الوقتي  بنجاح في ** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع** {sleeptimet} **الثواني و مع** {counter} **رسائل الـ  ️ :** \n"
                 + f"⌔∮ `{spam_message}`",
             )
-@l313l.on(admin_cmd(pattern="تيست"))
-async def test(event):
+@l313l.on(admin_cmd(pattern=f"تيست"))
+async def spammer(event):
     reply = await event.get_reply_message()
     input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
     try:
@@ -114,7 +115,6 @@ async def test(event):
     await event.delete()
     addgvar("spamwork", True)
     await spam_function(event, reply, l313l, sleeptimem, sleeptimet, DelaySpam=True)
-
 
 @l313l.ar_cmd(pattern="تعطيل التكرار")
 async def stop_spam(event):
