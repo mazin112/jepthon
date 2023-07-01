@@ -15,21 +15,19 @@ from . import BOTLOG, BOTLOG_CHATID
 #lياعلي مدد
 # جاي اشتغل عليه 😒
 
-@l313l.on(admin_cmd(pattern=r"تيست (\d+)"))
+@l313l.ar_cmd(pattern="تيست (.*)")
 async def spammer(event):
-    reply = await event.get_reply_message()
-    input_str = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
+    HuRe = await event.get_reply_message()
+    l313l = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
     try:
-        sleeptimet = sleeptimem = int(input_str[0])
+        sleeptimet = sleeptimem = int(l313l[0])
     except Exception:
         return await edit_delete(
             event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️"
         )
-    l313l = input_str[1:]
     await event.delete()
     addgvar("spamwork", True)
-    await spam_function(event, reply, l313l, sleeptimem, sleeptimet, DelaySpam=True)
-
+    await spam_function(event, HuRe, l313l, sleeptimem, sleeptimet)
 
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
     counter = 0
