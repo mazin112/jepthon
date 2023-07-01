@@ -15,7 +15,7 @@ from . import BOTLOG, BOTLOG_CHATID
 #lياعلي مدد
 # جاي اشتغل عليه 😒
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
-    counter = 1
+    counter = 5
     if len(l313l) == 2:
         spam_message = str(l313l[1])
         while gvarstatus("spamwork"):
