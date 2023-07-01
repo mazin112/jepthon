@@ -22,17 +22,15 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
             if event.reply_to_msg_id:
                 await HuRe.reply(spam_message)
             else:
-                await event.client.send_message(event.chat_id, spam_message)
+                await event.respond(spam_message)
             await asyncio.sleep(sleeptimet)
-            continue
     elif event.reply_to_msg_id and HuRe.media:
         while gvarstatus("spamwork"):
-            if event.reply_to_msg_id:
-                await HuRe.reply(spam_message)
-        else:
-            await event.respond(spam_message)
-        await asyncio.sleep(sleeptimet)
-        continue
+            HuRe = await event.client.send_file(
+                event.chat_id, HuRe, caption=HuRe.text
+            )
+            await _catutils.unsavegif(event, HuRe)
+            await asyncio.sleep(sleeptimem)
         if BOTLOG:
             if DelaySpam is not True:
                 if event.is_private:
