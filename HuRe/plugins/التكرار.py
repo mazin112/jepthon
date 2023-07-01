@@ -269,12 +269,3 @@ async def stopspamrz(event):
         delgvar("spamwork")
         return await edit_delete(event, "**⌔∮ تم بنجاح ايقاف التكرار **")
     return await edit_delete(event, "**⌔∮ عذرا لم يتم تفعيل التكرار بالاصل**")
-
-@l313l.on(admin_cmd(pattern=r"تيست (\d+) (.+)"))
-async def nshr_joker(event):
-    seconds = int(event.pattern_match.group(1))
-    message = event.pattern_match.group(2)
-    reply = await event.get_reply_message()
-    await event.delete()
-    addgvar("spamwork", True)
-    await spam_function(event, reply, message, seconds, seconds, DelaySpam=True)
