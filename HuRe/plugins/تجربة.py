@@ -40,7 +40,7 @@ async def _(event):
 async def _(event):
     if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
         delgvar("autoname")
-        if autoname_task:
+        if autoname_task is not None:
             autoname_task.cancel()
             autoname_task = None
         await edit_delete(event, "**تم تعطيل اسـم الـوقتي بنجـاح ✓**")
