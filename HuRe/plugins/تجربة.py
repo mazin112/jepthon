@@ -1,50 +1,48 @@
-import asyncio
-import os
-from telethon.tl import functions, types
-from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-from telethon.utils import get_display_name
-
 from HuRe import l313l
-from ..Config import Config
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.tools import media_type
-from ..helpers.utils import _catutils
+from datetime import datetime
+from telethon.errors import FloodWaitError
+import asyncio
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from . import BOTLOG, BOTLOG_CHATID
-#lياعلي مدد
-# جاي اشتغل عليه 😒
+from . import AUTONAME, edit_delete, l313l, logging
+normzltext = "1234567890"
+namerzfont = Config.JP_FN or "𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫𝟢"
+autoname_task = None
 
-@l313l.ar_cmd(pattern="تيست (.*)")
-async def spammer(event):
-    HuRe = await event.get_reply_message()
-    l313l = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
-    try:
-        sleeptimet = sleeptimem = int(l313l[0])
-    except Exception:
-        return await edit_delete(
-            event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️"
-        )
-    await event.delete()
-    addgvar("spamwork", True)
-    await spam_function(event, HuRe, l313l, sleeptimem, sleeptimet)
+async def autoname_loop():
+    global autoname_task
+    AUTONAMESTART = gvarstatus("autoname") == "true"
+    while AUTONAMESTART:
+        current_time = datetime.now().strftime("%H:%M:%S")
+        for normal in current_time:
+            if normal in normzltext:
+                namefont = namerzfont[normzltext.index(normal)]
+                current_time = current_time.replace(normal, namefont)
+        name = f"{lMl10l} {current_time}"
+        LOGS.info(name)
+        try:
+            await l313l(functions.account.UpdateProfileRequest(last_name=name))
+        except FloodWaitError as ex:
+            LOGS.warning(str(ex))
+            await asyncio.sleep(120)
+        await asyncio.sleep(1)
+        AUTONAMESTART = gvarstatus("autoname") == "true"
 
-async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet):
-    if len(l313l) == 2:
-        spam_message = str(l313l[1])
-        while gvarstatus("spamwork"):
-            if event.reply_to_msg_id:
-                await HuRe.reply(spam_message)
-            await asyncio.sleep(sleeptimet)
-    elif event.reply_to_msg_id and HuRe.media:
-        while gvarstatus("spamwork"):
-            HuRe = await event.client.send_file(
-                event.chat_id, HuRe, caption=HuRe.text
-            )
-            await _catutils.unsavegif(event, HuRe)
-            await asyncio.sleep(sleeptimem)
-    
-@l313l.ar_cmd(pattern="تعطيل التكرار")
-async def stop_spam(event):
-    delgvar("spamwork")
-    await event.respond("**⌔∮ تم إيقاف التكرار بنجاح.**")
+@l313l.on(admin_cmd(pattern=f"اسم ثواني(?:\s|$)([\s\S]*)"))
+async def _(event):
+    if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
+        return await edit_delete(event, "**الاسـم الـوقتي شغـال بالأصـل 🧸♥**")
+    addgvar("autoname", True)
+    await edit_delete(event, "**تم تفـعيل اسـم الـوقتي بنجـاح ✓**")
+    if autoname_task is None:
+        autoname_task = asyncio.create_task(autoname_loop())
+
+@l313l.on(admin_cmd(pattern="ايقاف ثواني$"))
+async def _(event):
+    if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
+        delgvar("autoname")
+        if autoname_task:
+            autoname_task.cancel()
+            autoname_task = None
+        await edit_delete(event, "**تم تعطيل اسـم الـوقتي بنجـاح ✓**")
+    else:
+        await edit_delete(event, "**اسـم الـوقتي معطـل بـالأصـل ❗**")
