@@ -12,7 +12,7 @@ from ..helpers.tools import media_type
 from ..helpers.utils import _catutils
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
-#ياعلي مدد
+#lياعلي مدد
 # جاي اشتغل عليه 😒
 async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=False):
     counter = 1
