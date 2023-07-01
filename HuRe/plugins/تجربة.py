@@ -106,35 +106,21 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
                 + f"**⌔∮ تم تنفيذ التكرار الوقتي  بنجاح في ** {get_display_name(await event.get_chat())}(`{event.chat_id}`) **الدردشة مع** {sleeptimet} **الثواني و مع** {counter} **رسائل الـ  ️ :** \n"
                 + f"⌔∮ `{spam_message}`",
             )
-
-JOKER_FILE = "spam_state.txt"
-if not os.path.exists(JOKER_FILE):
-    with open(JOKER_FILE, "w") as f:
-        f.write("")
-
-@l313l.ar_cmd(pattern="تيست ?(.*)")
+@l313l.ar_cmd(pattern="تيست")
 async def test(event):
-    seconds_str = event.pattern_match.group(1)
-    try:
-        seconds = int(seconds_str)
-    except ValueError:
-        await event.respond("⌔∮ يجب أن تقوم بإدخال قيمة رقمية صحيحة لعدد الثواني.")
-        return
-    reply_message = await event.get_reply_message()
-    if not reply_message:
-        await event.respond("⌔∮ يرجى الرد على الرسالة لتنفيذ الإجراء.")
-        return
-    async def send_message():
-        while True:
-            with open(JOKER_FILE, "r") as f:
-                status = f.readline().strip()
-            if status != "spam":
-                return
-            await event.respond(reply_message)
-            await asyncio.sleep(seconds)
-    asyncio.create_task(send_message())
-@l313l.ar_cmd(pattern="ايقاف التكرار ?(.*)")
+    seconds = int(event.pattern_match.group(1))
+    if event.reply_to_msg_id:
+        message = await event.get_reply_message()
+        spam_message = message.text
+    else:
+        spam_message = event.pattern_match.string.split(" ", 1)[1]
+    addgvar("spamwork", True)
+    while gvarstatus("spamwork"):
+        await event.respond(spam_message)
+        await asyncio.sleep(seconds)
+    await event.respond("**⌔∮ تم إيقاف التكرار بنجاح.**")
+
+@l313l.ar_cmd(pattern="ايقاف التكرار")
 async def stop_spam(event):
-    with open(JOKER_FILE, "w") as f:
-        f.write("")
-    await event.respond("**⌔∮ تم بنجاح ايقاف التكرار **")
+    delgvar("spamwork")
+    await event.respond("**⌔∮ تم إيقاف التكرار بنجاح.**")
