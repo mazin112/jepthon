@@ -1,5 +1,5 @@
 import asyncio
-import base64
+import os
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
@@ -108,6 +108,9 @@ async def spam_function(event, HuRe, l313l, sleeptimem, sleeptimet, DelaySpam=Fa
             )
 
 JOKER_FILE = "spam_state.txt"
+if not os.path.exists(JOKER_FILE):
+    with open(JOKER_FILE, "w") as f:
+        f.write("")
 
 @l313l.ar_cmd(pattern="تيست ?(.*)")
 async def test(event):
