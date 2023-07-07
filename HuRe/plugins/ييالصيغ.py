@@ -49,30 +49,30 @@ cancel_process = False
 )
 async def save_media(event):
     message_link = event.pattern_match.group(1)
+
     if not message_link:
         return await event.edit("يرجى تحديد رابط الرسالة!")
+
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
+
     try:
         message_link_parts = str(message_link).split("/")
         
         if message_link_parts:
-            if len(message_link_parts) == 4:
-                channel_id = int(message_link_parts[2])
-                message_id = int(message_link_parts[3])
-                entity = await l313l.get_entity(channel_id)
-            else:
-                channel_username_or_id = message_link_parts[-2]
-                message_id = int(message_link_parts[-1])
-                entity = await l313l.get_entity(channel_username_or_id)
+            channel_id = int(message_link_parts[-2])
+            message_id = int(message_link_parts[-1])
+            entity = await l313l.get_entity(channel_id)
         else:
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
+
     try:
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
+
         if message.media:
             file_ext = ""
             if message.photo:
@@ -97,7 +97,7 @@ async def save_media(event):
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
         await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
-
+        
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
     command=("تحويل صورة", plugin_category),
