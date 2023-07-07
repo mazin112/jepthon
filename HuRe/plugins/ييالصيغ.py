@@ -37,6 +37,8 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
+import re
+
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
     command=("حفظ_المحتوى", plugin_category),
@@ -56,14 +58,17 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
 
     try:
-        channel_username = re.search(r"t.me\/([^\/]+)", message_link).group(1)
-        entity = await l313l.get_entity(channel_username)
+        if "/c/" in message_link:
+            channel_id, message_id = re.search(r"t.me\/c\/(\d+)\/(\d+)", message_link).groups()
+        else:
+            channel_username, message_id = re.search(r"t.me\/([^\/]+)\/(\d+)", message_link).groups()
+            entity = await l313l.get_entity(channel_username)
+            channel_id = entity.id
     except Exception as e:
-        return await event.edit(f"حدث خطأ أثناء الحصول على القناة. الخطأ: {str(e)}")
+        return await event.edit(f"حدث خطأ أثناء الحصول على معرف القناة ومعرف الرسالة. الخطأ: {str(e)}")
 
     try:
-        message_id = int(message_link.split("/")[-1])
-        message = await l313l.get_messages(entity, ids=message_id)
+        message = await l313l.get_messages(int(channel_id), ids=int(message_id))
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
 
@@ -91,7 +96,7 @@ async def save_media(event):
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
         await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
-        
+    
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
     command=("تحويل صورة", plugin_category),
