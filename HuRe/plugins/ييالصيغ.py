@@ -37,7 +37,6 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
-import re
 
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
