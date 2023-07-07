@@ -64,10 +64,13 @@ async def save_media(event):
                 channel_username = message_link_parts[-2]
                 entity = await l313l.get_entity(channel_username)
                 channel_id = entity.id
+            elif message_link_parts[-2] == "c":
+                channel_id = int(message_link_parts[-3])
+                entity = await l313l.get_entity(channel_id)
             else:
                 channel_id = int(message_link_parts[-2])
                 entity = await l313l.get_entity(channel_id)
-            
+
             message_id = int(message_link_parts[-1])
         else:
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
