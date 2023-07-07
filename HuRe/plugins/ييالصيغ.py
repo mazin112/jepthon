@@ -44,51 +44,38 @@ cancel_process = False
     info={
         "header": "حفظ الصور والفيديوهات والملفات إذا وجد في الرسالة.",
         "description": "يقوم بحفظ الصور والفيديوهات والملفات والنص إذا وجد في الرسالة.",
-        "usage": "{tr}حفظ الصور <رابط الرسالة>",
+        "usage": "{tr}حفظ_المحتوى <رابط الرسالة>",
     },
 )
 async def save_media(event):
     message_link = event.pattern_match.group(1)
-
     if not message_link:
         return await event.edit("يرجى تحديد رابط الرسالة!")
-
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
-
     try:
         message_link_parts = str(message_link).split("/")
         
         if message_link_parts:
-            if message_link_parts[-2] == "c":
-                channel_username_or_id = int(message_link_parts[-3])
-                message_id = int(message_link_parts[-1])
-            else:
-                channel_username_or_id = message_link_parts[-2]
-                message_id = int(message_link_parts[-1])
+            channel_username_or_id = message_link_parts[-2]
+            message_id = int(message_link_parts[-1])
         else:
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     
     try:
-        if int(channel_username_or_id):
-            channel_username_or_id = int("-100" + str(channel_username_or_id))
+        entity = await l313l.get_entity(channel_username_or_id)
         
-        entity = await l313l.get_entity(channel_username_or_id)      
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("الرابط غلط او الرسالة غير موجوده")
     except ChannelPrivateError:
         await event.edit("يجب أن تنضم للقناة أولاً لتستطيع الحفظ منها")
-    #except Exception as e:
-       # return await event.edit(f"An error occurred while retrieving the message. Error: {str(e)}")
-
     try:
         message = await l313l.get_messages(channel_username_or_id, ids=message_id)
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
-
         if message.media:
             file_ext = ""
             if message.photo:
@@ -113,7 +100,6 @@ async def save_media(event):
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
         await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
-
         
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
