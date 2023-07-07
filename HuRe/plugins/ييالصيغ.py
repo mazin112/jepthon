@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import re
 import time
 from datetime import datetime
 from telethon import events
@@ -36,8 +37,6 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
-
-
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
     command=("حفظ_المحتوى", plugin_category),
@@ -57,23 +56,13 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
 
     try:
-        message_link_parts = str(message_link).split("/")
-
-        if message_link_parts:
-            if message_link_parts[-2].startswith("@"):
-                channel_username = message_link_parts[-2]
-                entity = await l313l.get_entity(channel_username)
-            else:
-                channel_id = int(message_link_parts[-2])
-                entity = await l313l.get_entity(channel_id)
-
-            message_id = int(message_link_parts[-1])
-        else:
-            return await event.edit("تحقق من الرابط، لأنه غير صحيح")
+        channel_username = re.search(r"t.me\/([^\/]+)", message_link).group(1)
+        entity = await l313l.get_entity(channel_username)
     except Exception as e:
-        return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
+        return await event.edit(f"حدث خطأ أثناء الحصول على القناة. الخطأ: {str(e)}")
 
     try:
+        message_id = int(message_link.split("/")[-1])
         message = await l313l.get_messages(entity, ids=message_id)
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
