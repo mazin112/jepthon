@@ -55,26 +55,22 @@ async def save_media(event):
     os.makedirs(save_dir, exist_ok=True)
     try:
         message_link_parts = str(message_link).split("/")
+        
         if message_link_parts:
             if len(message_link_parts) == 4:
-                channel_username_or_id = int(message_link_parts[2])
+                channel_id = int(message_link_parts[2])
                 message_id = int(message_link_parts[3])
+                entity = await l313l.get_entity(channel_id)
             else:
                 channel_username_or_id = message_link_parts[-2]
                 message_id = int(message_link_parts[-1])
+                entity = await l313l.get_entity(channel_username_or_id)
         else:
             return await event.edit("تحقق من الرابط، لأنه غير صحيح")
     except Exception as e:
         return await event.edit(f"حدث خطأ قم بتوجيه الرسالة لمطوري @rd0r0\n{e}")
     try:
-        entity = await l313l.get_entity(channel_username_or_id)
         message = await l313l.get_messages(entity, ids=message_id)
-        if not message:
-            return await event.edit("الرابط غلط او الرسالة غير موجوده")
-    except ChannelPrivateError:
-        await event.edit("يجب أن تنضم للقناة أولاً لتستطيع الحفظ منها")
-    try:
-        message = await l313l.get_messages(channel_username_or_id, ids=message_id)
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
         if message.media:
@@ -101,7 +97,7 @@ async def save_media(event):
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
         await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
-        
+
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
     command=("تحويل صورة", plugin_category),
