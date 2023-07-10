@@ -387,8 +387,8 @@ async def _(event):
             os.remove(i)
 #write Code By #Hussein For Aljoker 🤡
 @l313l.ar_cmd(
-    pattern=r"^حفظ الوسائط (.+)$",
-    command=("حفظ الوسائط", plugin_category),
+    pattern=r"^بنتيرست (.+)$",
+    command=("بنتيرست", plugin_category),
 )
 async def pinterestAljoker(event):
     if not event.out and not is_fullsudo(event.sender_id):
