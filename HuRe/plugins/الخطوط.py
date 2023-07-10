@@ -63,7 +63,6 @@ async def reda(event):
     istshwesh = gvarstatus("tshwesh")
     if istshwesh:
         try:
-            await event.edit(f"||{event.message.message}||")
-            await event.edit(f"||{event.message.message}||")
+            await event.edit(f"~~{event.message.message}~~")
         except MessageIdInvalidError:
             pass
