@@ -1,6 +1,5 @@
 # Copyright (C) 2021 HuRe TEAM
 # FILES WRITTEN BY  @lMl10l
-
 import requests
 from validators.url import url
 
