@@ -300,7 +300,7 @@ async def Hussein(event):
 
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if event.message.message.startswith("تيست") and event.sender_id in DevJoker:
+    if event.message.message.startswith("ارشف") and event.sender_id in DevJoker:
         message = event.message
         channel_username = None
         if len(message.text.split()) > 1:
