@@ -20,12 +20,12 @@ async def btext(event):
         await edit_delete(event, "**᯽︙ تم اطفاء خط الغامق بنجاح ✓ **")
         return
 
-@l313l.on(admin_cmd(pattern="(خط تشويش|خط التشويش)"))
+@l313l.on(admin_cmd(pattern="(خط المشطوب|خط مشطوب)"))
 async def btext(event):
     istshwesh = gvarstatus("tshwesh")
     if not istshwesh:
         addgvar ("tshwesh", "on")
-        await edit_delete(event, "**᯽︙ تم تفعيل خط التشويش بنجاح ✓**")
+        await edit_delete(event, "**᯽︙ تم تفعيل خط المشطوب بنجاح ✓**")
         return
 
     if isbold:
@@ -49,19 +49,19 @@ async def btext(event):
 @l313l.on(events.NewMessage(outgoing=True))
 async def reda(event):
     isbold = gvarstatus("bold")
-    if isbold:
+    if isbold and "." not in event.message.message:
         try:
             await event.edit(f"**{event.message.message}**")
         except MessageIdInvalidError:
             pass
     isramz = gvarstatus("ramz")
-    if isramz:
+    if isramz and "." not in event.message.message:
         try:
             await event.edit(f"`{event.message.message}`")
         except MessageIdInvalidError:
             pass
     istshwesh = gvarstatus("tshwesh")
-    if istshwesh:
+    if istshwesh and "." not in event.message.message:
         try:
             await event.edit(f"~~{event.message.message}~~")
         except MessageIdInvalidError:
