@@ -28,9 +28,9 @@ async def btext(event):
         await edit_delete(event, "**᯽︙ تم تفعيل خط المشطوب بنجاح ✓**")
         return
 
-    if isbold:
-        delgvar("bold")
-        await edit_delete(event, "**᯽︙ تم اطفاء خط الغامق بنجاح ✓ **")
+    if istshwesh:
+        delgvar("tshwesh")
+        await edit_delete(event, "**᯽︙ تم اطفاء خط المشطوب بنجاح ✓ **")
         return
 
 @l313l.on(admin_cmd(pattern="(خط رمز|خط الرمز)"))
