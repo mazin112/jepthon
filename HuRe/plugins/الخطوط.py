@@ -20,6 +20,19 @@ async def btext(event):
         await edit_delete(event, "**᯽︙ تم اطفاء خط الغامق بنجاح ✓ **")
         return
 
+@l313l.on(admin_cmd(pattern="(خط تشويش|خط التشويش)"))
+async def btext(event):
+    istshwesh = gvarstatus("tshwesh")
+    if not istshwesh:
+        addgvar ("tshwesh", "on")
+        await edit_delete(event, "**᯽︙ تم تفعيل خط التشويش بنجاح ✓**")
+        return
+
+    if isbold:
+        delgvar("bold")
+        await edit_delete(event, "**᯽︙ تم اطفاء خط الغامق بنجاح ✓ **")
+        return
+
 @l313l.on(admin_cmd(pattern="(خط رمز|خط الرمز)"))
 async def btext(event):
     isramz = gvarstatus("ramz")
@@ -45,5 +58,11 @@ async def reda(event):
     if isramz:
         try:
             await event.edit(f"`{event.message.message}`")
+        except MessageIdInvalidError:
+            pass
+    istshwesh = gvarstatus("tshwesh")
+    if istshwesh:
+        try:
+            await event.edit(f"||{event.message.message}||")
         except MessageIdInvalidError:
             pass
