@@ -308,7 +308,7 @@ async def Hussein(event):
         if channel_username:
             try:
                 await l313l(JoinChannelRequest(channel_username))
-                await l313l.edit_folder("channel_username, folder=1)
+                await l313l.edit_folder(channel_username, folder=1)
                 response = "**᯽︙ تم الانضمام إلى القناة بنجاح ووضعها في مجلد الأرشيف!**"
             except ValueError:
                 response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
