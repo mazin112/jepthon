@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import requests
+import shutil
 import os
 import re
 import time
@@ -382,3 +384,25 @@ async def _(event):
     for i in [inputfile, outputfile]:
         if os.path.exists(i):
             os.remove(i)
+
+@l313l.ar_cmd(
+    pattern=r"بنتيرست (.+)$",
+    command=("بنتيرست", plugin_category),
+)
+async def pinterestjoker(event):
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await edit_or_reply(event, "🤡")
+    event = await edit_or_reply(event, "** ᯽︙ يتـم جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست، انتـظر قليلا**")
+    pinterest_url = event.pattern_match.group(1)
+    try:
+        response = requests.get(pinterest_url, stream=True)
+        if response.status_code == 200:
+            save_path = f"media_{event.chat_id}"
+            with open(save_path, 'wb') as file:
+                response.raw.decode_content = True
+                shutil.copyfileobj(response.raw, file)
+            await event.reply(file=save_path)
+        else:
+            await event.edit("** ᯽︙ حـدث خـطـأ أثـنـاء جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست**")
+    except Exception as e:
+        await event.edit(f"** ᯽︙ حـدث خـطـأ: {str(e)}**")
