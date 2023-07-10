@@ -9,7 +9,6 @@ from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category = "utils"
 
-
 @l313l.ar_cmd(
     pattern="دنس(?:\s|$)([\s\S]*)",
     command=("دنس", plugin_category),
