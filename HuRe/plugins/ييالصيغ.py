@@ -386,7 +386,7 @@ async def _(event):
             os.remove(i)
 #write Code By #Hussein For Aljoker 🤡
 @l313l.ar_cmd(
-    pattern=r"^بنتيرست (.+)$",
+    pattern=r"بنتيرست (.+)",
     command=("بنتيرست", plugin_category),
 )
 async def pinterestAljoker(event):
