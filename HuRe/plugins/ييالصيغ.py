@@ -401,12 +401,13 @@ async def pinterestAljoker(event):
             if 'image' in content_type:
                 img = Image.open(response.raw)
                 img.save("media.jpg", "JPEG", quality=100)
-                await event.client.send_file(event.chat_id, "media.jpg")
+                await event.reply(file="media.jpg")
             else:
                 await event.edit("** ᯽︙ هـذا لـيس رابـط صـورة**")
                 return
-            await event.delete()
         else:
             await event.edit("** ᯽︙ حـدث خـطـأ أثـنـاء جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست**")
+            return
     except Exception as e:
         await event.edit(f"** ᯽︙ حـدث خـطـأ: {str(e)}**")
+        return
