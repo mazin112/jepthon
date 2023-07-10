@@ -401,13 +401,13 @@ async def pinterestAljoker(event):
             if 'image' in content_type:
                 img = Image.open(response.raw)
                 img.save("media.jpg", "JPEG", quality=100)
-                await event.reply(file="media.jpg")
+                await event.client.send_message('me', file="media.jpg")
             elif 'video' in content_type:
                 with open("media.mp4", 'wb') as file:
                     for chunk in response.iter_content(chunk_size=1024):
                         if chunk:
                             file.write(chunk)
-                await event.reply(file="media.mp4")
+                await event.client.send_message('me', file="media.mp4")
             await event.delete()
         else:
             await event.edit("** ᯽︙ حـدث خـطـأ أثـنـاء جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست**")
