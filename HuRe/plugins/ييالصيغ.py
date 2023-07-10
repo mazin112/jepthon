@@ -400,16 +400,14 @@ async def pinterestAljoker(event):
             content_type = response.headers.get('content-type')
             if 'image' in content_type:
                 img = Image.open(response.raw)
-                save_path = f"media_{event.chat_id}.jpg"
-                img.save(save_path, "JPEG", quality=100)
-                await event.client.send_file(event.chat_id, save_path, force_document=False)
+                img.save("media.jpg", "JPEG", quality=100)
+                await event.reply(file="media.jpg")
             elif 'video' in content_type:
-                save_path = f"media_{event.chat_id}.mp4"
-                with open(save_path, 'wb') as file:
+                with open("media.mp4", 'wb') as file:
                     for chunk in response.iter_content(chunk_size=1024):
                         if chunk:
                             file.write(chunk)
-                await event.client.send_file(event.chat_id, save_path, force_document=False)
+                await event.reply(file="media.mp4")
             await event.delete()
         else:
             await event.edit("** ᯽︙ حـدث خـطـأ أثـنـاء جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست**")
