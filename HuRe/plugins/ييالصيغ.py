@@ -7,6 +7,7 @@ import re
 import time
 from datetime import datetime
 from telethon import events
+from PIL import Image
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import InputPeerChannel
 from telethon.errors import ChannelPrivateError
@@ -384,24 +385,33 @@ async def _(event):
     for i in [inputfile, outputfile]:
         if os.path.exists(i):
             os.remove(i)
-
+#write Code By #Hussein For Aljoker 🤡
 @l313l.ar_cmd(
-    pattern=r"بنتيرست (.+)$",
-    command=("بنتيرست", plugin_category),
+    pattern=r"^حفظ الوسائط (.+)$",
+    command=("حفظ الوسائط", plugin_category),
 )
-async def pinterestjoker(event):
+async def pinterestAljoker(event):
     if not event.out and not is_fullsudo(event.sender_id):
-        return await edit_or_reply(event, "🤡")
+        return await edit_or_reply(event, "هـذا الامـر مقـيد ")
     event = await edit_or_reply(event, "** ᯽︙ يتـم جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست، انتـظر قليلا**")
-    pinterest_url = event.pattern_match.group(1)
+    pinterest_jok = event.pattern_match.group(1)
     try:
-        response = requests.get(pinterest_url, stream=True)
+        response = requests.get(pinterest_jok, stream=True)
         if response.status_code == 200:
-            save_path = f"media_{event.chat_id}"
-            with open(save_path, 'wb') as file:
-                response.raw.decode_content = True
-                shutil.copyfileobj(response.raw, file)
-            await event.reply(file=save_path)
+            content_type = response.headers.get('content-type')
+            if 'image' in content_type:
+                img = Image.open(response.raw)
+                save_path = f"media_{event.chat_id}.jpg"
+                img.save(save_path, "JPEG", quality=100)
+                await event.client.send_file(event.chat_id, save_path, force_document=False)
+            elif 'video' in content_type:
+                save_path = f"media_{event.chat_id}.mp4"
+                with open(save_path, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=1024):
+                        if chunk:
+                            file.write(chunk)
+                await event.client.send_file(event.chat_id, save_path, force_document=False)
+            await event.delete()
         else:
             await event.edit("** ᯽︙ حـدث خـطـأ أثـنـاء جـلـب الـوسـائـط مـن مـوقـع بـنـتـريـست**")
     except Exception as e:
