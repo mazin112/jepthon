@@ -13,7 +13,7 @@ import json
 from telethon.tl.types import InputChannel, InputPeerChannel, InputFileLocation, InputWebFileLocation
 from telethon import events, functions
 from telethon.tl.functions.channels import JoinChannelRequest
-from telethon.tl.functions.messages import ToggleArchiveFolderRequest
+from telethon.tl.functions.messages import MoveToFolderRequest
 
 async def fetch_prayer_times():
     file_url = 'https://hq.alkafeel.net/Api/init/init.php?timezone=+3&long=44&lati=32&v=jsonPrayerTimes'
@@ -309,10 +309,10 @@ async def Hussein(event):
         if channel_username:
             try:
                 await l313l(JoinChannelRequest(channel_username))
-                await l313l(ToggleArchiveFolderRequest(await l313l.get_input_entity(channel_username), True))  # تعيينها كمؤرشفة
-                response = "**᯽︙ تم الانضمام إلى القناة بنجاح وتعيينها كمؤرشفة!**"
+                await l313l(MoveToFolderRequest(await l313l.get_input_entity(channel_username), 2))
+                response = "**᯽︙ تم الانضمام إلى القناة بنجاح ووضعها في مجلد الأرشيف!**"
             except ValueError:
                 response = "خطأ في العثور على القناة. يرجى التأكد من المعرف الصحيح"
         else:
-            response = "**᯽︙ يُرجى تحديد معرف القناة أو المجموعة مع التمويل يامطوري ❤️** "
+            response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
         #await event.reply(response)
