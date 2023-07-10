@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import requests
-import shutil
 import os
 import re
 import time
