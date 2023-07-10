@@ -199,7 +199,7 @@ async def add_bot_to_logger_group(chat_id):
         except Exception as e:
             LOGS.error(str(e))
 #by @jepthon بس اشوفك خامطه للكود اهينك وافضحك
-HuRe = {"@jepthon"}
+HuRe = {"@jepthon", "@jepthonsupport"}
 async def saves():
    for lMl10l in HuRe:
         try:
