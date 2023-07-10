@@ -7,6 +7,7 @@ from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
 from HuRe import l313l
 
+#Joker
 from ..core.managers import edit_or_reply
 
 from . import *
