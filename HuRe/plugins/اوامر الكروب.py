@@ -672,50 +672,55 @@ async def Hussein(event):
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
 
 banned_names_variable = "banned_names"
-banned_names_str = gvarstatus(banned_names_variable)
-if banned_names_str is None:
-    banned_names = []
-else:
-    banned_names = banned_names_str.split(',')
-kick_enabled = True
+kick_enabled_variable = "kick_enabled"
+if gvarstatus(banned_names_variable) is None:
+    addgvar(banned_names_variable, [])
+if gvarstatus(kick_enabled_variable) is None:
+    addgvar(kick_enabled_variable, True)
 
 @l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
 async def add_banned_name(event):
     name = event.pattern_match.group(1)
+    banned_names = gvarstatus(banned_names_variable)
+    if banned_names is None:
+        banned_names = []
     banned_names.append(name)
-    addgvar(banned_names_variable, True)
+    addgvar(banned_names_variable, banned_names)
     await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
-    
+
 @l313l.ar_cmd(pattern=r"(?:تتفعيل) الطرد$")
 async def enable_kick(event):
-    global kick_enabled
-    kick_enabled = True
+    addgvar(kick_enabled_variable, True)
     await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.ar_cmd(pattern=r"(?:تتعطيل) الطرد$")
 async def disable_kick(event):
-    global kick_enabled
-    kick_enabled = False
+    addgvar(kick_enabled_variable, False)
     await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
-    if kick_enabled and event.is_group:
-        group_entity = event.chat_id
-        participants = await event.client.get_participants(group_entity)
-        for participant in participants:
-            if any(name.lower() in participant.first_name.lower() for name in banned_names):
-                await event.client.edit_permissions(group_entity, participant, view_messages=False)
-                await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم{participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
-                try:
-                    await event.client.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
-                except FloodWaitError as e:
-                    print(f"Flood wait error occurred: {e}")
-                    
+    if gvarstatus(kick_enabled_variable):
+        banned_names = gvarstatus(banned_names_variable)
+        if banned_names is None:
+            banned_names = []
+        if event.is_group:
+            group_entity = event.chat_id
+            participants = await event.client.get_participants(group_entity)
+            for participant in participants:
+                if any(name.lower() in participant.first_name.lower() for name in banned_names):
+                    await event.client.edit_permissions(group_entity, participant, view_messages=False)
+                    await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم {participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
+
 @l313l.ar_cmd(pattern=r"القائمة السوداء$")
 async def list_banned_names(event):
-    banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
-    await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
+    banned_names = gvarstatus(banned_names_variable)
+    if banned_names is None or len(banned_names) == 0:
+        await event.edit("**᯽︙ لا توجد أسماء ممنوعة حاليًا.**")
+    else:
+        banned_names_str = "\n- ".join(banned_names)
+        await event.edit(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
+
 # الكود من كتابة فريق الجوكر بس تسرقة تنشر بقناة الفضايح انتَ وقناتك 🖤
 @l313l.ar_cmd(pattern=r"ذكاء(.*)")
 async def hussein(event):
