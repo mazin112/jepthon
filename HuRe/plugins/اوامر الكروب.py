@@ -698,7 +698,7 @@ async def disable_kick(event):
     kick_enabled = False
     await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
 
-@l313l.on(events.NewMessage(incoming=True))
+@l313l.on(events.ChatAction)
 async def kick_banned_name(event):
     if kick_enabled and event.is_group:
         group_entity = event.chat_id
