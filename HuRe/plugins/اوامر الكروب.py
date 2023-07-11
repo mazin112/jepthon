@@ -708,6 +708,7 @@ async def kick_banned_name(event):
                 await event.client.edit_permissions(group_entity, participant, view_messages=False)
                 await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
                 try:
+                                    await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
                 except FloodWaitError as e:
                     print(f"Flood wait error occurred: {e}")
                     
