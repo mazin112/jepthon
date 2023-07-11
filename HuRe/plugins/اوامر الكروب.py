@@ -685,9 +685,9 @@ async def add_banned_name(event):
     if banned_names_str is None:
         banned_names = []
     else:
-        banned_names = banned_names_str.split('\n')
+        banned_names = banned_names_str.split('|')
     banned_names.append(name)
-    banned_names_str = '\n'.join(banned_names)
+    banned_names_str = '|'.join(banned_names)
     addgvar(banned_names_variable, banned_names_str)
     await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
 
@@ -717,12 +717,13 @@ async def kick_banned_name(event):
 
 @l313l.ar_cmd(pattern=r"القائمة السوداء$")
 async def list_banned_names(event):
-    banned_names = gvarstatus(banned_names_variable)
-    if banned_names is None or len(banned_names) == 0:
-        await event.edit("**᯽︙ لا توجد أسماء ممنوعة حاليًا.**")
+    banned_names_str = gvarstatus(banned_names_variable)
+    if banned_names_str is None or len(banned_names_str) == 0:
+        await event.reply("**᯽︙ لا توجد أسماء ممنوعة حاليًا.**")
     else:
-        banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
-        await event.edit(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
+        banned_names = banned_names_str.split('|')
+        banned_names_formatted = "\n- ".join(banned_names)
+        await event.reply(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_formatted}")
 
 # الكود من كتابة فريق الجوكر بس تسرقة تنشر بقناة الفضايح انتَ وقناتك 🖤
 @l313l.ar_cmd(pattern=r"ذكاء(.*)")
