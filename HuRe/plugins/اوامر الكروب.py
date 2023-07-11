@@ -55,11 +55,6 @@ BANNED_RIGHTS = ChatBannedRights(
     embed_links=True,
 )
 
-banned_names_variable = "banned_names"
-banned_names = gvarstatus(banned_names_variable)
-if banned_names is None:
-    banned_names = []
-
 async def ban_user(chat_id, i, rights):
     try:
         await l313l(functions.channels.EditBannedRequest(chat_id, i, rights))
@@ -692,18 +687,18 @@ async def kick_banned_name(event):
     banned_name = event.pattern_match.group(1)
     await event.edit(f"**᯽︙ جارٍ تنفيذ الأمر لمنع اسم {banned_name} ...**")
     try:
-        async with event.client as client:
-            is_admin = await client.is_admin(event.chat_id, event.sender_id)
+        async with event.l313l as l313l:
+            is_admin = await l313.is_admin(event.chat_id, event.sender_id)
             if is_admin:
-                async for message in client.iter_messages(event.chat_id, from_user='me', search=f'(?:منع|حظر) اسم {banned_name}'):
+                async for message in l313l.iter_messages(event.chat_id, from_user='me', search=f'(?:منع|حظر) اسم {banned_name}'):
                     group_entity = message.chat_id
-                    participants = client.get_participants(group_entity)
+                    participants = l313l.get_participants(group_entity)
                     for participant in participants:
                         if any(name.lower() in participant.first_name.lower() for name in banned_names):
                             try:
-                                await event.client.kick_participant(group_entity, participant)
+                                await event.l313l.kick_participant(group_entity, participant)
                                 print(f"Kicked {participant.first_name} {participant.last_name}")
-                                await event.client.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
+                                await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
                             except FloodWaitError as e:
                                 print(f"Flood wait error occurred: {e}")
             else:
