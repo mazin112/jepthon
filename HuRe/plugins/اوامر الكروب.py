@@ -700,7 +700,7 @@ async def disable_kick(event):
 
 @l313l.on(events.NewMessage(incoming=True))
 async def kick_banned_name(event):
-    if kick_enabled and isinstance(event.action, types.ChatActionUserJoined):
+    if kick_enabled and isinstance(event.action, types.ChatActionParticipantJoined):
         is_admin = await l313l.is_admin(event.chat_id, event.user_id)
         if is_admin:
             group_entity = event.chat_id
