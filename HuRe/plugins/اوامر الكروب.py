@@ -771,7 +771,6 @@ delete_enabled = True
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
-    global delete_enabled
     if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
         await event.delete()
 
@@ -779,10 +778,10 @@ async def Hussein(event):
 async def sbt36el(event):
     global delete_enabled
     delete_enabled = True
-    await event.reply("᯽︙تم منع السب بنجاح ✓")
+    await event.reply("᯽︙ تم منع السب بنجاح ✓")
 
 @l313l.ar_cmd(pattern=r"السب تعطيل")
 async def sbtf3el(event):
     global delete_enabled
     delete_enabled = False
-    await event.edit("᯽︙تم السماح بالسب هنا ✓")
+    await event.reply("᯽︙ تم السماح بالسب هنا ✓")
