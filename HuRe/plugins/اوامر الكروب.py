@@ -701,19 +701,19 @@ async def disable_kick(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def kick_banned_name(event):
     if kick_enabled and event.is_group:
-        is_admin = await l313l.is_admin(event.chat_id, event.user_id)
-        if is_admin:
-            group_entity = event.chat_id
-            participants = await event.l313l.get_participants(group_entity)
-            for participant in participants:
-                if any(name.lower() in participant.first_name.lower() for name in banned_names):
-                    try:
+        group_entity = event.chat_id
+        participants = await event.l313l.get_participants(group_entity)
+        for participant in participants:
+            if any(name.lower() in participant.first_name.lower() for name in banned_names):
+                try:
+                    admin_info = await event.l313l.get_participant(group_entity, participant)
+                    if isinstance(admin_info.participant, types.ChannelParticipantAdmin):
                         await event.l313l.kick_participant(group_entity, participant)
                         print(f"Kicked {participant.first_name} {participant.last_name}")
                         await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
-                    except FloodWaitError as e:
-                        print(f"Flood wait error occurred: {e}")
-            
+                except FloodWaitError as e:
+                    print(f"Flood wait error occurred: {e}")
+                    
 @l313l.ar_cmd(pattern=r"القائمة السوداء$")
 async def list_banned_names(event):
     banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
