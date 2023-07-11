@@ -776,7 +776,8 @@ async def Hussein(event):
             await event.delete()
 
 async def is_admin(user_id, chat_id):
-    participant = await l313l.get_participant(chat_id, user_id)
+    participants = await client.get_participants(chat_id, ids=[user_id])
+    participant = participants[0]
     return participant.admin
 
 async def has_delete_permission(user_id, chat_id):
