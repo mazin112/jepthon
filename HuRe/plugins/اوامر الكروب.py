@@ -703,11 +703,11 @@ async def kick_banned_name(event):
     if kick_enabled and event.is_group:
         group_entity = event.chat_id
         participants = await event.client.get_participants(group_entity)
+        aljoker_link = f'<a href="tg://user?id={participant.id}">{participant.first_name}</a>'
+        message = f'**᯽︙ تم حظره من المجموعة {aljoker_link} بسبب احتوائه على اسم ممنوع**'
         for participant in participants:
             if any(name.lower() in participant.first_name.lower() for name in banned_names):
                 await event.client.edit_permissions(group_entity, participant, view_messages=False)
-                aljoker_link = f'<a href="tg://user?id={participant.id}">{participant.first_name}</a>'
-                message = f'**᯽︙ تم حظره من المجموعة {aljoker_link} بسبب احتوائه على اسم ممنوع**'
                 await event.client.send_message(group_entity, message, parse_mode='HTML')
                 try:
                     await event.client.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
