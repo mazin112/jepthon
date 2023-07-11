@@ -704,7 +704,7 @@ async def kick_banned_name(event):
         group_entity = event.chat_id
         participants = await event.client.get_participants(group_entity)
         for participant in participants:
-            if any(name.lower() in participant.first_name.lower() for name in banned_names):
+            if participant.first_name is not None and any(name.lower() in participant.first_name.lower() for name in banned_names):
                 try:
                     admin_info = await event.client.get_participant(group_entity, participant)
                     if isinstance(admin_info.participant, types.ChannelParticipantAdmin):
