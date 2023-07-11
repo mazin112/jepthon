@@ -681,11 +681,14 @@ if gvarstatus(kick_enabled_variable) is None:
 @l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
 async def add_banned_name(event):
     name = event.pattern_match.group(1)
-    banned_names = gvarstatus(banned_names_variable)
-    if banned_names is None:
+    banned_names_str = gvarstatus(banned_names_variable)
+    if banned_names_str is None:
         banned_names = []
+    else:
+        banned_names = banned_names_str.split(',')
     banned_names.append(name)
-    addgvar(banned_names_variable, banned_names)
+    banned_names_str = ','.join(banned_names)
+    addgvar(banned_names_variable, banned_names_str)
     await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
 
 @l313l.ar_cmd(pattern=r"(?:تتفعيل) الطرد$")
