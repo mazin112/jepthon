@@ -768,21 +768,22 @@ async def reply_to_hussein(event):
             await event.reply(response)
 
 Mn3_sb = ["ينعل امك", "ابن المطي"]
-delete_enabled = True
+delete_enabled = {}
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
-    if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
+    chat_id = event.chat_id
+    if delete_enabled.get(chat_id, False) and any(word in event.raw_text for word in Mn3_sb):
         await event.delete()
 
 @l313l.ar_cmd(pattern=r"السب تفعيل")
 async def sbt36el(event):
-    global delete_enabled
-    delete_enabled = True
-    await event.reply("᯽︙ تم منع السب بنجاح ✓")
+    chat_id = event.chat_id
+    delete_enabled[chat_id] = True
+    await event.edit("**᯽︙ تم منع السب بنجاح ✓**")
 
 @l313l.ar_cmd(pattern=r"السب تعطيل")
 async def sbtf3el(event):
-    global delete_enabled
-    delete_enabled = False
-    await event.reply("᯽︙ تم السماح بالسب هنا ✓")
+    chat_id = event.chat_id
+    delete_enabled[chat_id] = False
+    await event.edit("**᯽︙ تم السماح بالسب هنا ✓**")
