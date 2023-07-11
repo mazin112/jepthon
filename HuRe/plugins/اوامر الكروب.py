@@ -766,3 +766,31 @@ async def reply_to_hussein(event):
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
             await asyncio.sleep(4)
             await event.reply(response)
+Mn3_sb = ["ينعل امك", "ابن المطي"]
+delete_enabled = True
+
+@l313l.on(events.NewMessage)
+async def Hussein(event):
+    if not delete_enabled or any(word in event.raw_text for word in Mn3_sb):
+        if await is_admin(event.sender_id, event.chat_id) and await has_delete_permission(event.sender_id, event.chat_id):
+            await event.delete()
+
+async def is_admin(user_id, chat_id):
+    participant = await client.get_participant(chat_id, user_id)
+    return participant.admin
+
+async def has_delete_permission(user_id, chat_id):
+    permissions = await client.get_permissions(chat_id, user_id)
+    return permissions.delete_messages
+
+@l313l.on(events.NewMessage(pattern="تعطيل السب"))
+async def sbt36el(event):
+    global delete_enabled
+    delete_enabled = True
+    await event.reply(" ᯽︙ تم منع السب بنجاح ✓  ")
+
+@l313l.on(events.NewMessage(pattern="تفعيل السب"))
+async def sbtf3el(event):
+    global delete_enabled
+    delete_enabled = False
+    await event.edit(" ᯽︙ تم السماح  بالسب هنا ✓ ")
