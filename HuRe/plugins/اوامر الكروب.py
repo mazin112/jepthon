@@ -676,6 +676,13 @@ if banned_names is None:
     banned_names = []
 kick_enabled = True
 
+@l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
+async def add_banned_name(event):
+    name = event.pattern_match.group(1)
+    banned_names.append(name)
+    addgvar(banned_names_variable, True)
+    await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
+    
 @l313l.ar_cmd(pattern=r"(?:تتفعيل) الطرد$")
 async def enable_kick(event):
     global kick_enabled
