@@ -704,13 +704,12 @@ async def kick_banned_name(event):
         group_entity = event.chat_id
         participants = await event.client.get_participants(group_entity)
         for participant in participants:
-            if participant.first_name is not None and any(name.lower() in participant.first_name.lower() for name in banned_names):
+            if any(name.lower() in participant.first_name.lower() for name in banned_names):
+                await event.client.kick_participant(group_entity, participant)
                 try:
-                    admin_info = await event.client.get_participant(group_entity, participant)
-                    if isinstance(admin_info.participant, types.ChannelParticipantAdmin):
-                        await event.client.kick_participant(group_entity, participant)
-                        print(f"Kicked {participant.first_name} {participant.last_name}")
-                        await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
+                    await event.client.kick_participant(group_entity, participant)
+                    print(f"Kicked {participant.first_name} {participant.last_name}")
+                    await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_names} ✘**")
                 except FloodWaitError as e:
                     print(f"Flood wait error occurred: {e}")
                     
