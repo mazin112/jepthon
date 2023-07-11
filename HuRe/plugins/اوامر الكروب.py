@@ -769,7 +769,7 @@ async def reply_to_hussein(event):
 
 Mn3_sb = ["ينعل امك", "ابن المطي"]
 addgvar("delete_enabled", True)
-
+#الجوكر لديكم لاخوف عليكم 🤡
 @l313l.on(events.NewMessage)
 async def Hussein(event):
     if gvarstatus("delete_enabled") and any(word in event.raw_text for word in Mn3_sb):
