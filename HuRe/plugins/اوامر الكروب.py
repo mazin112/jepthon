@@ -700,27 +700,27 @@ async def disable_kick(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def kick_banned_name(event):
     if kick_enabled and event.is_group and event.message.action and isinstance(event.message.action, types.MessageActionChatJoinedByLink):
-        is_admin = await l313.is_admin(event.chat_id, event.sender_id)
+        is_admin = await l313l.is_admin(event.chat_id, event.sender_id)
         if is_admin:
             group_entity = event.chat_id
             participant = event.sender_id
             if any(name.lower() in participant.first_name.lower() for name in banned_names):
                 try:
-                    await event.client.kick_participant(group_entity, participant)
+                    await event.l313l.kick_participant(group_entity, participant)
                     print(f"Kicked {participant.first_name} {participant.last_name}")
-                    await event.client.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
+                    await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
                 except FloodWaitError as e:
                     print(f"Flood wait error occurred: {e}")
     elif kick_enabled and event.is_group and isinstance(event.message, types.MessageService) and isinstance(event.message.action, types.MessageActionChatAddUser):
-        is_admin = await l313.is_admin(event.chat_id, event.action.user_id)
+        is_admin = await l313l.is_admin(event.chat_id, event.action.user_id)
         if is_admin:
             group_entity = event.chat_id
             participant = event.action.user_id
             if any(name.lower() in participant.first_name.lower() for name in banned_names):
                 try:
-                    await event.client.kick_participant(group_entity, participant)
+                    await event.l313l.kick_participant(group_entity, participant)
                     print(f"Kicked {participant.first_name} {participant.last_name}")
-                    await event.client.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
+                    await event.l313l.send_message(group_entity, f"**᯽︙ تم طرد {participant.first_name} {participant.last_name} لاحتوائه على الاسم الممنوع {banned_name} ✘**")
                 except FloodWaitError as e:
                     print(f"Flood wait error occurred: {e}")
 
