@@ -671,9 +671,11 @@ async def Hussein(event):
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
 
 banned_names_variable = "banned_names"
-banned_names = gvarstatus(banned_names_variable)
-if banned_names is None:
+banned_names_str = gvarstatus(banned_names_variable)
+if banned_names_str is None:
     banned_names = []
+else:
+    banned_names = banned_names_str.split(',')
 kick_enabled = True
 
 @l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
