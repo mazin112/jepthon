@@ -776,9 +776,12 @@ async def Hussein(event):
             await event.delete()
 
 async def is_admin(user_id, chat_id):
-    participants = await l313l.get_participants(chat_id, ids=[user_id])
-    participant = participants[0]
-    return participant.admin
+    try:
+        entity = await l313l.get_entity(user_id)
+        participant = await l313l.get_chat_member(chat_id, entity)
+        return participant.admin
+    except ChatAdminRequiredError:
+        return False
 
 async def has_delete_permission(user_id, chat_id):
     permissions = await l313l.get_permissions(chat_id, user_id)
