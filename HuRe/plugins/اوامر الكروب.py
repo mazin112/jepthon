@@ -687,7 +687,7 @@ async def kick_banned_name(event):
     banned_name = event.pattern_match.group(1)
     await event.edit(f"**᯽︙ جارٍ تنفيذ الأمر لمنع اسم {banned_name} ...**")
     try:
-        async with event.l313l as l313l:
+        async with event.client as l313l:
             is_admin = await l313.is_admin(event.chat_id, event.sender_id)
             if is_admin:
                 async for message in l313l.iter_messages(event.chat_id, from_user='me', search=f'(?:منع|حظر) اسم {banned_name}'):
