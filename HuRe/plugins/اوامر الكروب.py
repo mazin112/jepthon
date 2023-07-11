@@ -783,13 +783,13 @@ async def has_delete_permission(user_id, chat_id):
     permissions = await client.get_permissions(chat_id, user_id)
     return permissions.delete_messages
 
-@l313l.on(events.NewMessage(pattern="منعع السب"))
+@l313l.ar_cmd(pattern=r"السب تفعيل")
 async def sbt36el(event):
     global delete_enabled
     delete_enabled = True
     await event.reply(" ᯽︙ تم منع السب بنجاح ✓  ")
 
-@l313l.on(events.NewMessage(pattern="سماح السب"))
+@l313l.ar_cmd(pattern=r"السب تعطيل")
 async def sbtf3el(event):
     global delete_enabled
     delete_enabled = False
