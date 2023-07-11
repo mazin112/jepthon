@@ -772,20 +772,7 @@ delete_enabled = True
 @l313l.on(events.NewMessage)
 async def Hussein(event):
     if not delete_enabled or any(word in event.raw_text for word in Mn3_sb):
-        if await is_admin(event.sender_id, event.chat_id) and await has_delete_permission(event.sender_id, event.chat_id):
-            await event.delete()
-
-async def is_admin(user_id, chat_id):
-    try:
-        entity = await l313l.get_entity(user_id)
-        participant = await l313l.get_chat_member(chat_id, entity)
-        return participant.admin
-    except ChatAdminRequiredError:
-        return False
-
-async def has_delete_permission(user_id, chat_id):
-    permissions = await l313l.get_permissions(chat_id, user_id)
-    return permissions.delete_messages
+        await event.delete()
 
 @l313l.ar_cmd(pattern=r"السب تفعيل")
 async def sbt36el(event):
