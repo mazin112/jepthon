@@ -685,9 +685,9 @@ async def add_banned_name(event):
     if banned_names_str is None:
         banned_names = []
     else:
-        banned_names = banned_names_str.split(',')
+        banned_names = banned_names_str.split('\n')
     banned_names.append(name)
-    banned_names_str = ','.join(banned_names)
+    banned_names_str = '\n'.join(banned_names)
     addgvar(banned_names_variable, banned_names_str)
     await event.edit(f"**᯽︙ تمت إضافة {name} إلى قائمة الأسماء الممنوعة بنجاح ✓ **")
 
@@ -721,7 +721,7 @@ async def list_banned_names(event):
     if banned_names is None or len(banned_names) == 0:
         await event.edit("**᯽︙ لا توجد أسماء ممنوعة حاليًا.**")
     else:
-        banned_names_str = "\n- ".join(banned_names)
+        banned_names_str = "\n- ".join(banned_names) if banned_names else "**᯽︙ لا توجد أسماء ممنوعة حاليًا.**"
         await event.edit(f"**᯽︙ الأسماء الممنوعة حاليًا:**\n- {banned_names_str}")
 
 # الكود من كتابة فريق الجوكر بس تسرقة تنشر بقناة الفضايح انتَ وقناتك 🖤
