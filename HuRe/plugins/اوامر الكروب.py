@@ -776,11 +776,11 @@ async def Hussein(event):
             await event.delete()
 
 async def is_admin(user_id, chat_id):
-    participant = await client.get_participant(chat_id, user_id)
+    participant = await l313l.get_participant(chat_id, user_id)
     return participant.admin
 
 async def has_delete_permission(user_id, chat_id):
-    permissions = await client.get_permissions(chat_id, user_id)
+    permissions = await l313l.get_permissions(chat_id, user_id)
     return permissions.delete_messages
 
 @l313l.ar_cmd(pattern=r"السب تفعيل")
