@@ -771,7 +771,7 @@ delete_enabled = True
 
 @l313l.on(events.NewMessage)
 async def Hussein(event):
-    if not delete_enabled or any(word in event.raw_text for word in Mn3_sb):
+    if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
         await event.delete()
 
 @l313l.ar_cmd(pattern=r"السب تفعيل")
