@@ -766,22 +766,3 @@ async def reply_to_hussein(event):
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
             await asyncio.sleep(4)
             await event.reply(response)
-Mn3_sb = ["ينعل امك", "ابن المطي"]
-delete_enabled = True
-
-@l313l.on(events.NewMessage)
-async def Hussein(event):
-    if delete_enabled and any(word in event.raw_text for word in Mn3_sb):
-        await event.delete()
-
-@l313l.ar_cmd(pattern=r"السب تفعيل")
-async def sbt36el(event):
-    global delete_enabled
-    delete_enabled = True
-    await event.reply("᯽︙ تم منع السب بنجاح ✓")
-
-@l313l.ar_cmd(pattern=r"السب تعطيل")
-async def sbtf3el(event):
-    global delete_enabled
-    delete_enabled = False
-    await event.reply("᯽︙ تم السماح بالسب هنا ✓")
