@@ -695,11 +695,15 @@ async def add_banned_name(event):
 async def enable_kick(event):
     addgvar(kick_enabled_variable, True)
     await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
+    if gvarstatus(kick_enabled_variable):
+    await event.edit("**᯽︙ الأمر مفعل بالفعل**")
 
 @l313l.ar_cmd(pattern=r"(?:تتعطيل) الطرد$")
 async def disable_kick(event):
     addgvar(kick_enabled_variable, False)
     await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
+    if not gvarstatus(kick_enabled_variable):
+        await event.edit("**᯽︙ الأمر معطل بالفعل**")
 
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
