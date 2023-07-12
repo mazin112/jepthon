@@ -701,7 +701,7 @@ async def disable_kick(event):
     if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
     else:
-        delgvar("kick_enabled_variable", False)
+        delgvar("kick_enabled_variable")
         await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.on(events.ChatAction)
