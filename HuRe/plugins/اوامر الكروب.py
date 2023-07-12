@@ -693,10 +693,11 @@ async def add_banned_name(event):
 
 @l313l.ar_cmd(pattern=r"(?:تتفعيل) الطرد$")
 async def enable_kick(event):
-    addgvar(kick_enabled_variable, True)
-    await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
     if gvarstatus(kick_enabled_variable):
         await event.edit("**᯽︙ الأمر مفعل بالفعل**")
+    else:
+    addgvar(kick_enabled_variable, True)
+    await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.ar_cmd(pattern=r"(?:تتعطيل) الطرد$")
 async def disable_kick(event):
