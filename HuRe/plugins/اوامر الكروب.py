@@ -672,11 +672,8 @@ async def Hussein(event):
     await event.edit("**᯽︙ تم حذف جميع محادثات البوتات بنجاح ✓ **")
 
 banned_names_variable = "banned_names"
-kick_enabled_variable = False
 if gvarstatus(banned_names_variable) is None:
     addgvar(banned_names_variable, [])
-if gvarstatus(kick_enabled_variable) is None:
-    addgvar(kick_enabled_variable, True)
 
 @l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
 async def add_banned_name(event):
@@ -693,25 +690,23 @@ async def add_banned_name(event):
 
 @l313l.ar_cmd(pattern=r"(?:تتفعيل) الطرد$")
 async def enable_kick(event):
-    global kick_enabled_variable
-    if gvarstatus(kick_enabled_variable):
-        await event.edit("**᯽︙ الأمر مفعل بالفعل**")
+    if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
+        return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُفعل بالفعل🧸♥**")
     else:
-        addgvar(kick_enabled_variable, True)
+        addgvar("kick_enabled_variable", True)
         await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.ar_cmd(pattern=r"(?:تتعطيل) الطرد$")
 async def disable_kick(event):
-    global kick_enabled_variable
-    if not gvarstatus(kick_enabled_variable):
-        await event.edit("**᯽︙ الأمر معطل بالفعل**")
+    if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
+        return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
     else:
-        delgvar(kick_enabled_variable)
+        delgvar("kick_enabled_variable", False)
         await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
-    if gvarstatus(kick_enabled_variable):
+    if gvarstatus("kick_enabled_variable"):
         banned_names = gvarstatus(banned_names_variable)
         if banned_names is None:
             banned_names = []
