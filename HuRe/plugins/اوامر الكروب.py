@@ -707,7 +707,7 @@ async def disable_kick(event):
         await event.edit("**᯽︙ الأمر معطل بالفعل**")
     else:
         delgvar(kick_enabled_variable)
-        await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")نوعة بنجاح.**")
+        await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
