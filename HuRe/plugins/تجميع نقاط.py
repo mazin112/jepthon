@@ -9,7 +9,7 @@ from telethon.tl.functions.messages import ImportChatInviteRequest
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from telethon.events import NewMessage
 import requests
-from telethon.tl.types import InputPeerChannel
+from telethon.tl.functions.users import GetFullUserRequest
 import re
 import asyncio
 from telethon import events
@@ -24,7 +24,8 @@ async def _(event):
     if HuRe[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
         bot_username = event.pattern_match.group(0).split(" ")[-1].strip("@")
-        channel_entity = await l313l.get_input_entity(bot_username)
+        bot_entity = await l313l(GetFullUserRequest(bot_username))
+        channel_entity = bot_entity.user
         await l313l.send_message(bot_username, '/start')
         await asyncio.sleep(5)
         await l313l(JoinChannelRequest(bot_username))
