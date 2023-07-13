@@ -23,7 +23,7 @@ its_Reham = False
 async def _(event):
     if HuRe[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
-        bot_username = event.pattern_match.group(0).split(" ")[-1].strip("@")
+        bot_username = event.pattern_match.group(1).split(" ")[-1].strip("@")
         bot_entity = await l313l(GetFullUserRequest(bot_username))
         channel_entity = bot_entity.user
         await l313l.send_message(bot_username, '/start')
