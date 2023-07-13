@@ -552,7 +552,7 @@ keywords = []
 async def jepmeme(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
-        message = event.pattern_match.group(1)
+        message = event.pattern_match.string
         word, url = message.split(" ", 1)
         if len(url) > 20:
             keywords.append((word, url))
