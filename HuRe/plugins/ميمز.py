@@ -546,3 +546,24 @@ async def jepmeme(memejep):
   url = f"https://t.me/MemeSoundJep/102"
   await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
   await memejep.delete()
+
+keywords = []
+
+@l313l.on(admin_cmd(outgoing=True, pattern="بصمة$"))
+async def jepmeme(event):
+    reply = await event.get_reply_message()
+    if reply and reply.media:
+        message = event.pattern_match.group(1)
+        url = message.strip()
+        if len(url) > 20:
+            keywords.append((event.chat_id, url))
+            await event.client.send_file(event.chat_id, reply.media, caption="", parse_mode="html", reply_to=event.reply_to_msg_id)
+            await event.delete()
+
+@l313l.on(admin_cmd(outgoing=True, pattern="قائمة البصمات$"))
+async def show_keywords(event):
+    if keywords:
+        keyword_list = "\n".join([f"- {word}: {url}" for word, url in keywords])
+        await event.reply(f"قائمة البصمات:\n{keyword_list}")
+    else:
+        await event.reply("قائمة البصمات فارغة.")
