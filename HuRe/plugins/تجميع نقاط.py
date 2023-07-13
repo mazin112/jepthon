@@ -13,7 +13,6 @@ import re
 import asyncio
 from telethon import events
 c = requests.session()
-bot_username = '@zmmbot'
 bot_username2 = '@A_MAN9300BOT'
 bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
@@ -23,13 +22,14 @@ its_Reham = False
 async def _(event):
     if HuRe[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
+        bot_username = event.pattern_match.group(2)
         channel_entity = await l313l.get_entity(bot_username)
-        await l313l.send_message('@zmmbot', '/start')
+        await l313l.send_message(bot_username, '/start')
         await asyncio.sleep(5)
-        msg0 = await l313l.get_messages('@zmmbot', limit=1)
+        msg0 = await l313l.get_messages(bot_username, limit=1)
         await msg0[0].click(2)
         await asyncio.sleep(5)
-        msg1 = await l313l.get_messages('@zmmbot', limit=1)
+        msg1 = await l313l.get_messages(bot_username, limit=1)
         await msg1[0].click(0)
 
         chs = 1
@@ -50,7 +50,7 @@ async def _(event):
                 except:
                     bott = url.split('/')[-1]
                     await l313l(ImportChatInviteRequest(bott))
-                msg2 = await l313l.get_messages('@zmmbot', limit=1)
+                msg2 = await l313l.get_messages(bot_username, limit=1)
                 await msg2[0].click(text='تحقق')
                 chs += 1
                 await l313l.send_message("me", f"تم الاشتراك في {chs} قناة")
@@ -64,7 +64,8 @@ async def _(event):
 
 @l313l.on(admin_cmd(pattern="(الغاء التجميع|الغاء تجميع)"))
 async def cancel_collection(event):
-    await l313l.send_message('@zmmbot', '/start')
+    bot_username = event.pattern_match.group(2)
+    await l313l.send_message(bot_username, '/start')
     await event.edit("** ᯽︙ تم الغاء التجميع من بوت المليار **")
     
 @l313l.on(admin_cmd(pattern="(تجميع الجوكر|تجميع جوكر)"))
