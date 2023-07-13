@@ -22,7 +22,7 @@ its_Reham = False
 async def _(event):
     if HuRe[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
-        bot_username = event.pattern_match.group(1).split("@")[1]
+        bot_username = event.pattern_match.group(1).split(" ")[1].strip("@")
         channel_entity = await l313l.get_entity(bot_username)
         await l313l.send_message(bot_username, '/start')
         await asyncio.sleep(5)
@@ -32,13 +32,11 @@ async def _(event):
         await asyncio.sleep(5)
         msg1 = await l313l.get_messages(bot_username, limit=1)
         await msg1[0].click(0)
-
         chs = 1
         for i in range(100):
             if HuRe[0] == 'no':
                 break
             await asyncio.sleep(5)
-
             list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
             msgs = list.messages[0]
             if msgs.message.find('لا يوجد قنوات في الوقت الحالي، قم بتجميع النقاط بطريقة مختلفة') != -1:
@@ -61,7 +59,6 @@ async def _(event):
         await l313l.send_message(event.chat_id, "**تم الانتهاء من التجميع!**")
     else:
         await event.edit("يجب الدفع لاستخدام هذا الأمر!")
-
 
 @l313l.on(admin_cmd(pattern="(الغاء التجميع|الغاء تجميع)"))
 async def cancel_collection(event):
