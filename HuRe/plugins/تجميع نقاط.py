@@ -18,7 +18,7 @@ bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
 its_Reham = False
-@l313l.on(admin_cmd(pattern="(تجميع مليار|تجميع المليار)"))
+@l313l.on(admin_cmd(pattern="تجميع"))
 async def _(event):
     if HuRe[0] == "yes":
         await event.edit("**᯽︙سيتم تجميع نقاط بوت المليار، قبل كل شيء تأكد من أنك قمت بالانضمام إلى القنوات الاشتراك الاجباري للبوت لتجنب حدوث أخطاء.**")
