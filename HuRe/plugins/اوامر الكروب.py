@@ -63,29 +63,29 @@ async def ban_user(chat_id, i, rights):
     except Exception as exc:
         return False, str(exc)        
 banned_user_count = 2
-
-def send_alert():
-    print('Admin banned, alert sent')
+ban_admin_joker = False
 
 @l313l.ar_cmd(pattern=r"(?:حماية) تفعيل$")
-async def enable_kick(event):
-    if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
-        return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُفعل بالفعل🧸♥**")
+async def enable_protection(event):
+    global ban_admin_joker
+    if ban_admin_joker:
+        await event.edit("**أمر حظر المشرفين المفعل بالفعل.**")
     else:
-        addgvar("ban_admin_joker", True)
-        await event.edit("**᯽︙ تم تفعيل امر حظر المشرفين الممنوعة بنجاح.**")
+        ban_admin_joker = True
+        await event.edit("**تم تفعيل أمر حظر المشرفين.**")
 
 @l313l.ar_cmd(pattern=r"(?:حماية) تعطيل$")
-async def disable_kick(event):
-    if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
-        delgvar("ban_admin_joker")
-        await event.edit("**᯽︙ تم تعطيل امر حظر المشرفين الممنوعة بنجاح.**")
+async def disable_protection(event):
+    global ban_admin_joker
+    if not ban_admin_joker:
+        await event.edit("**أمر حظر المشرفين معطل بالفعل.**")
     else:
-        return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
+        ban_admin_joker = False
+        await event.edit("**تم تعطيل أمر حظر المشرفين.**")
 
 @l313l.on(events.ChatAction)
 async def handle_kick(event):
-    if gvarstatus("ban_admin_joker"):
+    if ban_admin_joker:
         if event.action_message and isinstance(event.action_message, types.MessageActionChatDeleteUser):
             if len(event.action_message.users) == banned_user_count:
                 banned_user_ids = [user.id for user in event.action_message.users]
