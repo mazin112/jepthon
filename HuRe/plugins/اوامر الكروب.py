@@ -66,7 +66,7 @@ async def ban_user(chat_id, i, rights):
 last_kick_time = 0
 kick_count = 0
 
-@l313l.ar_cmd(pattern=r"(?:تتفعيل) حماية$")
+@l313l.ar_cmd(pattern=r"(?:حماية) تفعيل$")
 async def enable_kick(event):
     if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُفعل بالفعل🧸♥**")
@@ -74,7 +74,7 @@ async def enable_kick(event):
         addgvar("ban_admin_joker", True)
         await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
 
-@l313l.ar_cmd(pattern=r"(?:تتعطيل) حماية$")
+@l313l.ar_cmd(pattern=r"(?:حماية) تعطيل$")
 async def disable_kick(event):
     if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
         delgvar("ban_admin_joker")
@@ -84,6 +84,7 @@ async def disable_kick(event):
 
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
+    global last_kick_time, kick_count
     if gvarstatus("ban_admin_joker"):
         current_time = time.time()
         if event.user_joined or event.user_kicked:
@@ -101,7 +102,7 @@ async def kick_banned_name(event):
                 else:
                     last_kick_time = current_time
                     kick_count = 1
-
+                    
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
