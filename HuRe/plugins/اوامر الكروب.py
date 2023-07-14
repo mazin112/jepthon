@@ -734,8 +734,9 @@ async def kick_banned_name(event):
             participants = await event.client.get_participants(group_entity)
             for participant in participants:
                 if any(name.lower() in participant.first_name.lower() for name in banned_names):
-                    await event.client.edit_permissions(group_entity, participant, view_messages=False)
-                    await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم {participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
+                    if participant.id != event.client.uid:
+                        await event.client.edit_permissions(group_entity, participant, view_messages=False)
+                        await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم {participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
 
 @l313l.ar_cmd(pattern=r"القائمة السوداء$")
 async def list_banned_names(event):
