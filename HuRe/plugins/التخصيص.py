@@ -247,3 +247,26 @@ async def custom_HuRe(event):
             f"#حذف_فار\
                     \n**فار {input_str}** تم حذفه من قاعده البيانات",
         )
+from telethon import types
+
+@l313l.ar_cmd(pattern=r"تيست (.*)")
+async def custom_HuRe(event):
+    reply = await event.get_reply_message()
+    text = None
+    var = None
+    if reply and isinstance(reply.media, types.MessageMediaWebPage):
+        if reply.media.webpage.url.startswith("https://telegra.ph"):
+            text = reply.media.webpage.url
+    if text is None:
+        return await edit_delete(
+            event, "**⌔∮ يجب عليك الرد على الميديا التي تحتوي على رابط تلكراف**"
+        )
+    input_str = event.pattern_match.group(1)
+    if (
+        input_str == "صورة الفحص"
+        or input_str == "صورة فحص"
+        or input_str == "صوره الفحص"
+        or input_str == "صوره فحص"
+    ):
+        addgvar("ALIVE_PIC", text)
+        var = "ALIVE_PIC"
