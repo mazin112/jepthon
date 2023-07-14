@@ -6,7 +6,8 @@ from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG_CHATID
-from telethon import types
+from telegraph import Telegraph
+
 
 LOGS = logging.getLogger(__name__)
 cmdhd = Config.COMMAND_HAND_LER
@@ -249,31 +250,33 @@ async def custom_HuRe(event):
             f"#حذف_فار\
                     \n**فار {input_str}** تم حذفه من قاعده البيانات",
         )
-
+telegraph = Telegraph()
+telegraph.create_account(short_name='my_account')
 @l313l.ar_cmd(pattern="تيست (.*)")
 async def custom_HuRe(event):
     reply = await event.get_reply_message()
     if not reply or not reply.media:
         return await event.edit("**⌔∮ يجب عليك الرد على وسائط (ميديا) لاستخراج الرابط**")
-    media_url = None
+    media = None
     if reply.photo:
-        media_url = reply.photo.file_reference
+        media = reply.photo
     elif reply.video:
-        media_url = reply.video.file_reference
+        media = reply.video
     elif reply.document:
-        media_url = reply.document.file_reference
-    if not media_url:
+        media = reply.document
+    if not media:
         return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
-    media_url = str(media_url)
-    telegraph_url = re.search(r"https?://telegra\.ph/[^?\s]+", media_url)
-    if not telegraph_url:
-        return await event.edit("**⌔∮ لا يمكن العثور على رابط Telegraph.org في الوسائط المرسلة.**")
+    response = await event.client.upload_file(media)
+    telegraph_url = telegraph.create_page(
+        title="Media",
+        html_content=f'<img src="{response.url}" />'
+    )['url']
     var = "PING_PIC"
     delgvar(var)
-    addgvar(var, telegraph_url.group())
+    addgvar(var, telegraph_url)
     await event.edit(f"**₰ تم بنجاح تحديث فار PING_PIC برابط Telegraph.org**")
     if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#اضف_فار\n**{var}** تم تحديثه بنجاح في قاعدة البيانات كـ:\n{telegraph_url.group()}",
+            f"#اضف_فار\n**{var}** تم تحديثه بنجاح في قاعدة البيانات كـ:\n{telegraph_url}",
         )
