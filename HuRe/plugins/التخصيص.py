@@ -213,12 +213,7 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
-from telegraph import Telegraph
-import re
-
-telegraph = Telegraph()
-
-@l313l.ar_cmd(pattern="جعل")
+@l313l.ar_cmd(pattern="جعل (.*)")
 async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
