@@ -82,7 +82,7 @@ async def disable_kick(event):
     else:
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
-@l313l.on(ChatAction)
+@l313l.on(events.ChatAction)
 def handle_kick(event):
     if gvarstatus("ban_admin_joker"):
         if event.user_kicked_out and event.action_message.action.users == 2:
