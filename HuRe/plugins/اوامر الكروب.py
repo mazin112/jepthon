@@ -63,47 +63,44 @@ async def ban_user(chat_id, i, rights):
     except Exception as exc:
         return False, str(exc)        
 
-kick_count = 0
 last_kick_time = 0
-is_enabled = True
+kick_count = 0
 
-async def get_admin_ids(chat_id):
-    admins = await l313l.get_participants(
-        chat_id, filter=ChannelParticipantsAdmins
-    )
-    admin_ids = [participant.id for participant in admins]
-    return admin_ids
+@l313l.ar_cmd(pattern=r"(?:تتفعيل) حماية$")
+async def enable_kick(event):
+    if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
+        return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُفعل بالفعل🧸♥**")
+    else:
+        addgvar("kick_enabled_variable", True)
+        await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
+
+@l313l.ar_cmd(pattern=r"(?:تتعطيل) حماية$")
+async def disable_kick(event):
+    if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
+        delgvar("kick_enabled_variable")
+        await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
+    else:
+        return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
 @l313l.on(events.ChatAction)
-async def handle_kick(event):
-    if is_enabled and event.user_id in await get_admin_ids(event.chat_id) and event.action.message.action == 'kick':
+async def kick_banned_name(event):
+    if gvarstatus("kick_enabled_variable"):
         current_time = time.time()
-        if current_time - last_kick_time <= 60:
-            kick_count += 1
-        else:
-            kick_count = 1
-        last_kick_time = current_time
-        if kick_count >= 3:
-            await client.kick_participant(event.chat_id, event.user_id)
-            kick_count = 0
-            admin_id = event.user_id  # افترض أنه هناك متغير يحتوي على معرّف المشرف
-            admin_entity = await client.get_entity(admin_id)
-            admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
-            admin_profile_link = f'https://t.me/{admin_username}'
-            message = f"تم إزالة المشرف! قام بطرد 3 أعضاء أو أكثر في نفس الدقيقة.\n\n" \
-                      f"ملف الشخصي للمشرف: {admin_profile_link}"
-            await l313l.send_message('me', message)
-            
-@l313l.ar_cmd(pattern=r"حماية تفعيل")
-async def enable(event):
-    is_enabled = True
-    await event.edit('**تم تشغيل حماية القناة والمجموعة بنجاح**')
-
-@l313l.ar_cmd(pattern=r"حماية تعطيل")
-async def disable(event):
-    is_enabled = False
-    await event.edit('**تم تعطيل حماية الثناة والمجموعة بنجاح**')
-
+        if event.user_joined or event.user_kicked:
+            if event.user_kicked:
+                if event.user_id == event.client.uid:
+                    return
+                if event.user_id == event.client.uid and current_time - last_kick_time <= 60:
+                    kick_count += 1
+                    if kick_count == 2:
+                        await event.client.ban_user(event.chat_id, event.client.uid)
+                        await event.client.send_message(event.chat_id, "**᯽︙ تم حظر المشرف لطرد 2 مشاركين في نفس الدقيقة ✘**")
+                        kick_count = 0
+                    else:
+                        last_kick_time = current_time
+                else:
+                    last_kick_time = current_time
+                    kick_count = 1
 
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
