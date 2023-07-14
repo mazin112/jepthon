@@ -278,9 +278,13 @@ async def custom_HuRe(event):
     else:
         photo_url = response.url
 
+    title = "Media"
+    content = "This is the media content."
+    
     telegraph_url = telegraph.create_page(
-        title="Media",
-        html_content=f'<img src="{photo_url}" />'
+        title=title,
+        author_name="Your Name",
+        html_content=f'<img src="{photo_url}" /><br>{content}'
     )['url']
 
     var = "PING_PIC"
