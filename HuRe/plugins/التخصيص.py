@@ -213,7 +213,7 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
-@l313l.ar_cmd(pattern=r"جعل (صورة الفحص|صورة البنك|صورة الحماية)")
+@l313l.ar_cmd(pattern=r"جعل(.+)")
 async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
@@ -224,10 +224,6 @@ async def test(event):
             url = 'https://telegra.ph' + response[0]['src']
             if input_str == "صورة الفحص" or input_str == "صورة فحص":
                 addgvar("ALIVE_PIC", url)
-            elif input_str == "صورة البنك" or input_str == "صورة بنك":
-                addgvar("PING_PIC", url)
-            elif input_str == "صورة الحماية" or input_str == "صورة حماية" or input_str == "صورة الحمايه" or input_str == "صورة الحمايه":
-                addgvar("pmpermit_pic", url)
             await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
             if BOTLOG_CHATID:
                 await event.client.send_message(
