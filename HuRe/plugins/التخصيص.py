@@ -222,7 +222,7 @@ telegraph = Telegraph()
 async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
-        input_str = event.pattern_match.group(0)
+        input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
         if response.ok:
