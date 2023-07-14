@@ -76,7 +76,8 @@ async def block_admins(event):
         for admin in admins:
             if admin.id == user_id:
                 await event.client.edit_permissions(event.chat_id, user_id, view_messages=False)
-                print(f"Blocked admin {admin.username}")
+                await event.client.kick_participant(event.chat_id, user_id)
+                print(f"Blocked and kicked admin {admin.username}")
 
 @l313l.ar_cmd(pattern="حماية تفعيل")
 async def enable_protection(event):
