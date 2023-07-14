@@ -728,18 +728,14 @@ async def disable_kick(event):
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
     if gvarstatus("kick_enabled_variable"):
-        banned_names = gvarstatus(banned_names_variable)
-        if banned_names is None:
-            banned_names = []
-        if event.is_chat_action() and event.user_joined:
+        if event.is_group:
             group_entity = event.chat_id
             participants = await event.client.get_participants(group_entity)
             for participant in participants:
-                if participant.id == event.user_id:
-                    if any(name.lower() in participant.first_name.lower() for name in banned_names):
-                        await event.client.kick_participant(group_entity, participant.id)
-                        await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم {participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
-                        
+                if any(name.lower() in participant.first_name.lower() for name in banned_names):
+                    await event.client.edit_permissions(group_entity, participant, view_messages=False)
+                    await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم {participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
+
 @l313l.ar_cmd(pattern=r"القائمة السوداء$")
 async def list_banned_names(event):
     banned_names_str = gvarstatus(banned_names_variable)
