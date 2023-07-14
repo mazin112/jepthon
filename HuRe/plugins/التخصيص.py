@@ -220,10 +220,9 @@ async def test(event):
         input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
-        if response[0].get('ok', False):
-            url = 'https://telegra.ph' + response[0]['src']
-            if input_str in ["صورة فحص", "صورة الفحص"]:
-                addgvar("ALIVE_PIC", url)
+        url = 'https://telegra.ph' + response[0]['src']
+        if input_str in ["صورة فحص", "صورة الفحص"]:
+            addgvar("ALIVE_PIC", url)
             await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
             if BOTLOG_CHATID:
                 await event.client.send_message(
