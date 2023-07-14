@@ -254,7 +254,7 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
-@l313l.ar_cmd(pattern="تيست صورة البنك", outgoing=True)
+@l313l.ar_cmd(pattern="تيست", outgoing=True)
 async def get_bank_photo(event):
     if event.is_reply:
         try:
