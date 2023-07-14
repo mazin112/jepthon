@@ -2,7 +2,7 @@ from asyncio import sleep
 import asyncio
 import requests
 import time
-from telethon import types, TelegramClient
+from telethon import types
 from telethon.tl.types import Channel, Chat, User, ChannelParticipantsAdmins
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.errors.rpcerrorlist import ChannelPrivateError
@@ -87,11 +87,14 @@ async def handle_kick(event):
         if kick_count >= 3:
             await client.kick_participant(event.chat_id, event.user_id)
             kick_count = 0
+            admin_id = event.user_id  # افترض أنه هناك متغير يحتوي على معرّف المشرف
+            admin_entity = await client.get_entity(admin_id)
+            admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
             admin_profile_link = f'https://t.me/{admin_username}'
             message = f"تم إزالة المشرف! قام بطرد 3 أعضاء أو أكثر في نفس الدقيقة.\n\n" \
                       f"ملف الشخصي للمشرف: {admin_profile_link}"
             await l313l.send_message('me', message)
-
+            
 @l313l.ar_cmd(pattern=r"حماية تفعيل")
 async def enable(event):
     global is_enabled
