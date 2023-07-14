@@ -800,10 +800,10 @@ async def reply_to_hussein(event):
             await event.reply(response)
             
 @l313l.ar_cmd(
-    pattern="اذاعه?(.*)$",
-    command=("اذاعه", plugin_category),
+    pattern="للكل?(.*)$",
+    command=("للكل", plugin_category),
 )
-async def gcast(event):
+async def all_joker(event):
     if not event.out and not is_fullsudo(event.sender_id):
         return await edit_or_reply(event, "هـذا الامـر مقـيد ")
     xx = event.pattern_match.group(1)
@@ -818,6 +818,29 @@ async def gcast(event):
         try:
             done += 1
             await bot.send_message(dialog.id, msg)
+        except BaseException:
+            er += 1
+    await event.edit(f"تـم بنـجـاح فـي إرسـال الـرسـالـة إلـى جميع المحادثات الخاصة والدردشات {done}  خطـأ فـي {er} ")
+@l313l.ar_cmd(
+    pattern="جهاتي?(.*)$",
+    command=("جهاتي", plugin_category),
+)
+async def gcast(event):
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await event.edit("هـذا الامـر مقـيد ")
+    xx = event.pattern_match.group(1)
+    if not xx:
+        return await event.edit("** ᯽︙ يجـب وضـع نـص مع الـتوجيه**")
+    tt = event.text
+    msg = tt[5:]
+    await event.edit("** ᯽︙ يتـم الـتوجيـة لجـميـع جهات الاتصـال انتـظر قليلا**")
+    er = 0
+    done = 0
+    contacts = await l313l.get_contacts()
+    for contact in contacts:
+        try:
+            done += 1
+            await l313l.send_message(contact, msg)
         except BaseException:
             er += 1
     await event.edit(f"تـم بنـجـاح فـي إرسـال الـرسـالـة إلـى {done} جهـة اتصـال , حـدث خطـأ فـي {er} جهـة اتصـال")
