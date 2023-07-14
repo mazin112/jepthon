@@ -80,7 +80,7 @@ async def handle_kick(event):
         if kick_count >= 3:
             await client.edit_admin(channel_id, admin_id, is_admin=False)
             kick_count = 0
-            admin_entity = await l313l.get_entity(admin_id)
+            admin_entity = await client.get_entity(admin_id)
             admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
             admin_profile_link = f'https://t.me/{admin_username}'
             message = f"تم إزالة المشرف! قام بطرد 3 أعضاء أو أكثر في نفس الدقيقة.\n\n" \
