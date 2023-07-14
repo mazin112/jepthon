@@ -258,29 +258,19 @@ auth_url = r["auth_url"]
 async def custom_HuRe(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
-        urls = extract_urls_from_media(reply.media)
-        if urls:
-            input_str = event.pattern_match.group(1)
-            text = urls[0]
-            addgvar("PING_PIC", text)
+        input_str = event.pattern_match.group(1)
+        media = await reply.download_media()
+        response = telegraph.upload_file(media)
+        if response.ok:
+            url = 'https://telegra.ph' + response[0]['src']
+            addgvar("PING_PIC", url)
             await event.edit(f"**تم بنجاح تحديث فار {input_str}**")
             if BOTLOG_CHATID:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {text}",
+                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
                 )
         else:
-            await event.edit("**يرجى الرد على وسائط تلجراف (Telegraph) أولاً**")
+            await event.edit("**حدث خطأ أثناء تحميل الوسائط على Telegraph**")
     else:
         await event.edit("**يرجى الرد على وسائط لاستخراج الرابط**")
-
-def extract_urls_from_media(media):
-    urls = []
-    if media.photo:
-        for photo in media.photo.sizes:
-            if photo.type == 'x':
-                urls.append(f"https://telegra.ph/file/{photo.id}")
-    elif media.document:
-        if media.document.mime_type.startswith('image/'):
-            urls.append(media.document.url)
-    return urls
