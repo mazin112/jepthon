@@ -1,4 +1,5 @@
 from urlextract import URLExtract
+import re
 from HuRe import l313l
 from HuRe.core.logger import logging
 from ..Config import Config
@@ -249,31 +250,29 @@ async def custom_HuRe(event):
                     \n**فار {input_str}** تم حذفه من قاعده البيانات",
         )
 
-@l313l.ar_cmd(pattern=r"اضف (.*)")
+@l313l.ar_cmd(pattern="اضف (.*)")
 async def custom_HuRe(event):
     reply = await event.get_reply_message()
-    text = None
-    var = None
-    if reply and (reply.media and (reply.photo or reply.video)):
-        if reply.media.webpage.url.startswith("https://telegra.ph"):
-            text = reply.media.webpage.url
-    if text is None:
-        return await event.edit("**⌔∮ يجب عليك الرد على صورة أو فيديو والذي يحتوي على رابط تلكراف**")
-    input_str = event.pattern_match.group(1)
-    if (
-        input_str == "صورة الفحص"
-        or input_str == "صورة فحص"
-        or input_str == "صوره الفحص"
-        or input_str == "صوره فحص"
-    ):
-        addgvar("ALIVE_PIC", text)
-        var = "ALIVE_PIC"
-    await edit_or_reply(event, f"**₰ تم بنجاح تحديث فار {input_str} 𓆰،**")
+    if not reply or not reply.media:
+        return await event.edit("**⌔∮ يجب عليك الرد على وسائط (ميديا) لاستخراج الرابط**")
+    media_url = None
+    if reply.photo:
+        media_url = reply.photo.url
+    elif reply.video:
+        media_url = reply.video.url
+    elif reply.document:
+        media_url = reply.document.url
+    if not media_url:
+        return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
+    telegraph_url = re.search(r"https?://telegra\.ph/[^?\s]+", media_url)
+    if not telegraph_url:
+        return await event.edit("**⌔∮ لا يمكن العثور على رابط Telegraph.org في الوسائط المرسلة.**")
+    var = "PING_PIC"
     delgvar(var)
-    addgvar(var, text)
+    addgvar(var, telegraph_url.group())
+    await event.edit(f"**₰ تم بنجاح تحديث فار PING_PIC برابط Telegraph.org**")
     if BOTLOG_CHATID:
-            await event.client.send_message(
+        await event.client.send_message(
             BOTLOG_CHATID,
-            f"#اضف_فار\
-                    \n**{input_str}** تم تحديثه بنجاح في قاعده البيانات كـ:",
+            f"#اضف_فار\n**{var}** تم تحديثه بنجاح في قاعدة البيانات كـ:\n{telegraph_url.group()}",
         )
