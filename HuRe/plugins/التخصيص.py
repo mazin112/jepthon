@@ -273,9 +273,14 @@ async def custom_HuRe(event):
     downloaded_file = await event.client.download_media(media)
     response = await event.client.upload_file(downloaded_file)
 
+    if reply.photo:
+        photo_url = await event.client.download_media(media)
+    else:
+        photo_url = response.url
+
     telegraph_url = telegraph.create_page(
         title="Media",
-        html_content=f'<img src="{media.url}" />'
+        html_content=f'<img src="{photo_url}" />'
     )['url']
 
     var = "PING_PIC"
