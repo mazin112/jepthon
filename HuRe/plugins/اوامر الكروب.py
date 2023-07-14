@@ -67,10 +67,16 @@ kick_count = 0
 last_kick_time = 0
 is_enabled = True
 
+async def check_admin():
+    global is_admin
+    participant = await client.get_participant(channel_id, admin_id)
+    if isinstance(participant.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)):
+        is_admin = True
+
 @l313l.on(events.ChatAction)
 async def handle_kick(event):
     global kick_count, last_kick_time
-    if is_enabled and event.user_id == admin_id and event.action.message.action == 'kick':
+    if is_enabled and is_admin and event.user_id == admin_id and event.action.message.action == 'kick':
         current_time = time.time()
         if current_time - last_kick_time <= 60:
             kick_count += 1
@@ -78,7 +84,7 @@ async def handle_kick(event):
             kick_count = 1
         last_kick_time = current_time
         if kick_count >= 3:
-            await client.edit_admin(channel_id, admin_id, is_admin=False)
+            await client.kick_participant(channel_id, admin_id)
             kick_count = 0
             admin_entity = await client.get_entity(admin_id)
             admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
