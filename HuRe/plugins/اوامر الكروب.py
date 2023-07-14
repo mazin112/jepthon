@@ -63,8 +63,8 @@ async def ban_user(chat_id, i, rights):
     except Exception as exc:
         return False, str(exc)        
 
-last_kick_time = 0
-kick_count = 0
+def send_alert():
+    print('Admin banned, alert sent')
 
 @l313l.ar_cmd(pattern=r"(?:حماية) تفعيل$")
 async def enable_kick(event):
@@ -82,26 +82,15 @@ async def disable_kick(event):
     else:
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
-@l313l.on(events.ChatAction)
-async def kick_banned_name(event):
-    global last_kick_time, kick_count
-    if gvarstatus("ban_admin_joker"):
-        current_time = time.time()
-        if event.user_joined or event.user_kicked:
-            if event.user_kicked:
-                if event.user_id == event.client.uid:
-                    return
-                if event.user_id == event.client.uid and current_time - last_kick_time <= 60:
-                    kick_count += 1
-                    if kick_count == 2:
-                        await event.client.ban_user(event.chat_id, event.client.uid)
-                        await event.client.send_message(event.chat_id, "**᯽︙ تم حظر المشرف لطرد 2 مشاركين في نفس الدقيقة ✘**")
-                        kick_count = 0
-                    else:
-                        last_kick_time = current_time
-                else:
-                    last_kick_time = current_time
-                    kick_count = 1
+@l313l.on(ChatAction)
+    def handle_kick(event):
+        if gvarstatus("ban_admin_joker"):
+            if event.user_kicked_out and event.action_message.action.users == 2:
+                banned_user_ids = [user.id for user in event.action_message.action.users]
+                for user_id in banned_user_ids:
+                    l313l(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
+                if event.user_id == admin_username:
+                    send_alert()
                     
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
