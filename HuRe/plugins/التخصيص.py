@@ -91,54 +91,12 @@ async def custom_HuRe(event):
     ):
        addgvar("digitalpiccolor", text)
        var = "digitalpiccolor"
-    if (
-        input_str == "صورة الحماية"
-        or input_str == "صورة الحمايه"
-        or input_str == "صوره الحماية"
-        or input_str == "صوره الحمايه"
-    ):
-        urls = extractor.find_urls(reply.text)
-        if not urls:
-            return await edit_delete(
-                event, "**⪼ يجب عليك الرد على رابط تلجراف اولا**", 5
-            )
-        text = " ".join(urls)
-        addgvar("pmpermit_pic", text)
-        var = "pmpermit_pic"
-    if (
-        input_str == "صورة الفحص"
-        or input_str == "صورة فحص"
-        or input_str == "صوره الفحص"
-        or input_str == "صوره فحص"
-    ):
-        urls = extractor.find_urls(reply.text)
-        if not urls:
-            return await edit_delete(
-                event, "**⪼ يجب عليك الرد على رابط تلجراف اولا**", 5
-            )
-        text = " ".join(urls)
-        addgvar("ALIVE_PIC", text)
-        var = "ALIVE_PIC"
     if input_str == "التخزين" or input_str == "تخزين":
         addgvar("PM_LOGGER_GROUP_ID", text)
         var = "PM_LOGGER_GROUP_ID"
     if input_str == "اشعارات" or input_str == "الاشعارات":
         addgvar("PRIVATE_GROUP_BOT_API_ID", text)
         var = "PRIVATE_GROUP_BOT_API_ID"
-    if (
-        input_str == "صورة البنك"
-        or input_str == "صورة بنك"
-        or input_str == "صوره البنك"
-        or input_str == "صوره بنك"
-    ):
-        urls = extractor.find_urls(reply.text)
-        if not urls:
-            return await edit_delete(
-                event, "**⪼ يجب عليك الرد على رابط تلجراف اولا**", 5
-            )
-        text = " ".join(urls)
-        addgvar("PING_PIC", text)
-        var = "PING_PIC"
     await edit_or_reply(event, f"**₰ تم بنجاح تحديث فار {input_str} 𓆰،**")
     delgvar(var)
     addgvar(var, text)
@@ -255,20 +213,33 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
-@l313l.ar_cmd(pattern="تيست (.*)")
-async def custom_HuRe(event):
+from telegraph import Telegraph
+import re
+
+telegraph = Telegraph()
+
+@l313l.ar_cmd(pattern="اضف")
+async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
         input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
-        url = 'https://telegra.ph' + response[0]['src']
-        addgvar("PING_PIC", url)
-        await event.edit(f"**تم بنجاح تحديث فار {input_str}**")
-        if BOTLOG_CHATID:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
-            )
+        if response.ok:
+            url = 'https://telegra.ph' + response[0]['src']
+            if input_str == "صورة الفحص" or input_str == "صورة فحص":
+                addgvar("ALIVE_PIC", url)
+            elif input_str == "صورة البنك" or input_str == "صورة بنك":
+                addgvar("PING_PIC", url)
+            elif input_str == "صورة الحماية" or input_str == "صورة حماية" or input_str == "صورة الحمايه" or input_str == "صورة الحمايه":
+                addgvar("pmpermit_pic", url)
+            await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
+            if BOTLOG_CHATID:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+                )
+        else:
+            await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
     else:
-        await event.edit("**يرجى الرد على وسائط لاستخراج الرابط**")
+        await event.edit("**يرجى الرد على الصورة لتحديث الفار**")
