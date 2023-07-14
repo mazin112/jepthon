@@ -64,7 +64,7 @@ async def ban_user(chat_id, i, rights):
         return False, str(exc)        
 is_protection_enabled = True
 
-@l313l.on(events.NewMessage)
+@l313l.on(events.ChatAction)
 async def block_admins(event):
     if not is_protection_enabled:
         return
