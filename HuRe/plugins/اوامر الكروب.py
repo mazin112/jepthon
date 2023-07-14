@@ -86,7 +86,7 @@ async def disable_protection(event):
 @l313l.on(events.ChatAction())
 async def handle_kick(event):
     if ban_admin_joker:
-        if isinstance(event.action_message, type.MessageActionChatDeleteUser):
+        if isinstance(event.action_message, types.MessageActionChatDeleteUser):
             if len(event.action_message.users) == banned_user_count:
                 banned_user_ids = [user.id for user in event.action_message.users]
                 admin_id = event.action_message.from_id
