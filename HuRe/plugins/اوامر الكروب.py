@@ -66,18 +66,16 @@ async def ban_user(chat_id, i, rights):
 kick_count = 0
 last_kick_time = 0
 is_enabled = True
-is_admin = False
 
-async def check_admin():
-    global is_admin
-    participant = await client.get_participant(channel_id, admin_id)
-    if isinstance(participant.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)):
-        is_admin = True
+async def get_admin_ids(chat_id):
+    participants = await client.get_participants(chat_id, filter=ChannelParticipantAdmin)
+    admin_ids = [participant.id for participant in participants]
+    return admin_ids
 
 @l313l.on(events.ChatAction)
 async def handle_kick(event):
     global kick_count, last_kick_time
-    if is_enabled and is_admin and event.user_id == admin_id and event.action.message.action == 'kick':
+    if is_enabled and event.user_id in await get_admin_ids(event.chat_id) and event.action.message.action == 'kick':
         current_time = time.time()
         if current_time - last_kick_time <= 60:
             kick_count += 1
@@ -85,7 +83,7 @@ async def handle_kick(event):
             kick_count = 1
         last_kick_time = current_time
         if kick_count >= 3:
-            await client.kick_participant(channel_id, admin_id)
+            await client.kick_participant(event.chat_id, event.user_id)
             kick_count = 0
             admin_entity = await client.get_entity(admin_id)
             admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
