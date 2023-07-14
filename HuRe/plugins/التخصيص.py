@@ -220,14 +220,20 @@ async def test(event):
         input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
-        url = 'https://telegra.ph' + response[0]['src']
-        addgvar("ALIVE_PIC", url)
-        await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
-        if BOTLOG_CHATID:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
-            )
+        if response[0].get('ok', False):
+            url = 'https://telegra.ph' + response[0]['src']
+            if input_str.lower() == "صورة الفحص" or input_str.lower() == "صورة فحص":
+                addgvar("ALIVE_PIC", url)
+            elif input_str.lower() == "صورة البنك" or input_str.lower() == "صورة بنك":
+                addgvar("PING_PIC", url)
+            elif input_str.lower() == "صورة الحماية" or input_str.lower() == "صورة حماية" or input_str.lower() == "صورة الحمايه" or input_str.lower() == "صورة الحمايه":
+                addgvar("pmpermit_pic", url)
+            await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
+            if BOTLOG_CHATID:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+                )
         else:
             await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
     else:
