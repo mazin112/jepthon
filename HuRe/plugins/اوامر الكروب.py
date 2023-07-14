@@ -99,9 +99,10 @@ async def handle_kick(event):
                     admin_username = None
                 
                 if admin_username:
-                    for user_id in banned_user_ids:
-                        banned_rights = ChannelParticipantAdmin(admin_id, "", True, True, True, True, True, True)
-                        await event.client(EditBannedRequest(event.chat_id, user_id, banned_rights))
+                    admin_participant = await event.client.get_participant(event.chat_id, admin_id)
+                    if isinstance(admin_participant.participant, ChannelParticipantAdmin):
+                        for user_id in banned_user_ids:
+                            await event.client(EditBannedRequest(event.chat_id, user_id, admin_participant.participant.banned_rights))
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
