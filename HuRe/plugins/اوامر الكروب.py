@@ -64,7 +64,7 @@ async def ban_user(chat_id, i, rights):
         return False, str(exc)        
 is_protection_enabled = True
 
-@client.on(events.ChatAction)
+@l313l.on(events.ChatAction)
 async def handle_chat_action(event):
     if is_protection_enabled and event.user_id in event.action_message.action.users and event.action_message.from_id == 6162340778:
         rights = ChatAdminRights(add_admins=False, invite_users=False, change_info=False, ban_users=False)
