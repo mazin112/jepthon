@@ -68,23 +68,23 @@ kick_count = 0
 
 @l313l.ar_cmd(pattern=r"(?:تتفعيل) حماية$")
 async def enable_kick(event):
-    if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
+    if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُفعل بالفعل🧸♥**")
     else:
-        addgvar("kick_enabled_variable", True)
+        addgvar("ban_admin_joker", True)
         await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
 
 @l313l.ar_cmd(pattern=r"(?:تتعطيل) حماية$")
 async def disable_kick(event):
-    if gvarstatus("kick_enabled_variable") is not None and gvarstatus("kick_enabled_variable") == "true":
-        delgvar("kick_enabled_variable")
+    if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
+        delgvar("ban_admin_joker")
         await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
     else:
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
-    if gvarstatus("kick_enabled_variable"):
+    if gvarstatus("ban_admin_joker"):
         current_time = time.time()
         if event.user_joined or event.user_kicked:
             if event.user_kicked:
