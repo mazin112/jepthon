@@ -72,13 +72,13 @@ async def enable_kick(event):
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُفعل بالفعل🧸♥**")
     else:
         addgvar("ban_admin_joker", True)
-        await event.edit("**᯽︙ تم تفعيل امر طرد الاسماء الممنوعة بنجاح.**")
+        await event.edit("**᯽︙ تم تفعيل امر حظر المشرفين الممنوعة بنجاح.**")
 
 @l313l.ar_cmd(pattern=r"(?:حماية) تعطيل$")
 async def disable_kick(event):
     if gvarstatus("ban_admin_joker") is not None and gvarstatus("kick_enabled_variable") == "true":
         delgvar("ban_admin_joker")
-        await event.edit("**᯽︙ تم تعطيل امر طرد الاسماء الممنوعة بنجاح.**")
+        await event.edit("**᯽︙ تم تعطيل امر حظر المشرفين الممنوعة بنجاح.**")
     else:
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
