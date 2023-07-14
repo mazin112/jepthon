@@ -90,8 +90,7 @@ async def handle_kick(event):
             if len(event.action_message.users) == banned_user_count:
                 banned_user_ids = [user.id for user in event.action_message.users]
                 for user_id in banned_user_ids:
-                    await client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
-                send_alert()
+                    await event.client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
                     
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
