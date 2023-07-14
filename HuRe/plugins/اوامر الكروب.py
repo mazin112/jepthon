@@ -62,6 +62,44 @@ async def ban_user(chat_id, i, rights):
         return True, None
     except Exception as exc:
         return False, str(exc)        
+
+kick_count = 0
+last_kick_time = 0
+is_enabled = True
+
+@l313l.on(events.ChatAction)
+async def handle_kick(event):
+    global kick_count, last_kick_time
+    if is_enabled and event.user_id == admin_id and event.action.message.action == 'kick':
+        current_time = time.time()
+        if current_time - last_kick_time <= 60:
+            kick_count += 1
+        else:
+            kick_count = 1
+        last_kick_time = current_time
+        if kick_count >= 3:
+            await l313l.edit_admin(channel_id, admin_id, is_admin=False)
+            kick_count = 0
+            admin_entity = await l313l.get_entity(admin_id)
+            admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
+            admin_profile_link = f'https://t.me/{admin_username}'
+            message = f"تم إزالة المشرف! قام بطرد 3 أعضاء أو أكثر في نفس الدقيقة.\n\n" \
+                      f"ملف الشخصي للمشرف: {admin_profile_link}"
+            await l313l.send_message('me', message)
+
+@l313l.ar_cmd(pattern=r"حماية تفعيل")
+async def enable(event):
+    global is_enabled
+    is_enabled = True
+    await event.edit('**تم تشغيل حماية القناة والمجموعة بنجاح**')
+
+@l313l.ar_cmd(pattern=r"حماية تعطيل")
+async def disable(event):
+    global is_enabled
+    is_enabled = False
+    await event.edit('**تم تعطيل حماية الثناة والمجموعة بنجاح**')
+
+
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
