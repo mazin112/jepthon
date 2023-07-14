@@ -83,18 +83,18 @@ async def disable_protection(event):
         ban_admin_joker = False
         await event.edit("**تم تعطيل أمر حظر المشرفين.**")
 
-@l313l.on(events.ChatAction)
+@l313l.on(events.NewMessage)
 async def handle_kick(event):
     if ban_admin_joker:
-        if isinstance(event.action, types.ChatActionParticipantRemoved):
-            if len(event.action.users) == banned_user_count:
-                banned_user_ids = [user.id for user in event.action.users]
-                admin_id = event.action.by_id
+        if event.message.action and isinstance(event.message.action, types.MessageActionChatDeleteUser):
+            if len(event.message.action.users) == banned_user_count:
+                banned_user_ids = [user.id for user in event.message.action.users]
+                admin_id = event.message.action.user_id
                 participant = await event.client.get_participant(event.chat_id, admin_id)
                 if isinstance(participant.participant, ChannelParticipantAdmin) and not participant.participant.banned_rights:
                     for user_id in banned_user_ids:
                         await event.client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
-
+                        
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
