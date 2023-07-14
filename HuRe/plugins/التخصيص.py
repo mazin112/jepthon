@@ -221,14 +221,13 @@ async def test(event):
         media = await reply.download_media()
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
-        if input_str in ["صورة فحص", "صورة الفحص"]:
-            addgvar("ALIVE_PIC", url)
-            await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
-            if BOTLOG_CHATID:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
-                )
+        addgvar("ALIVE_PIC", url)
+        await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
+        if BOTLOG_CHATID:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+            )
         else:
             await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
     else:
