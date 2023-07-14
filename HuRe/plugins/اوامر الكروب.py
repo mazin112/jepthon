@@ -798,3 +798,27 @@ async def reply_to_hussein(event):
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
             await asyncio.sleep(4)
             await event.reply(response)
+            
+@l313l.ar_cmd(
+    pattern="اذاعه?(.*)$",
+    command=("اذاعه", plugin_category),
+)
+async def gcast(event):
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await edit_or_reply(event, "هـذا الامـر مقـيد ")
+    xx = event.pattern_match.group(1)
+    if not xx:
+        return edit_or_reply(event, "** ᯽︙ يجـب وضـع نـص مع الـتوجيه**")
+    tt = event.text
+    msg = tt[5:]
+    event = await edit_or_reply(event, "** ᯽︙ يتـم الـتوجيـة لجـميـع جهات الاتصـال انتـظر قليلا**")
+    er = 0
+    done = 0
+    contacts = await bot.get_contacts()
+    for contact in contacts:
+        try:
+            done += 1
+            await bot.send_message(contact.id, msg)
+        except BaseException:
+            er += 1
+    await event.edit(f"تـم بنـجـاح فـي إرسـال الـرسـالـة إلـى {done} جهـة اتصـال , حـدث خطـأ فـي {er} جهـة اتصـال")
