@@ -220,7 +220,7 @@ async def test(event):
         input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
-        if response.ok:
+        if response[0].get('ok', False):
             url = 'https://telegra.ph' + response[0]['src']
             if input_str == "صورة الفحص" or input_str == "صورة فحص":
                 addgvar("ALIVE_PIC", url)
