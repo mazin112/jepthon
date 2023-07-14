@@ -68,7 +68,7 @@ last_kick_time = 0
 is_enabled = True
 
 async def get_admin_ids(chat_id):
-    participants = await l313l.get_participants(chat_id, filter=ChannelParticipantAdmins)
+    participants = await client.get_participants(chat_id, filter=ChannelParticipantAdmins)
     admin_ids = [participant.id for participant in participants]
     return admin_ids
 
