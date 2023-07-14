@@ -218,11 +218,11 @@ import re
 
 telegraph = Telegraph()
 
-@l313l.ar_cmd(pattern="اضف")
+@l313l.ar_cmd(pattern="جعل")
 async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
-        input_str = event.pattern_match.group(2)
+        input_str = event.pattern_match.group(0)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
         if response.ok:
