@@ -214,7 +214,7 @@ r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
 @l313l.ar_cmd(pattern="اضف صورة (الفحص|فحص) ?(.*)")
-async def test(event):
+async def alive_aljoker(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
         input_str = event.pattern_match.group(2)
@@ -222,7 +222,7 @@ async def test(event):
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
         addgvar("ALIVE_PIC", url)
-        await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
+        await event.edit(f"**᯽︙ تم بنجاح اضافة فار  {input_str} ✓ **")
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -231,4 +231,44 @@ async def test(event):
         else:
             await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
     else:
-        await event.edit("**يرجى الرد على الصورة لتحديث الفار**")
+        await event.edit("**᯽︙ يرجى الرد على الصورة لتحديث الفار**")
+@l313l.ar_cmd(pattern="اضف صورة (البنك|بنك) ?(.*)")
+async def add_ping_aljoker(event):
+    reply = await event.get_reply_message()
+    if reply and reply.media:
+        input_str = event.pattern_match.group(2)
+        media = await reply.download_media()
+        response = telegraph.upload_file(media)
+        if response.ok:
+            url = 'https://telegra.ph' + response[0]['src']
+            addgvar("PING_PIC", url)
+            await event.edit(f"**᯽︙ تم بنجاح اضافة فار  {input_str} ✓ **")
+            if BOTLOG_CHATID:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+                )
+        else:
+            await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
+    else:
+        await event.edit("**᯽︙ يرجى الرد على الصورة لتحديث الفار**")
+@l313l.ar_cmd(pattern="اضف صورة (الحماية|الحمايه|حماية|حمايه) ?(.*)")
+async def add_‏security_aljoker(event):
+    reply = await event.get_reply_message()
+    if reply and reply.media:
+        input_str = event.pattern_match.group(2)
+        media = await reply.download_media()
+        response = telegraph.upload_file(media)
+        if response.ok:
+            url = 'https://telegra.ph' + response[0]['src']
+            addgvar("pmpermit_pic", url)
+            await event.edit(f"**᯽︙ تم بنجاح اضافة فار  {input_str} ✓ **")
+            if BOTLOG_CHATID:
+                await event.client.send_message(
+                    BOTLOG_CHATID,
+                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+                )
+        else:
+            await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
+    else:
+        await event.edit("** ᯽︙ يرجى الرد على الصورة او فيديو لتحديث الفار **")
