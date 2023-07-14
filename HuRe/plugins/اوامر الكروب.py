@@ -694,7 +694,7 @@ async def Hussein(event):
 
 banned_names_variable = "banned_names"
 if gvarstatus(banned_names_variable) is None:
-    addgvar(banned_names_variable, [])
+    addgvar(banned_names_variable)
 
 @l313l.ar_cmd(pattern=r"(?:اضافة|اضافه) اسم (.+)")
 async def add_banned_name(event):
@@ -728,6 +728,7 @@ async def disable_kick(event):
 @l313l.on(events.ChatAction)
 async def kick_banned_name(event):
     if gvarstatus("kick_enabled_variable"):
+        banned_names = gvarstatus(banned_names_variable)
         if event.is_group:
             group_entity = event.chat_id
             participants = await event.client.get_participants(group_entity)
