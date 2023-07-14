@@ -65,20 +65,11 @@ async def ban_user(chat_id, i, rights):
 is_protection_enabled = True
 
 @l313l.on(events.ChatAction)
-async def block_admins(event):
-    if not is_protection_enabled:
-        return
-    if hasattr(event, 'message') and event.message.action and event.message.action.user_id is not None:
-        user_id = event.message.action.user_id
-        admins = await event.client.get_participants(event.chat_id, filter=events.ChannelParticipantsAdmins)
-        for admin in admins:
-            if admin.id == user_id:
-                await event.client.edit_permissions(event.chat_id, user_id, view_messages=False)
-                await event.client.kick_participant(event.chat_id, user_id)
-                print(f"Blocked and kicked admin {admin.username}")
-            elif event.message.action.__class__.__name__ == 'ChannelParticipantKicked':
-                await event.client.kick_participant(event.chat_id, user_id)
-                print(f"Kicked participant {user_id}")
+async def handle_chat_action(event):
+    if is_protection_enabled and event.user_removed and event.action_message.from_id == 6162340778:
+        rights = ChatAdminRights(add_admins=False, invite_users=False, change_info=False, ban_users=False)
+        request = EditAdminRequest(chat_id, event.action_message.from_id, rights, 'New admin rights')
+        await client(request)
 
 @l313l.ar_cmd(pattern="حماية تفعيل")
 async def enable_protection(event):
