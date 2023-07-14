@@ -264,6 +264,7 @@ async def custom_HuRe(event):
         media_url = reply.document.file_reference
     if not media_url:
         return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
+    media_url = str(media_url)
     telegraph_url = re.search(r"https?://telegra\.ph/[^?\s]+", media_url)
     if not telegraph_url:
         return await event.edit("**⌔∮ لا يمكن العثور على رابط Telegraph.org في الوسائط المرسلة.**")
