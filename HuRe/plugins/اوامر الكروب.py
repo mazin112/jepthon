@@ -725,7 +725,7 @@ async def disable_kick(event):
     else:
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
-@l313l.on(events.NewMessage)
+@l313l.on(events.ChatAction)
 async def kick_banned_name(event):
     if gvarstatus("kick_enabled_variable"):
         banned_names = gvarstatus(banned_names_variable)
