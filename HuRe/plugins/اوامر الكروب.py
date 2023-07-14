@@ -735,7 +735,7 @@ async def kick_banned_name(event):
             group_entity = event.chat_id
             sender_id = event.sender_id
             participant = await event.client.get_entity(sender_id)
-            if participant is not None:
+            if participant is not None and participant.first_name is not None:
                 if any(name.lower() in participant.first_name.lower() for name in banned_names):
                     await event.client.kick_participant(group_entity, sender_id)
                     await event.client.send_message(group_entity, f"**᯽︙ تم طرد المستخدم {participant.first_name} لاحتوائه على الاسم الممنوع ✘**")
