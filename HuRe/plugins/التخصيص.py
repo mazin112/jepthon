@@ -217,7 +217,7 @@ auth_url = r["auth_url"]
 async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
-        input_str = event.pattern_match.group(1)
+        input_str = event.pattern_match.group(2)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
