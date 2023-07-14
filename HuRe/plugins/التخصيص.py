@@ -221,7 +221,7 @@ async def test(event):
         media = await reply.download_media()
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
-            addgvar("ALIVE_PIC", url)
+        addgvar("ALIVE_PIC", url)
         await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
         if BOTLOG_CHATID:
             await event.client.send_message(
