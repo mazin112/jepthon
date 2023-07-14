@@ -68,9 +68,7 @@ is_protection_enabled = True
 async def block_admins(event):
     if not is_protection_enabled:
         return
-    if event.is_private:
-        return
-    if event.message.action and event.message.action.user_id is not None:
+    if hasattr(event, 'message') and event.message.action and event.message.action.user_id is not None:
         user_id = event.message.action.user_id
         admins = await event.client.get_participants(event.chat_id, filter=events.ChannelParticipantsAdmins)
         for admin in admins:
@@ -78,7 +76,6 @@ async def block_admins(event):
                 await event.client.edit_permissions(event.chat_id, user_id, view_messages=False)
                 await event.client.kick_participant(event.chat_id, user_id)
                 print(f"Blocked and kicked admin {admin.username}")
-
 @l313l.ar_cmd(pattern="حماية تفعيل")
 async def enable_protection(event):
     global is_protection_enabled
