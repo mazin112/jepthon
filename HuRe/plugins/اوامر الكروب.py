@@ -69,7 +69,7 @@ is_enabled = True
 
 async def get_admin_ids(chat_id):
     admins = await l313l.get_participants(
-        event.chat_id, filter=ChannelParticipantsAdmins
+        chat_id, filter=ChannelParticipantsAdmins
     )
     admin_ids = [participant.id for participant in admins]
     return admin_ids
