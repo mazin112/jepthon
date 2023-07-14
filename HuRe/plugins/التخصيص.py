@@ -213,27 +213,21 @@ telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
-@l313l.ar_cmd(pattern=r"جعل(.+)")
+@l313l.ar_cmd(pattern=r"(الفحص|فحص)اضف صورة(.+)")
 async def test(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
         input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
-        if response[0].get('ok', False):
-            url = 'https://telegra.ph' + response[0]['src']
-            if input_str.lower() == "صورة الفحص" or input_str.lower() == "صورة فحص":
-                addgvar("ALIVE_PIC", url)
-            elif input_str.lower() == "صورة البنك" or input_str.lower() == "صورة بنك":
-                addgvar("PING_PIC", url)
-            elif input_str.lower() == "صورة الحماية" or input_str.lower() == "صورة حماية" or input_str.lower() == "صورة الحمايه" or input_str.lower() == "صورة الحمايه":
-                addgvar("pmpermit_pic", url)
-            await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
-            if BOTLOG_CHATID:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
-                )
+        url = 'https://telegra.ph' + response[0]['src']
+            addgvar("ALIVE_PIC", url)
+        await event.edit(f"**تم بنجاح تحديث الفار {input_str}**")
+        if BOTLOG_CHATID:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+            )
         else:
             await event.edit("**حدث خطأ أثناء تحميل الصورة على Telegraph**")
     else:
