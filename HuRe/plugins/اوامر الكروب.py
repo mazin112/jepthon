@@ -76,7 +76,6 @@ async def get_admin_ids(chat_id):
 
 @l313l.on(events.ChatAction)
 async def handle_kick(event):
-    global kick_count, last_kick_time
     if is_enabled and event.user_id in await get_admin_ids(event.chat_id) and event.action.message.action == 'kick':
         current_time = time.time()
         if current_time - last_kick_time <= 60:
@@ -97,13 +96,11 @@ async def handle_kick(event):
             
 @l313l.ar_cmd(pattern=r"حماية تفعيل")
 async def enable(event):
-    global is_enabled
     is_enabled = True
     await event.edit('**تم تشغيل حماية القناة والمجموعة بنجاح**')
 
 @l313l.ar_cmd(pattern=r"حماية تعطيل")
 async def disable(event):
-    global is_enabled
     is_enabled = False
     await event.edit('**تم تعطيل حماية الثناة والمجموعة بنجاح**')
 
