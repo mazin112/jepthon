@@ -62,7 +62,7 @@ async def ban_user(chat_id, i, rights):
         return True, None
     except Exception as exc:
         return False, str(exc)        
-banned_user_count = 2
+banned_user_count = 1
 ban_admin_joker = False
 
 @l313l.ar_cmd(pattern=r"(?:حماية) تفعيل$")
