@@ -257,11 +257,11 @@ async def custom_HuRe(event):
         return await event.edit("**⌔∮ يجب عليك الرد على وسائط (ميديا) لاستخراج الرابط**")
     media_url = None
     if reply.photo:
-        media_url = reply.photo.url
+        media_url = reply.photo.file_reference
     elif reply.video:
-        media_url = reply.video.url
+        media_url = reply.video.file_reference
     elif reply.document:
-        media_url = reply.document.url
+        media_url = reply.document.file_reference
     if not media_url:
         return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
     telegraph_url = re.search(r"https?://telegra\.ph/[^?\s]+", media_url)
