@@ -78,13 +78,13 @@ async def block_admins(event):
                 await event.client.edit_permissions(event.chat_id, user_id, view_messages=False)
                 print(f"Blocked admin {admin.username}")
 
-@l313l.on(events.NewMessage(pattern=r"(?:حماية) تفعيل$"))
+@l313l.ar_cmd(pattern="حماية تفعيل")
 async def enable_protection(event):
     global is_protection_enabled
     is_protection_enabled = True
     await event.reply("تم تفعيل الحماية")
 
-@l313l.on(events.NewMessage(pattern=r"(?:حماية) تعطيل$"))
+@l313l.ar_cmd(pattern="حماية تعطيل")
 async def disable_protection(event):
     global is_protection_enabled
     is_protection_enabled = False
