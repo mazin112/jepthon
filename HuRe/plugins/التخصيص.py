@@ -279,8 +279,8 @@ def extract_urls_from_media(media):
     if media.photo:
         for photo in media.photo.sizes:
             if photo.type == 'x':
-                urls.append(photo.file_path)
+                urls.append(f"https://telegra.ph/file/{photo.id}")
     elif media.document:
         if media.document.mime_type.startswith('image/'):
-            urls.append(media.document.file_path)
+            urls.append(media.document.url)
     return urls
