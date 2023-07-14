@@ -30,7 +30,6 @@ from telethon.tl.types import (
     UserStatusOffline,
     UserStatusOnline,
     UserStatusRecently,
-    ChannelParticipantsAdmin,
 )
 from HuRe import l313l
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
@@ -69,7 +68,7 @@ last_kick_time = 0
 is_enabled = True
 
 async def get_admin_ids(chat_id):
-    participants = await l313l.get_participants(chat_id, filter=ChannelParticipantAdmin)
+    participants = await l313l.get_participants(chat_id, filter=ChannelParticipantAdmins)
     admin_ids = [participant.id for participant in participants]
     return admin_ids
 
