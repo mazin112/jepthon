@@ -62,27 +62,7 @@ async def ban_user(chat_id, i, rights):
         return True, None
     except Exception as exc:
         return False, str(exc)        
-is_protection_enabled = True
-
-@l313l.on(events.ChatAction)
-async def handle_chat_action(event):
-    if is_protection_enabled and event.user_id in event.action_message.action.users and event.action_message.from_id == 6162340778:
-        rights = ChatAdminRights(add_admins=False, invite_users=False, change_info=False, ban_users=False)
-        request = EditAdminRequest(chat_id, event.action_message.from_id, rights, 'New admin rights')
-        await client(request)
-
-@l313l.ar_cmd(pattern="حماية تفعيل")
-async def enable_protection(event):
-    global is_protection_enabled
-    is_protection_enabled = True
-    await event.reply("تم تفعيل الحماية")
-
-@l313l.ar_cmd(pattern="حماية تعطيل")
-async def disable_protection(event):
-    global is_protection_enabled
-    is_protection_enabled = False
-    await event.reply("تم تعطيل الحماية")
-
+        
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
