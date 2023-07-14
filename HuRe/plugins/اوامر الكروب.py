@@ -62,44 +62,34 @@ async def ban_user(chat_id, i, rights):
         return True, None
     except Exception as exc:
         return False, str(exc)        
-banned_user_count = 1
-ban_admin_joker = False
+is_protection_enabled = True
 
-@l313l.ar_cmd(pattern=r"(?:حماية) تفعيل$")
+@l313l.on(events.NewMessage)
+async def block_admins(event):
+    if not is_protection_enabled:
+        return
+    if event.is_private:
+        return
+    if event.message.action and event.message.action.user_id is not None:
+        user_id = event.message.action.user_id
+        admins = await event.client.get_participants(event.chat_id, filter=events.ChannelParticipantsAdmins)
+        for admin in admins:
+            if admin.id == user_id:
+                await event.client.edit_permissions(event.chat_id, user_id, view_messages=False)
+                print(f"Blocked admin {admin.username}")
+
+@l313l.on(events.NewMessage(pattern=r"(?:حماية) تفعيل$"))
 async def enable_protection(event):
-    global ban_admin_joker
-    if ban_admin_joker:
-        await event.edit("**أمر حظر المشرفين مفعل بالفعل.**")
-    else:
-        ban_admin_joker = True
-        await event.edit("**تم تفعيل أمر حظر المشرفين.**")
+    global is_protection_enabled
+    is_protection_enabled = True
+    await event.reply("تم تفعيل الحماية")
 
-@l313l.ar_cmd(pattern=r"(?:حماية) تعطيل$")
+@l313l.on(events.NewMessage(pattern=r"(?:حماية) تعطيل$"))
 async def disable_protection(event):
-    global ban_admin_joker
-    if not ban_admin_joker:
-        await event.edit("**أمر حظر المشرفين معطل بالفعل.**")
-    else:
-        ban_admin_joker = False
-        await event.edit("**تم تعطيل أمر حظر المشرفين.**")
+    global is_protection_enabled
+    is_protection_enabled = False
+    await event.reply("تم تعطيل الحماية")
 
-@l313l.on(events.ChatAction())
-async def handle_kick(event):
-    if ban_admin_joker:
-        if isinstance(event.action_message, types.MessageActionChatDeleteUser):
-            if len(event.action_message.user_id) == banned_user_count:
-                banned_user_ids = [user.id for user in event.action_message.user_id]
-                admin_id = event.action_message.by_id
-                participants = await event.client.get_participants(event.chat_id)
-                for participant in participants:
-                    if participant.id == admin_id:
-                        admin_username = participant.username
-                        break
-                else:
-                    admin_username = None
-                if admin_username:
-                    for user_id in banned_user_ids:
-                        await event.client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
 
