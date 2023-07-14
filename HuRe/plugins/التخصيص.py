@@ -258,6 +258,7 @@ async def custom_HuRe(event):
     reply = await event.get_reply_message()
     if not reply or not reply.media:
         return await event.edit("**⌔∮ يجب عليك الرد على وسائط (ميديا) لاستخراج الرابط**")
+
     media = None
     if reply.photo:
         media = reply.photo
@@ -265,18 +266,24 @@ async def custom_HuRe(event):
         media = reply.video
     elif reply.document:
         media = reply.document
+
     if not media:
         return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
+
     downloaded_file = await event.client.download_media(media)
     response = await event.client.upload_file(downloaded_file)
+
     telegraph_url = telegraph.create_page(
         title="Media",
-        html_content=f'<img src="{response.url}" />'
+        html_content=f'<img src="{media.url}" />'
     )['url']
+
     var = "PING_PIC"
     delgvar(var)
     addgvar(var, telegraph_url)
+
     await event.edit(f"**₰ تم بنجاح تحديث فار PING_PIC برابط Telegraph.org**")
+
     if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
