@@ -76,6 +76,10 @@ async def block_admins(event):
                 await event.client.edit_permissions(event.chat_id, user_id, view_messages=False)
                 await event.client.kick_participant(event.chat_id, user_id)
                 print(f"Blocked and kicked admin {admin.username}")
+            elif event.message.action.__class__.__name__ == 'ChannelParticipantKicked':
+                await event.client.kick_participant(event.chat_id, user_id)
+                print(f"Kicked participant {user_id}")
+
 @l313l.ar_cmd(pattern="حماية تفعيل")
 async def enable_protection(event):
     global is_protection_enabled
