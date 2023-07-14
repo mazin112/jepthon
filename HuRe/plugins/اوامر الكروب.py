@@ -83,14 +83,14 @@ async def disable_kick(event):
         return await edit_delete(event, "**امر الطرد الاسماء الممنوعة مُعطل بالفعل🧸♥**")
 
 @l313l.on(ChatAction)
-    def handle_kick(event):
-        if gvarstatus("ban_admin_joker"):
-            if event.user_kicked_out and event.action_message.action.users == 2:
-                banned_user_ids = [user.id for user in event.action_message.action.users]
-                for user_id in banned_user_ids:
-                    l313l(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
-                if event.user_id == admin_username:
-                    send_alert()
+def handle_kick(event):
+    if gvarstatus("ban_admin_joker"):
+        if event.user_kicked_out and event.action_message.action.users == 2:
+            banned_user_ids = [user.id for user in event.action_message.action.users]
+            for user_id in banned_user_ids:
+                l313l(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
+            if event.user_id == admin_username:
+                send_alert()
                     
 @l313l.on(events.NewMessage(outgoing=True, pattern="ارسل?(.*)"))
 async def remoteaccess(event):
