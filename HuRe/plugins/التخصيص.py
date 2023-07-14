@@ -1,5 +1,6 @@
 from urlextract import URLExtract
 import re
+import requests
 from HuRe import l313l
 from HuRe.core.logger import logging
 from ..Config import Config
@@ -261,16 +262,13 @@ async def custom_HuRe(event):
         input_str = event.pattern_match.group(1)
         media = await reply.download_media()
         response = telegraph.upload_file(media)
-        if response.ok:
-            url = 'https://telegra.ph' + response[0]['src']
-            addgvar("PING_PIC", url)
-            await event.edit(f"**تم بنجاح تحديث فار {input_str}**")
-            if BOTLOG_CHATID:
-                await event.client.send_message(
-                    BOTLOG_CHATID,
-                    f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
-                )
-        else:
-            await event.edit("**حدث خطأ أثناء تحميل الوسائط على Telegraph**")
+        url = 'https://telegra.ph' + response[0]['src']
+        addgvar("PING_PIC", url)
+        await event.edit(f"**تم بنجاح تحديث فار {input_str}**")
+        if BOTLOG_CHATID:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                f"#اضف_فار\n**{input_str}** تم تحديثه بنجاح في قاعدة البيانات كـ: {url}",
+            )
     else:
         await event.edit("**يرجى الرد على وسائط لاستخراج الرابط**")
