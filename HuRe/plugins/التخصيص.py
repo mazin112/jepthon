@@ -254,13 +254,11 @@ async def custom_HuRe(event):
     reply = await event.get_reply_message()
     text = None
     var = None
-    if reply and (isinstance(reply.media, types.MessageMediaPhoto) or isinstance(reply.media, types.MessageMediaDocument)):
+    if reply and (reply.media and (reply.photo or reply.video)):
         if reply.media.webpage.url.startswith("https://telegra.ph"):
             text = reply.media.webpage.url
     if text is None:
-        return await edit_delete(
-            event, "**⌔∮ يجب عليك الرد على صورة أو فيديو والذي يحتوي على رابط تلكراف**"
-        )
+        return await event.edit("**⌔∮ يجب عليك الرد على صورة أو فيديو والذي يحتوي على رابط تلكراف**")
     input_str = event.pattern_match.group(1)
     if (
         input_str == "صورة الفحص"
@@ -270,3 +268,12 @@ async def custom_HuRe(event):
     ):
         addgvar("ALIVE_PIC", text)
         var = "ALIVE_PIC"
+    await edit_or_reply(event, f"**₰ تم بنجاح تحديث فار {input_str} 𓆰،**")
+    delgvar(var)
+    addgvar(var, text)
+    if BOTLOG_CHATID:
+            await event.client.send_message(
+            BOTLOG_CHATID,
+            f"#اضف_فار\
+                    \n**{input_str}** تم تحديثه بنجاح في قاعده البيانات كـ:",
+        )
