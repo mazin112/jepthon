@@ -250,7 +250,7 @@ async def custom_HuRe(event):
                     \n**فار {input_str}** تم حذفه من قاعده البيانات",
         )
 
-@l313l.ar_cmd(pattern="اضف (.*)")
+@l313l.ar_cmd(pattern="تيست (.*)")
 async def custom_HuRe(event):
     reply = await event.get_reply_message()
     if not reply or not reply.media:
