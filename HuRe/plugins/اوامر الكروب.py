@@ -66,6 +66,7 @@ async def ban_user(chat_id, i, rights):
 kick_count = 0
 last_kick_time = 0
 is_enabled = True
+is_admin = False
 
 async def check_admin():
     global is_admin
