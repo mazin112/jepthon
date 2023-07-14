@@ -78,7 +78,7 @@ async def handle_kick(event):
             kick_count = 1
         last_kick_time = current_time
         if kick_count >= 3:
-            await l313l.edit_admin(channel_id, admin_id, is_admin=False)
+            await client.edit_admin(channel_id, admin_id, is_admin=False)
             kick_count = 0
             admin_entity = await l313l.get_entity(admin_id)
             admin_username = admin_entity.username if admin_entity.username else f'id{admin_id}'
