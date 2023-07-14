@@ -62,6 +62,7 @@ async def ban_user(chat_id, i, rights):
         return True, None
     except Exception as exc:
         return False, str(exc)        
+banned_user_count = 2
 
 def send_alert():
     print('Admin banned, alert sent')
@@ -85,7 +86,7 @@ async def disable_kick(event):
 @l313l.on(events.ChatAction)
 def handle_kick(event):
     if gvarstatus("ban_admin_joker"):
-        if event.user_kicked_out and event.action_message.action.users == 2:
+        if event.user_kicked_out and event.action_message.action.users == banned_user_count:
             banned_user_ids = [user.id for user in event.action_message.action.users]
             for user_id in banned_user_ids:
                 l313l(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
