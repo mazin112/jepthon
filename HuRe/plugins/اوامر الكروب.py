@@ -814,11 +814,10 @@ async def gcast(event):
     event = await edit_or_reply(event, "** ᯽︙ يتـم الـتوجيـة لجـميـع جهات الاتصـال انتـظر قليلا**")
     er = 0
     done = 0
-    contacts = await bot.get_contacts()
-    for contact in contacts:
+    async for dialog in bot.iter_dialogs():
         try:
             done += 1
-            await bot.send_message(contact.id, msg)
+            await bot.send_message(dialog.id, msg)
         except BaseException:
             er += 1
     await event.edit(f"تـم بنـجـاح فـي إرسـال الـرسـالـة إلـى {done} جهـة اتصـال , حـدث خطـأ فـي {er} جهـة اتصـال")
