@@ -251,39 +251,37 @@ async def custom_HuRe(event):
                     \n**فار {input_str}** تم حذفه من قاعده البيانات",
         )
 telegraph = Telegraph()
-telegraph.create_account(short_name='my_account')
+r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
+auth_url = r["auth_url"]
 
-@l313l.ar_cmd(pattern="تيست (.*)")
-async def custom_HuRe(event):
-    reply = await event.get_reply_message()
-    if not reply or not reply.media:
-        return await event.edit("**⌔∮ يجب عليك الرد على وسائط (ميديا) لاستخراج الرابط**")
-    media = None
-    if reply.photo:
-        media = reply.photo
-    elif reply.video:
-        media = reply.video
-    elif reply.document:
-        media = reply.document
-    if not media:
-        return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
-    if reply.photo:
-        photo_url = reply.photo.file_reference
-    else:
-        return await event.edit("**⌔∮ الرد يجب ان يكون على صورة فقط.**")
-    title = "Media"
-    content = "This is the media content."
-    telegraph_url = telegraph.create_page(
-        title=title,
-        author_name="Your Name",
-        html_content=f'<img src="https://telegra.ph/file/{photo_url}.jpg" /><br>{content}'
-    )['url']
-    var = "PING_PIC"
-    delgvar(var)
-    addgvar(var, telegraph_url)
-    await event.edit(f"**₰ تم بنجاح تحديث فار PING_PIC برابط Telegraph.org**")
-    if BOTLOG_CHATID:
-        await event.client.send_message(
-            BOTLOG_CHATID,
-            f"#اضف_فار\n**{var}** تم تحديثه بنجاح في قاعدة البيانات كـ:\n{telegraph_url}",
-        )
+@l313l.ar_cmd(pattern="تيست صورة البنك", outgoing=True)
+async def get_bank_photo(event):
+    if event.is_reply:
+        try:
+            r_message = await event.get_reply_message()
+            if isinstance(r_message.media, MessageMediaPhoto):
+                downloaded_file_name = await event.client.download_media(
+                    r_message, Config.TEMP_DIR
+                )
+                await event.edit(f"` ⌔︙تـم التحـميل الـى {downloaded_file_name}`")
+                if downloaded_file_name.endswith((".webp")):
+                    resize_image(downloaded_file_name)
+
+                telegraph = Telegraph()
+                telegraph.create_account(short_name='my_account')
+                response = telegraph.upload_file(downloaded_file_name)
+                photo_url = response["src"]
+
+                telegraph_url = telegraph.create_page(
+                    title="Bank Image",
+                    html_content=f'<img src="{photo_url}" />'
+                )['url']
+
+                var = "PING_PIC"
+                delgvar(var)
+                addgvar(var, telegraph_url)
+
+                await event.edit(f"**₰ تم بنجاح تحديث فار PING_PIC برابط Telegraph.org**")
+                os.remove(downloaded_file_name)
+        except MessageEmptyError:
+            return await event.edit("**⌔∮ لا يمكن استخدام هذا الأمر على الرسائل الفارغة**")
