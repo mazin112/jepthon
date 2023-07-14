@@ -252,6 +252,7 @@ async def custom_HuRe(event):
         )
 telegraph = Telegraph()
 telegraph.create_account(short_name='my_account')
+
 @l313l.ar_cmd(pattern="تيست (.*)")
 async def custom_HuRe(event):
     reply = await event.get_reply_message()
@@ -266,7 +267,8 @@ async def custom_HuRe(event):
         media = reply.document
     if not media:
         return await event.edit("**⌔∮ الوسائط (الميديا) غير مدعومة. يرجى إرسال صورة أو فيديو أو ملف للاستخراج.**")
-    response = await event.client.upload_file(media)
+    downloaded_file = await event.client.download_media(media)
+    response = await event.client.upload_file(downloaded_file)
     telegraph_url = telegraph.create_page(
         title="Media",
         html_content=f'<img src="{response.url}" />'
