@@ -89,9 +89,9 @@ async def handle_kick(event):
         if event.action_message and isinstance(event.action_message, types.MessageActionChatDeleteUser):
             if len(event.action_message.users) == banned_user_count:
                 banned_user_ids = [user.id for user in event.action_message.users]
-                admin_user_id = event.action_message.user_id
-                admin_entity = await event.client.get_entity(admin_user_id)
-                if admin_entity and admin_entity.admin_rights:
+                admin_id = event.action_message.user_id
+                participant = await event.client.get_participant(event.chat_id, admin_id)
+                if isinstance(participant.participant, ChannelParticipantAdmin) and not participant.participant.banned_rights:
                     for user_id in banned_user_ids:
                         await event.client(EditBannedRequest(event.chat_id, user_id, ChatBannedRights(until_date=None, view_messages=True)))
         
