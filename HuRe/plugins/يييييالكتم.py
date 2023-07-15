@@ -195,14 +195,15 @@ async def unmute_aljoker(event):
 
 @l313l.ar_cmd(pattern=r"قائمة المكتومين")
 async def show_muted_users(event):
-    if len(muted_users) > 0:
-        joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
+    muted_users = gvarstatus("muted_users")
+    if muted_users:
+        joker_list = "**قائمة المستخدمين المكتومين:**\n"
         for i, user in enumerate(muted_users, start=1):
             profile_link = f"[{user.first_name}](tg://user?id={user.id})"
             joker_list += f"{i}. {profile_link}\n"
         await event.edit(joker_list)
     else:
-        await event.edit("**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**")
+        await event.edit("**لا يوجد مستخدمين مكتومين حاليًا**")
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
