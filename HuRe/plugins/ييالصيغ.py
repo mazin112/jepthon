@@ -40,15 +40,7 @@ cancel_process = False
 #Edited By Reda 
 
 
-@l313l.ar_cmd(
-    pattern=r"حفظ_المحتوى (.+)",
-    command=("حفظ_المحتوى", plugin_category),
-    info={
-        "header": "حفظ الصور والفيديوهات والملفات إذا وجد في الرسالة.",
-        "description": "يقوم بحفظ الصور والفيديوهات والملفات والنص إذا وجد في الرسالة.",
-        "usage": "{tr}حفظ_المحتوى <رابط الرسالة>",
-    },
-)
+
 async def save_media(event):
     message_link = event.pattern_match.group(1)
 
@@ -74,17 +66,10 @@ async def save_media(event):
             return await event.edit("رابط الرسالة غير صالح!")
 
         if message.media:
-            file_ext = ""
-            if message.photo:
-                file_ext = ".jpg"
-            elif message.video:
-                file_ext = ".mp4"
-            elif message.document:
-                if hasattr(message.document, "file_name"):
-                    file_ext = os.path.splitext(message.document.file_name)[1]
-
-            if not file_ext:
-                return await event.edit(f"الرسالة لا تحتوي على ميديا!\n{message.message}")
+            if message.document:
+                file_ext = os.path.splitext(message.document.file_name)[1].lower()
+            else:
+                return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
 
             file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
             await l313l.download_media(message, file=file_path)
@@ -92,11 +77,12 @@ async def save_media(event):
             await l313l.send_file('me', file=file_path, caption=message.text)
 
             os.remove(file_path)
-            await event.edit(f"تم حفظ الميديا بنجاح!\n\nرابط الرسالة: {message_link}")
+            await event.edit(f"تم حفظ الملف بنجاح!\n\nرابط الرسالة: {message_link}")
         else:
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
         await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
+
     
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
