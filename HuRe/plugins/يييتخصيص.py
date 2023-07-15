@@ -252,7 +252,7 @@ async def add_ping_aljoker(event):
     else:
         await event.edit("**᯽︙ يرجى الرد على الصورة لتحديث الفار**")
 @l313l.ar_cmd(pattern="اضف صورة (الحماية|الحمايه|حماية|حمايه) ?(.*)")
-async def add_‏security_aljoker(event):
+async def security_aljoker(event):
     reply = await event.get_reply_message()
     if reply and reply.media:
         input_str = event.pattern_match.group(1)
