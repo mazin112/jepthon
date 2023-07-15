@@ -40,7 +40,15 @@ cancel_process = False
 #Edited By Reda 
 
 
-
+@l313l.ar_cmd(
+    pattern=r"حفظ_المحتوى (.+)",
+    command=("حفظ_المحتوى", plugin_category),
+    info={
+        "header": "حفظ الصور والفيديوهات والملفات إذا وجد في الرسالة.",
+        "description": "يقوم بحفظ الصور والفيديوهات والملفات والنص إذا وجد في الرسالة.",
+        "usage": "{tr}حفظ_المحتوى <رابط الرسالة>",
+    },
+)
 async def save_media(event):
     message_link = event.pattern_match.group(1)
 
