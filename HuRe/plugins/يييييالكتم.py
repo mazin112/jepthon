@@ -185,9 +185,13 @@ async def show_muted_users(event):
     muted_users_str = gvarstatus(muted_users_variable)
     if muted_users_str is None or len(muted_users_str) > 0:
         joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
-        for i, user in enumerate(muted_users, start=1):
-            profile_link = f"[{user.first_name}](tg://user?id={user.id})"
-            joker_list += f"{i}. {profile_link}\n"
+        for i, user_id in enumerate(muted_users_str, start=1):
+            try:
+                user = await event.client.get_entity(user_id)
+                profile_link = f"[{user.first_name}](tg://user?id={user.id})"
+                joker_list += f"{i}. {profile_link}\n"
+            except Exception as e:
+                print(f"Error retrieving user {user_id}: {str(e)}")
         await event.edit(joker_list)
     else:
         await event.edit("**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**")
