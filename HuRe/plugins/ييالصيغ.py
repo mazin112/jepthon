@@ -39,7 +39,6 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
-# No need to import modules here since they are already imported in the main script.
 
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
@@ -81,7 +80,7 @@ async def save_media(event):
             elif message.video:
                 file_ext = ".mp4"
             elif message.document:
-                file_ext = os.path.splitext(message.document.file.name)[1].lower()
+                file_ext = os.path.splitext(message.document.mime_type)[1].lower()
 
             if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
