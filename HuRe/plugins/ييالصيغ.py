@@ -40,7 +40,6 @@ cancel_process = False
 #Edited By Reda 
 
 
-
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
     command=("حفظ_المحتوى", plugin_category),
@@ -75,7 +74,16 @@ async def save_media(event):
             return await event.edit("رابط الرسالة غير صالح!")
 
         if message.media and message.document:
-            file_ext = os.path.splitext(message.document.attributes[0].file_name)[1].lower()
+            file_ext = ""
+            if message.photo:
+                file_ext = ".jpg"
+            elif message.video:
+                file_ext = ".mp4"
+            elif message.document.attributes:
+                for attribute in message.document.attributes:
+                    if isinstance(attribute, types.DocumentAttributeFilename):
+                        file_ext = os.path.splitext(attribute.file_name)[1].lower()
+                        break
 
             if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
