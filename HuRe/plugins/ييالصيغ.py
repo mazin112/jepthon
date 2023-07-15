@@ -39,16 +39,9 @@ cancel_process = False
 #WRITE BY  @lMl10l  
 #Edited By Reda 
 
+import os
+import re
 
-@l313l.ar_cmd(
-    pattern=r"حفظ_المحتوى (.+)",
-    command=("حفظ_المحتوى", plugin_category),
-    info={
-        "header": "حفظ الصور والفيديوهات والملفات إذا وجد في الرسالة.",
-        "description": "يقوم بحفظ الصور والفيديوهات والملفات والنص إذا وجد في الرسالة.",
-        "usage": "{tr}حفظ_المحتوى <رابط الرسالة>",
-    },
-)
 async def save_media(event):
     message_link = event.pattern_match.group(1)
 
@@ -74,9 +67,15 @@ async def save_media(event):
             return await event.edit("رابط الرسالة غير صالح!")
 
         if message.media:
-            if message.document:
-                file_ext = os.path.splitext(message.document.file_name)[1].lower()
-            else:
+            file_ext = ""
+            if message.photo:
+                file_ext = ".jpg"
+            elif message.video:
+                file_ext = ".mp4"
+            elif message.document:
+                file_ext = os.path.splitext(message.document.file_name or "file")[1].lower()
+
+            if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
 
             file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
