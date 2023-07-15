@@ -28,6 +28,7 @@ async def mutejep(event):
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
+            aljoker_users.append(event.chat_id)
             return await event.edit(
                 "**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **"
             )
