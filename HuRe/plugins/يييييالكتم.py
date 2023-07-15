@@ -43,7 +43,7 @@ async def mute_aljoker(event):
             return await edit_delete(event, "**- لا يمكنني كتم مطور السورس.**")
         try:
             mute(event.chat_id, event.chat_id)
-            muted_users.append(replied_user.id)
+            muted_users.append(replied_user)
         except Exception as e:
             await event.edit(f"**- حدث خطأ: {e}**")
         else:
