@@ -17,7 +17,7 @@ from ..sql_helper.mute_sql import is_muted, mute, unmute
 from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
 
 plugin_category = "admin"
-
+aljoker_users = []
 joker_mute = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
 joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
@@ -37,6 +37,7 @@ async def mutejep(event):
             return await edit_delete(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
         try:
             mute(event.chat_id, event.chat_id)
+            aljoker_users.append(user.id)
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
@@ -175,7 +176,15 @@ async def unmutejep(event):
                 f"**- الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
-
+@l313l.ar_cmd(pattern=r"قائمة المكتومين")
+async def muted_list(event):
+    if aljoker_users:
+        users_list = ""
+        for user_id in aljoker_users:
+            users_list += f"- {user_id}\n"
+        await event.edit(f"**᯽︙ قائمة المستخدمين المكتومين:**\n{users_list}")
+    else:
+        await event.edit("لا يوجد مستخدمين مكتومين حاليًا.")
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
