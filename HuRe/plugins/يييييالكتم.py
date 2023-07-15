@@ -7,7 +7,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-
+from telethon.errors import UserAdminInvalidError
 from HuRe import l313l
 
 from ..core.managers import edit_delete, edit_or_reply
