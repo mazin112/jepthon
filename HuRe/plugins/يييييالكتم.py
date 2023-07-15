@@ -28,7 +28,7 @@ async def save_muted_users():
 
 async def load_muted_users():
     global muted_users
-    muted_users = await l313l.getgvar("muted_users")
+    await gvarstatus("muted_users", muted_users)
 
 def mute_user(user):
     if user not in muted_users:
