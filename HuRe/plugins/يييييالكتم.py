@@ -23,8 +23,18 @@ joker_mute = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
 joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
-@l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
-async def mutejep(event):
+async def save_muted_users():
+    await addgvar("muted_users_list", muted_users)
+
+def mute_user(user):
+    if user not in muted_users:
+        muted_users.append(user)
+
+def unmute_user(user):
+    if user in muted_users:
+        muted_users.remove(user)
+
+async def mute_aljoker(chat_id, user):
     await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
@@ -116,15 +126,15 @@ async def mutejep(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#الكــتم\n"
+            "#الكــتم\n"    
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
+        await save_muted_users()
     
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
-@l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
-async def unmutejep(event):
+async def unmute_aljoker(chat_id, user):
     await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
@@ -177,9 +187,7 @@ async def unmutejep(event):
                 f"**- الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**- الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
-
-@l313l.ar_cmd(pattern="قائمة المكتومين")
-async def aljokerlist(event):
+async def show_muted_users(event):
     if len(muted_users) > 0:
         joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
         for i, user in enumerate(muted_users, start=1):
@@ -188,6 +196,18 @@ async def aljokerlist(event):
         await event.edit(joker_list)
     else:
         await event.edit("**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**")
+
+@l313l.ar_cmd(pattern=r"كتم(?:\s|$)([\s\S]*)")
+async def mute_user_command(event):
+    await mute_aljoker(event.chat_id, event.sender)
+
+@l313l.ar_cmd(pattern=r"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
+async def unmute_user_command(event):
+    await unmute_aljoker(event.chat_id, event.sender)
+
+@l313l.ar_cmd(pattern=r"قائمة المكتومين")
+async def show_muted_users_command(event):
+    await show_muted_users(event)
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
