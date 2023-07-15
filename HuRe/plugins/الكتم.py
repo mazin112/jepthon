@@ -150,6 +150,7 @@ async def unmutejep(event):
         try:
             if is_muted(user.id, event.chat_id):
                 unmute(user.id, event.chat_id)
+                aljoker_users.remove(user_id)
             else:
                 result = await event.client.get_permissions(event.chat_id, user.id)
                 if result.participant.banned_rights.send_messages:
