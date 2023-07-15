@@ -179,10 +179,10 @@ async def aljokerlist(event):
         joker_list = "᯽︙ قائمة المستخدمين المكتومين:\n"
         for user in aljoker_users:
             profile_link = f"[{user.first_name}](tg://user?id={user.id})"
-            joker_list += f"- {profile_link}\n”
-            await event.reply(joker_list)
+            joker_list += f"- {profile_link}\n"
+        await event.reply(joker_list)
     else:
-        await event.reply(”᯽︙ لا يوجد مستخدمين مكتومين حاليًا.”)
+        await event.reply("᯽︙ لا يوجد مستخدمين مكتومين حاليًا.")
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
