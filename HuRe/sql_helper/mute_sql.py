@@ -3,8 +3,9 @@ try:
 except ImportError as e:
     raise Exception("Hello!") from e
 from sqlalchemy import Column, String, select
+from sqlalchemy.orm import sessionmaker
 
-
+SESSEION = sessionmaker(bind=engine)
 class Mute(BASE):
     __tablename__ = "mute"
     sender = Column(String(14), primary_key=True)
@@ -29,7 +30,6 @@ def mute(sender, chat_id):
         adder = Mute(str(sender), str(chat_id))
         session.add(adder)
         session.commit()
-
 
 def unmute(sender, chat_id):
     with SESSION() as session:
