@@ -54,6 +54,7 @@ async def save_media(event):
 
     if not message_link:
         return await event.edit("يرجى تحديد رابط الرسالة!")
+    await event.edit("يجري حفظ الميديا....")
 
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
@@ -83,7 +84,8 @@ async def save_media(event):
                 file_ext = os.path.splitext(message.document.attributes[0].file_name)[1].lower()
             if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
-
+            await l313l.send_message(event
+chat_id, file_ext)
             file_path = os.path.join(save_dir, f"media_{file_ext}")
             await l313l.download_media(message, file=file_path)
 
