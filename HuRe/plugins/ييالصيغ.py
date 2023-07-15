@@ -72,6 +72,7 @@ async def save_media(event):
         message = await l313l.get_messages(int(channel_id), ids=int(message_id))
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
+        await l313l.send_message(event.chat_id, str(message))
 
         if message.media:
             file_ext = ""
