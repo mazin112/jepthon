@@ -2,7 +2,7 @@ try:
     from . import BASE, SESSION
 except ImportError as e:
     raise Exception("Hello!") from e
-from sqlalchemy import Column, String, select
+from sqlalchemy import Column, String
 
 
 class Mute(BASE):
@@ -19,27 +19,17 @@ Mute.__table__.create(checkfirst=True)
 
 
 def is_muted(sender, chat_id):
-    with SESSION() as session:
-        user = session.query(Mute).get((str(sender), str(chat_id)))
-        return bool(user)
+    user = SESSION.query(Mute).get((str(sender), str(chat_id)))
+    return bool(user)
 
 
 def mute(sender, chat_id):
-    with SESSION() as session:
-        adder = Mute(str(sender), str(chat_id))
-        session.add(adder)
-        session.commit()
+    adder = Mute(str(sender), str(chat_id))
+    SESSION.add(adder)
+    SESSION.commit()
 
 
 def unmute(sender, chat_id):
-    with SESSION() as session:
-        if rem := session.query(Mute).get((str(sender), str(chat_id))):
-            session.delete(rem)
-            session.commit()
-
-
-def get_muted_users():
-    with SESSION() as session:
-        query = select(Mute)
-        muted_users = session.execute(query).scalars().all()
-        return muted_users
+    if rem := SESSION.query(Mute).get((str(sender), str(chat_id))):
+        SESSION.delete(rem)
+        SESSION.commit()
