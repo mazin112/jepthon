@@ -74,14 +74,14 @@ async def save_media(event):
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
 
-        if message.media and message.document:
+        if message.media or message.document:
             file_ext = ""
             if message.photo:
                 file_ext = ".jpg"
             elif message.video:
                 file_ext = ".mp4"
             elif message.document.attributes:
-                file_ext = os.path.splitext(message.document.attributes[0].file_name)[1].lower()
+                file_ext = message.document.attributes[0].file_name
             if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
             await l313l.send_message(event
