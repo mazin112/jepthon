@@ -13,7 +13,7 @@ from HuRe import l313l
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format
 from ..sql_helper import gban_sql_helper as gban_sql
-from ..sql_helper.mute_sql import is_muted, mute, unmute, muted_users
+from ..sql_helper.mute_sql import is_muted, mute, unmute, get_muted_users
 from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
 #ياعلي مدد ٣١٣
 #علي مع الحق والحق مع علي يدور معهُ حينما دار
@@ -180,6 +180,7 @@ async def unmutejep(event):
 
 @l313l.ar_cmd(pattern="قائمة المكتومين")
 async def aljokerlist(event):
+    muted_users = get_muted_users()
     if len(muted_users) > 0:
         joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
         for i, user in enumerate(muted_users, start=1):
