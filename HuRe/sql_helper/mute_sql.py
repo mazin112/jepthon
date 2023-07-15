@@ -2,7 +2,7 @@ try:
     from . import BASE, SESSION
 except ImportError as e:
     raise Exception("Hello!") from e
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, select
 
 
 class Mute(BASE):
