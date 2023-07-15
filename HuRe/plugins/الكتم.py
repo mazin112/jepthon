@@ -28,7 +28,6 @@ async def mutejep(event):
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
-            aljoker_users.append(event.chat_id)
             return await event.edit(
                 "**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **"
             )
@@ -38,7 +37,7 @@ async def mutejep(event):
             return await edit_delete(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
         try:
             mute(event.chat_id, event.chat_id)
-            aljoker_users.append(user.id)
+            aljoker_users.append(event.chat_id)  # Add the muted user's ID to the list
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
@@ -85,6 +84,7 @@ async def mutejep(event):
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         try:
             mute(user.id, event.chat_id)
+            aljoker_users.append(user.id)  # Add the muted user's ID to the list
         except UserAdminInvalidError:
             if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
                 if chat.admin_rights.delete_messages is not True:
@@ -110,13 +110,6 @@ async def mutejep(event):
                 joker_mute,
                 caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
             )
-        if BOTLOG:
-            await event.client.send_message(
-                BOTLOG_CHATID,
-                "#الكــتم\n"
-                f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
-            ) 
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
