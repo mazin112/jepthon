@@ -29,7 +29,7 @@ async def save_muted_users():
 async def load_muted_users():
     global muted_users
     await gvarstatus("muted_users")
-await load_muted_users()
+    await load_muted_users()
 
 def mute_user(user):
     if user not in muted_users:
