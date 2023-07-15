@@ -1,7 +1,7 @@
 import base64
 import asyncio
 from datetime import datetime
-
+from telethon import events
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.users import GetFullUserRequest
