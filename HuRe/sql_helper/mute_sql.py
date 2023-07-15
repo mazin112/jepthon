@@ -34,7 +34,7 @@ def unmute(sender, chat_id):
         SESSION.delete(rem)
         SESSION.commit()
         
-def muted_users(sender, chat_id):
+def get_muted_users():
     with SESSION() as session:
         query = select(Mute)
         muted_users = session.execute(query).scalars().all()
