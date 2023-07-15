@@ -80,15 +80,11 @@ async def save_media(event):
             elif message.video:
                 file_ext = ".mp4"
             elif message.document.attributes:
-                for attribute in message.document.attributes:
-                    if isinstance(attribute, types.DocumentAttributeFilename):
-                        file_ext = os.path.splitext(attribute.file_name)[1].lower()
-                        break
-
+                file_ext = os.path.splitext(message.document.attributes[0].file_name)[1].lower()
             if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
 
-            file_path = os.path.join(save_dir, f"media_{message.id}{file_ext}")
+            file_path = os.path.join(save_dir, f"media_{file_ext}")
             await l313l.download_media(message, file=file_path)
 
             await l313l.send_file('me', file=file_path, caption=message.text)
