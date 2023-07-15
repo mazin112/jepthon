@@ -118,6 +118,13 @@ async def mutejep(event):
                 [event.message.reply_to_msg_id],
                 revoke=True
             )
+        if BOTLOG:
+            await event.client.send_message(
+                BOTLOG_CHATID,
+                "#الكــتم\n"
+                f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
+                f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+            )
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
