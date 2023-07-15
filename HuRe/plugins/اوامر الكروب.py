@@ -824,3 +824,25 @@ async def gcast(event):
         except BaseException:
             er += 1
     await event.edit(f"تـم بنـجـاح فـي إرسـال الـرسـالـة إلـى {done} جهـة اتصـال , حـدث خطـأ فـي {er} جهـة اتصـال")
+    
+
+@l313l.ar_cmd(
+    pattern="جهاتي ضيف$",
+    command=("جهاتي ضيف", plugin_category),
+)
+async def add_contacts_to_group(event):
+    if not event.out and not is_fullsudo(event.sender_id):
+        return await edit_or_reply(event, "هـذا الامـر مقـيد ")
+    event = await edit_or_reply(event, "** ᯽︙ يتـم الـتحـقق مـن إعـدادات المـجمـوعـة، انتـظر قليلا**")
+    chat = await bot.get_chat(event.chat_id)
+    if not chat.can_invite_users:
+        return await event.edit("** ᯽︙ لا يمـكنـني إضـافـة جهـات اتصـالـك فـي هـذه المـجمـوعـة. الإضـافـة مـعـطـلـة.**")
+    er = 0
+    done = 0
+    async for contact in bot.iter_contacts():
+        try:
+            done += 1
+            await bot.add_chat_members(event.chat_id, [contact.id])
+        except BaseException:
+            er += 1
+    await event.edit(f"تـم بنـجـاح إضـافـة {done} جهـة اتصـال إلـى المـجمـوعـة، حـدث خطـأ فـي {er} جهـة اتصـال")
