@@ -37,20 +37,21 @@ async def mutejep(event):
             return await edit_delete(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
         try:
             mute(event.chat_id, event.chat_id)
-            aljoker_users.append(event.chat_id)  # Add the muted user's ID to the list
+            aljoker_users.append(replied_user)
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
+            profile_link = f"[{replied_user.first_name}](tg://user?id={event.chat_id})"
             return await event.client.send_file(
                 event.chat_id,
                 joker_mute,
-                caption="** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**",
+                caption=f"** تم ڪتـم الـمستخـدم  . . بنجـاح 🔕✓**\n\n**- المستخـدم :** {profile_link}",
             )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 "#كتــم_الخــاص\n"
-                f"**- الشخـص  :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
+                f"**- الشخـص  :** {profile_link}\n",
             )
     else:
         chat = await event.get_chat()
@@ -84,7 +85,7 @@ async def mutejep(event):
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         try:
             mute(user.id, event.chat_id)
-            aljoker_users.append(user.id)  # Add the muted user's ID to the list
+            aljoker_users.append(user)
         except UserAdminInvalidError:
             if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
                 if chat.admin_rights.delete_messages is not True:
@@ -98,17 +99,18 @@ async def mutejep(event):
                 )
         except Exception as e:
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
+        profile_link = f"[{user.first_name}](tg://user?id={user.id})"
         if reason:
             await event.client.send_file(
                 event.chat_id,
                 joker_mute,
-                caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n**- السـبب :** {reason}",
+                caption=f"**- المستخـدم :** {profile_link}  \n**- تـم كتمـه بنجـاح ✓**\n\n**- السـبب :** {reason}",
             )
         else:
             await event.client.send_file(
                 event.chat_id,
                 joker_mute,
-                caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
+                caption=f"**- المستخـدم :** {profile_link}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
             )
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
