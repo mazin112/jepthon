@@ -180,7 +180,6 @@ async def unmutejep(event):
 
 @l313l.ar_cmd(pattern="قائمة المكتومين")
 async def aljokerlist(event):
-    muted_users = get_muted_users()
     if len(muted_users) > 0:
         joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
         for i, user in enumerate(muted_users, start=1):
