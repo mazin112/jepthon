@@ -26,6 +26,10 @@ joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 async def save_muted_users():
     await addgvar("muted_users_list", muted_users)
 
+async def load_muted_users():
+    global muted_users
+    muted_users = await gvarstatus("muted_users")
+
 def mute_user(user):
     if user not in muted_users:
         muted_users.append(user)
@@ -189,20 +193,21 @@ async def unmute_aljoker(event):
                 f"**- الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**- الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
-def show_muted_users():
+
+async def show_muted_users():
+    await load_muted_users()
     if len(muted_users) > 0:
         joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
         for i, user in enumerate(muted_users, start=1):
             profile_link = f"[{user.first_name}](tg://user?id={user.id})"
-            joker_list += f"{i}• {profile_link}\n"
-        return joker_list
+            joker_list += f"{i}. {profile_link}\n"
+        await event.edit(joker_list)
     else:
-        return "**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**"
+        await event.edit("**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**")
 
 @l313l.ar_cmd(pattern=r"قائمة المكتومين")
 async def show_muted_users_command(event):
-    muted_users_list = show_muted_users()
-    await event.edit(muted_users_list)
+    await show_muted_users(event)
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
