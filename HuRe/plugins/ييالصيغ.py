@@ -40,6 +40,7 @@ cancel_process = False
 #Edited By Reda 
 
 
+
 @l313l.ar_cmd(
     pattern=r"حفظ_المحتوى (.+)",
     command=("حفظ_المحتوى", plugin_category),
@@ -72,16 +73,9 @@ async def save_media(event):
         message = await l313l.get_messages(int(channel_id), ids=int(message_id))
         if not message:
             return await event.edit("رابط الرسالة غير صالح!")
-        await l313l.send_message(event.chat_id, str(message))
 
-        if message.media:
-            file_ext = ""
-            if message.photo:
-                file_ext = ".jpg"
-            elif message.video:
-                file_ext = ".mp4"
-            elif message.document:
-                file_ext = os.path.splitext(message.document.mime_type)[1].lower()
+        if message.media and message.document:
+            file_ext = os.path.splitext(message.document.attributes[0].file_name)[1].lower()
 
             if not file_ext:
                 return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
@@ -97,6 +91,7 @@ async def save_media(event):
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
         await event.edit(f"حدث خطأ أثناء حفظ الرسالة. الخطأ: {str(e)}")
+
 
     
 @l313l.ar_cmd(
