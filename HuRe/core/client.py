@@ -98,10 +98,7 @@ class HuReClient(TelegramClient):
                 chat = check.chat
                 #code by Ultroid
                 if hasattr(chat, "title"):
-                    if( "ᵛ²" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
-                    ):
-                        await edit_delete(check, "** ᯽︙ لا يمكنني استخدام سورس الجوكر هنا في هذه المجموعة 🤷🏻 **")
-                    elif( "³¹³" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
+                    if( "ALjoker" in     chat.title and not (chat.admin_rights or chat.creator) and not (check.sender_id in DEVJOKR)
                     ):
                         await edit_delete(check, "** ᯽︙ لا يمكنني استخدام سورس الجوكر هنا في هذه المجموعة 🤷🏻 **")
                         return
