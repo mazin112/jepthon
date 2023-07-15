@@ -222,7 +222,7 @@ async def alive_aljoker(event):
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
         addgvar("ALIVE_PIC", url)
-        await event.edit(f"**᯽︙ تم بنجاح اضافة فار  {input_str} ✓ **")
+        await event.edit(f"**᯽︙ تم بنجاح اضافة صورة  {input_str} ✓ **")
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -241,7 +241,7 @@ async def add_ping_aljoker(event):
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
         addgvar("PING_PIC", url)
-        await event.edit(f"**᯽︙ تم بنجاح اضافة فار  {input_str} ✓ **")
+        await event.edit(f"**᯽︙ تم بنجاح اضافة صورة  {input_str} ✓ **")
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -260,7 +260,7 @@ async def security_aljoker(event):
         response = telegraph.upload_file(media)
         url = 'https://telegra.ph' + response[0]['src']
         addgvar("pmpermit_pic", url)
-        await event.edit(f"**᯽︙ تم بنجاح اضافة فار  {input_str} ✓ **")
+        await event.edit(f"**᯽︙ تم بنجاح اضافة صورة  {input_str} ✓ **")
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
