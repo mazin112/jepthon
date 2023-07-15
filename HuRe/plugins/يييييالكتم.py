@@ -30,7 +30,7 @@ def mute_user(user):
      if user not in muted_users:
          muted_users.append(user)
 
- def unmute_user(user):
+def unmute_user(user):
      if user in muted_users:
          muted_users.remove(user)
 
