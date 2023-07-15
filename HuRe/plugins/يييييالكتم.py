@@ -33,7 +33,9 @@ def unmute_user(user):
     if user in muted_users:
         muted_users.remove(user)
 
-async def mute_aljoker(chat_id, user):
+@l313l.ar_cmd(pattern=r"كتم(?:\s|$)([\s\S]*)")
+async def mute_aljoker(event):
+    await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
@@ -132,7 +134,9 @@ async def mute_aljoker(chat_id, user):
     
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
-async def unmute_aljoker(chat_id, user):
+@l313l.ar_cmd(pattern=r"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
+async def unmute_aljoker(event):
+    await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if not is_muted(event.chat_id, event.chat_id):
@@ -184,7 +188,9 @@ async def unmute_aljoker(chat_id, user):
                 f"**- الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**- الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
+@l313l.ar_cmd(pattern=r"قائمة المكتومين")
 async def show_muted_users(event):
+    await event.delete()
     if len(muted_users) > 0:
         joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
         for i, user in enumerate(muted_users, start=1):
@@ -193,20 +199,6 @@ async def show_muted_users(event):
         await event.edit(joker_list)
     else:
         await event.edit("**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**")
-
-@l313l.ar_cmd(pattern=r"كتم(?:\s|$)([\s\S]*)")
-async def mute_user_command(event):
-    await mute_aljoker(event.chat_id, event.sender)
-    await event.delete()
-
-@l313l.ar_cmd(pattern=r"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
-async def unmute_user_command(event):
-    await unmute_aljoker(event.chat_id, event.sender)
-    await event.delete()
-
-@l313l.ar_cmd(pattern=r"قائمة المكتومين")
-async def show_muted_users_command(event):
-    await show_muted_users(event)
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
