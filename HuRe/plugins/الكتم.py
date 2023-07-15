@@ -126,11 +126,10 @@ async def unmutejep(event):
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if not is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                "**عــذراً .. هـذا الشخـص غيــر مكتــوم هنـا**"
-            )
+            return await event.edit("**عــذراً .. هـذا الشخص غيــر مكتــوم هنـا**")
         try:
             unmute(event.chat_id, event.chat_id)
+            aljoker_users.remove(replied_user)
         except Exception as e:
             await event.edit(f"**- خطــأ **\n`{e}`")
         else:
@@ -152,7 +151,7 @@ async def unmutejep(event):
         try:
             if is_muted(user.id, event.chat_id):
                 unmute(user.id, event.chat_id)
-                aljoker_users.remove(user_id)
+                aljoker_users.remove(user)
             else:
                 result = await event.client.get_permissions(event.chat_id, user.id)
                 if result.participant.banned_rights.send_messages:
@@ -160,16 +159,13 @@ async def unmutejep(event):
                         EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS)
                     )
         except AttributeError:
-            return await edit_or_reply(
-                event,
-                "**- الشخـص غيـر مكـتـوم**",
-            )
+            return await edit_or_reply(event, "**- الشخـص غيـر مكـتـوم**")
         except Exception as e:
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         await event.client.send_file(
             event.chat_id,
             joker_unmute,
-            caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name ,user.id)} \n**- تـم الغـاء كتمـه بنجـاح ✓**",
+            caption=f"**- المستخـدم :** {_format.mentionuser(user.first_name, user.id)} \n**- تـم الغـاء كتمـه بنجـاح ✓**",
         )
         if BOTLOG:
             await event.client.send_message(
