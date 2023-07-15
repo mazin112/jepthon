@@ -24,11 +24,11 @@ joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
 async def save_muted_users():
-    await addgvar("muted_users", muted_users)
+    await l313l.addgvar("muted_users", muted_users)
 
 async def load_muted_users():
     global muted_users
-    muted_users = await gvarstatus("muted_users")
+    muted_users = await l313l.gvarstatus("muted_users")
 
 def mute_user(user):
     if user not in muted_users:
