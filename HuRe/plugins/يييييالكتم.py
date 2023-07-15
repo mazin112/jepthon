@@ -26,6 +26,14 @@ joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 async def save_muted_users():
     await addgvar("muted_users", muted_users)
 
+def mute_user(user):
+     if user not in muted_users:
+         muted_users.append(user)
+
+ def unmute_user(user):
+     if user in muted_users:
+         muted_users.remove(user)
+
 @l313l.ar_cmd(pattern=r"كتم(?:\s|$)([\s\S]*)")
 async def mute_aljoker(event):
     await event.delete()
