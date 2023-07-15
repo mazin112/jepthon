@@ -112,6 +112,12 @@ async def mutejep(event):
                 joker_mute,
                 caption=f"**- المستخـدم :** {profile_link}  \n**- تـم كتمـه بنجـاح ✓**\n\n",
             )
+        if event.forward:
+            await event.client.delete_messages(
+                event.chat_id,
+                [event.message.reply_to_msg_id],
+                revoke=True
+            )
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
