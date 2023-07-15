@@ -31,8 +31,6 @@ async def mute_aljoker(event):
     await event.delete()
     muted_users_variable = "muted_users"
     muted_users_str = gvarstatus(muted_users_variable)
-    if muted_users_str is None:
-        muted_users = []
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
