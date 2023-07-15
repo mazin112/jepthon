@@ -173,15 +173,16 @@ async def unmutejep(event):
                 f"**- الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
-@l313l.ar_cmd(pattern=r"قائمة المكتومين")
-async def muted_list(event):
-    if aljoker_users:
-        users_list = ""
-        for user_id in aljoker_users:
-            users_list += f"- {user_id}\n"
-        await event.edit(f"**᯽︙ قائمة المستخدمين المكتومين:**\n{users_list}")
+@l313l.ar_cmd(pattern="قائمة المكتومين")
+async def aljokerlist(event):
+    if len(aljoker_users) > 0:
+        joker_list = "᯽︙ قائمة المستخدمين المكتومين:\n"
+        for user in aljoker_users:
+            profile_link = f"[{user.first_name}](tg://user?id={user.id})"
+            joker_list += f"- {profile_link}\n”
+            await event.reply(joker_list)
     else:
-        await event.edit("لا يوجد مستخدمين مكتومين حاليًا.")
+        await event.reply(”᯽︙ لا يوجد مستخدمين مكتومين حاليًا.”)
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
