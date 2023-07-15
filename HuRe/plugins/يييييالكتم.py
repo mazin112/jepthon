@@ -1,7 +1,6 @@
 import base64
 import asyncio
 from datetime import datetime
-from telethon import events
 from telethon.errors import BadRequestError
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.users import GetFullUserRequest
@@ -35,7 +34,6 @@ def unmute_user(user):
         muted_users.remove(user)
 
 async def mute_aljoker(chat_id, user):
-    await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
@@ -135,7 +133,6 @@ async def mute_aljoker(chat_id, user):
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 async def unmute_aljoker(chat_id, user):
-    await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if not is_muted(event.chat_id, event.chat_id):
@@ -200,10 +197,12 @@ async def show_muted_users(event):
 @l313l.ar_cmd(pattern=r"كتم(?:\s|$)([\s\S]*)")
 async def mute_user_command(event):
     await mute_aljoker(event.chat_id, event.sender)
+    await event.delete()
 
 @l313l.ar_cmd(pattern=r"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
 async def unmute_user_command(event):
     await unmute_aljoker(event.chat_id, event.sender)
+    await event.delete()
 
 @l313l.ar_cmd(pattern=r"قائمة المكتومين")
 async def show_muted_users_command(event):
