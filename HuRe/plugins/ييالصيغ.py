@@ -91,7 +91,7 @@ async def save_media(event):
             await l313l.send_file('me', file=file_path, caption=message.text)
 
             os.remove(file_path)
-            await event.edit(f"تم حفظ الملف بنجاح!\n\nرابط الرسالة: {message_link}")
+            await event.edit(f"تم حفظ الميديا بنجاح اذهب الى الرسائل المحفوظة!\n\nرابط الرسالة: {message_link}")
         else:
             await event.edit("الرسالة لا تحتوي على ميديا!")
     except Exception as e:
