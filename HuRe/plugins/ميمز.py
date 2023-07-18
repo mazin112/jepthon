@@ -88,7 +88,7 @@ async def _(event):
 async def aljoker313(joker313):
   rl = random.randint(3,267)
   url = f"https://t.me/alhusseinl313l/{rl}"
-  await joker313.client.send_file(joker313.chat_id,url,caption="**᯽︙ عظم الله لنا ولكم الاجر بهذا المُصاب الجلل 🏴**",parse_mode="html")
+  await joker313.client.send_file(joker313.chat_id,url,caption="᯽︙ عظم الله لنا ولكم الاجر بهذا المُصاب الجلل 🏴",parse_mode="html")
   await joker313.delete()
 
 @l313l.on(admin_cmd(outgoing=True, pattern="شعر$"))
