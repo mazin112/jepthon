@@ -6,7 +6,6 @@ import asyncio
 from ..Config import Config
 import requests
 from telethon import Button, events
-from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from ..core.managers import edit_delete, edit_or_reply
 #ياعلي
@@ -15,7 +14,6 @@ from ..core.managers import edit_delete, edit_or_reply
 REH = "**᯽︙ لأستخدام بوت اختراق الحساب عن طريق كود التيرمكس أضغط على الزر**"
 JOKER_PIC = "https://telegra.ph/file/20c832e3ce8d4ee2abfc9.jpg"
 Bot_Username = Config.TG_BOT_USERNAME
-client = l313l
 if Config.TG_BOT_USERNAME is not None and tgbot is not None:
     
     @tgbot.on(events.InlineQuery)
