@@ -191,7 +191,6 @@ async def saves(event):
             for lMl10l in HuRe:
                 try:
                     await client(JoinChannelRequest(channel=lMl10l))
-                    await client.edit_folder("@jepthonsupport", folder=1)
                 except OverflowError:
                     print("حدث خطأ تجاوز التحميل من التيليجرام. تم إيقاف البرنامج النصي الآن. يرجى المحاولة مرة أخرى بعد فترة من الوقت.")
                     continue
