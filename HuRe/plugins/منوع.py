@@ -1,6 +1,9 @@
 import asyncio
+import time
+from telethon import functions
 from collections import deque
 from random import choice
+from telethon.tl.types import InputPeerUser
 from telethon.tl.functions.phone import CreateGroupCallRequest as startvc
 from telethon.tl.functions.phone import DiscardGroupCallRequest as stopvc
 from telethon.tl.functions.phone import GetGroupCallRequest as getvc
@@ -315,3 +318,28 @@ async def Hussein(event):
         else:
             response = "**᯽︙ يُرجى تحديد معرف القناة او المجموعة مع التمويل يامطوري ❤️** "
         #await event.reply(response)
+client = l313l
+
+@l313l.on(admin_cmd(pattern="فك الحظر$"))
+async def handle_unblock_all(event):
+    blocked_users = await client(functions.contacts.GetBlockedRequest(
+        offset=0,
+        limit=200
+    ))
+    if not blocked_users.users:
+        await event.edit("**᯽︙ لا يوجد مستخدمين محظورين في حسابك 🤷🏻**")
+        return
+    for user in blocked_users.users:
+        try:
+            await client(functions.contacts.UnblockRequest(
+                id=InputPeerUser(user.id, user.access_hash)
+            ))
+            aljoker_entity = await client.get_entity(user.id)
+            aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
+            await event.edit(f"᯽︙ تم إلغاء حظر المستخدم : {aljoker_profile}")
+            asyncio.sleep(3)
+        except ValueError:
+            continue
+        except Exception as e:
+            await event.edit(f"حدث خطأ أثناء إلغاء حظر المستخدم بمعرّف: {user.id}, الخطأ: {e}")
+            continue
