@@ -196,4 +196,4 @@ async def saves(event):
                     continue
                 except ChannelPrivateError:
                     continue
-                await asyncio.sleep(60)
+                await asyncio.sleep(600)
