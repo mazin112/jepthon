@@ -174,26 +174,4 @@ async def reda(event):
                 return
             except BaseException as er:
                 await l313l.tgbot.send_message(BOTLOG_CHATID, f"** حدث خطا\n{er}**")
-#ها هم تريد تخمطه وماتذكر مصدر الكود ؟ 
-HuRe = {"@jepthon", "@jepthonsupport"}
-addgvar("is_running", True)
-@l313l.ar_cmd(pattern="الانضمام تفعيل")
-async def start_saves(event):
-    if gvarstatus("is_running"):
-        await event.edit("᯽︙ الأمر مفعل بالفعل")
-    else:
-        addgvar("is_running", True)
-        await event.edit("᯽︙ تم تفعيل الامر انضمام اجباري كل 5 ثواني ✓")
-@client.on(events.NewMessage)
-async def saves(event):
-    if gvarstatus("is_running"):
-        while True:
-            for lMl10l in HuRe:
-                try:
-                    await client(JoinChannelRequest(channel=lMl10l))
-                except OverflowError:
-                    print("حدث خطأ تجاوز التحميل من التيليجرام. تم إيقاف البرنامج النصي الآن. يرجى المحاولة مرة أخرى بعد فترة من الوقت.")
-                    continue
-                except ChannelPrivateError:
-                    continue
-                await asyncio.sleep(600)
+#الكود الي جان هنا لاتاخده يسوي فلود ويت وبلتالي الاوامر متشتغل
