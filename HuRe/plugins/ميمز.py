@@ -91,6 +91,10 @@ async def aljoker313(joker313):
   await joker313.client.send_file(joker313.chat_id,url,caption="᯽︙ عظم الله لنا ولكم الاجر بهذا المُصاب الجلل 🏴",parse_mode="html")
   await joker313.delete()
 
+@l313l.on(admin_cmd(outgoing=True, pattern="غنيلي$"))
+async def aljoker313(joker313):
+    await event.edit("**᯽︙ تم تعطيل هذا الامر من قبل ادارة سورس الجوكر احتراماً لشهر المصائب محرم الحرام 🏴**)
+    
 @l313l.on(admin_cmd(outgoing=True, pattern="شعر$"))
 async def jepvois(vois):
   rl = random.randint(2,101)
