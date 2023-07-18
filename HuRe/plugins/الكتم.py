@@ -17,7 +17,7 @@ from ..sql_helper.mute_sql import is_muted, mute, unmute
 from . import BOTLOG, BOTLOG_CHATID, admin_groups, get_user_from_event
 
 plugin_category = "admin"
-
+joker_users = []
 joker_mute = "https://telegra.ph/file/c5ef9550465a47845c626.jpg"
 joker_unmute = "https://telegra.ph/file/e9473ddef0b58cdd7f9e7.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
@@ -37,6 +37,7 @@ async def mutejep(event):
             return await edit_delete(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  ╰**")
         try:
             mute(event.chat_id, event.chat_id)
+            joker_users.append(replied_user)
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
@@ -83,6 +84,7 @@ async def mutejep(event):
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         try:
             mute(user.id, event.chat_id)
+            joker_users.append(user)
         except UserAdminInvalidError:
             if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
                 if chat.admin_rights.delete_messages is not True:
@@ -115,6 +117,11 @@ async def mutejep(event):
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             ) 
+@l313l.on(events.NewMessage)
+async def handle_forwarded(event):
+    if event.fwd_from:
+        if is_muted(event.sender_id, event.chat_id):
+            await event.delete()
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
@@ -128,6 +135,7 @@ async def unmutejep(event):
             )
         try:
             unmute(event.chat_id, event.chat_id)
+            joker_users.remove(replied_user)
         except Exception as e:
             await event.edit(f"**- خطــأ **\n`{e}`")
         else:
@@ -149,6 +157,7 @@ async def unmutejep(event):
         try:
             if is_muted(user.id, event.chat_id):
                 unmute(user.id, event.chat_id)
+                joker_users.remove(user)
             else:
                 result = await event.client.get_permissions(event.chat_id, user.id)
                 if result.participant.banned_rights.send_messages:
@@ -175,7 +184,16 @@ async def unmutejep(event):
                 f"**- الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
-
+@l313l.ar_cmd(pattern=r"قائمة المكتومين")
+async def show_muted_users(event):
+    if len(joker_users) > 0:
+        joker_list = "**᯽︙ قائمة المستخدمين المكتومين:**\n"
+        for i, user in enumerate(joker_users, start=1):
+            joker_link = f"[{user.first_name}](tg://user?id={user.id})"
+            joker_list += f"{i}. {joker_link}\n"
+        await event.edit(joker_list)
+    else:
+        await event.edit("**᯽︙ لا يوجد مستخدمين مكتومين حاليًا**")
 # ===================================== # 
 
 @l313l.ar_cmd(incoming=True)
