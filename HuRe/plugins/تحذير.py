@@ -3,7 +3,8 @@ import html
 from HuRe import l313l
 from ..core.managers import edit_or_reply
 from ..sql_helper import warns_sql as sql
-
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import ChatBannedRights
 plugin_category = "admin"
 
 #warn
@@ -34,16 +35,19 @@ async def _(event):
                 limit, reply_message.sender_id
             )
         else:
-            logger.info("TODO: ban user")
-            reply = "**▸┊بسبب تخطي التحذيرات الـ {} ، يجب حظر المستخدم! ⛔️**".format(
-                limit, reply_message.sender_id
-            )
+            try:
+                await event.client(EditBannedRequest(event.chat_id, reply_message.sender_id, ChatBannedRights(until_date=None, view_messages=True)))
+                reply = "**▸┊بسبب تخطي التحذيرات الـ {} ، تم حظر المستخدم! ⛔️**".format(
+                    limit, reply_message.sender_id
+                )
+            except Exception as e:
+                reply = "**▸┊حدث خطأ أثناء محاولة طرد المستخدم! ⚠️**"
     else:
-        reply = "**▸┊[ المستخدم 👤](tg://user?id={}) **لديه {}/{} تحذيرات ، احذر!****".format(
+        reply = "**▸┊[ المستخدم 👤](tg://user?id={}) **لديه {}/{} تحذيرات، احذر!**".format(
             reply_message.sender_id, num_warns, limit
         )
         if warn_reason:
-            reply += "\n**▸┊سبب التحذير الأخير **\n{}".format(html.escape(warn_reason))
+            reply += "\n▸┊سبب التحذير الأخير \n{}".format(html.escape(warn_reason))
     await edit_or_reply(event, reply)
 
 
