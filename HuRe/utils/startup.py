@@ -204,7 +204,6 @@ async def saves():
    for lMl10l in HuRe:
         try:
              await l313l(JoinChannelRequest(channel=lMl10l))
-             await l313l.edit_folder("@jepthonsupport", folder=1)
         except OverflowError:
             LOGS.error("Getting Flood Error from telegram. Script is stopping now. Please try again after some time.")
             continue
