@@ -166,6 +166,7 @@ async def _(event):
 )
 async def _(event):
     "To ban everyone from group."
+    await event.delete()
     result = await event.client(
         functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
     )
@@ -173,7 +174,6 @@ async def _(event):
         return await edit_or_reply(
             event, "᯽︙ - يبدو انه ليس لديك صلاحيات الحذف في هذه الدردشة ❕"
         )
-    catevent = await edit_or_reply(event, "`نورتونا 😍😍`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -191,7 +191,7 @@ async def _(event):
                 await sleep(0.5) # for avoid any flood waits !!-> do not remove it 
         except Exception as e:
             LOGS.info(str(e))
-    await catevent.edit(
+    await event.reply(
         f"᯽︙  تم بنجاح حظر من {total} الاعضاء ✅ "
     )
 
