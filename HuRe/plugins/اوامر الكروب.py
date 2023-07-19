@@ -119,11 +119,11 @@ async def kickme(leave):
             "{tr}kickall",
         ],
     },
-    groups_only=True,
     require_admin=True,
 )
 async def _(event):
     "To kick everyone from group."
+    await event.delete()
     result = await event.client(
         functions.channels.GetParticipantRequest(event.chat_id, event.client.uid)
     )
@@ -131,7 +131,6 @@ async def _(event):
         return await edit_or_reply(
             event, "᯽︙ - يبدو انه ليس لديك صلاحيات الحذف في هذه الدردشة "
         )
-    catevent = await edit_or_reply(event, "`يتم الطرد انتظر قليلا `")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -148,7 +147,7 @@ async def _(event):
         except Exception as e:
             LOGS.info(str(e))
             await sleep(0.5)
-    await catevent.edit(
+    await event.reply(
         f"᯽︙  تم بنجاح طرد من {total} الاعضاء ✅ "
     )
 
