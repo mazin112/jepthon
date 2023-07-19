@@ -162,7 +162,6 @@ async def _(event):
             "{tr}kickall",
         ],
     },
-    groups_only=True,
     require_admin=True,
 )
 async def _(event):
