@@ -275,7 +275,7 @@ async def hussein(event):
     global its_joker
     its_joker = False
     await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✓ **")
-@l313l.ar_cmd(pattern="سرقة بوت(?:\s|$)([\s\S]*)")
+@l313l.ar_cmd(pattern="سرقة وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     global its_reda
     its_reda = True
