@@ -241,10 +241,10 @@ async def _(event):
 
 @l313l.ar_cmd(pattern="راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
+    await event.delete()
     global its_hussein
     its_hussein = True
     if event.is_group:
-        await event.edit("**᯽︙ تم تفعيل راتب وعد بنجاح سيتم أرسال راتب كل 11 دقيقة**")
         await send_reham(event)
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
@@ -259,10 +259,10 @@ async def hussein(event):
     await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
 @l313l.ar_cmd(pattern="بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
+    await event.delete()
     global its_joker
     its_joker = True
     if event.is_group:
-        await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم أرسال بخشيش كل 11 دقيقة**")
         await send_aljoker(event)
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
@@ -277,12 +277,12 @@ async def hussein(event):
     await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✓ **")
 @l313l.ar_cmd(pattern="سرقة وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
+    await event.delete()
     global its_reda
     its_reda = True
     if event.is_group:
         message = event.pattern_match.group(1).strip()
         if message:
-            await event.edit(f"**᯽︙ تم تفعيل سرقة وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة سرقة كل 10 دقائق**")
             await send_message(event, message)
         else:
             await event.edit("**يرجى كتابة ايدي الشخص مع الامر!**")
@@ -303,6 +303,7 @@ client = l313l
 
 @l313l.ar_cmd(pattern="استثمار وعد")
 async def w3d_joker(event):
+    await event.delete()
     global its_Reham
     its_Reham = True
     while True:
