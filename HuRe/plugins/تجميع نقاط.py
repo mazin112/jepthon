@@ -20,6 +20,9 @@ bot_username4 = '@qweqwe1919bot'
 bot_username5 = '@qweqwe1919bot'
 HuRe = ['yes']
 its_Reham = False
+its_hussein = False
+its_reda = False
+its_joker = False
 @l313l.on(admin_cmd(pattern="(تجميع مليار|تجميع المليار)"))
 async def _(event):
     if HuRe[0] == "yes":
@@ -238,172 +241,90 @@ async def _(event):
 
 @l313l.ar_cmd(pattern="راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
+    global its_hussein
+    its_hussein = True
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل راتب وعد بنجاح سيتم أرسال راتب كل 11 دقيقة**")
-        global is_active
-        is_active_status = gvarstatus("is_active")
-        if is_active_status != "True":
-            addgvar("is_active", "True")
-            await send_reham(event)
-        else:
-            await event.edit("**راتب وعد قيد التشغيل بالفعل!**")
+        await send_reham(event)
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def send_reham(event):
-    is_active_status = gvarstatus("is_active")
-    if is_active_status == "True":
-        await event.respond('راتب')
-        await asyncio.sleep(660)
-        await send_reham(event)  
+    await event.respond('راتب')
+    await asyncio.sleep(660)
+    await send_reham(event)  
 @l313l.ar_cmd(pattern="ايقاف راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
-    if event.is_group:
-        delgvar("is_active")
-        await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
-    else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+    global its_hussein
+    its_husein = False
+    await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
 @l313l.ar_cmd(pattern="بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
+    global its_joker
+    its_joker = True
     if event.is_group:
         await event.edit("**᯽︙ تم تفعيل بخشيش وعد بنجاح سيتم أرسال بخشيش كل 11 دقيقة**")
-        global is_aljoker
-        is_aljoker_status = gvarstatus("is_aljoker")
-        if is_aljoker_status != "True":
-            addgvar("is_aljoker", "True")
-            await send_aljoker(event)
-        else:
-            await event.edit("**راتب وعد قيد التشغيل بالفعل!**")
+        await send_aljoker(event)
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def send_aljoker(event):
-    is_aljoker_status = gvarstatus("is_aljoker")
-    if is_aljoker_status == "True":
-        await event.respond('بخشيش')
-        await asyncio.sleep(660)
-        await send_aljoker(event)  
+    await event.respond('بخشيش')
+    await asyncio.sleep(660)
+    await send_aljoker(event)  
 @l313l.ar_cmd(pattern="ايقاف بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
-    if event.is_group:
-        delgvar("is_aljoker")
-        await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✅**")
-    else:
-        await event.edit("**᯽︙ هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-@l313l.ar_cmd(pattern="استثمار وعد(?:\s|$)([\s\S]*)")
+    global its_joker
+    its_joker = False
+    await event.edit("**᯽︙ تم تعطيل بخشيش وعد بنجاح ✓ **")
+@l313l.ar_cmd(pattern="سرقة بوت(?:\s|$)([\s\S]*)")
 async def hussein(event):
-    if event.is_group:
-        match = re.search(r"استثمار وعد(?:\s+(.*))?", event.raw_text)
-        if match:
-            message = match.group(1)
-            if message:
-                if message.isnumeric():
-                    await event.edit(f"**᯽︙ تم تفعيل استثمار وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة استثمار كل 10 دقائق**")
-                    global its_hussein
-                    its_hussein_status = gvarstatus("its_hussein")
-                    if its_hussein_status != "True":
-                        addgvar("its_hussein", "True")
-                        await Reham_english(event, message)
-                    else:
-                        await event.edit("**استثمار وعد قيد التشغيل بالفعل!**")
-                else:
-                    await event.edit("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-            else:
-                await event.edit("**تنبيه: يرجى كتابة رقم الاستثمار مع الأمر!**")
-    else:
-        await event.edit("**تنبيه: هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-async def Reham_english(event, message):
-    its_hussein_status = gvarstatus("its_hussein")
-    if its_hussein_status == "True":
-        if message.isnumeric():
-            await event.respond(f"استثمار {message}")
-            await asyncio.sleep(660)
-            await Reham_english(event, message)
-        else:
-            await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-    else:
-        if not message.isnumeric():
-            await event.respond("**تنبيه: يجب أن يحتوي رقم الاستثمار على أرقام فقط!**")
-@l313l.ar_cmd(pattern="ايقاف استثمار وعد(?:\s|$)([\s\S]*)")
-async def Reham(event):
-    if event.is_group:
-        its_hussein_status = gvarstatus("its_hussein")
-        if its_hussein_status == "True":
-            delgvar("its_hussein")
-            await event.edit("**تم إيقاف استثمار الوعد بنجاح!**")
-        else:
-            await event.edit("**استثمار وعد ليست قيد التشغيل حاليًا!**")
-    else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-
-@l313l.ar_cmd(pattern="سرقة وعد(?:\s|$)([\s\S]*)")
-async def hussein(event):
+    global its_reda
+    its_reda = True
     if event.is_group:
         message = event.pattern_match.group(1).strip()
         if message:
             await event.edit(f"**᯽︙ تم تفعيل سرقة وعد بنجاح سيتم إرسال الرسالة '{message}' مع كلمة سرقة كل 10 دقائق**")
-            global its_reda
-            its_reda_status = gvarstatus("its_reda")
-            if its_reda_status != "True":
-                addgvar("its_reda", "True")
-                await send_message(event, message)
-            else:
-                await event.edit("**سرقة وعد قيد التشغيل بالفعل!**")
+            await send_message(event, message)
         else:
             await event.edit("**يرجى كتابة ايدي الشخص مع الامر!**")
     else:
         await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 
 async def send_message(event, message):
-    its_reda_status = gvarstatus("its_reda")
-    if its_reda_status == "True":
-        await event.respond(f"زرف {message}")
-        await asyncio.sleep(660)
-        await send_message(event, message)
+    await event.respond(f"زرف {message}")
+    await asyncio.sleep(660)
+    await send_message(event, message)
 
 @l313l.ar_cmd(pattern="ايقاف سرقة وعد(?:\s|$)([\s\S]*)")
-async def Reham(event):
-    if event.is_group:
-        its_reda_status = gvarstatus("its_reda")
-        if its_reda_status == "True":
-            delgvar("its_reda")
-            await event.edit("**تم إيقاف سرقة الوعد بنجاح!**")
-        else:
-            await event.edit("**استثمار وعد ليست قيد التشغيل حاليًا!**")
-    else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-        
+async def Reda(event):
+    global its_reda
+    its_reda = False
+    await event.edit("** ᯽︙ تم ايقاف السرقة بنجاح ✓ **")
+client = l313l
 
-@l313l.ar_cmd(pattern="استثمار بوت وعد")
-async def aljoker_money_w3d(event):
+@l313l.ar_cmd(pattern="استثمار وعد")
+async def w3d_joker(event):
     global its_Reham
-    if event.is_group:
-        await event.respond("فلوسي")
-        while its_Reham:
-            response = await event.client.listen(event.chat_id, timeout=10)
-            if response and response.raw_text.startswith("⇜ فلوسك 54841 ريال 💸"):
-                message = response.raw_text
-                amount = araby.numbers.from_string(araby.strip_tashkeel(message.split()[2]))
-                pyperclip.copy(str(amount))
-                await event.respond(f"استثمار {amount}")
-            await asyncio.sleep(60)
-    else:
-        await event.respond("**تنبيه: هذا الأمر يمكن استخدامه فقط في المجموعات!**")
-
-@l313l.ar_cmd(pattern="تعطيل استثمار وعد")
+    its_Reham = True
+    while True:
+        if event.is_group:
+            await event.respond("فلوسي")
+            await asyncio.sleep(5)
+            aljoker = await event.client.get_messages(event.chat_id, limit=1)
+            aljoker = aljoker[0].message
+            aljoker = ("".join(aljoker.split(maxsplit=2)[2:])).split(" ", 2)
+            l313l = aljoker[0]
+            if l313l.isdigit() and int(l313l) > 500000000:
+                await event.respond(f"استثمار {l313l}")
+                await asyncio.sleep(10)
+                joker = await event.client.get_messages(event.chat_id, limit=1)
+                await joker[0].click(text="اي ✅")
+            else:
+                await event.respond(f"استثمار {l313l}")
+                await asyncio.sleep(1205)
+        else:
+            await event.edit("** ᯽︙ امر الاستثمار يمكنك استعماله في المجموعات فقط 🖤**")
+@l313l.ar_cmd(pattern="ايقاف استثمار وعد")
 async def disable_w3d(event):
     global its_Reham
     its_Reham = False
-    await event.edit("**تم تعطيل عملية الاستثمار وعد.**")
-
-
-@l313l.on(NewMessage(incoming=True))
-async def handle_new_message(event):
-    if event.reply_to and event.sender_id == 1421907917:
-        reply_msg = await event.get_reply_message()
-        owner_id = reply_msg.from_id.user_id
-        if owner_id == l313l.uid and 'فلوسك صارت' in event.message.message and 'استثمار' in event.message.message:
-            amount_t = event.message.message.split('فلوسك صارت')[-1].split('ريال')[0].strip()
-            amount = re.sub(r'\D', '', amount_t)
-            
-
-
-       
+    await event.edit("** ᯽︙ تم تعطيل أمر استثمار وعد بنجاح ✓ **")
