@@ -764,3 +764,34 @@ async def reply_to_hussein(event):
             response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
             await asyncio.sleep(4)
             await event.reply(response)
+aljoker = False
+async def aljoker_nshr(l313l, sleeptimet, chat, message, seconds):
+    global aljoker
+    aljoker = True
+    while aljoker:
+        if message.media:
+            sent_message = await l313l.send_file(chat, message.media, caption=message.text)
+        else:
+            sent_message = await l313l.send_message(chat, message.text)
+        await asyncio.sleep(sleeptimet)
+
+@l313l.ar_cmd(pattern="نشر")
+async def Hussein(event):
+    seconds = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
+    message =  await event.get_reply_message()
+    chat = event.chat_id
+    try:
+        sleeptimet = int(seconds[0])
+    except Exception:
+        return await edit_delete(
+            event, "⌔∮ يجب استخدام كتابة صحيحة الرجاء التاكد من الامر اولا ⚠️"
+        )
+    l313l = event.client
+    global aljoker
+    aljoker = True
+    await aljoker_nshr(l313l, sleeptimet, chat, message, seconds)
+@l313l.ar_cmd(pattern="ايقاف (النشر|نشر)")
+async def stop_aljoker(event):
+    global aljoker
+    aljoker = False
+    await event.edit("**᯽︙ تم ايقاف النشر التلقائي بنجاح ✓** ")
