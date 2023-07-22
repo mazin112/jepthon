@@ -777,6 +777,7 @@ async def aljoker_nshr(l313l, sleeptimet, chat, message, seconds):
 
 @l313l.ar_cmd(pattern="نشر")
 async def Hussein(event):
+    await event.delete()
     seconds = "".join(event.text.split(maxsplit=1)[1:]).split(" ", 2)
     message =  await event.get_reply_message()
     chat = event.chat_id
