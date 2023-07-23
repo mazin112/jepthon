@@ -258,7 +258,7 @@ async def hussein(event):
 
 async def send_message(event, message):
     await event.respond(f"زرف {message}")
-    await asyncio.sleep(6)
+    await asyncio.sleep(660)
     global its_reda
     if its_reda:
         await send_message(event, message)
