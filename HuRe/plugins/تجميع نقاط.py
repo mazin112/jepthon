@@ -21,9 +21,9 @@ bot_username3 = '@MARKTEBOT'
 bot_username4 = '@qweqwe1919bot'
 HuRe = ['yes']
 its_Reham = False
-its_hussein = True
-its_reda = True
-its_joker = True
+its_hussein = False
+its_reda = False
+its_joker = False
 #اياثارات الحسين
 @l313l.on(admin_cmd(pattern="تجميع"))
 async def _(event):
@@ -206,11 +206,12 @@ async def hussein(event):
     global its_hussein
     await event.delete()
     if not its_hussein:
-        return
-    if event.is_group:
-        await send_reham(event)
-    else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+        its_hussein = True
+        if event.is_group:
+            await send_reham(event)
+        else:
+            await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+
 async def send_reham(event):
     await event.respond('راتب')
     await asyncio.sleep(660)
@@ -220,18 +221,18 @@ async def send_reham(event):
 @l313l.ar_cmd(pattern="ايقاف راتب وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     global its_hussein
-    its_husein = False
+    its_hussein = False
     await event.edit("**تم تعطيل راتب وعد بنجاح ✅**")
 @l313l.ar_cmd(pattern="بخشيش وعد(?:\s|$)([\s\S]*)")
 async def hussein(event):
     global its_joker
     await event.delete()
     if not its_joker:
-        return
-    if event.is_group:
-        await send_aljoker(event)
-    else:
-        await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
+        its_joker = True
+        if event.is_group:
+            await send_aljoker(event)
+        else:
+            await event.edit("**هذا الأمر يمكن استخدامه فقط في المجموعات!**")
 async def send_aljoker(event):
     await event.respond('بخشيش')
     await asyncio.sleep(660)
@@ -248,13 +249,13 @@ async def hussein(event):
     global its_reda
     await event.delete()
     if not its_reda:
-        return
-    if event.is_group:
-        message = event.pattern_match.group(1).strip()
-        if message:
-            await send_message(event, message)
-        else:
-            await event.edit("**يرجى كتابة ايدي الشخص مع الامر!**")
+        its_reda = True
+        if event.is_group:
+            message = event.pattern_match.group(1).strip()
+            if message:
+                await send_message(event, message)
+            else:
+                await event.edit("**يرجى كتابة ايدي الشخص مع الامر!**")
 
 async def send_message(event, message):
     await event.respond(f"زرف {message}")
@@ -269,12 +270,13 @@ async def Reda(event):
     its_reda = False
     await event.edit("** ᯽︙ تم ايقاف السرقة بنجاح ✓ **")
 client = l313l
+
 @l313l.ar_cmd(pattern="استثمار وعد")
 async def w3d_joker(event):
     await event.delete()
     global its_Reham
     its_Reham = True
-    while True:
+    while its_Reham:
         if event.is_group:
             await event.client.send_message(event.chat_id, "فلوسي")
             await asyncio.sleep(3)
