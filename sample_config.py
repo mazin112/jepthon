@@ -38,6 +38,7 @@ class Config(object):
 
     # تعديلي
     PING_PIC = os.environ.get("PING_PIC")
+    T7KM = os.environ.get("T7KM")
     TIME_JEP = os.environ.get("TIME_JEP", None)
     JP_FN = os.environ.get("JP_FN", None)
     ID_EM = os.environ.get("ID_EM", None)
