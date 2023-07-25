@@ -199,7 +199,7 @@ async def Hussein(event):
 
 @l313l.on(admin_cmd(pattern="(تجميع المليار|تجميع مليار)"))
 async def _(event):
-    await event.edit("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بلانظمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
+    await event.edit("**᯽︙سيتم تجميع النقاط من بوت المليار , قبل كل شي تأكد من انك قمت بالانضمام الى القنوات الاشتراك الاجباري للبوت لعدم حدوث اخطاء**")
     channel_entity = await l313l.get_entity(bot_username)
     await l313l.send_message(bot_username, '/start')
     await asyncio.sleep(4)
@@ -213,20 +213,20 @@ async def _(event):
     for i in range(100):
         await asyncio.sleep(4)
 
-        list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1,
-                                                offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
+        list = await l313l(GetHistoryRequest(peer=channel_entity, limit=1, offset_date=None, offset_id=0, max_id=0, min_id=0, add_offset=0, hash=0))
         msgs = list.messages[0]
-        if msgs.message.find('لا يوجد قنوات في الوقت الحالي , قم يتجميع النقاط بطريقه مختلفه') != -1:
-             await l313l.send_message(event.chat_id, f"تم الانتهاء من التجميع")
-
+        if msgs.message.find('لا يوجد قنوات في الوقت الحالي , قم بتجميع النقاط بطريقة مختلفة') != -1:
+            await l313l.send_message(event.chat_id, "تم الانتهاء من التجميع")
             break
+
         url = msgs.reply_markup.rows[0].buttons[0].url
+
         try:
-             try:
+            try:
                 await l313l(JoinChannelRequest(url))
             except:
                 bott = url.split('/')[-1]
-                 await l313l(ImportChatInviteRequest(bott))
+                await l313l(ImportChatInviteRequest(bott))
             msg2 = await l313l.get_messages(bot_username, limit=1)
             await msg2[0].click(text='تحقق')
             chs += 1
@@ -236,6 +236,7 @@ async def _(event):
             await msg2[0].click(text='التالي')
             chs += 1
             await event.edit(f"القناة رقم {chs}")
+
     await l313l.send_message(event.chat_id, "تم الانتهاء من التجميع")
         
 @l313l.on(admin_cmd(pattern="(ايقاف التجميع|ايقاف تجميع)"))
