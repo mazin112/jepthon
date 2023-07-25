@@ -290,7 +290,7 @@ async def variable(event):
             "**⌔∮ تم بنجاح حذف فار الكروب\n\n❃ جار اعادة تشغيل السورس انتظر من 2-5 دقائق ليتشغل مره اخرى**",
         )
         del heroku_var[variable]
-        if exe == "تحكم" or exe == "التحكم":
+    if exe == "تحكم" or exe == "التحكم":
         variable = "T7KM"
         await asyncio.sleep(1)
         if variable not in heroku_var:
