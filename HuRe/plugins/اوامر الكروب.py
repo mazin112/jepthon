@@ -773,10 +773,7 @@ async def Hussein(event):
                 await event.client(functions.channels.EditBannedRequest(
                     event.chat_id,
                     event.sender_id,
-                    types.ChannelBannedRights(
-                        until_date=None,
-                        view_messages=False
-                    )
+                    view_messages=False
                 ))
                 await event.reply(f"**᯽︙ تم تقييدك {aljoker_profile} من إرسال الرسائل بسبب ارسالك للإيموجي المُميز بكثرة 🖤**")
 
