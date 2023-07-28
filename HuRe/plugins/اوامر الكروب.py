@@ -759,7 +759,7 @@ async def Hussein(event):
         if isinstance(event.message.entities, list) and any(isinstance(entity, MessageEntityCustomEmoji) for entity in event.message.entities):
             sender_id = event.sender_id
             if sender_id not in emoji_warnings:
-                emoji_warnings[sender_id] = 10
+                emoji_warnings[sender_id] = 3
             if emoji_warnings[sender_id] > 0:
                 emoji_warnings[sender_id] -= 1
                 await event.delete()
@@ -769,7 +769,14 @@ async def Hussein(event):
                 await event.reply(f"**᯽︙ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المميز. لديك {emoji_warnings[sender_id]} تحذيرات متبقية.**")
             else:
                 await event.delete()
-                await l313l(EditBannedRequest(event.chat_id, sender_id, view_messages=False))
+                await event.client(functions.channels.EditBannedRequest(
+                    event.chat_id,
+                    event.sender_id,
+                    types.ChannelBannedRights(
+                        until_date=None,
+                        view_messages=False
+                    )
+                ))
                 await event.reply(f"**᯽︙ تم تقييدك {aljoker_profile} من إرسال الرسائل بسبب ارسالك للإيموجي المُميز بكثرة 🖤**")
 
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True, groups_only=True)
