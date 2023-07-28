@@ -812,7 +812,7 @@ async def handler(event):
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True)
 async def enable_emoji_blocker(event):
     addgvar("Emoji_Premium", True)
-    await edit.edit("**᯽︙ تم تفعيل منع امر الايموجي المُميز من هذا الدردشة بنجاح ✓**")
+    await event.edit("**᯽︙ تم تفعيل منع امر الايموجي المُميز من هذا الدردشة بنجاح ✓**")
 
 
 @l313l.ar_cmd(pattern="المميز تعطيل", require_admin=True)
