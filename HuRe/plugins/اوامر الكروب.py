@@ -769,7 +769,7 @@ async def Hussein(event):
                 await event.reply(f"**᯽︙ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المميز. لديك {emoji_warnings[sender_id]} تحذيرات متبقية.**")
             else:
                 await event.delete()
-                await l313l.restrict_permissions(event.chat_id, sender_id, view_messages=False)
+                await l313l(EditBannedRequest(event.chat_id, sender_id, view_messages=False))
                 await event.reply(f"**᯽︙ تم تقييدك {aljoker_profile} من إرسال الرسائل بسبب ارسالك للإيموجي المُميز بكثرة 🖤**")
 
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True, groups_only=True)
