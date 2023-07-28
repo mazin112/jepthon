@@ -810,18 +810,12 @@ async def handler(event):
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True)
 async def enable_emoji_blocker(event):
     lMl10l = event.chat_id
-    if gvarstatus("Emoji_Premium", lMl10l):
-        await event.edit("᯽︙ الأمر مفعل بالفعل")
-    else:
-        addgvar("Emoji_Premium", True, lMl10l)
-        await edit.edit("**᯽︙ تم تفعيل منع امر الايموجي المُميز من هذا الدردشة بنجاح ✓**")
+    addgvar("Emoji_Premium", True, lMl10l)
+    await edit.edit("**᯽︙ تم تفعيل منع امر الايموجي المُميز من هذا الدردشة بنجاح ✓**")
 
 
 @l313l.ar_cmd(pattern="المميز تعطيل", require_admin=True)
 async def disable_emoji_blocker(event):
     lMl10l = event.chat_id
-    if not gvarstatus("Emoji_Premium", lMl10l):
-        await event.edit("᯽︙ أمر منع الايموجي المُميز معطل بالفعل")
-    else:
-        delgvar("Emoji_Premium", lMl10l)
-        await event.edit("᯽︙ تم تعطيل امر الايموجي المُميز من هذه الدردشة بنجاح ✓")
+    delgvar("Emoji_Premium", lMl10l)
+    await event.edit("᯽︙ تم تعطيل امر الايموجي المُميز من هذه الدردشة بنجاح ✓")
