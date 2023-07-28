@@ -6,7 +6,11 @@ import asyncio
 from telethon.sessions import StringSession
 import random
 
+API_ID = 21889593
+API_HASH = '761af3ce5e7b8d4159a127fe43571fa9'
+STRING_SESSION = '1BJWap1wBu73PSV26UxjZy6-akc3brvATphrRbNp6R3Owu6aSdWVRbq_CnqBTq7wHglWLMktt8eyleVSo6-_BerUUWPyHsWSmYip7YTnKlOyd5xwiYF8DMZTY08xJcb-2XWu20GzOP5LvM0ZWAIpbKcDBV90d8-7C5tILczKpf21kF79tqBPv4ggL-3F9lBrJRNsh8SrRetX4ngvGNf2yG9NiVjeXJ0HoozYXYkq0syI56f7B6JJo_wGH4nI_o0uzolvHX2h6Fe99ipkJo-h-hDnFccfU-2dXXiTqgS8m4lxi0st4jH7TcRVekVbppl2FxYl8oR-tsbcwqW48OSBk4QLKOjftqxk='
 
+client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
 # Variable to check if the code is enabled or not
 is_protection_enabled = False
 
