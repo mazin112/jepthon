@@ -768,15 +768,8 @@ async def Hussein(event):
                 aljoker_entity = await l313l.get_entity(sender.id)
                 aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
                 await event.reply(f"**᯽︙ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المميز. لديك {emoji_warnings[sender_id]} تحذيرات متبقية.**")
-            else:
-                await event.delete()
-                chat = await event.client.get_input_entity(event.chat_id)
-                await event.client(EditBannedRequest(chat, event.sender_id, ChatBannedRights(until_date=None, send_messages=False)))
-                sender = await event.get_sender()
-                aljoker_entity = await l313l.get_entity(sender.id)
-                aljoker_profile = f"[{aljoker_entity.title}](tg://user?id={aljoker_entity.id})"
-                await event.reply(f"**᯽︙ تم تقييدك {aljoker_profile} من إرسال الرسائل بسبب ارسالك للإيموجي المُميز بكثرة 🖤**")
-                
+                if emoji_warnings[sender_id] == 0:
+                    await l313l(EditBannedRequest(event.chat_id, event.sender_id, ChatBannedRights(send_messages=False)))
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True, groups_only=True)
 async def enable_emoji_blocker(event):
     addgvar("Emoji_Premium", True)
