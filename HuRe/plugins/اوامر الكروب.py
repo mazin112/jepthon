@@ -809,13 +809,11 @@ async def handler(event):
 #By Aljoker @jepthon
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True)
 async def enable_emoji_blocker(event):
-    lMl10l = event.chat_id
-    addgvar("Emoji_Premium", True, lMl10l)
+    addgvar("Emoji_Premium", True)
     await edit.edit("**᯽︙ تم تفعيل منع امر الايموجي المُميز من هذا الدردشة بنجاح ✓**")
 
 
 @l313l.ar_cmd(pattern="المميز تعطيل", require_admin=True)
 async def disable_emoji_blocker(event):
-    lMl10l = event.chat_id
-    delgvar("Emoji_Premium", lMl10l)
+    delgvar("Emoji_Premium")
     await event.edit("᯽︙ تم تعطيل امر الايموجي المُميز من هذه الدردشة بنجاح ✓")
