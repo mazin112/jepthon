@@ -751,26 +751,33 @@ async def stop_aljoker(event):
     global aljoker
     aljoker = False
     await event.edit("**᯽︙ تم ايقاف النشر التلقائي بنجاح ✓** ")
+emoji_warnings = {}
+
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
-    if gvarstatus("Emoji_Premium"):
+    if event.is_group and gvarstatus("Emoji_Premium"):
         if isinstance(event.message.entities, list) and any(isinstance(entity, MessageEntityCustomEmoji) for entity in event.message.entities):
-            await event.delete()
-            sender = await event.get_sender()
-            aljoker_entity = await l313l.get_entity(sender.id)
-            aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
-            await event.reply(f"**᯽︙ عزيزي {aljoker_profile} ممنوع أرسال الايموجي المُميز هنا في هذه الدردشة 🖤**")
-# هم شهر محرم وهم تريد تخمط الامر اترك الخمط وشوفلك موكب زين دك زنجيل
-#By Aljoker @jepthon
-@l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True)
+            sender_id = event.sender_id
+            if sender_id not in emoji_warnings:
+                emoji_warnings[sender_id] = 10
+            if emoji_warnings[sender_id] > 0:
+                emoji_warnings[sender_id] -= 1
+                await event.delete()
+                sender = await event.get_sender()
+                aljoker_entity = await l313l.get_entity(sender.id)
+                aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
+                await event.reply(f"**᯽︙ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المميز. لديك {emoji_warnings[sender_id]} تحذيرات متبقية.**")
+            else:
+                await event.delete()
+                await l313l.restrict_permissions(event.chat_id, sender_id, view_messages=False)
+                await event.reply(f"**᯽︙ تم تقييدك {aljoker_profile} من إرسال الرسائل بسبب ارسالك للإيموجي المُميز بكثرة 🖤**")
+
+@l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True, groups_only=True)
 async def enable_emoji_blocker(event):
-    if event.is_group:
-        addgvar("Emoji_Premium", True)
-        await event.edit("**᯽︙ تم تفعيل منع امر الايموجي المُميز من هذا الدردشة بنجاح ✓**")
+    addgvar("Emoji_Premium", True)
+    await event.edit("**᯽︙ تم تفعيل منع ارسال الايموجي المُميز بنجاح ✓**")
 
-
-@l313l.ar_cmd(pattern="المميز تعطيل", require_admin=True)
+@l313l.ar_cmd(pattern="المميز تعطيل", require_admin=True, groups_only=True)
 async def disable_emoji_blocker(event):
-    if event.is_group:
-        delgvar("Emoji_Premium")
-        await event.edit("᯽︙ تم تعطيل امر الايموجي المُميز من هذه الدردشة بنجاح ✓")
+    delgvar("Emoji_Premium")
+    await event.edit("᯽︙ تم تعطيل امر منع الايموجي المُميز بنجاح ✓")
