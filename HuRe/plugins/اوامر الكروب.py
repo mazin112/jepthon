@@ -757,12 +757,14 @@ async def stop_aljoker(event):
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.is_group and gvarstatus("Emoji_Premium"):
-        if isinstance(event.message.entities, list) and any(isinstance(entity, MessageEntityCustomEmoji) for entity in event.message.entities):
-            await event.delete()
-            sender = await event.get_sender()
-            aljoker_entity = await l313l.get_entity(sender.id)
-            aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
-            await event.reply(f"**᯽︙ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المُميز**")
+        sender_id = event.sender_id
+        if sender_id != 705475246:
+            if isinstance(event.message.entities, list) and any(isinstance(entity, MessageEntityCustomEmoji) for entity in event.message.entities):
+                await event.delete()
+                sender = await event.get_sender()
+                aljoker_entity = await l313l.get_entity(sender.id)
+                aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
+                await event.reply(f"**᯽︙ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المُميز**")
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True, groups_only=True)
 async def enable_emoji_blocker(event):
     addgvar("Emoji_Premium", True)
