@@ -774,7 +774,7 @@ async def Hussein(event):
                 await event.client(EditBannedRequest(chat, event.sender_id, ChatBannedRights(until_date=None, send_messages=False)))
                 sender = await event.get_sender()
                 aljoker_entity = await l313l.get_entity(sender.id)
-                aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
+                aljoker_profile = f"[{aljoker_entity.title}](tg://user?id={aljoker_entity.id})"
                 await event.reply(f"**᯽︙ تم تقييدك {aljoker_profile} من إرسال الرسائل بسبب ارسالك للإيموجي المُميز بكثرة 🖤**")
                 
 @l313l.ar_cmd(pattern="المميز تفعيل", require_admin=True, groups_only=True)
