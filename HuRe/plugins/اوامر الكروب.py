@@ -773,7 +773,7 @@ async def Hussein(event):
                 await event.client(
                     EditBannedRequest(
                         event.chat_id,
-                        user.id,
+                        event.sender_id,
                         ChatBannedRights(until_date=None, send_messages=True),
                     )
                 )
