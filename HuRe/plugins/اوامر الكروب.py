@@ -29,6 +29,8 @@ from telethon.tl.types import (
     UserStatusOffline,
     UserStatusOnline,
     UserStatusRecently,
+    InputPeerChat,
+    MessageEntityCustomEmoji,
 )
 from HuRe import l313l
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
